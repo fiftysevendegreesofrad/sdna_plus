@@ -1,0 +1,125 @@
+sDNA sdnaintegral config: linkonly;zonesums=lulinks=landuse*FULLlf@origzone,eucsum=euc@destzone;origweightformula=zoneweight*one*dztest*landuse*FULLlf/lulinks;destweightformula=eucsum;metric=HYBRID;lineformula=fwd?lulinks:eucsum*landuse;ignorenonlinear
+Reading table file zonetesttable.csv
+ ...1d variable zoneweight
+ ...1d variable one
+Reading table file zonetesttable2.csv
+ ...1d variable dztest
+  Using origin weight expression: zoneweight*one*dztest*landuse*FULLlf/lulinks
+  Using destination weight expression: eucsum
+ WARNING: ignorenonlinear is in use, and the link formula doesn't look linear.
+  Using default of euclidean link centres for hybrid analysis
+  Using xytolerance=0, ztolerance=0
+Input has 24 rows
+Creating geometry output tabletestout.shp
+Adding fields:
+    ID         - ID
+    origzone   - origzone
+    destzone   - destzone
+    landuse    - landuse
+    zoneweight - zoneweight
+    one        - one
+    dztest     - dztest
+    lulinks    - lulinks
+    eucsum     - eucsum
+    LConn      - Line Connectivity
+    LLen       - Line Length
+    LFrac      - Link Fraction
+    LAC        - Line Ang Curvature
+    LSin       - Line Sinuosity
+    LBear      - Line Bearing
+    HMf        - Hybrid Metric fwd
+    HMb        - Hybrid Metric bwd
+    LOrigWt    - Line Origin Weight
+    LDestWt    - Line Destination Weight
+Field names saved to tabletestout.shp.names.csv
+Reading features from zonetest
+Reading features from zonetest
+sDNA processing
+  sDNA is running in 64-bit mode
+  Building network and checking for tolerance errors...
+Writing tabletestout.shp
+Shapefile  tabletestout.shp ====================================
+Item 0
+[
+ [
+  0.0,0.0,0.0
+  0.0,1.0,0.0
+ ]
+]
+ [('ID', '0.00000'), ('origzone', 'a'), ('destzone', 'x'), ('landuse', '0.00000'), ('zoneweight', '3.00000'), ('one', '1.00000'), ('dztest', '1.00000'), ('lulinks', '1.00000'), ('eucsum', '4.00000'), ('LConn', '0.00000'), ('LLen', '1.00000'), ('LFrac', '1.00000'), ('LAC', '0.00000'), ('LSin', '1.00000'), ('LBear', '0.00000'), ('HMf', '1.00000'), ('HMb', '0.00000'), ('LOrigWt', '0.00000'), ('LDestWt', '4.00000')]
+Item 1
+[
+ [
+  1.0,0.0,0.0
+  1.0,1.0,0.0
+ ]
+]
+ [('ID', '1.00000'), ('origzone', 'a'), ('destzone', 'x'), ('landuse', '1.00000'), ('zoneweight', '3.00000'), ('one', '1.00000'), ('dztest', '1.00000'), ('lulinks', '1.00000'), ('eucsum', '4.00000'), ('LConn', '0.00000'), ('LLen', '1.00000'), ('LFrac', '1.00000'), ('LAC', '0.00000'), ('LSin', '1.00000'), ('LBear', '0.00000'), ('HMf', '1.00000'), ('HMb', '4.00000'), ('LOrigWt', '3.00000'), ('LDestWt', '4.00000')]
+Item 2
+[
+ [
+  2.0,0.0,0.0
+  2.0,1.0,0.0
+ ]
+]
+ [('ID', '2.00000'), ('origzone', 'b'), ('destzone', 'x'), ('landuse', '1.00000'), ('zoneweight', '7.00000'), ('one', '1.00000'), ('dztest', '1.00000'), ('lulinks', '3.00000'), ('eucsum', '4.00000'), ('LConn', '0.00000'), ('LLen', '1.00000'), ('LFrac', '1.00000'), ('LAC', '0.00000'), ('LSin', '1.00000'), ('LBear', '0.00000'), ('HMf', '3.00000'), ('HMb', '4.00000'), ('LOrigWt', '2.33333'), ('LDestWt', '4.00000')]
+Item 3
+[
+ [
+  3.0,0.0,0.0
+  3.0,1.0,0.0
+ ]
+]
+ [('ID', '3.00000'), ('origzone', 'b'), ('destzone', 'x'), ('landuse', '2.00000'), ('zoneweight', '7.00000'), ('one', '1.00000'), ('dztest', '1.00000'), ('lulinks', '3.00000'), ('eucsum', '4.00000'), ('LConn', '0.00000'), ('LLen', '1.00000'), ('LFrac', '1.00000'), ('LAC', '0.00000'), ('LSin', '1.00000'), ('LBear', '0.00000'), ('HMf', '3.00000'), ('HMb', '8.00000'), ('LOrigWt', '4.66667'), ('LDestWt', '4.00000')]
+Item 4
+[
+ [
+  0.0,2.0,0.0
+  0.0,3.0,0.0
+ ]
+]
+ [('ID', '4.00000'), ('origzone', 'c'), ('destzone', 'y'), ('landuse', '0.00000'), ('zoneweight', '3.00000'), ('one', '1.00000'), ('dztest', '2.00000'), ('lulinks', '1.00000'), ('eucsum', '4.41421'), ('LConn', '0.00000'), ('LLen', '1.00000'), ('LFrac', '1.00000'), ('LAC', '0.00000'), ('LSin', '1.00000'), ('LBear', '0.00000'), ('HMf', '1.00000'), ('HMb', '0.00000'), ('LOrigWt', '0.00000'), ('LDestWt', '4.41421')]
+Item 5
+[
+ [
+  1.0,2.0,0.0
+  1.0,3.0,0.0
+ ]
+]
+ [('ID', '5.00000'), ('origzone', 'c'), ('destzone', 'y'), ('landuse', '1.00000'), ('zoneweight', '3.00000'), ('one', '1.00000'), ('dztest', '2.00000'), ('lulinks', '1.00000'), ('eucsum', '4.41421'), ('LConn', '0.00000'), ('LLen', '1.00000'), ('LFrac', '1.00000'), ('LAC', '0.00000'), ('LSin', '1.00000'), ('LBear', '0.00000'), ('HMf', '1.00000'), ('HMb', '4.41421'), ('LOrigWt', '6.00000'), ('LDestWt', '4.41421')]
+Item 6
+[
+ [
+  2.0,2.0,0.0
+  2.0,3.0,0.0
+ ]
+]
+ [('ID', '6.00000'), ('origzone', 'd'), ('destzone', 'y'), ('landuse', '1.00000'), ('zoneweight', '7.00000'), ('one', '1.00000'), ('dztest', '2.00000'), ('lulinks', '1.58579'), ('eucsum', '4.41421'), ('LConn', '1.00000'), ('LLen', '1.00000'), ('LFrac', '0.41421'), ('LAC', '0.00000'), ('LSin', '1.00000'), ('LBear', '0.00000'), ('HMf', '1.58579'), ('HMb', '4.41421'), ('LOrigWt', '3.65685'), ('LDestWt', '4.41421')]
+Item 7
+[
+ [
+  2.0,2.0,0.0
+  3.0,3.0,0.0
+ ]
+]
+ [('ID', '7.00000'), ('origzone', 'd'), ('destzone', 'y'), ('landuse', '2.00000'), ('zoneweight', '7.00000'), ('one', '1.00000'), ('dztest', '2.00000'), ('lulinks', '1.58579'), ('eucsum', '4.41421'), ('LConn', '1.00000'), ('LLen', '1.41421'), ('LFrac', '0.58579'), ('LAC', '0.00000'), ('LSin', '1.00000'), ('LBear', '45.00000'), ('HMf', '1.58579'), ('HMb', '8.82843'), ('LOrigWt', '10.34315'), ('LDestWt', '4.41421')]
+
+
+
+"duplicate zone table/sum test" 
+sDNA sdnaintegral config: linkonly;zonesums=one=1@destzone
+Reading table file zonetesttable.csv
+ ...1d variable zoneweight
+ ...1d variable one
+  Using default of angular link centres for angular analysis
+  Using xytolerance=0, ztolerance=0
+  Data name one detected more than once in zonesums, zone data or net data.
+ ERROR: Duplicate data name is ambiguous
+ERROR: Bad config
+"duplicate zone and net data test" 
+sDNA sdnaintegral config: linkonly
+Reading table file zonetesttableduplicate.csv
+ ...1d variable landuse
+  Using default of angular link centres for angular analysis
+  Using xytolerance=0, ztolerance=0
+Field landuse appears both on network and in tables, ambiguous

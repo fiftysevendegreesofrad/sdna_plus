@@ -1,0 +1,2 @@
+class SDNAException(Exception):
+    pass

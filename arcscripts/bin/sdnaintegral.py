@@ -1,0 +1,4 @@
+import _parentdir
+from commandline_integral_prepare import commandline_integral_prepare
+
+commandline_integral_prepare("sdnaintegral")

@@ -1,0 +1,66 @@
+Option,Default,Description,sDNA,sDNA+
+startelev=,,Name of field to read start elevation from,Yes,Yes
+endelev=,,Name of field to read end elevation from,Yes,Yes
+metric=,angular,"Metric – angular, euclidean, custom or hybrid (see next section)",Yes (except Hybrid),Yes
+radius=,n,List of radii separated by commas,Yes,Yes
+startelev=,,Name of field to read start elevation from,Yes,Yes
+endelev=,,Name of field to read end elevation from,Yes,Yes
+origweight=,,Name of field to read origin weight from,Yes,Yes
+destweight=,,Name of field to read destination weight from,Yes,Yes
+origweightformula=,,Expression for origin weight (overrides origweight),Yes,Yes
+destweightformula=,,Expression for destination weight (overrides destweight),Yes,Yes
+weight=,,Name of field to read weight from. Applies weight field to both origins and destinations.,Yes,Yes
+zonesums=,,Expressions to sum over zones (see zone sums below),Yes,Yes
+lenwt,,Specifies that weight field is per unit length,Yes,Yes
+custommetric=,,Specified field name to read custom metric from,Yes,Yes
+xytol=,,Manual override xy tolerance for fixing endpoint connectivity.  ,Yes,Yes
+ztol=,,Manual override z tolerance for fixing endpoint connectivity.  ,Yes,Yes
+outputgeodesics,,Output geometry of all pairwise geodesics in analysis (careful – this can create a lot of data),Yes,Yes
+outputdestinations,,Output geometry of all pairwise destinations in analysis (careful – this can create a lot of data).  Useful in combination with origins for creating a map of distance/metric from a given origin.,Yes,Yes
+outputhulls,,Output geometry of all convex hulls in analysis ,Yes,Yes
+outputnetradii,,Output geometry of all network radii in analysis,Yes,Yes
+origins=,,"Only compute selected origins (provide feature IDs as comma separated list).  Useful in conjunction with outputgeodesicsm, outputdestinations, outputhulls, outputnetradii.",Yes,Yes
+destinations=,,Only compute selected destinations (ditto),Yes,Yes
+nonetdata,,Don’t output any network data (used in conjunction with geometry outputs),Yes,Yes
+pre=,,Prefix text of your choice to output column names,Yes,Yes
+post=,,Postfix text of your choice to output column names,Yes,Yes
+nobetweenness,,Don’t calculate betweenness (saves a lot of time),Yes,Yes
+nojunctions,,Don’t calculate junction measures (saves time),Yes,Yes
+nohull,,Don’t calculate convex hull measures (saves time),Yes,Yes
+linkonly,,Only calculate individual link measures.  ,Yes,Yes
+outputsums,,"Output sum measures SAD, SCF etc as well as means MAD, MCF etc.",Yes,Yes
+probroutes,,Output measures of problem routes – routes which exceed the length of the radius,Yes,Yes
+forcecontorigin,,"Force origin link to be handled in continuous space, even in a discrete analysis.  Prevents odd results on very long links.",Yes,Yes
+nqpdn=,1,Custom numerator power for NQPD equation,Yes,Yes
+nqpdd=,1,Custom denominator power for NQPD equation,Yes,Yes
+skipzeroweightorigins,,Skips calculation of any output measures for origins with zero weight.  Saves a lot of time if many such origins exist.,Yes,Yes
+skipzeroweightdestinations,1,Zero weight destinations are skipped by default.  Note this will exclude them from geometry outputs; if this is not desired behaviour then set skipzeroweightdestinations=0,Yes,Yes
+skiporiginifzero=,,"Specified field name.  If this field is zero, the origin will be skipped.  Allows full customization of skipping origins.",Yes,Yes
+skipfraction=,1,"Set to value n, skips calculation for (n-1)/n origins.  Effectively the increment value when looping over origins.",Yes,Yes
+skipmod=,0,Chooses which origins are calculated if skipfraction?1.  Effectively the initial value when looping over origins: every skipfractionth origin is computed starting with the skipmodth one.,Yes,Yes
+nostrictnetworkcut,,Don’t constrain geodesics to stay within radius.  This will create a lot more ‘problem routes’.  Only alters behaviour of betweenness measures (not closeness).,Yes,Yes
+probrouteaction=,ignore,"Take special action for problem routes that exceed the radius by a factor greater than probroutethreshold.  Can be set to ignore, discard or reroute.  Reroute changes geodesic to shortest Euclidean path.  Only alters betweenness output, not closeness.",Yes,Yes
+probroutethreshold=,1.2,"Threshold over which probrouteaction is taken.  Note this does not affect computation of probroutes measures, which report on all routes which exceed the radius length regardless of this setting.",Yes,Yes
+outputdecomposableonly,,output only measures which are decomposable i.e. can be summed over different origins (useful for parallelization),Yes,Yes
+linkcentretype=,"Angular for angular analysis, Euclidean otherwise",Override link centre types – angular or Euclidean,Yes,Yes
+lineformula=,,Formula for line metric in hybrid analysis (see below),Yes,Yes
+juncformula=,0,Formula for junction turn metric in hybrid analysis (see below),Yes,Yes
+ignorenonlinear,,Force sDNA to proceed even if linkformula is nonlinear (see below),No,Yes
+bidir,,Output betweenness for each direction separately,Yes,Yes
+oneway=,,Specified field name to read one way data from (see note 1 below),Yes,Yes
+vertoneway=,,Specified field name to read vertical one way data from (see note 1 below),Yes,Yes
+oversample=,1,Number of times to run the analysis; results given are the mean of all runs.  Useful for sampling hybrid metrics with random components.,Yes,Yes
+odmatrix,,Read OD matrix from input tables (a 2d table must be present),Yes,Yes
+zonedist=,euc,"Set expression to determine how zone weights are distributed over links in each zone, or 0 to skip distribution (all lines receive entire zone weight)",Yes,Yes
+intermediates=,,Set expression for intermediate link filter.  Geodesics are discarded unless they pass through link where expression is nonzero.,Yes,Yes
+disable=,,Set expression to switch off links (links switched off when expression evaluates nonzero),Yes,Yes
+radlineformula,,Formula for radial line metric in when using hybrid radial metric (see below),No,Yes
+radjuncformula,0,Formula for junction turn metric when using hybrid radial metric (see below),No,Yes
+radcustommetric,,Data field for custom metric when using custom radial metric,No,Yes
+radmetric,euclidean,Type of radial metric to use,No,Yes
+outputskim,,Output skim matrix file,Yes,Yes
+skimorigzone,,Origin zone field (must be text) for skim matrix,Yes,Yes
+skimdestzone,,Destination zone field (must be text) for skim matrix,Yes,Yes
+skimzone,,Skim matrix zone field for both origin and destination (sets both skimorigzone and skimdestzone),Yes,Yes
+bandedradii,,Divide radius into bands: for each radius only include links outside the previous radius,Yes,Yes
+datatokeep=,,List of field names for data to copy to output,Yes,Yes
