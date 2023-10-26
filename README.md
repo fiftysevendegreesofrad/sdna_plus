@@ -17,8 +17,6 @@ Builds are not currently available - we are working on it.
 In the interim you can download the old sDNA software from the [sDNA website](https://sdna.cardiff.ac.uk/sdna/). This requires a free serial number, also available on the website. Note that free serial numbers now unlock ALL features including the previously proprietary sDNA+ features.
 
 
-If you wish to be kept apace of new sDNA developments, you might prefer the closed-source-but-free-as-in-beer version, as installing and unlocking this will add you to our mailing list. (At some point we will create a separate mailing list signup!)
-
 ### Use
 
 Use the software via any of the following means:
