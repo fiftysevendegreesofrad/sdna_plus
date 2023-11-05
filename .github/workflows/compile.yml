@@ -1,0 +1,20 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  compile:
+    name: Try to compile on windows
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Run MSBuild
+      shell: cmd 
+      run: MSBuild build_installer.proj /t:rebuild /p:Configuration=release
+
+    - name: upload output dir
+      uses: actions/upload-artifact@v3
+      with:
+        name: sdna_plus_output
+        path: output/
+        retention-days: 5
