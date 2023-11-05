@@ -1,5 +1,18 @@
+name: "Compile with MSBuild for Windows"
+
 on:
   workflow_dispatch:
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+
+env:
+  # Path to the solution file relative to the root of the project.
+  SOLUTION_FILE_PATH: .
+
+  # Configuration type to build.
+  BUILD_CONFIGURATION: Release
 
 jobs:
   compile:
@@ -13,12 +26,18 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
       # https://github.com/microsoft/setup-msbuild
+    - name: Restore NuGet packages
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
     - name: Build Geos
       shell: cmd
       run: sDNA\geos\build_in_ci_vs_2022.bat
-    - name: Run MSBuild on main sdna_plus .proj
-      shell: cmd 
-      run:  MSBuild.exe build_installer.proj /t:rebuild /p:Configuration=release'
+    # - name: Run MSBuild on main sdna_plus .proj
+    #   shell: cmd 
+    #   run:  MSBuild.exe build_installer.proj /t:rebuild /p:Configuration=release'
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
     - name: upload output dir
       uses: actions/upload-artifact@v3
       with:
