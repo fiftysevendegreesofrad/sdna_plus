@@ -7,10 +7,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-
     - name: Run MSBuild
       shell: cmd 
-      run: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe' build_installer.proj /t:rebuild /p:Configuration=release
+      run: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe build_installer.proj /t:rebuild /p:Configuration=release
 
     - name: upload output dir
       uses: actions/upload-artifact@v3
