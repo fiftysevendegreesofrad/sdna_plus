@@ -100,6 +100,7 @@ jobs:
 
     - name: Build Geos
       if: steps.cache-primes.outputs.cache-hit != 'true'
+      shell: cmd
       working-directory: ${{env.GITHUB_WORKSPACE}}\sDNA\geos
       run: .\build.bat
 
