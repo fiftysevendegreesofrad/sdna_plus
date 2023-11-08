@@ -101,7 +101,7 @@ jobs:
     - name: Build Geos
       if: steps.cache-primes.outputs.cache-hit != 'true'
       shell: cmd
-      working-directory: ${{env.GITHUB_WORKSPACE}}\sDNA\geos
+      working-directory: sDNA/geos
       run: .\build.bat
 
     - name: Build sDNA
