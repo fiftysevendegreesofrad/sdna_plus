@@ -13,6 +13,8 @@ if not %1==x86 (
 
 set CWD=%cd%
 
+@REM Build in the same build dir as the sDNA main branch does, i.e. in tree and 
+@REM also use a compiler step to copy geos_c.dll, or the only files sDNA needs, to \out\x64\bin.
 set BUILD_DIR=%~dp0\%1%\src
 mkdir %BUILD_DIR%
 
@@ -26,7 +28,7 @@ cd %CWD%
 
 echo CMake successfully built geos.sln!  
 "C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\Vcvarsall.bat" %1
-msbuild /p:ContinueOnError=false %BUILD_DIR%\geos.sln || goto error
+msbuild /p:ContinueOnError=false /p:Configuration=Release %BUILD_DIR%\geos.sln || goto error
 
 exit /b 0
 
