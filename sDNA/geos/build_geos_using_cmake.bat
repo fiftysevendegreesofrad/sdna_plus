@@ -20,12 +20,12 @@ cd %BUILD_DIR%
 
 rem https://web.archive.org/web/20120715050247/http://trac.osgeo.org/geos/wiki/BuildingOnWindowsWithCMake
 
-cmake -G "Visual Studio 9 2008" ..\..\drop || goto error
+cmake -G "Visual Studio 11 2012" ..\..\drop || goto error
 
 cd %CWD%
 
 echo CMake successfully built geos.sln!  
-"C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\Vcvarsall.bat" %1
+"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\Vcvarsall.bat" %1
 msbuild /p:ContinueOnError=false %BUILD_DIR%\geos.sln || goto error
 
 exit /b 0
