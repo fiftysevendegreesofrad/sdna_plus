@@ -27,8 +27,8 @@ cmake -G "Visual Studio 11 2012" ..\..\drop || goto error
 cd %CWD%
 
 echo CMake successfully built geos.sln!  
-"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\Vcvarsall.bat" %1
-msbuild /p:ContinueOnError=false /p:Configuration=Release %BUILD_DIR%\geos.sln || goto error
+"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\Vcvarsall.bat" amd64
+msbuild /p:ContinueOnError=false /p:Configuration=Debug /p:Platform=win32 .\sDNA\geos\x64\src\geos.sln || goto error
 
 exit /b 0
 
