@@ -166,7 +166,7 @@ ConnectedInteriorTester::isInteriorsConnected()
 
 	// Release memory allocated by MaximalEdgeRings
 	// There should be no more references to this object
-	// how to check this ? boost::shared_ptr<> comes to mind.
+	// how to check this ? boost::boost::shared_ptr<> comes to mind.
 	//
 	for (size_t i=0, n=maximalEdgeRings.size(); i<n; i++)
 	{

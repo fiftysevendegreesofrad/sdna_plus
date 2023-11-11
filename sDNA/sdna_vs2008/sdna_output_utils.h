@@ -110,7 +110,7 @@ public:
 class ControlledRadialOutputDataWrapper : public SplitNameRadialOutputDataWrapper
 {
 private:
-	shared_ptr<SplitNameRadialOutputDataWrapper> data;
+	boost::shared_ptr<SplitNameRadialOutputDataWrapper> data;
 	SDNAPolylineIdRadiusIndexed2dArrayBase *control_data;
 	string control_description;
 public:
@@ -122,7 +122,7 @@ public:
 	virtual bool enabled() {return data->enabled() && control_data->is_enabled();}
 	ControlledRadialOutputDataWrapper(RadialOutputDataWrapper &data,
 									  string control_desc, SDNAPolylineIdRadiusIndexed2dArrayBase *control_data)
-					: data(shared_ptr<SplitNameRadialOutputDataWrapper>(data.clone())),
+					: data(boost::shared_ptr<SplitNameRadialOutputDataWrapper>(data.clone())),
 					  control_data(control_data)
 	{
 		stringstream cd;
@@ -131,12 +131,12 @@ public:
 	}
 	ControlledRadialOutputDataWrapper(ControlledRadialOutputDataWrapper &data,
 									  string control_desc, SDNAPolylineIdRadiusIndexed2dArrayBase *control_data)
-					: data(shared_ptr<SplitNameRadialOutputDataWrapper>(data.clone())),
+					: data(boost::shared_ptr<SplitNameRadialOutputDataWrapper>(data.clone())),
 					  control_data(control_data), control_description(control_desc)
 	{}
 	ControlledRadialOutputDataWrapper(RadialOutputDataWrapper &data,
 									  SDNAPolylineIdRadiusIndexed2dArrayBase *control_data)
-							  : data(shared_ptr<SplitNameRadialOutputDataWrapper>(data.clone())),
+							  : data(boost::shared_ptr<SplitNameRadialOutputDataWrapper>(data.clone())),
 							    control_data(control_data),
 								control_description("")
 	{}
@@ -398,11 +398,11 @@ public:
 class ExtraNameWrapper : public OutputDataWrapper
 {
 private:
-	shared_ptr<OutputDataWrapper> odw;
+	boost::shared_ptr<OutputDataWrapper> odw;
 	string prefix,postfix;
 public:
 	ExtraNameWrapper(OutputDataWrapper &od,string pre,string post)
-		: odw(shared_ptr<OutputDataWrapper>(od.clone())), 
+		: odw(boost::shared_ptr<OutputDataWrapper>(od.clone())), 
 		  prefix(pre), postfix(post) {}
 	virtual bool enabled() {return odw->enabled();}
 	virtual float get_output(SDNAPolyline *x, int oversample)
@@ -497,7 +497,7 @@ public:
 class OutputMap
 {
 private:
-	typedef vector<shared_ptr<OutputDataWrapper> > OutputVector;
+	typedef vector<boost::shared_ptr<OutputDataWrapper> > OutputVector;
 	OutputVector outputs;
 	bool finalized;
 
@@ -521,7 +521,7 @@ public:
 		assert(!finalized);
 		if (output.enabled())
 		{
-			shared_ptr<OutputDataWrapper> output_ptr(output.clone());
+			boost::shared_ptr<OutputDataWrapper> output_ptr(output.clone());
 			outputs.push_back(output_ptr);
 		}
 	}

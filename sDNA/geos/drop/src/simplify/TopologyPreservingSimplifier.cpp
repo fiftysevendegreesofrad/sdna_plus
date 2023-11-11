@@ -191,7 +191,7 @@ LineStringTransformer::transformCoordinates(
  * Would be nice if auto_ptr<> worked in a container, but it doesn't :(
  *
  * mloskot: So, let's write our own "shared smart pointer" or better ask
- * PCS about using Boost's shared_ptr.
+ * PCS about using Boost's boost::shared_ptr.
  *
  */
 class LineStringMapBuilderFilter: public geom::GeometryComponentFilter

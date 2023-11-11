@@ -29,9 +29,9 @@ class DataExpectedByExpression //data that an expression expects to appear
 	SDNAIntegralCalculation *calculation;
 	string name;
 
-	shared_ptr<Table<float>> zonedatatable;
-	shared_ptr<Table<long double>> zonesumtable;
-	shared_ptr<NetExpectedDataSource<float>> netdata;
+	boost::shared_ptr<Table<float>> zonedatatable;
+	boost::shared_ptr<Table<long double>> zonesumtable;
+	boost::shared_ptr<NetExpectedDataSource<float>> netdata;
 public:
 
 	DataExpectedByExpression(string name,Net *net,SDNAIntegralCalculation *calculation);
@@ -70,7 +70,7 @@ public:
 	virtual float evaluate_junction(float turn_angle,const Edge * const prev,const Edge * const next) = 0;
 	virtual string descriptive_letter() = 0;
 	virtual string abbreviation() = 0;
-	static boost::shared_ptr<MetricEvaluator> from_event_type(traversal_event_type t);
+	static boost::boost::shared_ptr<MetricEvaluator> from_event_type(traversal_event_type t);
 
 	virtual MetricEvaluator* clone() = 0;
 	virtual ~MetricEvaluator() {}
@@ -126,12 +126,12 @@ enum junc_data_t {PREV,NEXT,TEMP};
 
 struct JuncVariableSource
 {
-	boost::shared_ptr<NetExpectedDataSource<float> > das;
+	boost::boost::shared_ptr<NetExpectedDataSource<float> > das;
 	junc_data_t type;
 	bool initialized;
 	string varname;
 	JuncVariableSource() : initialized(false) {}
-	JuncVariableSource(string vn,junc_data_t t,boost::shared_ptr<NetExpectedDataSource<float> > data) 
+	JuncVariableSource(string vn,junc_data_t t,boost::boost::shared_ptr<NetExpectedDataSource<float> > data) 
 		: das(data), type(t), initialized(true), varname(vn)
 	{
 		assert (t==PREV || t==NEXT);
@@ -152,13 +152,13 @@ struct JuncVariableSource
 struct LinkVariableSource
 {
 	//fixme this is very similar to DataExpectedByExpression - perhaps a needless layer of abstraction
-	shared_ptr<DataExpectedByExpression> debe;
+	boost::shared_ptr<DataExpectedByExpression> debe;
 	bool is_temp;
 	bool initialized; //NB this is only false if called with 1st constructor 
 	string varname;
 	LinkVariableSource() : initialized(false) {}
 	LinkVariableSource(string vn) : initialized(true), is_temp(true), varname(vn) {}
-	LinkVariableSource(string vn,shared_ptr<DataExpectedByExpression> debe) : initialized(true), is_temp(false), debe(debe), varname(vn) {}
+	LinkVariableSource(string vn,boost::shared_ptr<DataExpectedByExpression> debe) : initialized(true), is_temp(false), debe(debe), varname(vn) {}
 	float get_link_data(const Edge * const e);
 	string getvarname()
 	{
