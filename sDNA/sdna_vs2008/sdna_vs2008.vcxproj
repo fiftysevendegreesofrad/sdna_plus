@@ -598,7 +598,7 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
     <PostBuildEvent>
       <Message>copy to output tree</Message>
       <Command>IF "$(Platform)"=="x64" ( copy $(TargetPath) $(ProjectDir)\..\..\output\$(Configuration)\x64\ ) ELSE ( copy $(TargetPath) $(ProjectDir)\..\..\output\$(Configuration)\)
-IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\output\$(Configuration)\x64\ ) ELSE ( copy $(TargetPath) $(ProjectDir)\..\..\output\$(Configuration)\)
+
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
