@@ -31,7 +31,7 @@
 #include <string>
 #include <map>
 #include <sstream>
-#include <boost/boost::shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/pool/pool_alloc.hpp>
 #include <boost/pool/object_pool.hpp>

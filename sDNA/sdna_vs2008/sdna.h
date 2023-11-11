@@ -6,7 +6,7 @@
 #else
 
 #define SDNA_API extern "C" __declspec(dllimport) 
-#include <boost/boost::shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <vector>
 
 #endif
