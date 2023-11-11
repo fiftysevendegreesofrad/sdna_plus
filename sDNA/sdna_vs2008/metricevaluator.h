@@ -70,7 +70,7 @@ public:
 	virtual float evaluate_junction(float turn_angle,const Edge * const prev,const Edge * const next) = 0;
 	virtual string descriptive_letter() = 0;
 	virtual string abbreviation() = 0;
-	static boost::boost::shared_ptr<MetricEvaluator> from_event_type(traversal_event_type t);
+	static boost::shared_ptr<MetricEvaluator> from_event_type(traversal_event_type t);
 
 	virtual MetricEvaluator* clone() = 0;
 	virtual ~MetricEvaluator() {}
@@ -126,12 +126,12 @@ enum junc_data_t {PREV,NEXT,TEMP};
 
 struct JuncVariableSource
 {
-	boost::boost::shared_ptr<NetExpectedDataSource<float> > das;
+	boost::shared_ptr<NetExpectedDataSource<float> > das;
 	junc_data_t type;
 	bool initialized;
 	string varname;
 	JuncVariableSource() : initialized(false) {}
-	JuncVariableSource(string vn,junc_data_t t,boost::boost::shared_ptr<NetExpectedDataSource<float> > data) 
+	JuncVariableSource(string vn,junc_data_t t,boost::shared_ptr<NetExpectedDataSource<float> > data) 
 		: das(data), type(t), initialized(true), varname(vn)
 	{
 		assert (t==PREV || t==NEXT);
