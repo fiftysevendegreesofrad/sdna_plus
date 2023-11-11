@@ -798,10 +798,12 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
       <Command>for /f "usebackq tokens=*" %25%25i in (`C:\Program Files\Git\bin\git.exe rev-parse HEAD`) do sed %27s/#GITHASH#/%25%25i/%27 &lt;version_template.h &gt;version_generated.h</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Message>copying geos dll</Message>
-      <Command>copy ..\geos\x86\src\geos_c.dll $(OutDir)
-</Command>
-      <Outputs>$(OutDir)geos_c.dll;%(Outputs)</Outputs>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <ClCompile>
       <AdditionalOptions>/Zm140 %(AdditionalOptions)</AdditionalOptions>
@@ -833,8 +835,7 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
     </Link>
     <PostBuildEvent>
       <Message>copy to output tree</Message>
-      <Command>IF "$(Platform)"=="x64" ( copy $(TargetPath) $(ProjectDir)\..\..\output\$(Configuration)\x64\ ) ELSE ( copy $(TargetPath) $(ProjectDir)\..\..\output\$(Configuration)\)
-IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\output\$(Configuration)\x64\ ) ELSE ( copy $(TargetPath) $(ProjectDir)\..\..\output\$(Configuration)\)
+      <Command>copy $(TargetPath) $(ProjectDir)\..\..\output\$(Configuration)\x64\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
