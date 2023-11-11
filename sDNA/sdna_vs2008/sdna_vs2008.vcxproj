@@ -557,10 +557,12 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
       <Command>for /f "usebackq tokens=*" %25%25i in (`git rev-parse HEAD`) do sed %27s/#GITHASH#/%25%25i/%27 &lt;version_template.h &gt;version_generated.h</Command>
     </PreBuildEvent>
     <CustomBuildStep>
-      <Message>copying geos dll</Message>
-      <Command>copy ..\geos\x64\src\geos_c.dll $(OutDir)
-</Command>
-      <Outputs>$(OutDir)geos_c.dll;%(Outputs)</Outputs>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
     <Midl>
       <TargetEnvironment>X64</TargetEnvironment>
