@@ -4,3 +4,4 @@ venv/
 *.pyc
 *.ncb
 *.sdf
+*.db
