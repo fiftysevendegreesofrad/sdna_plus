@@ -67,20 +67,25 @@ jobs:
     #   run: vcpkg install geos
 
     - name: Cache Deps
-      id: cache-deps
-      uses: actions/cache@v3
+      id: cache-deps-restore
+      uses: actions/cache/restore@v3
       with:
-        path: C:/vcpkg/packages/
+        path: |
+          C:\vcpkg\packages\
+          sDNA\geos\x64
+          sDNA\geos\x86
+          
         key: ${{ runner.os }}-boost-v${{ env.BOOST_FILE }}
         # --${{ hashFiles('vcpkg.json') }}
+
 
 
     - name: Download Boost
       if: steps.cache-deps.outputs.cache-hit != 'true'
       shell: cmd
       run: |
-        mkdir d:\boost\
-        cd d:\boost
+        mkdir C:\Program Files\Boost\64\boost_1_55_0\
+        cd C:\Program Files\Boost\64\
         curl -L -o ${{ env.BOOST_FILE }}.zip ${{ env.BOOST_URL }}${{ env.BOOST_FILE }}.zip
         tar -xf ${{ env.BOOST_FILE }}.zip
         mv .\${{ env.BOOST_FILE }} .\boost_1_55_0
@@ -88,11 +93,21 @@ jobs:
       # but I want to change the sDNA config and source as little as possible until I know it actually compiles
 
 
-    - name: Install Geos etc. from vcpkg.json
-      if: steps.cache-deps.outputs.cache-hit != 'true'
-      run: vcpkg install
+    # - name: Install Geos etc. from vcpkg.json
+    #   if: steps.cache-deps.outputs.cache-hit != 'true'
+    #   run: vcpkg install
 
  
+    - name: Cache Deps
+      id: cache-deps-save
+      uses: actions/cache/save@v3
+      with:
+        path: |
+          C:\vcpkg\packages\
+          sDNA\geos\x64
+          sDNA\geos\x86
+          
+        key: ${{ steps.cache-deps-restore.outputs.cache-primary-key }}
 
     - name: Build sDNA
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -104,3 +119,6 @@ jobs:
         name: sdna_plus_output
         path: output/
         retention-days: 5
+
+
+
