@@ -12,7 +12,9 @@ Copyright rests with Cardiff University and the code is released under GPL versi
 
 ### Installation
 
-Builds are not currently available - we are working on it.
+Builds under VS 2015 not available:
+
+
 
 In the interim you can download the old sDNA software from the [sDNA website](https://sdna.cardiff.ac.uk/sdna/). This requires a free serial number, also available on the website. Note that free serial numbers now unlock ALL features including the previously proprietary sDNA+ features.
 
