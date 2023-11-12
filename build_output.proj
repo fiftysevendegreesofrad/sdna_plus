@@ -4,8 +4,7 @@
 
 <ItemGroup>
 
-<scripts Include="autocadscripts\sdna.vlx"/>
-<scripts Include="autocadscripts\sdna.cuix"/>
+
 <scripts Include="arcscripts\sDNA_ArcGIS_extra_tools.tbx"/>
 <scripts Include="arcscripts\runcalculation.py"/>
 <scripts Include="arcscripts\sDNA.pyt"/>
@@ -33,7 +32,7 @@
 
 <rportable Include="arcscripts\rportable\**\*.*" />
 
-<installerbits Include="installerbits\license.rtf"/>
+
 
 </ItemGroup>
 
