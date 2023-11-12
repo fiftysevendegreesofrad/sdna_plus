@@ -47,7 +47,7 @@ If filing a bug, please file to the database here on github.
 Build requirements:
 
 * [Microsoft Visual C++ professional 2015](https://my.visualstudio.com/Downloads?q=%22Visual%20Studio%20Professional%202015%22)  
-* Boost C++ libraries [version 1.83 (MSVC 14.0)](https://sourceforge.net/projects/boost/files/boost-binaries/1.83.0/boost_1_83_0-msvc-14.0-64.exe/download)
+* Boost C++ libraries [version 1.72 (MSVC 14.0)](https://sourceforge.net/projects/boost/files/boost-binaries/1.72.0/boost_1_72_0-msvc-14.0-64.exe/download)
 
 First download [geos 3.12.0](https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos/geos-3.12.0-1.tar.bz2) ([source code](https://download.osgeo.org/geos/geos-3.12.0.tar.bz2) ).  
 
