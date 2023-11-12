@@ -8,3 +8,6 @@ venv/
 UpgradeLog*.htm
 **/.vs/*
 *.sln.cache
+Backup
+Backup1
+.vs
