@@ -2,8 +2,8 @@ name: "Compile with MSBuild for Windows"
 
 on:
   workflow_dispatch:
-  # push:
-  #  branches: [ "VS_2022" ]
+  push:
+    branches: [ "VS_2022_x64_release_config_only" ]
   # pull_request:
   #   branches: [ "main" ]
 
@@ -32,11 +32,9 @@ jobs:
     - name: 'Add "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" to path'
       shell: bash
       run: echo "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" >> $GITHUB_PATH
-      
-    - name: Configure nmake
-      uses: ilammy/msvc-dev-cmd@v1
-      # https://github.com/marketplace/actions/enable-developer-command-prompt
-      
+    # - name: Configure nmake
+    #   uses: ilammy/msvc-dev-cmd@v1
+    #   # https://github.com/marketplace/actions/enable-developer-command-prompt
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
 
@@ -72,11 +70,7 @@ jobs:
       id: cache-deps
       uses: actions/cache@v3
       with:
-        path: |
-          C:\vcpkg\packages\
-          sDNA\geos\x64
-          sDNA\geos\x86
-          
+        path: C:/vcpkg/packages/
         key: ${{ runner.os }}-boost-v${{ env.BOOST_FILE }}
         # --${{ hashFiles('vcpkg.json') }}
 
@@ -94,20 +88,15 @@ jobs:
       # but I want to change the sDNA config and source as little as possible until I know it actually compiles
 
 
-    # - name: Install Geos etc. from vcpkg.json
-    #   if: steps.cache-deps.outputs.cache-hit != 'true'
-    #   run: vcpkg install
-
-    - name: Build Geos
+    - name: Install Geos etc. from vcpkg.json
       if: steps.cache-deps.outputs.cache-hit != 'true'
-      shell: cmd
-      working-directory: sDNA/geos
-      run: .\build.bat
+      run: vcpkg install
+
+ 
 
     - name: Build sDNA
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
-      run: .\build_release.bat
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
 
     - name: upload output dir
       uses: actions/upload-artifact@v3
