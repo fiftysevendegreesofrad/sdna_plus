@@ -3,7 +3,7 @@
 
     <Target Name="Rebuild">
 
-        <MSBuild Projects="build_output.proj" Targets="Rebuild"/>
+        <MSBuild Projects="build_output.vcproj" Targets="Rebuild"/>
 
     </Target>
 
