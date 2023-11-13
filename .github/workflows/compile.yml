@@ -46,7 +46,8 @@ jobs:
       with:
         path: |
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-        key: ${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
+          ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
+        key: ${{ runner.os }}-geos_v${{ env.GEOS_VERSION }}-${{ hashFiles('vcpkg.json') }}
 
     - name: Install Boost from vcpkg.json
       run: vcpkg install
@@ -68,6 +69,7 @@ jobs:
       with:
         path: |
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
+          ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
         key: ${{ steps.cache-deps-restore.outputs.cache-primary-key }}
 
     - name: Build sDNA
