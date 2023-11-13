@@ -81,7 +81,7 @@ jobs:
         curl -L -o $GEOS_FILE ${{ env.OSGEO4W_GEOS_URL }}/$GEOS_FILE
         tar -xf $GEOS_FILE
         BUILD_CONFIG=${{ env.CONFIGURATION }}
-        mv bin/geos_c.dll ${{ github.workspace }}/output/${BUILD_CONFIG,R}/${{ env.PLATFORM }}
+        mv bin/geos_c.dll $GITHUB_WORKSPACE/output/${BUILD_CONFIG,R}/${{ env.PLATFORM }}
       # ${BUILD_CONFIG,R} Tries to make first letter of BUILD_CONFIG lowercase only if it is an R
       # as the sDNA source tree has output/Debug
       #                             output/release
