@@ -16,7 +16,7 @@ env:
   GEOS_VERSION: '3.12.0-1'
   GEOS_DOWNLOAD_DIR: '%TMP%\geos'
   RELEASE: '6.0.1'
-  RELEASE_ZIP_FILES_DIR: '%TMP%\release_files'
+  RELEASE_ZIP_FILES_DIR: '%TMP%/release_files'
   BOOST_VERSION: '1.8.3'
 
 jobs:
@@ -111,7 +111,7 @@ jobs:
     - name: Package sDNA
       shell: bash
       run: |
-        mkdir ${{ env.RELEASE_ZIP_FILES_DIR }}
+        mkdir -p ${{ env.RELEASE_ZIP_FILES_DIR }}
         RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v${{ env.GEOS_VERSION }}_Boost_v${{ env.BOOST_VERSION }}_RTTI_on
         RELEASE_FILE_NAME_STUB_AND_DIR=${{ env.RELEASE_ZIP_FILES_DIR }}/%RELEASE_FILE_NAME%
         BUILD_CONFIG=${{ env.CONFIGURATION }}
