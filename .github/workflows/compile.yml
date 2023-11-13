@@ -59,10 +59,10 @@ jobs:
         mkdir ${{ env.GEOS_DOWNLOAD_DIR }}
         cd ${{ env.GEOS_DOWNLOAD_DIR }}
         set URL=${{ env.OSGEO4W_GEOS_URL }}/%GEOS_FILE%
-        echo %URL$
+        echo %URL%
         curl -L -o %GEOS_FILE% %URL%
-        tar -xf %GEOS_FILE%
-        move bin\geos_c.dll ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
+      #  tar -xf %GEOS_FILE%
+      #  move bin\geos_c.dll ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
 
     - name: Cache Deps
       if: steps.cache-deps-restore.outputs.cache-hit != 'true'
