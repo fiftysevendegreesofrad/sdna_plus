@@ -60,7 +60,7 @@ jobs:
         cd ${{ env.GEOS_DOWNLOAD_DIR }}
         curl -L -o $GEOS_FILE ${{ env.OSGEO4W_GEOS_URL }}/$GEOS_FILE
         tar -xf $GEOS_FILE
-        mv bin\geos_c.dll ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
+        mv bin/geos_c.dll ${{ env.GITHUB_WORKSPACE }}/output/${{ env.CONFIGURATION }}/${{ env.PLATFORM }}
 
     - name: Cache Deps
       if: steps.cache-deps-restore.outputs.cache-hit != 'true'
