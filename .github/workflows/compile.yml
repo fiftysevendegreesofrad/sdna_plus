@@ -110,7 +110,8 @@ jobs:
 
     - name: Build sDNA
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild /m /p:Platform=x64 /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
+      # run: msbuild /m /p:Platform=x64 /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild build_installer.proj /t:rebuild /p:Configuration=release /p:Platform=x64  /p:VcpkgEnableManifest=true
 
     - name: upload output dir
       uses: actions/upload-artifact@v3
