@@ -111,7 +111,7 @@ jobs:
 
     - name: Build sDNA
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild /m /p:Platform=Release /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild /m /p:Platform=x64 /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
 
     - name: upload output dir
       uses: actions/upload-artifact@v3
