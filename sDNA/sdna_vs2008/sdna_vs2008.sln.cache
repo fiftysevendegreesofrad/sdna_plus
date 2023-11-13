@@ -1,0 +1,411 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="3.5" InitialTargets="ValidateSolutionConfiguration;ValidateToolsVersions" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_SolutionProjectConfiguration>Debug|Mixed Platforms</_SolutionProjectConfiguration>
+    <_SolutionProjectToolsVersion>3.5</_SolutionProjectToolsVersion>
+    <_SolutionProjectCacheVersion>4.0</_SolutionProjectCacheVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <_SolutionProjectProjects Include="sdna_vs2008.vcproj" />
+  </ItemGroup>
+  <UsingTask TaskName="Microsoft.Build.Tasks.CreateTemporaryVCProject" AssemblyName="Microsoft.Build.Tasks.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.ResolveVCProjectOutput" AssemblyName="Microsoft.Build.Tasks.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <PropertyGroup Condition=" '$(Configuration)' == '' ">
+    <Configuration>Debug</Configuration>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == '' ">
+    <Platform>Mixed Platforms</Platform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(AspNetConfiguration)' == '') ">
+    <AspNetConfiguration>$(Configuration)</AspNetConfiguration>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SolutionDir>C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\</SolutionDir>
+    <SolutionExt>.sln</SolutionExt>
+    <SolutionFileName>sdna_vs2008.sln</SolutionFileName>
+    <SolutionName>sdna_vs2008</SolutionName>
+    <SolutionPath>C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.sln</SolutionPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' and '$(MSBuildToolsVersion)' == '2.0'">v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' and ('$(MSBuildToolsVersion)' == '3.5' or '$(MSBuildToolsVersion)' == '3.0')">v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' and '$(MSBuildToolsVersion)' == '4.0'">v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Any CPU') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">benchmark_probroutes|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Mixed Platforms') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">benchmark_probroutes|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Win32') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">benchmark_probroutes|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'x64') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">benchmark_probroutes|x64</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Any CPU') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Debug_speedup|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Mixed Platforms') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Debug_speedup|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Win32') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Debug_speedup|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'x64') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Debug_speedup|x64</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Debug|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Debug|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Win32') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Debug|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x64') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Debug|x64</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Any CPU') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">fast_debug|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Mixed Platforms') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">fast_debug|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Win32') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">fast_debug|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'x64') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">fast_debug|x64</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Any CPU') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">parallel_debug|x64</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Mixed Platforms') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">parallel_debug|x64</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Win32') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">parallel_debug|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'x64') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">parallel_debug|x64</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Release|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Release|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Win32') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Release|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x64') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">Release|x64</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Any CPU') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">vtune|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Mixed Platforms') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">vtune|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Win32') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">vtune|Win32</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <PropertyGroup Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'x64') ">
+    <CurrentSolutionConfigurationContents>
+      <SolutionConfiguration xmlns="">
+        <ProjectConfiguration Project="{E9ECF51A-5C6C-490A-8963-112A59EE66F7}">vtune|x64</ProjectConfiguration>
+      </SolutionConfiguration>
+    </CurrentSolutionConfigurationContents>
+  </PropertyGroup>
+  <Target Name="ValidateSolutionConfiguration">
+    <Error Text="The specified solution configuration &quot;$(Configuration)|$(Platform)&quot; is invalid. Please specify a valid solution configuration using the Configuration and Platform properties (e.g. MSBuild.exe Solution.sln /p:Configuration=Debug /p:Platform=&quot;Any CPU&quot;) or leave those properties blank to use the default solution configuration." Code="MSB4126" HelpKeyword="MSBuild.SolutionInvalidSolutionConfiguration" Condition="('$(CurrentSolutionConfigurationContents)' == '') and ('$(SkipInvalidConfigurations)' != 'true')" />
+    <Warning Text="The specified solution configuration &quot;$(Configuration)|$(Platform)&quot; is invalid. Please specify a valid solution configuration using the Configuration and Platform properties (e.g. MSBuild.exe Solution.sln /p:Configuration=Debug /p:Platform=&quot;Any CPU&quot;) or leave those properties blank to use the default solution configuration." Code="MSB4126" HelpKeyword="MSBuild.SolutionInvalidSolutionConfiguration" Condition="('$(CurrentSolutionConfigurationContents)' == '') and ('$(SkipInvalidConfigurations)' == 'true')" />
+    <Message Text="Building solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="'$(CurrentSolutionConfigurationContents)' != ''" />
+  </Target>
+  <Target Name="ValidateToolsVersions">
+    <Error Text="The tools version &quot;$(MSBuildToolsVersion)&quot; of the solution does not support building projects with a different tools version." Code="MSB4149" HelpKeyword="MSBuild.SolutionToolsVersionDoesNotSupportProjectToolsVersion" Condition="'$(MSBuildToolsVersion)' == '2.0' and ('$(ProjectToolsVersion)' != '2.0' and '$(ProjectToolsVersion)' != '')" />
+  </Target>
+  <Target Name="sdna_vs2008" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Any CPU&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Win32&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|x64&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Win32&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|x64&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Win32&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|x64&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Win32&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|x64&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Win32&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|x64&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Release|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <CreateProperty Value="C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\..\..\vc\vcpackages" Condition="'$(VCBuildToolPath)' == ''">
+      <Output TaskParameter="Value" PropertyName="VCBuildToolPath" />
+    </CreateProperty>
+    <VCBuild Projects="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.vcproj" ToolPath="$(VCBuildToolPath)" Configuration="Release|Win32" SolutionFile="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.sln" Override="$(VCBuildOverride)" AdditionalLibPaths="$(VCBuildAdditionalLibPaths)" AdditionalLinkLibraryPaths="$(VCBuildAdditionalLinkLibraryPaths)" UseEnvironment="$(VCBuildUseEnvironment)" UserEnvironment="$(VCBuildUserEnvironment)" AdditionalOptions="$(VCBuildAdditionalOptions)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Release|Win32&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Win32') " />
+    <CreateProperty Value="C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\..\..\vc\vcpackages" Condition="'$(VCBuildToolPath)' == ''">
+      <Output TaskParameter="Value" PropertyName="VCBuildToolPath" />
+    </CreateProperty>
+    <VCBuild Projects="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.vcproj" ToolPath="$(VCBuildToolPath)" Configuration="Release|x64" SolutionFile="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.sln" Override="$(VCBuildOverride)" AdditionalLibPaths="$(VCBuildAdditionalLibPaths)" AdditionalLinkLibraryPaths="$(VCBuildAdditionalLinkLibraryPaths)" UseEnvironment="$(VCBuildUseEnvironment)" UserEnvironment="$(VCBuildUserEnvironment)" AdditionalOptions="$(VCBuildAdditionalOptions)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Any CPU&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Win32&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|x64&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'x64') " />
+  </Target>
+  <Target Name="sdna_vs2008:Clean" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Any CPU&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Win32&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|x64&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Win32&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|x64&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Win32&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|x64&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Win32&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|x64&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Win32&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|x64&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Release|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <CreateProperty Value="C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\..\..\vc\vcpackages" Condition="'$(VCBuildToolPath)' == ''">
+      <Output TaskParameter="Value" PropertyName="VCBuildToolPath" />
+    </CreateProperty>
+    <VCBuild Projects="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.vcproj" ToolPath="$(VCBuildToolPath)" Configuration="Release|Win32" SolutionFile="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.sln" Clean="true" Override="$(VCBuildOverride)" AdditionalLibPaths="$(VCBuildAdditionalLibPaths)" AdditionalLinkLibraryPaths="$(VCBuildAdditionalLinkLibraryPaths)" UseEnvironment="$(VCBuildUseEnvironment)" UserEnvironment="$(VCBuildUserEnvironment)" AdditionalOptions="$(VCBuildAdditionalOptions)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Release|Win32&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Win32') " />
+    <CreateProperty Value="C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\..\..\vc\vcpackages" Condition="'$(VCBuildToolPath)' == ''">
+      <Output TaskParameter="Value" PropertyName="VCBuildToolPath" />
+    </CreateProperty>
+    <VCBuild Projects="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.vcproj" ToolPath="$(VCBuildToolPath)" Configuration="Release|x64" SolutionFile="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.sln" Clean="true" Override="$(VCBuildOverride)" AdditionalLibPaths="$(VCBuildAdditionalLibPaths)" AdditionalLinkLibraryPaths="$(VCBuildAdditionalLinkLibraryPaths)" UseEnvironment="$(VCBuildUseEnvironment)" UserEnvironment="$(VCBuildUserEnvironment)" AdditionalOptions="$(VCBuildAdditionalOptions)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Any CPU&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Win32&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|x64&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'x64') " />
+  </Target>
+  <Target Name="sdna_vs2008:Rebuild" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Any CPU&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Win32&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|x64&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Win32&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|x64&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Win32&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|x64&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Win32&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|x64&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Win32&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|x64&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Release|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <CreateProperty Value="C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\..\..\vc\vcpackages" Condition="'$(VCBuildToolPath)' == ''">
+      <Output TaskParameter="Value" PropertyName="VCBuildToolPath" />
+    </CreateProperty>
+    <VCBuild Projects="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.vcproj" ToolPath="$(VCBuildToolPath)" Configuration="Release|Win32" SolutionFile="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.sln" Rebuild="true" Override="$(VCBuildOverride)" AdditionalLibPaths="$(VCBuildAdditionalLibPaths)" AdditionalLinkLibraryPaths="$(VCBuildAdditionalLinkLibraryPaths)" UseEnvironment="$(VCBuildUseEnvironment)" UserEnvironment="$(VCBuildUserEnvironment)" AdditionalOptions="$(VCBuildAdditionalOptions)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Release|Win32&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Win32') " />
+    <CreateProperty Value="C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\..\..\vc\vcpackages" Condition="'$(VCBuildToolPath)' == ''">
+      <Output TaskParameter="Value" PropertyName="VCBuildToolPath" />
+    </CreateProperty>
+    <VCBuild Projects="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.vcproj" ToolPath="$(VCBuildToolPath)" Configuration="Release|x64" SolutionFile="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.sln" Rebuild="true" Override="$(VCBuildOverride)" AdditionalLibPaths="$(VCBuildAdditionalLibPaths)" AdditionalLinkLibraryPaths="$(VCBuildAdditionalLinkLibraryPaths)" UseEnvironment="$(VCBuildUseEnvironment)" UserEnvironment="$(VCBuildUserEnvironment)" AdditionalOptions="$(VCBuildAdditionalOptions)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Any CPU&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Win32&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|x64&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'x64') " />
+  </Target>
+  <Target Name="sdna_vs2008:Publish" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <Warning Text="VC projects do not support the &quot;Publish&quot; target." Code="MSB4076" HelpKeyword="MSBuild.SolutionVCProjectNoPublish" />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Any CPU&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|Win32&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;benchmark_probroutes|x64&quot;." Condition=" ('$(Configuration)' == 'benchmark_probroutes') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|Win32&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug_speedup|x64&quot;." Condition=" ('$(Configuration)' == 'Debug_speedup') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|Win32&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Debug|x64&quot;." Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|Win32&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;fast_debug|x64&quot;." Condition=" ('$(Configuration)' == 'fast_debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Any CPU&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|Win32&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;parallel_debug|x64&quot;." Condition=" ('$(Configuration)' == 'parallel_debug') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Release|Any CPU&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+    <CreateProperty Value="C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\..\..\vc\vcpackages" Condition="'$(VCBuildToolPath)' == ''">
+      <Output TaskParameter="Value" PropertyName="VCBuildToolPath" />
+    </CreateProperty>
+    <VCBuild Projects="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.vcproj" ToolPath="$(VCBuildToolPath)" Configuration="Release|Win32" SolutionFile="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.sln" Override="$(VCBuildOverride)" AdditionalLibPaths="$(VCBuildAdditionalLibPaths)" AdditionalLinkLibraryPaths="$(VCBuildAdditionalLinkLibraryPaths)" UseEnvironment="$(VCBuildUseEnvironment)" UserEnvironment="$(VCBuildUserEnvironment)" AdditionalOptions="$(VCBuildAdditionalOptions)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;Release|Win32&quot;." Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Win32') " />
+    <CreateProperty Value="C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\..\..\vc\vcpackages" Condition="'$(VCBuildToolPath)' == ''">
+      <Output TaskParameter="Value" PropertyName="VCBuildToolPath" />
+    </CreateProperty>
+    <VCBuild Projects="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.vcproj" ToolPath="$(VCBuildToolPath)" Configuration="Release|x64" SolutionFile="C:\Users\drjam\Coding\sDNA\sdna_plus\sdna\sdna_vs2008\sdna_vs2008.sln" Override="$(VCBuildOverride)" AdditionalLibPaths="$(VCBuildAdditionalLibPaths)" AdditionalLinkLibraryPaths="$(VCBuildAdditionalLinkLibraryPaths)" UseEnvironment="$(VCBuildUseEnvironment)" UserEnvironment="$(VCBuildUserEnvironment)" AdditionalOptions="$(VCBuildAdditionalOptions)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x64') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Any CPU&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Any CPU') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Mixed Platforms&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Mixed Platforms') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|Win32&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'Win32') " />
+    <Message Text="The project &quot;sdna_vs2008&quot; is not selected for building in solution configuration &quot;vtune|x64&quot;." Condition=" ('$(Configuration)' == 'vtune') and ('$(Platform)' == 'x64') " />
+  </Target>
+  <Target Name="Build" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(CollectedBuildOutput)">
+    <MSBuild Condition="@(BuildLevel0) != ''" Projects="@(BuildLevel0)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)">
+      <Output TaskParameter="TargetOutputs" ItemName="CollectedBuildOutput" />
+    </MSBuild>
+    <Message Text="The project &quot;%(SkipLevel0.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel0) != ''" />
+    <Warning Text="The project configuration for project &quot;%(MissingConfigLevel0.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel0) != ''" />
+    <CallTarget Targets="sdna_vs2008" RunEachTargetSeparately="true" />
+  </Target>
+  <Target Name="Clean" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <MSBuild Condition="@(BuildLevel0) != ''" Projects="@(BuildLevel0)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" Targets="Clean" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" />
+    <Message Text="The project &quot;%(SkipLevel0.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel0) != ''" />
+    <Warning Text="The project configuration for project &quot;%(MissingConfigLevel0.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel0) != ''" />
+    <CallTarget Targets="sdna_vs2008:Clean" RunEachTargetSeparately="true" />
+    <Delete Files="sdna_vs2008.sln.cache" />
+  </Target>
+  <Target Name="Rebuild" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(CollectedBuildOutput)">
+    <MSBuild Condition="@(BuildLevel0) != ''" Projects="@(BuildLevel0)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" Targets="Rebuild" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)">
+      <Output TaskParameter="TargetOutputs" ItemName="CollectedBuildOutput" />
+    </MSBuild>
+    <Message Text="The project &quot;%(SkipLevel0.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel0) != ''" />
+    <Warning Text="The project configuration for project &quot;%(MissingConfigLevel0.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel0) != ''" />
+    <CallTarget Targets="sdna_vs2008:Rebuild" RunEachTargetSeparately="true" />
+  </Target>
+  <Target Name="Publish" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <MSBuild Condition="@(BuildLevel0) != ''" Projects="@(BuildLevel0)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" Targets="Publish" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" />
+    <Message Text="The project &quot;%(SkipLevel0.Identity)&quot; is not selected for building in solution configuration &quot;$(Configuration)|$(Platform)&quot;." Condition="@(SkipLevel0) != ''" />
+    <Warning Text="The project configuration for project &quot;%(MissingConfigLevel0.Identity)&quot; was not specified in the solution file for the solution configuration &quot;$(Configuration)|$(Platform)&quot;." Code="MSB4121" HelpKeyword="MSBuild.SolutionProjectConfigurationMissing" Condition="@(MissingConfigLevel0) != ''" />
+    <CallTarget Targets="sdna_vs2008:Publish" RunEachTargetSeparately="true" />
+  </Target>
+</Project>
