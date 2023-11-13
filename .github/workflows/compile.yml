@@ -10,10 +10,14 @@ on:
 env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: sDNA\sdna_vs2008\sdna_vs2008.sln
-  BUILD_CONFIGURATION: Release
+  CONFIGURATION: Release
+  PLATFORM: x64
   OSGEO4W_GEOS_URL: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos
-  GEOS_BINARY_ARCHIVE: geos-3.12.0-1.tar.bz2
+  GEOS_VERSION: '3.12.0-1'
   GEOS_DOWNLOAD_DIR: '%TMP%\geos'
+  RELEASE: '6.0.1'
+  RELEASE_ZIP_FILES_DIR: '%TMP%\release_files'
+  BOOST_VERSION: '1.8.3'
 
 jobs:
   compile:
@@ -50,11 +54,12 @@ jobs:
     - name: Download and unzip Geos binary from OSGEO
       shell: cmd
       run: |
+        set GEOS_FILE=geos-${{ env.GEOS_VERSION }}.tar.bz2
         mkdir ${{ env.GEOS_DOWNLOAD_DIR }}
-        set GEOS_ARCHIVE=${{ env.GEOS_DOWNLOAD_DIR }}\${{ env.GEOS_BINARY_ARCHIVE }}
-        curl -L -o %GEOS_ARCHIVE% ${{ env.OSGEO4W_GEOS_URL }}/${{ env.GEOS_BINARY_ARCHIVE }}
-        tar -xf %GEOS_ARCHIVE%
-        move ${{ env.GEOS_DOWNLOAD_DIR }}\bin\geos_c.dll output\release\x64
+        cd ${{ env.GEOS_DOWNLOAD_DIR }}
+        curl -L -o %GEOS_FILE% ${{ env.OSGEO4W_GEOS_URL }}/%GEOS_FILE%
+        tar -xf %GEOS_FILE%
+        move bin\geos_c.dll ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
 
     - name: Cache Deps
       if: steps.cache-deps-restore.outputs.cache-hit != 'true'
@@ -66,14 +71,30 @@ jobs:
         key: ${{ steps.cache-deps-restore.outputs.cache-primary-key }}
 
     - name: Build sDNA
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      # run: msbuild /m /p:Platform=x64 /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
-      run: msbuild build_installer.proj /t:rebuild /p:Configuration=release /p:Platform=x64  /p:VcpkgEnableManifest=true
+      working-directory: ${{ env.GITHUB_WORKSPACE }}
+      # run: msbuild /m  /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
+      run: > 
+        msbuild build_installer.proj 
+        /t:rebuild 
+        /p:Platform=${{ env.PLATFORM }}  
+        /p:Configuration=${{ env.CONFIGURATION }} 
+        /p:VcpkgEnableManifest=true
+
+    - name: Package sDNA
+      shell: cmd
+      run: |
+        mkdir ${{ env.RELEASE_ZIP_FILES_DIR }}
+        set RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v{{ env.GEOS_VERSION }}_Boost_v{{ env.BOOST_VERSION }}_RTTI_on
+        set RELEASE_FILE_NAME_STUB_AND_DIR=${{ env.RELEASE_ZIP_FILES_DIR }}\%RELEASE_FILE_NAME%
+        cd output\${{ env.CONFIGURATION }}
+        tar -acf %RELEASE_FILE_NAME_STUB_AND_DIR%.zip *
+        tar -cjf %RELEASE_FILE_NAME_STUB_AND_DIR%.tar.bz2 *
 
     - name: upload output dir
       uses: actions/upload-artifact@v3
       with:
         name: sdna_plus_output
-        path: output/release
+        # path: output/release
+        path: ${{ env.RELEASE_ZIP_FILES_DIR }}
 
 
