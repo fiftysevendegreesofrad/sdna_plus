@@ -111,17 +111,16 @@ jobs:
     - name: Package sDNA
       shell: bash
       run: |
-        RELEASE_FILES_DIR=${{ runner.temp }}/release_zip_files_dir/
-        mkdir -p $RELEASE_FILES_DIR
+        mkdir -p release_zip_files_dir
         RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v${{ env.GEOS_VERSION }}_Boost_v${{ env.BOOST_VERSION }}_RTTI_on
-        RELEASE_FILE_NAME_STUB_AND_DIR=$RELEASE_FILES_DIR/$RELEASE_FILE_NAME
+        RELEASE_FILE_NAME_STUB_AND_DIR=release_zip_files_dir/$RELEASE_FILE_NAME
         BUILD_CONFIG=${{ env.CONFIGURATION }}
 
-        cd output/${BUILD_CONFIG,R}
+        DIR_TO_ZIP=output/${BUILD_CONFIG,R}
         touch test.txt
         touch tyfwefw.rt
-        tar -caf $RELEASE_FILE_NAME_STUB_AND_DIR.zip **/*
-        tar -caf $RELEASE_FILE_NAME_STUB_AND_DIR.tar.bz2 **/*
+        tar -caf $RELEASE_FILE_NAME_STUB_AND_DIR.zip DIR_TO_ZIP/**/*
+        tar -caf $RELEASE_FILE_NAME_STUB_AND_DIR.tar.bz2 DIR_TO_ZIP/**/*
 
     - name: upload output dir
       uses: actions/upload-artifact@v3
