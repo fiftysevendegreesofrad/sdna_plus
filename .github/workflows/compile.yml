@@ -93,7 +93,7 @@ jobs:
 
 
     - name: Install Geos and Boost from vcpkg.json
-      if: steps.cache-deps.outputs.cache-hit != 'true'
+      if: steps.cache-deps-restore.outputs.cache-hit != 'true'
       run: vcpkg install
 
  
