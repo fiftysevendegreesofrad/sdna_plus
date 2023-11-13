@@ -20,30 +20,6 @@
           "boost-type-traits", 
           "boost-utility", 
           "boost-variant"
-        ],
-    "overrides": [
-        { "name": "geos", "version": "3.11.2" },
+        ]
 
-        { "name": "boost-algorithm", "version": "1.72.0" },
-        { "name": "boost-bimap", "version": "1.72.0" },
-        { "name": "boost-chrono", "version": "1.72.0" },
-        { "name": "boost-date-time", "version": "1.72.0" },
-        { "name": "boost-foreach", "version": "1.72.0" },
-        { "name": "boost-geometry", "version": "1.72.0" },
-        { "name": "boost-iterator", "version": "1.72.0" },
-        { "name": "boost-lexical-cast", "version": "1.72.0" },
-        { "name": "boost-math", "version": "1.72.0" },
-        { "name": "boost-mpl", "version": "1.72.0" },
-        { "name": "boost-numeric-conversion", "version": "1.72.0" },
-        { "name": "boost-pool", "version": "1.72.0" },
-        { "name": "boost-random", "version": "1.72.0" },
-        { "name": "boost-smart-ptr", "version": "1.72.0" },
-        { "name": "boost-static-assert", "version": "1.72.0" },
-        { "name": "boost-system", "version": "1.72.0" },
-        { "name": "boost-thread", "version": "1.72.0" },
-        { "name": "boost-type-traits", "version": "1.72.0" },
-        { "name": "boost-utility", "version": "1.72.0" },
-        { "name": "boost-variant", "version": "1.72.0" }
-
-      ]
 }
