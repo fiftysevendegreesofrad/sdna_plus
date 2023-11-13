@@ -77,6 +77,7 @@ jobs:
       uses: actions/cache/restore@v3
       with:
         path: |
+          C:\vcpkg\packages\
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
         key: ${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
 
@@ -92,6 +93,7 @@ jobs:
       uses: actions/cache/save@v3
       with:
         path: |
+          C:\vcpkg\packages\
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
         key: ${{ steps.cache-vcpkg-deps-restore.outputs.cache-primary-key }}
 
@@ -111,8 +113,10 @@ jobs:
       run: |
         mkdir ${{ env.RELEASE_ZIP_FILES_DIR }}
         RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v${{ env.GEOS_VERSION }}_Boost_v${{ env.BOOST_VERSION }}_RTTI_on
-        RELEASE_FILE_NAME_STUB_AND_DIR=${{ env.RELEASE_ZIP_FILES_DIR }}\%RELEASE_FILE_NAME%
-        cd output\${{ env.CONFIGURATION }}
+        RELEASE_FILE_NAME_STUB_AND_DIR=${{ env.RELEASE_ZIP_FILES_DIR }}/%RELEASE_FILE_NAME%
+        BUILD_CONFIG=${{ env.CONFIGURATION }}
+
+        cd output/${BUILD_CONFIG,R}
         tar -acf $RELEASE_FILE_NAME_STUB_AND_DIR.zip *
         tar -cjf $RELEASE_FILE_NAME_STUB_AND_DIR.tar.bz2 *
 
