@@ -10,11 +10,7 @@ on:
 env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: sDNA\sdna_vs2008\sdna_vs2008.sln
-
-  # Configuration type to build.
   BUILD_CONFIGURATION: Release
-  BOOST_URL: "https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/"
-  BOOST_FILE: "boost_1_72_0" 
 
 jobs:
   compile:
@@ -23,77 +19,31 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # Slightly adapted from https://github.com/libgeos/geos/blob/main/.github/workflows/ci.yml
-    # - name: 'Setup'
-    #   run: choco install ccache
 
 
 
     - name: 'Add "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" to path'
       shell: bash
       run: echo "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" >> $GITHUB_PATH
-    # - name: Configure nmake
-    #   uses: ilammy/msvc-dev-cmd@v1
-    #   # https://github.com/marketplace/actions/enable-developer-command-prompt
+
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Integrate vcpkg with Visual Studio
       run: vcpkg integrate install
 
-    # - name: Install boost
-    #   run: >
-    #     vcpkg install 
-    #     boost-iterator
-    #     boost-type-traits
-    #     boost-mpl
-    #     boost-foreach
-    #     boost-utility
-    #     boost-static-assert
-    #     boost-smart-ptr
-    #     boost-lexical-cast
-    #     boost-pool
-    #     boost-numeric-conversion
-    #     boost-variant
-    #     boost-bimap
-    #     boost-math
-    #     boost-algorithm
-    #     boost-thread
-    #     boost-geometry
-    #     boost-random
-    #   # https://vcpkg.io/en/packages
 
-    # - name: Install Geos
-    #   run: vcpkg install geos
-
-    - name: Cache Deps
+    - name: Restore Cached Deps
       id: cache-deps-restore
       uses: actions/cache/restore@v3
       with:
         path: |
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-        # sDNA\geos\x64
-        # sDNA\geos\x86
           
-        key: ${{ runner.os }}-boost-v${{ env.BOOST_FILE }}-${{ hashFiles('vcpkg.json') }}
-
-
-
-    # - name: Download Boost
-    #   if: steps.cache-deps.outputs.cache-hit != 'true'
-    #   shell: cmd
-    #   run: |
-    #     mkdir C:\Program Files\Boost\64\boost_1_55_0\
-    #     cd C:\Program Files\Boost\64\
-    #     curl -L -o ${{ env.BOOST_FILE }}.zip ${{ env.BOOST_URL }}${{ env.BOOST_FILE }}.zip
-    #     tar -xf ${{ env.BOOST_FILE }}.zip
-    #     mv .\${{ env.BOOST_FILE }} .\boost_1_55_0
-      # Renaming an env-versioned download to one of a different version is a terrible awful hack,
-      # but I want to change the sDNA config and source as little as possible until I know it actually compiles
+        key: ${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
 
 
     - name: Install Geos and Boost from vcpkg.json
-      if: steps.cache-deps-restore.outputs.cache-hit != 'true'
       run: vcpkg install
 
  
@@ -103,8 +53,6 @@ jobs:
       with:
         path: |
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-        # sDNA\geos\x64
-        # sDNA\geos\x86
           
         key: ${{ steps.cache-deps-restore.outputs.cache-primary-key }}
 
