@@ -4,7 +4,7 @@
           "name": "geos", "version": "3.11.2"
         },
         {
-          "name": "boost-chrono ", "version": "1.72.0"
+          "name": "boost-chrono", "version": "1.72.0"
         },
         {
           "name": "boost-date-time", "version": "1.72.0"
