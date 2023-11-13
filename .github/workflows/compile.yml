@@ -14,9 +14,7 @@ env:
   PLATFORM: x64
   OSGEO4W_GEOS_URL: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos
   GEOS_VERSION: '3.12.0-1'
-  GEOS_DOWNLOAD_DIR: ${{ runner.temp }}/geos
   RELEASE: '6.0.1'
-  RELEASE_ZIP_FILES_DIR: ${{ runner.temp }}/release_files
   BOOST_VERSION: '1.8.3'
 
 jobs:
@@ -53,8 +51,10 @@ jobs:
       shell: bash
       run: |
         GEOS_FILE=geos-${{ env.GEOS_VERSION }}.tar.bz2
-        mkdir ${{ env.GEOS_DOWNLOAD_DIR }}
-        cd ${{ env.GEOS_DOWNLOAD_DIR }}
+        GEOS_DOWNLOAD_DIR=${{ runner.temp }}/geos
+
+        mkdir $GEOS_DOWNLOAD_DIR
+        cd $GEOS_DOWNLOAD_DIR
         curl -L -o $GEOS_FILE ${{ env.OSGEO4W_GEOS_URL }}/$GEOS_FILE
         tar -xf $GEOS_FILE
         BUILD_CONFIG=${{ env.CONFIGURATION }}
@@ -111,9 +111,9 @@ jobs:
     - name: Package sDNA
       shell: bash
       run: |
-        mkdir -p ${{ env.RELEASE_ZIP_FILES_DIR }}
+        mkdir -p release_zip_files_dir
         RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v${{ env.GEOS_VERSION }}_Boost_v${{ env.BOOST_VERSION }}_RTTI_on
-        RELEASE_FILE_NAME_STUB_AND_DIR=${{ env.RELEASE_ZIP_FILES_DIR }}/%RELEASE_FILE_NAME%
+        RELEASE_FILE_NAME_STUB_AND_DIR=release_zip_files_dir/$RELEASE_FILE_NAME
         BUILD_CONFIG=${{ env.CONFIGURATION }}
 
         cd output/${BUILD_CONFIG,R}
@@ -125,6 +125,6 @@ jobs:
       with:
         name: sdna_plus_output
         # path: output/release
-        path: ${{ env.RELEASE_ZIP_FILES_DIR }}
+        path: release_zip_files_dir
 
 
