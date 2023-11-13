@@ -109,18 +109,11 @@ jobs:
     #     /p:VcpkgEnableManifest=true
 
     - name: Package sDNA
-      shell: bash
+      shell: cmd
       run: |
-        mkdir -p release_zip_files_dir
-        RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v${{ env.GEOS_VERSION }}_Boost_v${{ env.BOOST_VERSION }}_RTTI_on
-        RELEASE_FILE_NAME_STUB_AND_DIR=release_zip_files_dir/$RELEASE_FILE_NAME
-        BUILD_CONFIG=${{ env.CONFIGURATION }}
-
-        DIR_TO_ZIP=output/${BUILD_CONFIG,R}
-        touch test.txt
-        touch tyfwefw.rt
-        tar -caf $RELEASE_FILE_NAME_STUB_AND_DIR.zip DIR_TO_ZIP/**/*
-        tar -caf $RELEASE_FILE_NAME_STUB_AND_DIR.tar.bz2 DIR_TO_ZIP/**/*
+        mkdir release_zip_files_dir
+        cd release_zip_files_dir
+        ..\package_release.bat
 
     - name: upload output dir
       uses: actions/upload-artifact@v3
