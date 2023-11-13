@@ -55,12 +55,10 @@ jobs:
     - name: Download and unzip Geos binary from OSGEO
       shell: bash
       run: |
-        set GEOS_FILE=geos-${{ env.GEOS_VERSION }}.tar.bz2
+        GEOS_FILE=geos-${{ env.GEOS_VERSION }}.tar.bz2
         mkdir ${{ env.GEOS_DOWNLOAD_DIR }}
         cd ${{ env.GEOS_DOWNLOAD_DIR }}
-        set URL=${{ env.OSGEO4W_GEOS_URL }}/$GEOS_FILE
-        echo $URL
-        curl -L -o $GEOS_FILE $URL
+        curl -L -o ${{ env.OSGEO4W_GEOS_URL }}/$GEOS_FILE
         tar -xf $GEOS_FILE
       #  move bin\geos_c.dll ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
 
