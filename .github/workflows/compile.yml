@@ -11,6 +11,9 @@ env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: sDNA\sdna_vs2008\sdna_vs2008.sln
   BUILD_CONFIGURATION: Release
+  OSGEO4W_GEOS_URL: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos
+  GEOS_BINARY_ARCHIVE: geos-3.12.0-1.tar.bz2
+  GEOS_DOWNLOAD_DIR: '%TMP%\geos'
 
 jobs:
   compile:
@@ -43,6 +46,15 @@ jobs:
 
     - name: Install Boost from vcpkg.json
       run: vcpkg install
+
+    - name: Download and unzip Geos binary from OSGEO
+      shell: cmd
+      run: |
+        mkdir ${{ env.GEOS_DOWNLOAD_DIR }}
+        set GEOS_ARCHIVE=${{ env.GEOS_DOWNLOAD_DIR }}\${{ env.GEOS_BINARY_ARCHIVE }}
+        curl -L -o %GEOS_ARCHIVE% ${{ env.OSGEO4W_GEOS_URL }}/${{ env.GEOS_BINARY_ARCHIVE }}
+        tar -xf %GEOS_ARCHIVE%
+        move ${{ env.GEOS_DOWNLOAD_DIR }}\bin\geos_c.dll output\release\x64
 
     - name: Cache Deps
       if: steps.cache-deps-restore.outputs.cache-hit != 'true'
