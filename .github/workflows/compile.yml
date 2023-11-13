@@ -61,7 +61,7 @@ jobs:
       with:
         path: |
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-        key: ${{ steps.cache-deps-restore.outputs.cache-primary-key }}
+        key: ${{ steps.cache-vcpkg-deps-restore.outputs.cache-primary-key }}
 
     - name: Restore Cache'd Geos binary
       id: cache-geos-restore
