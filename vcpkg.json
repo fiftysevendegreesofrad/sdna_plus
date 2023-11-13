@@ -1,5 +1,4 @@
 {   "dependencies" : [
-          "geos",
           "boost-algorithm", 
           "boost-bimap", 
           "boost-chrono", 

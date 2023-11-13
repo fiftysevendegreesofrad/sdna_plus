@@ -39,21 +39,18 @@ jobs:
       with:
         path: |
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-          
         key: ${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
 
-
-    - name: Install Geos and Boost from vcpkg.json
+    - name: Install Boost from vcpkg.json
       run: vcpkg install
 
- 
     - name: Cache Deps
+      if: steps.cache-deps-restore.outputs.cache-hit != 'true'
       id: cache-deps-save
       uses: actions/cache/save@v3
       with:
         path: |
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-          
         key: ${{ steps.cache-deps-restore.outputs.cache-primary-key }}
 
     - name: Build sDNA
