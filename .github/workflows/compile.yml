@@ -40,29 +40,6 @@ jobs:
       run: vcpkg integrate install
 
 
-    - name: Restore vcpkg Deps
-      id: cache-vcpkg-deps-restore
-      uses: actions/cache/restore@v3
-      with:
-        path: |
-          D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-        key: ${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
-
-    # Let vcpkg do its thing with the cache and don't skip this step
-    # is there is a cache hit - vcpkg will detect pre existing files.
-    - name: Install Boost from vcpkg.json
-      run: vcpkg install
-
-
-    - name: Cache vcpkg Deps
-      if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
-      id: cache-deps-save
-      uses: actions/cache/save@v3
-      with:
-        path: |
-          D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-        key: ${{ steps.cache-vcpkg-deps-restore.outputs.cache-primary-key }}
-
     - name: Restore Cache'd Geos binary
       id: cache-geos-restore
       uses: actions/cache/restore@v3
@@ -94,6 +71,30 @@ jobs:
         path: |
           ${{ github.workspace }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}\geos_c.dll
         key: ${{ steps.cache-geos-restore.outputs.cache-primary-key }}
+        
+    - name: Restore vcpkg Deps
+      id: cache-vcpkg-deps-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: |
+          D:\a\sdna_plus\sdna_plus\vcpkg_installed\
+        key: ${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
+
+    # Let vcpkg do its thing with the cache and don't skip this step
+    # is there is a cache hit - vcpkg will detect pre existing files.
+    - name: Install Boost from vcpkg.json
+      run: vcpkg install
+
+
+    - name: Cache vcpkg Deps
+      if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
+      id: cache-deps-save
+      uses: actions/cache/save@v3
+      with:
+        path: |
+          D:\a\sdna_plus\sdna_plus\vcpkg_installed\
+        key: ${{ steps.cache-vcpkg-deps-restore.outputs.cache-primary-key }}
+
 
     - name: Build sDNA
       working-directory: ${{ github.workspace }}
