@@ -49,8 +49,8 @@ jobs:
           ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
         key: ${{ runner.os }}-geos_v${{ env.GEOS_VERSION }}-${{ hashFiles('vcpkg.json') }}
 
-    - name: Install Boost from vcpkg.json
-      run: vcpkg install
+    # - name: Install Boost from vcpkg.json
+    #   run: vcpkg install
 
     - name: Download and unzip Geos binary from OSGEO
       shell: cmd
@@ -58,7 +58,9 @@ jobs:
         set GEOS_FILE=geos-${{ env.GEOS_VERSION }}.tar.bz2
         mkdir ${{ env.GEOS_DOWNLOAD_DIR }}
         cd ${{ env.GEOS_DOWNLOAD_DIR }}
-        curl -L -o %GEOS_FILE% ${{ env.OSGEO4W_GEOS_URL }}/%GEOS_FILE%
+        set URL=${{ env.OSGEO4W_GEOS_URL }}/%GEOS_FILE%
+        echo %URL$
+        curl -L -o %GEOS_FILE% %URL%
         tar -xf %GEOS_FILE%
         move bin\geos_c.dll ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
 
@@ -72,31 +74,31 @@ jobs:
           ${{ env.GITHUB_WORKSPACE }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}
         key: ${{ steps.cache-deps-restore.outputs.cache-primary-key }}
 
-    - name: Build sDNA
-      working-directory: ${{ env.GITHUB_WORKSPACE }}
-      # run: msbuild /m  /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
-      run: > 
-        msbuild build_installer.proj 
-        /t:rebuild 
-        /p:Platform=${{ env.PLATFORM }}  
-        /p:Configuration=${{ env.CONFIGURATION }} 
-        /p:VcpkgEnableManifest=true
+    # - name: Build sDNA
+    #   working-directory: ${{ env.GITHUB_WORKSPACE }}
+    #   # run: msbuild /m  /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
+    #   run: > 
+    #     msbuild build_installer.proj 
+    #     /t:rebuild 
+    #     /p:Platform=${{ env.PLATFORM }}  
+    #     /p:Configuration=${{ env.CONFIGURATION }} 
+    #     /p:VcpkgEnableManifest=true
 
-    - name: Package sDNA
-      shell: cmd
-      run: |
-        mkdir ${{ env.RELEASE_ZIP_FILES_DIR }}
-        set RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v{{ env.GEOS_VERSION }}_Boost_v{{ env.BOOST_VERSION }}_RTTI_on
-        set RELEASE_FILE_NAME_STUB_AND_DIR=${{ env.RELEASE_ZIP_FILES_DIR }}\%RELEASE_FILE_NAME%
-        cd output\${{ env.CONFIGURATION }}
-        tar -acf %RELEASE_FILE_NAME_STUB_AND_DIR%.zip *
-        tar -cjf %RELEASE_FILE_NAME_STUB_AND_DIR%.tar.bz2 *
+    # - name: Package sDNA
+    #   shell: cmd
+    #   run: |
+    #     mkdir ${{ env.RELEASE_ZIP_FILES_DIR }}
+    #     set RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v{{ env.GEOS_VERSION }}_Boost_v{{ env.BOOST_VERSION }}_RTTI_on
+    #     set RELEASE_FILE_NAME_STUB_AND_DIR=${{ env.RELEASE_ZIP_FILES_DIR }}\%RELEASE_FILE_NAME%
+    #     cd output\${{ env.CONFIGURATION }}
+    #     tar -acf %RELEASE_FILE_NAME_STUB_AND_DIR%.zip *
+    #     tar -cjf %RELEASE_FILE_NAME_STUB_AND_DIR%.tar.bz2 *
 
-    - name: upload output dir
-      uses: actions/upload-artifact@v3
-      with:
-        name: sdna_plus_output
-        # path: output/release
-        path: ${{ env.RELEASE_ZIP_FILES_DIR }}
+    # - name: upload output dir
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: sdna_plus_output
+    #     # path: output/release
+    #     path: ${{ env.RELEASE_ZIP_FILES_DIR }}
 
 
