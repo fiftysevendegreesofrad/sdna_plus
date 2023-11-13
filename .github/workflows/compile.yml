@@ -71,7 +71,7 @@ jobs:
         path: |
           ${{ github.workspace }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}\geos_c.dll
         key: ${{ steps.cache-geos-restore.outputs.cache-primary-key }}
-        
+
     - name: Restore vcpkg Deps
       id: cache-vcpkg-deps-restore
       uses: actions/cache/restore@v3
@@ -110,7 +110,7 @@ jobs:
       shell: bash
       run: |
         mkdir ${{ env.RELEASE_ZIP_FILES_DIR }}
-        RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v{{ env.GEOS_VERSION }}_Boost_v{{ env.BOOST_VERSION }}_RTTI_on
+        RELEASE_FILE_NAME=sDNA_lite_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v${{ env.GEOS_VERSION }}_Boost_v${{ env.BOOST_VERSION }}_RTTI_on
         RELEASE_FILE_NAME_STUB_AND_DIR=${{ env.RELEASE_ZIP_FILES_DIR }}\%RELEASE_FILE_NAME%
         cd output\${{ env.CONFIGURATION }}
         tar -acf $RELEASE_FILE_NAME_STUB_AND_DIR.zip *
