@@ -1,11 +1,11 @@
-name: "Compile with MSBuild for Windows"
+name: "Compile with MSBuild and VS 2022 for Windows"
 
 on:
   workflow_dispatch:
   push:
-    branches: [ "VS_2022_x64_release_config_only" ]
-  # pull_request:
-  #   branches: [ "main" ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 env:
   # Path to the solution file relative to the root of the project.
