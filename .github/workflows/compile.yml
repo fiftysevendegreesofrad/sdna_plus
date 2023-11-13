@@ -119,8 +119,8 @@ jobs:
         cd output/${BUILD_CONFIG,R}
         touch test.txt
         touch tyfwefw.rt
-        tar -caf $RELEASE_FILE_NAME_STUB_AND_DIR.zip *
-        tar -cjf $RELEASE_FILE_NAME_STUB_AND_DIR.tar.bz2 *
+        tar --create -a --file=$RELEASE_FILE_NAME_STUB_AND_DIR.zip **/*
+        tar --create -j --file=$RELEASE_FILE_NAME_STUB_AND_DIR.tar.bz2 **/*
 
     - name: upload output dir
       uses: actions/upload-artifact@v3
