@@ -12,7 +12,9 @@ Copyright rests with Cardiff University and the code is released under GPL versi
 
 ### Installation
 
-Builds are not currently available - we are working on it.
+Builds under VS 2015 not available:
+
+
 
 In the interim you can download the old sDNA software from the [sDNA website](https://sdna.cardiff.ac.uk/sdna/). This requires a free serial number, also available on the website. Note that free serial numbers now unlock ALL features including the previously proprietary sDNA+ features.
 
@@ -46,16 +48,18 @@ If filing a bug, please file to the database here on github.
 
 Build requirements:
 
-* Microsoft Visual C++ professional 2008
-* Python 2.7
-* Sphinx
-* Advanced Installer
-* Boost C++ libraries version 1.55
-* Autocad (only if wanting to modify the Autocad interface)
+* [Microsoft Visual C++ professional 2015](https://my.visualstudio.com/Downloads?q=%22Visual%20Studio%20Professional%202015%22)  
+* Boost C++ libraries [version 1.83 (MSVC 14.0)](https://sourceforge.net/projects/boost/files/boost-binaries/1.83.0/boost_1_83_0-msvc-14.0-64.exe/download)
 
-First build the geos library using `sDNA\geos\build.bat`. After that, `build_release.bat` in project root does what it says on the tin.
+First download [geos 3.11.2](https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos/geos-3.11.2-1.tar.bz2) ([source code](https://download.osgeo.org/geos/geos-3.11.2.tar.bz2) ).  
 
-The Autocad components are not rebuilt automatically. If editing the Lisp files, you will need to use the Autocad Lisp editor to rebuild the `sdna.prv` Lisp project.
+Run .\build_release.bat
+
+Extract or open the geos archive, copy geos_c.dll, and (as professionally as possible) paste it  in `\output\release\x64` (next to `sdna_vs2008.dll`)
+
+Cd into the `\bin` folder and run the python entry scripts to run.
+
+To package for release: add everything in `\output\release` to a .zip archive.
 
 ### Project Structure
 

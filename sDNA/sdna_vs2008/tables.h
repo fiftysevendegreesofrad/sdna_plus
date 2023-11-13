@@ -182,7 +182,7 @@ template <class T> class Table
 	typedef map<string, T> MAPTYPE;
 	EmergencyMemory emergencyMemory;
 	string name_s,zonefieldname_s;
-	shared_ptr<NetExpectedDataSource<string> > zonefieldname_das;
+	boost::shared_ptr<NetExpectedDataSource<string> > zonefieldname_das;
 	SDNAPolylineIdIndexedArray<size_t> zonetableindex;
 	set<string> zoneset;
 	MAPTYPE zone_to_data;
@@ -283,7 +283,7 @@ public:
 	{
 		zonetableindex.initialize(n);
 	}
-	void setNameDas(shared_ptr<NetExpectedDataSource<string> > das)
+	void setNameDas(boost::shared_ptr<NetExpectedDataSource<string> > das)
 	{
 		zonefieldname_das = das;
 	}
