@@ -14,7 +14,7 @@ env:
   # Configuration type to build.
   BUILD_CONFIGURATION: Release
   BOOST_URL: "https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/"
-  BOOST_FILE: "boost_1_82_0" 
+  BOOST_FILE: "boost_1_72_0" 
 
 jobs:
   compile:
@@ -72,30 +72,30 @@ jobs:
       with:
         path: |
           C:\vcpkg\packages\
-          sDNA\geos\x64
-          sDNA\geos\x86
+        # sDNA\geos\x64
+        # sDNA\geos\x86
           
         key: ${{ runner.os }}-boost-v${{ env.BOOST_FILE }}
         # --${{ hashFiles('vcpkg.json') }}
 
 
 
-    - name: Download Boost
-      if: steps.cache-deps.outputs.cache-hit != 'true'
-      shell: cmd
-      run: |
-        mkdir C:\Program Files\Boost\64\boost_1_55_0\
-        cd C:\Program Files\Boost\64\
-        curl -L -o ${{ env.BOOST_FILE }}.zip ${{ env.BOOST_URL }}${{ env.BOOST_FILE }}.zip
-        tar -xf ${{ env.BOOST_FILE }}.zip
-        mv .\${{ env.BOOST_FILE }} .\boost_1_55_0
+    # - name: Download Boost
+    #   if: steps.cache-deps.outputs.cache-hit != 'true'
+    #   shell: cmd
+    #   run: |
+    #     mkdir C:\Program Files\Boost\64\boost_1_55_0\
+    #     cd C:\Program Files\Boost\64\
+    #     curl -L -o ${{ env.BOOST_FILE }}.zip ${{ env.BOOST_URL }}${{ env.BOOST_FILE }}.zip
+    #     tar -xf ${{ env.BOOST_FILE }}.zip
+    #     mv .\${{ env.BOOST_FILE }} .\boost_1_55_0
       # Renaming an env-versioned download to one of a different version is a terrible awful hack,
       # but I want to change the sDNA config and source as little as possible until I know it actually compiles
 
 
-    # - name: Install Geos etc. from vcpkg.json
-    #   if: steps.cache-deps.outputs.cache-hit != 'true'
-    #   run: vcpkg install
+    - name: Install Geos and Boost from vcpkg.json
+      if: steps.cache-deps.outputs.cache-hit != 'true'
+      run: vcpkg install
 
  
     - name: Cache Deps
@@ -104,14 +104,14 @@ jobs:
       with:
         path: |
           C:\vcpkg\packages\
-          sDNA\geos\x64
-          sDNA\geos\x86
+        # sDNA\geos\x64
+        # sDNA\geos\x86
           
         key: ${{ steps.cache-deps-restore.outputs.cache-primary-key }}
 
     - name: Build sDNA
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild /m /p:Platform=Release /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:VcpkgEnableManifest=true ${{env.SOLUTION_FILE_PATH}}
 
     - name: upload output dir
       uses: actions/upload-artifact@v3
