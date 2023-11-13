@@ -3,7 +3,8 @@ name: "Compile with MSBuild and VS 2022 for Windows"
 on:
   workflow_dispatch:
   push:
-    branches: [ "VS_2022_x64_release_config_only" ]
+    branches: [ "main" ]
+
   # pull_request:
   #   branches: [ "main" ]
 
@@ -16,6 +17,7 @@ env:
   GEOS_VERSION: '3.12.0-1'
   RELEASE: '6.0.1'
   BOOST_VERSION: '1.8.3'
+
 
 jobs:
   compile:
