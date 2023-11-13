@@ -117,8 +117,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: sdna_plus_output
-        path: output/
-        retention-days: 5
-
+        path: output/release
 
 
