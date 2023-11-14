@@ -6,7 +6,7 @@ venv/
 *.sdf
 *.db
 UpgradeLog*.htm
-**/.vs/*
+*/.vs/*
 *.sln.cache
 Backup
 Backup1
@@ -14,5 +14,8 @@ Backup1
 .vscode
 vcpkg_installed
 sDNA/sdna_vs2008/x64/Release
-output/release/x64/sdna_vs2008.dll
 sDNA/sdna_vs2008/sdna_vs2008.vcxproj.user
+output/**/*.dll
+output/**/*.py
+output/**/README.txt
+bin/*
