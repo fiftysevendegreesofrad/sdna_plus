@@ -67,7 +67,7 @@ inline polarity reverse_polarity(polarity p)
 struct OutgoingConnection;
 typedef vector<OutgoingConnection > OutgoingConnectionVector;
 struct CandidateEdge;
-typedef vector<const CandidateEdge> CandidateEdgeVector;
+typedef vector<CandidateEdge> CandidateEdgeVector;
 typedef IteratorTypeErasure::any_iterator<TraversalEvent,random_access_iterator_tag> TraversalEventIterator;
 
 typedef vector<Point > PointVector;
