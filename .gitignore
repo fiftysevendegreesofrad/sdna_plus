@@ -2,3 +2,13 @@
 __pycache__/
 venv/
 *.pyc
+*.ncb
+*.sdf
+*.db
+UpgradeLog*.htm
+**/.vs/*
+*.sln.cache
+Backup
+Backup1
+.vs
+.vscode
