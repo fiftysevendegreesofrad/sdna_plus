@@ -18,4 +18,3 @@ sDNA/sdna_vs2008/sdna_vs2008.vcxproj.user
 output/**/*.dll
 output/**/*.py
 output/**/README.txt
-bin/*
