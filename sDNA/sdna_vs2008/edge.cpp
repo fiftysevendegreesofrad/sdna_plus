@@ -304,7 +304,7 @@ void Edge::print() const
 	for (OutgoingConnectionVector::const_iterator it = outgoing_connections.begin(); it!=outgoing_connections.end(); ++it)
 	{
 		std::cout << (*it).edge->id.id;
-		std::cout << "(�ang" << (*it).turn_angle << ") ";
+		std::cout << "(ang" << (*it).turn_angle << ") ";
 	}
 	std::cout << endl;
 }
