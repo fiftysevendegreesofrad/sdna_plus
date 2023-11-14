@@ -53,10 +53,6 @@ jobs:
       shell: bash
       run: |
         GEOS_FILE=geos-${{ env.GEOS_VERSION }}.tar.bz2
-        GEOS_DOWNLOAD_DIR=${{ runner.temp }}/geos
-
-        mkdir $GEOS_DOWNLOAD_DIR
-        cd $GEOS_DOWNLOAD_DIR
         curl -L -o $GEOS_FILE ${{ env.OSGEO4W_GEOS_URL }}/$GEOS_FILE
         tar -xf $GEOS_FILE
         BUILD_CONFIG=${{ env.CONFIGURATION }}
