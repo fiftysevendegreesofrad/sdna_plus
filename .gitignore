@@ -12,3 +12,7 @@ Backup
 Backup1
 .vs
 .vscode
+vcpkg_installed
+sDNA/sdna_vs2008/x64/Release
+output/release/x64/sdna_vs2008.dll
+sDNA/sdna_vs2008/sdna_vs2008.vcxproj.user
