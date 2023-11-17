@@ -249,7 +249,7 @@ SDNA_API void __stdcall geom_iterator_destroy(sDNAGeometryCollectionIteratorBase
 SDNA_API Calculation* __stdcall calc_create(char *name, char *config, Net *net,
 									  int (__cdecl *set_progressor_callback)(float),
 									  int (__cdecl *print_warning_callback)(const char*),
-									  vector<shared_ptr<Table<float>>>* tables1d)
+									  vector<boost::shared_ptr<Table<float>>>* tables1d)
 {
 	try
 	{
@@ -272,9 +272,9 @@ SDNA_API Table2d* __stdcall table2d_create(char *name,char *origzonefieldname,ch
 SDNA_API int __stdcall table_addrow(Table<float> *t,char *zone,float data) { return t->addrow(zone,data);}
 SDNA_API int __stdcall table2d_addrow(Table2d *t,char *fromzone,char *tozone,float data) { return t->addrow(fromzone,tozone,data);}
 
-SDNA_API vector<shared_ptr<Table<float>>>* __stdcall table_collection_create() { return new vector<shared_ptr<Table<float>>>(); }
-SDNA_API int __stdcall table_collection_add_table(vector<shared_ptr<Table<float>>>* collection,Table<float>* table)
+SDNA_API vector<boost::shared_ptr<Table<float>>>* __stdcall table_collection_create() { return new vector<boost::shared_ptr<Table<float>>>(); }
+SDNA_API int __stdcall table_collection_add_table(vector<boost::shared_ptr<Table<float>>>* collection,Table<float>* table)
 {
-	collection->push_back(shared_ptr<Table<float>>(table));
+	collection->push_back(boost::shared_ptr<Table<float>>(table));
 	return 0;
 }

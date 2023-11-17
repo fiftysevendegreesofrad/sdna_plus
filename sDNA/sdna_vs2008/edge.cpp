@@ -304,7 +304,7 @@ void Edge::print() const
 	for (OutgoingConnectionVector::const_iterator it = outgoing_connections.begin(); it!=outgoing_connections.end(); ++it)
 	{
 		std::cout << (*it).edge->id.id;
-		std::cout << "(€ang" << (*it).turn_angle << ") ";
+		std::cout << "(ang" << (*it).turn_angle << ") ";
 	}
 	std::cout << endl;
 }
@@ -702,7 +702,7 @@ void TraversalEventContainer::add_centre(traversal_event_type tetype)
 	//otherwise, traverse vector twice to find centre
 	else
 	{
-		shared_ptr<MetricEvaluator> me = MetricEvaluator::from_event_type(tetype);
+		boost::shared_ptr<MetricEvaluator> me = MetricEvaluator::from_event_type(tetype);
 
 		//NULL here is safe as our evaluator should not be a kind that accesses it
 		float half_cost = me->evaluate_edge(full_cost_ignoring_oneway(PLUS),NULL) / 2;

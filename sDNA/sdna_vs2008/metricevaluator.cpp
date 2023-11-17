@@ -70,7 +70,7 @@ float* HybridMetricEvaluator::variablefactory(const char* name)
 		if (name[0]!='_')
 		{
 			//get data from network, zone table or zone sum - we don't know which yet
-			shared_ptr<DataExpectedByExpression> d(new DataExpectedByExpression(name,net,calc));
+			boost::shared_ptr<DataExpectedByExpression> d(new DataExpectedByExpression(name,net,calc));
 			lvs = LinkVariableSource(name,d);
 		}
 		else
@@ -126,7 +126,7 @@ float* HybridMetricEvaluator::juncvariablefactory(const char* name_cstr)
 			else
 				throw mu::Parser::exception_type(junc_parse_error);
 
-			shared_ptr<NetExpectedDataSource<float>> d;
+			boost::shared_ptr<NetExpectedDataSource<float>> d;
 			d.reset(new NetExpectedDataSource<float>(dataname,net,calc->print_warning_callback));
 			jvs = JuncVariableSource(name,which,d);
 			calc->add_expected_data(&*d);
@@ -394,9 +394,9 @@ float HybridMetricEvaluator::evaluate_junction(float turn_angle,const Edge * con
 	return retval;
 }
 
-shared_ptr<MetricEvaluator> MetricEvaluator::from_event_type(traversal_event_type t)
+boost::shared_ptr<MetricEvaluator> MetricEvaluator::from_event_type(traversal_event_type t)
 {
-	shared_ptr<MetricEvaluator> result;
+	boost::shared_ptr<MetricEvaluator> result;
 	switch (t)
 	{
 	case ANGULAR_TE:
@@ -455,7 +455,7 @@ DataExpectedByExpression::DataExpectedByExpression(string name,Net *net,SDNAInte
 		}
 		if (datasource!=ZONESUM)
 		{
-			BOOST_FOREACH(shared_ptr<Table<float> > zdt,calculation->zonedatatables)
+			BOOST_FOREACH(boost::shared_ptr<Table<float> > zdt,calculation->zonedatatables)
 			{
 				if (zdt->name()==name)
 				{

@@ -110,9 +110,9 @@ void PrepareOperation::fix_split_link(JunctionMapKey &key,float gradesep)
 	//move over data
 	for (vector<LengthWeightingStrategy>::iterator it=datatokeep.begin();it!=datatokeep.end();it++)
 	{
-		if (std::find(enforce_identical_numeric_data.begin(),enforce_identical_numeric_data.end(),&*it)!=enforce_identical_numeric_data.end())
-			it->set_data_ignoring_weighting_strategy(newlink,it->get_data_ignoring_weighting_strategy(link1));
-		else
+		// if (std::find(enforce_identical_numeric_data.begin(),enforce_identical_numeric_data.end(),&*it)!=enforce_identical_numeric_data.end())
+		// 	it->set_data_ignoring_weighting_strategy(newlink,it->get_data_ignoring_weighting_strategy(link1));
+		// else
 			it->set_data(newlink,it->get_data(link1)+it->get_data(link2));
 	}
 	for (vector<NetExpectedDataSource<string>>::iterator it=textdatatokeep.begin();it!=textdatatokeep.end();it++)
@@ -290,7 +290,7 @@ size_t PrepareOperation::get_subsystems(char **message,long **links)
 	return output_buffer_1.size();
 }
 
-bool compare_vector_size(shared_ptr<vector<SDNAPolyline*> > i,shared_ptr<vector<SDNAPolyline*> > j)
+bool compare_vector_size(boost::shared_ptr<vector<SDNAPolyline*> > i,boost::shared_ptr<vector<SDNAPolyline*> > j)
 {
 	return (i->size() > j->size());
 }
@@ -309,7 +309,7 @@ PrepareOperation::subsystem_group PrepareOperation::get_subsystems()
 	{
 		SDNAPolyline *arbitrary_link = *unreached.begin();
 		unreached.erase(unreached.begin());
-		shared_ptr<vector<SDNAPolyline*> > reached = flood_fill(unreached,arbitrary_link);
+		boost::shared_ptr<vector<SDNAPolyline*> > reached = flood_fill(unreached,arbitrary_link);
 		subsystems.push_back(reached);
 	}
 
@@ -332,12 +332,12 @@ size_t PrepareOperation::fix_subsystems()
 	return subsystems.size()-1;
 }
 
-shared_ptr<vector<SDNAPolyline*> > PrepareOperation::flood_fill(set<SDNAPolyline*> &unreached,SDNAPolyline *start_link)
+boost::shared_ptr<vector<SDNAPolyline*> > PrepareOperation::flood_fill(set<SDNAPolyline*> &unreached,SDNAPolyline *start_link)
 {
 	assert(unreached.count(start_link)==0); //starting link not in unreached
 	assert(net->net_is_built);
 	
-	shared_ptr<vector<SDNAPolyline*> > reached(new vector<SDNAPolyline*>());
+	boost::shared_ptr<vector<SDNAPolyline*> > reached(new vector<SDNAPolyline*>());
 	reached->push_back(start_link);
 
 	vector<SDNAPolyline*> to_explore;

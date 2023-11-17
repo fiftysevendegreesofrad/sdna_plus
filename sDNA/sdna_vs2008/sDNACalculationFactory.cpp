@@ -5,7 +5,7 @@
 Calculation* sDNACalculationFactory(char *name_cstr, char *config, Net *net,
 									  int (__cdecl *set_progressor_callback)(float),
 									  int (__cdecl *print_warning_callback)(const char*),
-									  vector<shared_ptr<Table<float>>>* tables1d)
+									  vector<boost::shared_ptr<Table<float>>>* tables1d)
 {
 	string name(name_cstr);
 	to_lower(name);

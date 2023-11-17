@@ -47,7 +47,7 @@ SDNA_API void __stdcall net_iterator_destroy(NetIterator *it);
 SDNA_API Calculation* __stdcall calc_create(char *name, char *config, Net *net,
 									  int (__cdecl *set_progressor_callback)(float),
 									  int (__cdecl *print_warning_callback)(const char*),
-									  vector<shared_ptr<Table<float>>>* tables1d=NULL);
+									  vector<boost::shared_ptr<Table<float>>>* tables1d=NULL);
 
 //deprecated, kept for autocad, use factory method now (calc_create)
 SDNA_API SDNAIntegralCalculation* __stdcall integral_calc_create(Net *n, char *config,
@@ -105,8 +105,8 @@ SDNA_API Table2d* __stdcall table2d_create(char *name,char *origfieldname,char *
 SDNA_API int __stdcall table_addrow(Table<float> *t,char *zone,float data);
 SDNA_API int __stdcall table2d_addrow(Table2d *t,char *fromzone,char *tozone,float data);
 
-SDNA_API vector<shared_ptr<Table<float>>>* __stdcall table_collection_create();
-SDNA_API int __stdcall table_collection_add_table(vector<shared_ptr<Table<float>>>*,Table<float>*); //assumes ownership (and calc will take it from there)
+SDNA_API vector<boost::shared_ptr<Table<float>>>* __stdcall table_collection_create();
+SDNA_API int __stdcall table_collection_add_table(vector<boost::shared_ptr<Table<float>>>*,Table<float>*); //assumes ownership (and calc will take it from there)
 
 SDNA_API void __stdcall run_unit_tests();
 

@@ -36,7 +36,7 @@ K keys;
 V values;
 };
 
-template<class P> class shared_ptr
+template<class P> class boost::shared_ptr
 {
 P* p;
 };

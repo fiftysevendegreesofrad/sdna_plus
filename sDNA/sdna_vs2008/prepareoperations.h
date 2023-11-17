@@ -28,9 +28,9 @@ private:
 		bool partial_search = false, vector<SDNAPolyline*> &subset = vector<SDNAPolyline*>());
 	hash_t get_link_hash(SDNAPolyline *s);
 	
-	typedef vector<shared_ptr<vector<SDNAPolyline*> > > subsystem_group;
+	typedef vector<boost::shared_ptr<vector<SDNAPolyline*> > > subsystem_group;
 	subsystem_group get_subsystems();
-	shared_ptr<vector<SDNAPolyline*> > flood_fill(set<SDNAPolyline*> &unreached,SDNAPolyline *start_link);
+	boost::shared_ptr<vector<SDNAPolyline*> > flood_fill(set<SDNAPolyline*> &unreached,SDNAPolyline *start_link);
 	
 	//for internally generated links
 	long next_new_arcid;
@@ -165,12 +165,12 @@ private:
 			data.reserve(2);
 			data.push_back(arcid);
 			data.push_back(desc);
-			shared_ptr<sDNADataMultiGeometry> linkdata(
+			boost::shared_ptr<sDNADataMultiGeometry> linkdata(
 				new sDNADataMultiGeometry(
 					POLYLINEZ,
 					data,
 					1));
-			shared_ptr<sDNAGeometryPointsByEdgeLength> link(new sDNAGeometryPointsByEdgeLength());
+			boost::shared_ptr<sDNAGeometryPointsByEdgeLength> link(new sDNAGeometryPointsByEdgeLength());
 			link->add_edge_length_from_start_to_end(&(net->link_container[arcid]->forward_edge),numeric_limits<float>::infinity());
 			linkdata->add_part(link);
 			errors.add(linkdata);

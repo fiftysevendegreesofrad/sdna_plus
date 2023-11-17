@@ -29,9 +29,9 @@ class DataExpectedByExpression //data that an expression expects to appear
 	SDNAIntegralCalculation *calculation;
 	string name;
 
-	shared_ptr<Table<float>> zonedatatable;
-	shared_ptr<Table<long double>> zonesumtable;
-	shared_ptr<NetExpectedDataSource<float>> netdata;
+	boost::shared_ptr<Table<float>> zonedatatable;
+	boost::shared_ptr<Table<long double>> zonesumtable;
+	boost::shared_ptr<NetExpectedDataSource<float>> netdata;
 public:
 
 	DataExpectedByExpression(string name,Net *net,SDNAIntegralCalculation *calculation);
@@ -152,13 +152,13 @@ struct JuncVariableSource
 struct LinkVariableSource
 {
 	//fixme this is very similar to DataExpectedByExpression - perhaps a needless layer of abstraction
-	shared_ptr<DataExpectedByExpression> debe;
+	boost::shared_ptr<DataExpectedByExpression> debe;
 	bool is_temp;
 	bool initialized; //NB this is only false if called with 1st constructor 
 	string varname;
 	LinkVariableSource() : initialized(false) {}
 	LinkVariableSource(string vn) : initialized(true), is_temp(true), varname(vn) {}
-	LinkVariableSource(string vn,shared_ptr<DataExpectedByExpression> debe) : initialized(true), is_temp(false), debe(debe), varname(vn) {}
+	LinkVariableSource(string vn,boost::shared_ptr<DataExpectedByExpression> debe) : initialized(true), is_temp(false), debe(debe), varname(vn) {}
 	float get_link_data(const Edge * const e);
 	string getvarname()
 	{

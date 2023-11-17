@@ -132,7 +132,7 @@ bool SDNAIntegralCalculation::run_internal()
 
 void SDNAIntegralCalculation::initialize_zones()
 {
-	BOOST_FOREACH(shared_ptr<Table<float>> zdt, zonedatatables)
+	BOOST_FOREACH(boost::shared_ptr<Table<float>> zdt, zonedatatables)
 	{
 		zdt->finalize();
 		zdt->initializeItems(net->num_items());
@@ -160,7 +160,7 @@ void SDNAIntegralCalculation::initialize_zones()
 
 	BOOST_FOREACH(ZoneSum& zd, zone_sum_evaluators)
 	{
-		shared_ptr<Table<long double> > zone_sum_table = zd.table;
+		boost::shared_ptr<Table<long double> > zone_sum_table = zd.table;
 		zone_sum_table->setNameDas(zd.zone_das);
 
 		for (SDNAPolylineContainer::iterator it = net->link_container.begin(); it != net->link_container.end(); it++)
@@ -355,7 +355,7 @@ bool SDNAIntegralCalculation::run_internal_throwing_exceptions()
 	MetricEvaluatorCopyableWrapper radial_evaluator_copyable(radial_evaluator_factory);
 
 	bool terminate_early = false;
-	shared_ptr<SDNARuntimeException> inner_loop_exception;
+	boost::shared_ptr<SDNARuntimeException> inner_loop_exception;
 
 	//omp parallel loop.  different threads should stay clear of one another, because they only update
 	//arrays for their own origin link, which is different in each case
@@ -408,7 +408,7 @@ bool SDNAIntegralCalculation::run_internal_throwing_exceptions()
 				const long double sumdist = skim_matrix_sum_distance[skim_orig][skim_dest];
 				const long double weight = skim_matrix_weight[skim_orig][skim_dest];
 				const size_t N = skim_matrix_n[skim_orig][skim_dest];
-				shared_ptr<sDNADataMultiGeometry> skimdata(
+				boost::shared_ptr<sDNADataMultiGeometry> skimdata(
 					new sDNADataMultiGeometry(
 						NO_GEOM,
 						get_skim_data(skim_origins.index_to_zone(skim_orig),
@@ -474,7 +474,7 @@ void SDNAIntegralCalculation::sdna_inner_loop(long origin_link_index,
 			destinations.reserve(destinationsegments.size());
 			
 			//initialize geometry store for convex hull and netradius
-			shared_ptr<sDNADataMultiGeometry> all_edge_segments_in_radius = shared_ptr<sDNADataMultiGeometry>(
+			boost::shared_ptr<sDNADataMultiGeometry> all_edge_segments_in_radius = boost::shared_ptr<sDNADataMultiGeometry>(
 				new sDNADataMultiGeometry(MULTIPOLYLINEZ,get_hull_or_netradius_data(origin->arcid,radii[r],origweightdata.get_data(*origin)),destinationsegments.size()));
 
 			//must be stored here as needed by process_origin and process_destination;
@@ -505,7 +505,7 @@ void SDNAIntegralCalculation::sdna_inner_loop(long origin_link_index,
 	} // end oversample loop
 }
 
-void SDNAIntegralCalculation::process_origin(SDNAPolyline *origin,int r,shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,MetricEvaluator *analysis_evaluator,double& total_weight_this_origin_sample_radius)
+void SDNAIntegralCalculation::process_origin(SDNAPolyline *origin,int r,boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,MetricEvaluator *analysis_evaluator,double& total_weight_this_origin_sample_radius)
 {
 	//the origin link is handled separately, because it is traversed starting in the middle, not at one end
 
@@ -524,7 +524,7 @@ void SDNAIntegralCalculation::process_origin(SDNAPolyline *origin,int r,shared_p
 	const float origin_effective_radius = origin_cont_space?static_cast<float>(radii[r]):numeric_limits<float>::infinity();
 			
 	float length_of_origin_within_radius, cost_of_origin_within_radius;
-	shared_ptr<sDNAGeometryPointsByEdgeLength> origin_geom(new sDNAGeometryPointsByEdgeLength());
+	boost::shared_ptr<sDNAGeometryPointsByEdgeLength> origin_geom(new sDNAGeometryPointsByEdgeLength());
 	
 	const TraversalEventAccumulator origin_fwd_cost = origin->forward_edge.partial_cost_from_middle_ignoring_oneway(origin_effective_radius);
 	const TraversalEventAccumulator origin_bwd_cost = origin->backward_edge.partial_cost_from_middle_ignoring_oneway(origin_effective_radius);
@@ -610,7 +610,7 @@ void SDNAIntegralCalculation::process_origin(SDNAPolyline *origin,int r,shared_p
 		two_stage_dest_popularity.increment(origin,r,two_stage_betweenness_origin_weight);
 		if (output_destinations)
 		{
-			shared_ptr<sDNADataMultiGeometry> orig_as_destinationdata(
+			boost::shared_ptr<sDNADataMultiGeometry> orig_as_destinationdata(
 				new sDNADataMultiGeometry(
 					POLYLINEZ,
 					get_destination_data(origin->arcid,origin->arcid,radii[r],
@@ -620,7 +620,7 @@ void SDNAIntegralCalculation::process_origin(SDNAPolyline *origin,int r,shared_p
 										 (float)(length_of_origin_within_radius / 3.),
 										 (float)origin_crow_flight),
 					 1));
-			shared_ptr<sDNAGeometryPointsByEdgeLength> origasdestination(new sDNAGeometryPointsByEdgeLength());
+			boost::shared_ptr<sDNAGeometryPointsByEdgeLength> origasdestination(new sDNAGeometryPointsByEdgeLength());
 			orig_as_destinationdata->add_part(origin_geom);
 			destinationgeoms.add(orig_as_destinationdata);
 		}
@@ -635,7 +635,7 @@ double SDNAIntegralCalculation::get_geodesic_analytical_cost(DestinationEdgeProc
 void SDNAIntegralCalculation::process_destination(DestinationEdgeProcessingTask &dest,SDNAPolyline *origin_link, 
 											  int r,
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
-											  shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
+											  boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
 											  double& total_weight_this_origin_sample_radius)
 {
 	const float length_of_edge_inside_radius = dest.length_of_edge_inside_radius;
@@ -673,7 +673,7 @@ void SDNAIntegralCalculation::process_destination(DestinationEdgeProcessingTask 
 			" radius " << radius << endl;
 	#endif
 	
-	shared_ptr<sDNAGeometryPointsByEdgeLength> g(new sDNAGeometryPointsByEdgeLength());
+	boost::shared_ptr<sDNAGeometryPointsByEdgeLength> g(new sDNAGeometryPointsByEdgeLength());
 	g->add_edge_length_from_start_to_end(dest.geom_edge,length_of_edge_inside_radius);
 	all_edge_segments_in_radius->add_part(g);
 
@@ -804,7 +804,7 @@ void SDNAIntegralCalculation::process_geodesic(DestinationEdgeProcessingTask &de
 	#endif
 	if (output_geodesics)
 	{
-		shared_ptr<sDNADataMultiGeometry> geodesicdata(
+		boost::shared_ptr<sDNADataMultiGeometry> geodesicdata(
 			new sDNADataMultiGeometry(
 				POLYLINEZ,
 				get_geodesic_data(origin_link->arcid,destination_link->arcid,(float)radii[r],
@@ -813,7 +813,7 @@ void SDNAIntegralCalculation::process_geodesic(DestinationEdgeProcessingTask &de
 								  (float)get_geodesic_analytical_cost(dest,anal_best_costs_reaching_edge),
 								  (float)euclidean_cost_of_geodesic),
 				1));
-		shared_ptr<sDNAGeometryPointsByEdgeLength> geodesic(new sDNAGeometryPointsByEdgeLength());
+		boost::shared_ptr<sDNAGeometryPointsByEdgeLength> geodesic(new sDNAGeometryPointsByEdgeLength());
 		assert(destination_link != origin_link);
 		geodesic->add_edge_length_from_middle_to_end(origin_exit_edge,numeric_limits<float>::infinity());
 		for (vector<Edge*>::reverse_iterator it=intermediate_edges.rbegin();it!=intermediate_edges.rend();it++)
@@ -827,7 +827,7 @@ void SDNAIntegralCalculation::process_geodesic(DestinationEdgeProcessingTask &de
 		//this could go in process_destination, which would make output of destinations run faster
 		//but only if we ditched two_stage_betweenness_weight and euclidean_cost_of_geodesic
 		//so for the time being, here it stays
-		shared_ptr<sDNADataMultiGeometry> destinationdata(
+		boost::shared_ptr<sDNADataMultiGeometry> destinationdata(
 			new sDNADataMultiGeometry(
 				POLYLINEZ,
 				get_destination_data(origin_link->arcid,destination_link->arcid,radii[r],
@@ -837,7 +837,7 @@ void SDNAIntegralCalculation::process_geodesic(DestinationEdgeProcessingTask &de
 									 (float)euclidean_cost_of_geodesic,
 									 (float)crow_flies_distance),
 				 1));
-		shared_ptr<sDNAGeometryPointsByEdgeLength> destination(new sDNAGeometryPointsByEdgeLength());
+		boost::shared_ptr<sDNAGeometryPointsByEdgeLength> destination(new sDNAGeometryPointsByEdgeLength());
 		destination->add_edge_length_from_start_to_end(dest.routing_edge,dest.length_of_edge_inside_radius);
 		destinationdata->add_part(destination);
 		destinationgeoms.add(destinationdata);
@@ -924,7 +924,7 @@ void PartialNet::count_junctions_accumulate(long &num_junctions, float &connecti
 	}
 }
 
-void SDNAIntegralCalculation::finalize_radius_geometry(SDNAPolyline *origin,int r,shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius)
+void SDNAIntegralCalculation::finalize_radius_geometry(SDNAPolyline *origin,int r,boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius)
 {
 	if (run_convex_hull)
 	{
@@ -968,10 +968,10 @@ void SDNAIntegralCalculation::finalize_radius_geometry(SDNAPolyline *origin,int 
 		//save geometries if needed
 		if (output_hulls)
 		{
-			shared_ptr<sDNADataMultiGeometry> saved_hull_with_data(
+			boost::shared_ptr<sDNADataMultiGeometry> saved_hull_with_data(
 				new sDNADataMultiGeometry(POLYGON,get_hull_or_netradius_data(origin->arcid,radii[r],origweightdata.get_data(*origin)),1)
 			);
-			shared_ptr<sDNAGeometry> saved_hull(new sDNAGeometryPointsByValue(convex_hull));
+			boost::shared_ptr<sDNAGeometry> saved_hull(new sDNAGeometryPointsByValue(convex_hull));
 			saved_hull_with_data->add_part(saved_hull);
 			hulls.add(saved_hull_with_data);
 		}

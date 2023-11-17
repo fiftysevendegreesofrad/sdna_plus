@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "net.h"
 #include "geos_sdna_wrapper.h"
-#include "licensing.h"
 
 Net::Net() 
 		: net_is_built(false), 

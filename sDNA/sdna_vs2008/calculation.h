@@ -176,7 +176,7 @@ private:
 	void process_destination(DestinationEdgeProcessingTask &dest,SDNAPolyline *origin_link, 
 											  int r,
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
-											  shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
+											  boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
 											  double& total_weight_this_origin_sample_radius);
 	void process_geodesic(DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
 											  vector<Edge*> &intermediate_edges,
@@ -186,9 +186,9 @@ private:
 	double backtrace(DestinationEdgeProcessingTask &t,SDNAPolyline * origin_link,
 										  IdIndexedArray<Edge *  ,EdgeId> &anal_backlinks_edge,
 										  vector<Edge*> &intermediate_edges,Edge **origin_exit_edge,bool &passed_intermediate_filter);
-	void process_origin(SDNAPolyline *origin,int r,shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
+	void process_origin(SDNAPolyline *origin,int r,boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
 										MetricEvaluator *analysis_evaluator,double& total_weight_this_origin_sample_radius);
-	void finalize_radius_geometry(SDNAPolyline *origin,int r,shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius);
+	void finalize_radius_geometry(SDNAPolyline *origin,int r,boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius);
 	static double get_geodesic_analytical_cost(DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge);
 
 	MetricEvaluator* create_metric_from_config(ConfigStringParser &config,string metric_field,string hybrid_line_expr_field,string hybrid_junc_expr_field,string custom_cost_field);
@@ -218,7 +218,7 @@ private:
 
 	NetExpectedDataSource<float> customcostdata, skiporiginifzerodata, onewaydata, vertonewaydata;
 	LengthWeightingStrategy origweightsource, destweightsource;
-	shared_ptr<HybridMetricEvaluator> origweightexpr, destweightexpr;
+	boost::shared_ptr<HybridMetricEvaluator> origweightexpr, destweightexpr;
 
 	SDNAPolylineDataSourceGeometryCollectionWrapper netdata;
 	sDNAGeometryCollection geodesics,hulls,netradii,destinationgeoms,skim_geom;
@@ -280,11 +280,11 @@ private:
 			if (pos==string::npos) throw BadConfigException("Encountered zone sum without @ to specify zone field name: "+s);
 			string expr = rest.substr(0,pos);
 			string zfn = rest.substr(pos+1);
-			shared_ptr<NetExpectedDataSource<string> > das(new NetExpectedDataSource<string>(zfn,net,print_warning_callback));
+			boost::shared_ptr<NetExpectedDataSource<string> > das(new NetExpectedDataSource<string>(zfn,net,print_warning_callback));
 			add_expected_data(&*das);
 
-			shared_ptr<HybridMetricEvaluator> eval(new HybridMetricEvaluator(expr,"0",net,this));
-			shared_ptr<Table<long double> > zone_sum_table(new Table<long double>(varname.c_str(),das->get_name().c_str()));
+			boost::shared_ptr<HybridMetricEvaluator> eval(new HybridMetricEvaluator(expr,"0",net,this));
+			boost::shared_ptr<Table<long double> > zone_sum_table(new Table<long double>(varname.c_str(),das->get_name().c_str()));
 			zonesumtables.push_back(zone_sum_table);
 			zone_sum_evaluators.push_back(ZoneSum(varname,das,eval,zone_sum_table));
 		}
@@ -596,7 +596,7 @@ private:
 		vector<string> data_names;
 		BOOST_FOREACH(ZoneSum zs, zone_sum_evaluators)
 			data_names.push_back(zs.varname);
-		BOOST_FOREACH(shared_ptr<Table<float> > zdt, zonedatatables)
+		BOOST_FOREACH(boost::shared_ptr<Table<float> > zdt, zonedatatables)
 			data_names.push_back(zdt->name());
 		BOOST_FOREACH(NetExpectedDataSource<float>* neds,expecteddata_netonly_nodupl())
 			data_names.push_back(neds->get_name());
@@ -783,7 +783,7 @@ public:
 	void get_all_outputs_c(float* buffer, long arcid)	{ output_map.get_outputs_c(buffer,net->link_container[arcid],oversample); }
 	
 	SDNAIntegralCalculation(Net *net,char *configstring,
-		int (__cdecl *set_progressor_callback)(float), int(__cdecl *print_warning_callback)(const char*), vector<shared_ptr<Table<float>>>* tables1d_in=NULL)
+		int (__cdecl *set_progressor_callback)(float), int(__cdecl *print_warning_callback)(const char*), vector<boost::shared_ptr<Table<float>>>* tables1d_in=NULL)
 		: Calculation(net,print_warning_callback), 
 	      set_progressor_callback(set_progressor_callback),
 		  using_od_matrix_bool(false),
@@ -835,8 +835,8 @@ private:
 	IdIndexedArray<Edge *,EdgeId> *radial_backlinks_edge;
 
 	//the following are null if uncomputed
-	shared_ptr<IdIndexedArray<double,EdgeId>> anal_best_costs_reaching_edge; 
-	shared_ptr<IdIndexedArray<Edge *,EdgeId> > anal_backlinks_edge; 
+	boost::shared_ptr<IdIndexedArray<double,EdgeId>> anal_best_costs_reaching_edge; 
+	boost::shared_ptr<IdIndexedArray<Edge *,EdgeId> > anal_backlinks_edge; 
 	
 	//generates partial net radius r, requires radial costs to be precomputed
 	//anal_best_costs and anal_backlinks are default constructed to NULL shared ptr
@@ -861,8 +861,8 @@ private:
 				&*anal_backlinks_edge);
 	}
 
-	void assign_analytical_costs(shared_ptr<IdIndexedArray<double,EdgeId>> shared_anal_best_costs_reaching_edge,
-		shared_ptr<IdIndexedArray<Edge *,EdgeId>> shared_anal_backlinks_edge)
+	void assign_analytical_costs(boost::shared_ptr<IdIndexedArray<double,EdgeId>> shared_anal_best_costs_reaching_edge,
+		boost::shared_ptr<IdIndexedArray<Edge *,EdgeId>> shared_anal_backlinks_edge)
 	{
 		anal_best_costs_reaching_edge = shared_anal_best_costs_reaching_edge;
 		anal_backlinks_edge = shared_anal_backlinks_edge;
@@ -1074,8 +1074,8 @@ private:
 	JunctionCosts junction_radial_costs;
 
 	//these may or may not be computed for all nets together:
-	shared_ptr<IdIndexedArray<double,EdgeId>> shared_anal_best_costs_reaching_edge; 
-	shared_ptr<IdIndexedArray<Edge *,EdgeId>> shared_anal_backlinks_edge; 
+	boost::shared_ptr<IdIndexedArray<double,EdgeId>> shared_anal_best_costs_reaching_edge; 
+	boost::shared_ptr<IdIndexedArray<Edge *,EdgeId>> shared_anal_backlinks_edge; 
 
 public:
 	IdIndexedArray<Edge *,EdgeId> *get_radial_backlinks() { assert(radial_backlinks_edge.isInitialized()); return &radial_backlinks_edge;}
