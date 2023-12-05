@@ -9,6 +9,24 @@ import abc,sys,os,re,shutil,csv,codecs
 from os import path
 from collections import defaultdict
 
+import time
+
+try:
+    time.process_time 
+    try:
+        time.clock 
+    except AttributeError:
+        time.clock = time.process_time
+except AttributeError:
+    try:
+        time.clock
+        time.process_time = time.clock
+    except AttributeError:
+        raise NotImplementedError(
+            'No suitable timer can be found in this Python environment. '
+            'time.clock or time.process_time are required'
+            )
+
 PY3 = sys.version_info > (3,)
 
 if PY3:
