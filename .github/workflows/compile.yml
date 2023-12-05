@@ -13,7 +13,7 @@ env:
   PLATFORM: x64
   OSGEO4W_GEOS_URL: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos
   GEOS_VERSION: '3.12.0-1'
-  RELEASE: '6.0.1'
+  RELEASE: '6.2.1'
   BOOST_VERSION: '1.8.3'
 
 
