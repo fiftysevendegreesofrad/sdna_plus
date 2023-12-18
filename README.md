@@ -46,6 +46,25 @@ If filing a bug, please file to the database here on github.
 
 ### Building the software
 
+#### Buidling James' fork on github.  
+ - Fork the repo
+ - Click the actions tab in your fork
+ - Clcik the compile action on the left
+ - Click run action (selecting the chosen branch - main is tested) on the right
+ - The action attempts to cache geos and boost.
+
+#### Building James' fork locally
+
+ - Install (the) Visual Studio 2022 (installer).  Community edition is fine.
+ - In the VS 2022 installer, ensure there is a desktop C++ development, with vcpkg and both the Windows 11 and Windows 10 sdks.
+ - Clone the repo locally.
+ - Run vcpkg integrate install (in the repo root dir?), to let VS 2022 both launch vcpkg, and put the locations vcpkg installs the deps in vcpkg.json on to the include paths.  vcpkg might install boost twice, but shouldn't have to download it again thereafter.
+ - Open /sDNA/sdna_vs2008/sdna_vs2008.vcxproj
+ - Click build.
+
+
+
+
 Build requirements:
 
 * [Microsoft Visual C++ professional 2015](https://my.visualstudio.com/Downloads?q=%22Visual%20Studio%20Professional%202015%22)  
