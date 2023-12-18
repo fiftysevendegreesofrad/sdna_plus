@@ -104,7 +104,7 @@ class sDNAGeometryPointsByEdgeLength : public sDNAGeometry
 		pos_t pos;
 		EdgeLengthPos(Edge* e, float l, pos_t p) : edge(e),length(l),pos(p) {}
 	};
-	vector<const EdgeLengthPos> parts;
+	vector<EdgeLengthPos> parts;
 public:
 	void add_edge_length_from_start_to_end(Edge* e, float length)
 	{
@@ -120,7 +120,7 @@ public:
 	}
 	void append_points_to(BoostLineString3d &result)
 	{
-		for (vector<const EdgeLengthPos>::iterator it=parts.begin(); it!=parts.end(); ++it)
+		for (vector<EdgeLengthPos>::iterator it=parts.begin(); it!=parts.end(); ++it)
 		{
 			switch(it->pos)
 			{
