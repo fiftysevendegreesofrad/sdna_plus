@@ -5,6 +5,9 @@ from sdnapy import *
 import time
 import gc
 
+if not hasattr(time,"process_time"):
+    time.process_time = time.clock
+
 #sys.stdin.readline()
 
 '''
