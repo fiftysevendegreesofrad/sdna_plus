@@ -67,8 +67,8 @@ We assume these entities travel via the shortest possible path – and we call s
 * *Euclidean metrics*, taking the shortest physical distance possible
 * *angular metrics*, which minimize the amount of turning both on links and at junctions
 * *custom* metrics based on user data
-* *hybrid* metrics which are user programmable (requires :ref:`sDNA+`)
-* specialist metrics for *cyclists*, *vehicles* and *pedestrians* (requires :ref:`sDNA+`)
+* *hybrid* metrics which are user programmable
+* specialist metrics for *cyclists*, *vehicles* and *pedestrians* 
 
 As a first approach to most urban network problems, we really like using angular metrics.  Pedestrians, unless they know an area very well, will tend to follow the shortest angular paths, because they are easier to remember (“second on the right then straight on 'till morning” – Peter Pan would probably have got lost had he tried to take a short cut requiring more complex directions).  Drivers of vehicles also tend to follow angular geodesics, but for a different reason – straight roads through a city tend to be faster, on average.  So we have set the default metric in sDNA to be angular.  
 

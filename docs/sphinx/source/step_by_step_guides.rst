@@ -85,7 +85,7 @@ connectivity and geometry errors. These were fixed by use of topology tools (Arc
    (modified for other bridge types if necessary) and save them to a new layer.
    
 3. On the "other links" layer run ``v.clean.advanced`` from the GRASS toolbox.  The GRASS tools are bundled with the free QGIS_, though to display them it is necessary to switch the 
-   Processing toolbox to advanced mode.  (This is necessary for :ref:`firstuse` in any case).  For the ``Cleaning tools`` parameter, enter::
+   Processing toolbox to advanced mode.  For the ``Cleaning tools`` parameter, enter::
    
      snap,break,rmline
      
@@ -105,10 +105,9 @@ slope and twistiness. However, several lessons for other model types
 (vehicle and pedestrian) are illustrated by the same process, so the
 example is worthwhile reading whatever your intended end use of sDNA.
 
-The tutorial is written with sDNA+ and ArcGIS in mind, though could
+The tutorial is written with ArcGIS in mind, though could
 apply to any GIS software. Steps specific to ArcGIS are written in
-*italics.*  Some features (hybrid metrics, one way streets) are not available in standard sDNA, though
-the principles of modelling remain the same.
+*italics.*  
 
 sDNA cycle models are based on detailed behavioural simulation and have
 various outputs including

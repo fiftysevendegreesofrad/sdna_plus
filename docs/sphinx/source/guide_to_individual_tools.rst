@@ -31,8 +31,6 @@ Several tools share the following parameters:
     The remaining metrics provided are preset forms of hybrid metric designed for specific network types (pedestrian, vehicle, cycle, public transport).  You can inspect
     the message output of sDNA to discover exactly what formula they use - this is, in fact, a good way to learn how to use hybrid metrics.  Some presets include user variables, which have a default value but can be changed in advanced config; see `preset metric variables`_.
     
-    Hybrid and preset metrics require :ref:`sDNA+`.
-
 * *Weighting*, *Origin weight*, *Destination weight*
     Select :ref:`weighting type` (link, length or polyline) and the data to use.  If *origweightformula* or *destweightformula* are supplied in advanced config, they override origin and destination weight.
     
@@ -43,9 +41,9 @@ Several tools share the following parameters:
 
 * *Radial metric*
     
-    As well as using Euclidean radii, in :ref:`sDNA+` it is possible to use radii expressed using any other metric.  If using hybrid metrics, the formula must be provided in `advanced_config`_ using the *radlineformula* and *radjuncformula* keywords.  If using a custom metric, provide the custom data field to `advanced_config`_ in *radcustommetric*.
+    As well as using Euclidean radii it is possible to use radii expressed using any other metric.  If using hybrid metrics, the formula must be provided in `advanced_config`_ using the *radlineformula* and *radjuncformula* keywords.  If using a custom metric, provide the custom data field to `advanced_config`_ in *radcustommetric*.
     
-    If the radial metric is set to *match_analytical* sDNA+ will use the analysis metric for the radius, which saves you from having to input the same metric twice.  
+    If the radial metric is set to *match_analytical* sDNA will use the analysis metric for the radius, which saves you from having to input the same metric twice.  
     
 * *Continuous space*
     Select whether :ref:`continuous space <continuous space>` analysis is used.
@@ -287,7 +285,7 @@ Advanced config options for sDNA Integral and geometry tools
 
 .. csv-table::
    :file: integral-advanced-config.csv
-   :widths: 10,10,80,5,5
+   :widths: 10,10,80
    :header-rows: 1
 
 .. _preset metric variables:

@@ -19,38 +19,18 @@ The toolbox can be used in any of a number of ways:
 
 -  As a plug-in to QGIS 2.0 or later, or
 
--  As a plug-in to Autocad (various versions; 2010-2013 have been
-   tested), or
-
 -  From the windows command line, or
 
 -  From sdnapy, the python API to sDNA.
 
-Note that Autocad usage is limited to network shape analysis using sDNA Prepare and Integral.  For more detailed analysis, we recommend using Autocad Map3d or other suitable software to convert CAD to 3d Shapefile, then processing in the free QGIS.
-
 Installation
 ************
 
-sDNA can be downloaded an installed from our website_.  You will need a serial number; these can be obtained for free.  
+sDNA can be downloaded an installed from our website_.  
 
 .. _website: http://www.cardiff.ac.uk/sdna/software/download/
 
 Further steps are then needed depending on how you plan to use sDNA.
-
-.. _sDNA+:
-
-sDNA+
-*****
-
-sDNA+ is the extended version of sDNA, containing enhanced features.  The download is the same as for standard sDNA.  To unlock the sDNA+ features, you need to purchase of an enhanced serial number via our `sDNA+ page <http://www.cardiff.ac.uk/sdna/sdna-plus/>`_.
-
-.. _firstuse:
-
-Using sDNA for the first time
-*****************************
-
-Before using sDNA, it is necessary to unlock it using ``sDNA License Manager`` on your Start menu.  If you wish to 
-manage licenses for all users, then sDNA License Manager must be run as administrator.
 
 How you use sDNA depends on your host application.
 
@@ -109,65 +89,12 @@ QGIS
 
 Results of sDNA operations can be displayed using layer styles.  After running sDNA, right-click the relevant layer in the layers panel, choose ``Properties`` |rarr| ``Style``, change ``Single Symbol`` to ``Graduated`` and select the data you want to display.
 
-Autocad
-=======
-
-When we originally created sDNA, we envisaged urban designers using it via Autocad.  As sDNA has become more advanced, the data handling capabilities of Autocad no longer support all the features we offer; in particular, use of user data attached to links is not possible.  We are not fixing this because the Urban Design world mostly uses BIM systems these days, and we plan to implement sDNA for BIM in future.  If you are interested in this possibility, please get in touch with us!
-
-If you are an **Autocad Map3d** user, there is a workflow for using fully featured sDNA models that involves exporting/importing data from the free QGIS.  See our notes on `Advanced sDNA models in Autocad Map3d`_.
-
-For other products in the Autocad family, use of basic models (without user data) is supported.  Installation is as follows:
-
-1. On your start menu, in the sDNA program group, click on ``Register sDNA for Autocad`` (32 or 64 bit depending on your Windows installation).  You may need to provide an administrator password.
-
-2. From the Ribbon, choose ``Manage`` |rarr| ``Load Application``
-
-3. Under ``Startup Suite`` click ``Contents…`` then ``Add…``
-
-4. Navigate to the place where you installed sDNA (usually ``c:\Program
-   Files (x86)\sDNA``) and select the application *sdna.vlx*.
-
-5. Click ``Close`` on the Startup Suite dialog
-
-6. Click ``Close`` on the Load Application dialog
-
-7. In Autocad versions 2010 onwards, load the sDNA buttons:
-
-   a. From the Ribbon, choose ``Manage`` |rarr| ``Custom User Interface (CUI)``
-
-   b. Locate the button for loading a Partial Customization File – the icon
-      is a folder symbol with a green plus sign
-
-   c. Navigate to the place where you installed sDNA (usually
-      ``c:\Program Files (x86)\sDNA``) and select ``sDNA.cuix``
-
-   d. Click ``OK``
-
-8. Quit Autocad
-
-9. When Autocad is restarted, the sDNA application will be loaded.
-
-In Autocad 2010 onwards, sDNA will appear as a series of buttons on the
-ribbon toolbar labelled “sDNA”. Simply click these buttons to load the
-tools.
-
-In older versions of Autocad, it is necessary to know the commands for
-running sDNA. (These can also be used in Autocad 2010 onwards, if
-preferred). Enter one of the following at the command prompt:
-
--  **sdnaloaditn** to load ITN data
-
--  **sdnaprepare** to prepare the network
-
--  **sdnaintegral** to analyze the network
-
--  **sdnacolor** or **sdnacolour** to display the results of
-   **sdnaintegral**
-
 Advanced sDNA models in Autocad Map3d
 =====================================
 
-To use the full data capabilities of sDNA from Autocad Map3d, we recommend the following workflow:
+The Autocad interface to sDNA has been sunsetted as of 2024, as vanilla Autocad did not support field data essential to most users of sDNA.
+
+To use sDNA from Autocad Map3d, we recommend the following workflow:
 
 1. Export data as a shapefile.
 2. Process in the free QGIS_ or by `using sDNA from the command line`_.

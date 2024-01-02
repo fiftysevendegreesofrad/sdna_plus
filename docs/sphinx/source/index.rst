@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Spatial Design Network Analysis (sDNA) Manual
+Spatial Design Network Analysis (sDNA/sDNA+) Manual
 =============================================
 
 This is the manual for sDNA_, the spatial network analysis toolbox for GIS and Python.
@@ -23,6 +23,8 @@ This is the manual for sDNA_, the spatial network analysis toolbox for GIS and P
 .. _sDNA: http://www.cardiff.ac.uk/sdna
 
 **Acknowledgements:** This manual was originally put together under an Impact Accelerator grant from the Economic and Social Research Council.  The principal investigator was Alain Chiaradia and the co-investigator Crispin Cooper, based at Cardiff University department of Geography and Planning and the Sustainable Places Research Institute.
+
+As of 2024, the previously proprietary sDNA+ software has been merged with the open source sDNA Open. All features are now open source - enjoy! While this manual uses *sDNA* to refer to the software, *sDNA+* can now be used interchangeably. 
 
 Table of Contents
 =================

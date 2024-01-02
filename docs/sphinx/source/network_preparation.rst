@@ -489,7 +489,7 @@ Break intersections
 Breaking intersections between lines means converting intersections from the type shown in :num:`Figure #crossinglines` to the type shown in :num:`Figure #crossinglinesnoded`. 
 
 * **QGIS**: 
-    within the open source environment, using the ``break`` option on `v.clean in the GRASS tools`_ can be used to break polylines where they intersect.  The GRASS tools are bundled with the free QGIS_, though to display them it is necessary to switch the Processing toolbox to advanced mode.  (This is necessary for :ref:`firstuse` in any case).
+    within the open source environment, using the ``break`` option on `v.clean in the GRASS tools`_ can be used to break polylines where they intersect.  The GRASS tools are bundled with the free QGIS_, though to display them it is necessary to switch the Processing toolbox to advanced mode. 
 
 * **ArcGIS**: 
     ArcGIS Advanced offers two tools to break intersections *en masse*.  The simplest is to run `ArcGIS Planarize`_ with a tolerance of zero.  The alternative is to use `Arc Topology`_ tools to detect and fix all intersections.  We have found the latter is more flexible, but less able to deal with large numbers of intersections.
