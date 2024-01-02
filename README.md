@@ -26,7 +26,7 @@ Use the software via any of the following means:
 
 ### Documentation
 
-Soon to be hosted on readthedocs.
+Hosted on [readthedocs](https://sdna-plus.readthedocs.io/en/latest/).
 
 ### Support
 
