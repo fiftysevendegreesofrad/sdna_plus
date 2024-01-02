@@ -65,13 +65,21 @@ Some key folders:
 
 ### Tests
 
-For testing the core network processing and numerical routines, fire up the `sdna_vs2008.sln` solution in `sDNA\sDNA_vs2008`. 
+The test code needs updating (plan to do this with the port to Linux).
+
+Currently the steps outlined below may not work, but what *does* work is setting appriate paths for `python2exe`, `python3exe`, and `sdnadll` (which should be 32 or 64 bit depending on the Python executable) then calling `pause_debug_test.bat`.
+
+Old routine: for testing the core network processing and numerical routines, fire up the `sdna_vs2008.sln` solution in `sDNA\sDNA_vs2008`. 
 You will need the correct debug settings; unfortunately Visual Studio stores these with user information. Copy `sdna\sdna_vs2008\sdna_vs2008.vcproj.octopi.Crispin.user.sample` on top of your own `sdna_vs2008.vcproj.yourmachine.yourusername.user` file.
 Set build configuration to `Debug Win32`, and run. This calls scripts in `sDNA\sDNA_vs2008\tests` and diffs the output with correct outputs (the core of which are originally hand computed) in that directory. Any call to `diff` that shows differences is a test fail.
 
 For `test_parallel_results.py` to work, you also need to build the `parallel_debug Win32` configuration. When `Debug Win32` is run as described above, serial and parallel results are compared to check they are identical.
 
 Interfaces are not automatically tested, though `arcscripts\sdna_environment.py` can be tested by `environment_test.py`.
+
+### Future
+
+The long term roadmap includes moving to reproducible builds (which will be nice when developers have to onboard or change machines), and porting to Linux. We think the path towards this is (1) replace MSBuild with cmake (there is a converter); (2) replace msvc with gcc; (3) the community profits!
 
 ## License
 
