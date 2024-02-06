@@ -9,6 +9,7 @@ class my_void_p(ctypes.c_void_p):
     pass
 
 sdnadll = os.environ["sdnadll"]
+# print(f'{sdnadll=}')
 dll = ctypes.windll.LoadLibrary(sdnadll)
 
 dll.run_unit_tests()

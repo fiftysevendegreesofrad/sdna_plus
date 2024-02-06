@@ -8,7 +8,7 @@ del testout_learn_%outputsuffix%.txt
 %pythonexe% -u ..\..\..\arcscripts\bin\sdnapredict.py --input tiny --output tinypred_%outputsuffix%.shp --modelfile regtestout_multiple_%outputsuffix%.txt --predvarname prediction >>testout_learn_%outputsuffix%.txt 2>>&1
 
 rem remove all numbers after :,= as they vary with random seed. unlike the rest of the suite, this particular test is to check i/o works not numeric backend.
-sed 's/[,:=].*[0-9].*//' testout_learn_%outputsuffix%.txt >testout_learn_%outputsuffix%_fordiff.txt
+sed s/[,:=].*[0-9].*// testout_learn_%outputsuffix%.txt >testout_learn_%outputsuffix%_fordiff.txt
 
 @echo on
 
