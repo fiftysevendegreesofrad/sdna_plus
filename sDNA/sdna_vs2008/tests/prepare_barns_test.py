@@ -58,7 +58,7 @@ print ("after")
 prepout = prep.toString()
 import re
 for line in prepout.split("\n"):
-    m=re.match("(\[\('ID'[^\]]*\]) (.*)",line)
+    m=re.match(r"(\[\('ID'[^\]]*\]) (.*)",line)
     if m:
         data,points = m.groups()
         data = dict(eval(data))
