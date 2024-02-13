@@ -1,0 +1,67 @@
+name: run_diff_tests
+
+on:
+  # push:
+  #   branches: ["Test_releases_in_a_Github_Action"]
+  # workflow_dispatch:
+
+  workflow_call:
+    inputs:
+      sdnadll: 
+        required: false
+        type: string
+        default: 'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
+      pythonexe:
+        required: false
+        type: string
+        default: python
+      outputsuffix:
+        required: false
+        type: string
+        default: py3
+
+
+
+jobs:
+
+
+
+
+  run_diff_tests:
+    name: "Run the diff tests, with pytest. "
+    
+    runs-on: windows-2022
+
+    steps:
+    - uses: actions/checkout@v4
+
+
+    - name: "Lint the Dockerfile with Hadolint. "
+      run: |
+        Invoke-WebRequest https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Windows-x86_64.exe -OutFile hadolint.exe
+        .\hadolint.exe Dockerfile
+        Remove-Item .\hadolint.exe
+
+
+    - name: "Build the Windows Docker image" 
+      run: docker build -t powershell_windows_ssh_server .
+
+    - name: "Run the Windows Docker image" 
+      shell: bash
+      run: >
+        docker run 
+        --rm 
+        -d 
+        -p 22:22 
+        --name ssh_server 
+        powershell_windows_ssh_server
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12' 
+
+    - name: Install Python script's deps.
+      run: pip install fabric
+
+    - name: "Print Hello World (via Python and Fabric), from outside container. "
+      run: python ssh_from_outside_container.py ssh Passw0rd 22

@@ -1,0 +1,37 @@
+name: install_msi_from_releases_page
+
+on:
+  workflow_call:
+    inputs:
+      SDNA_VERSION: 
+        type: string
+        required: false 
+        default: 4_1_1
+
+      SDNA_RELEASES_DOWNLOAD_URL:
+        type: string
+        required: false
+        default: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v
+    #      e.g.: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v4_1_1.msi
+    #            https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/old%20versions/sDNA_setup_win_v3_4_5.msi
+  workflow_dispatch:
+    
+
+
+
+
+
+jobs:
+
+  download_and_install_sDNA_msi:
+    name: "Download and install a release of sDNA. "
+    
+    runs-on: windows-2022
+
+    steps:
+    - name: Download and install release of sDNA, then delete installer file.
+      run: |
+        Invoke-WebRequest ${{ inputs.SDNA_RELEASES_DOWNLOAD_URL }}${{ inputs.SDNA_VERSION }}.msi -OutFile sDNA_setup_win_v${{ inputs.SDNA_VERSION }}.msi
+        .\sDNA_setup_win_v${{ inputs.SDNA_VERSION }}.msi /passive
+        Remove-Item .\sDNA_setup_win_v${{ inputs.SDNA_VERSION }}.msi
+
