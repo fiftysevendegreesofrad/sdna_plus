@@ -70,10 +70,17 @@ jobs:
     - name: List Program Files (x86)
       run: 'dir "C:\Program Files (x86)"'
     
+    - name: List ProgramData
+      run: 'dir "c:\ProgramData"'
 
     - name: List "Program Files (x86)\s*"
       run: 'dir "C:\Program Files (x86)\s*"'
 
+    - name: List %appdata%
+      shell: cmd
+      run: 'dir %appdata%'
+
+    
 
   # test_sDNA_msi:
   
