@@ -58,6 +58,6 @@ jobs:
       # directory probably just needs to be copied from the repo, into the sDNA
       # installation to be tested's tree, and pytest run from there.  
     
-      working-directory: .\sdna_plus\sDNA\sdna_vs2008\tests\pytest
+      working-directory: .\sDNA\sdna_vs2008\tests\pytest
       run: pytest -rA
       # -rA shows summary of tests, one per line, even when they all pass.
