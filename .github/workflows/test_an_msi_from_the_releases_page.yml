@@ -4,22 +4,22 @@ on:
   push:
     branches: ["Test_releases_in_a_Github_Action"]
   workflow_call:
-    inputs:
-      VERSION: 
-        type: string
-        required: false 
-        default: 4_1_1
 
-      DOWNLOAD_URL_PREFIX:
-        type: string
-        required: false
-        default: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v
-    #      e.g.: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v4_1_1.msi
-    #            https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/old%20versions/sDNA_setup_win_v3_4_5.msi
   workflow_dispatch:
     
 
+env:
+  VERSION: 
+    type: string
+    required: false 
+    default: 4_1_1
 
+  DOWNLOAD_URL_PREFIX:
+    type: string
+    required: false
+    default: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v
+#      e.g.: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v4_1_1.msi
+#            https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/old%20versions/sDNA_setup_win_v3_4_5.msi
 
 
 
@@ -42,9 +42,9 @@ jobs:
     steps:
     - name: Download and install release of sDNA, then delete installer file.
       run: |
-        Invoke-WebRequest ${{ inputs.DOWNLOAD_URL_PREFIX }}${{ inputs.VERSION }}.msi -OutFile sDNA_setup_win_v${{ inputs.VERSION }}.msi
-        .\sDNA_setup_win_v${{ inputs.VERSION }}.msi /passive
-        Remove-Item .\sDNA_setup_win_v${{ inputs.VERSION }}.msi
+        Invoke-WebRequest ${{ env.DOWNLOAD_URL_PREFIX }}${{ env.VERSION }}.msi -OutFile sDNA_setup_win_v${{ env.VERSION }}.msi
+        .\sDNA_setup_win_v${{ env.VERSION }}.msi /passive
+        Remove-Item .\sDNA_setup_win_v${{ env.VERSION }}.msi
 
   test_sDNA_msi:
     strategy:
