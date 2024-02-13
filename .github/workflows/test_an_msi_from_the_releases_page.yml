@@ -9,17 +9,11 @@ on:
     
 
 env:
-  VERSION: 
-    type: string
-    required: false 
-    default: 4_1_1
+  VERSION: 4_1_1
 
-  DOWNLOAD_URL_PREFIX:
-    type: string
-    required: false
-    default: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v
-#      e.g.: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v4_1_1.msi
-#            https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/old%20versions/sDNA_setup_win_v3_4_5.msi
+  DOWNLOAD_URL_PREFIX: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v
+#                e.g.: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v4_1_1.msi
+#                      https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/old%20versions/sDNA_setup_win_v3_4_5.msi
 
 
 
