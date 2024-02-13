@@ -42,13 +42,13 @@ jobs:
     steps:
     - name: Download and install release of sDNA, then delete installer file.
       run: |
-        Invoke-WebRequest ${{ inputs.DOWNLOAD_URL_PREFIX }}${{ inputs.VERSION }}.msi -OutFile sDNA_setup_win_v${{ inputs.SDNA_VERSION }}.msi
+        Invoke-WebRequest ${{ inputs.DOWNLOAD_URL_PREFIX }}${{ inputs.VERSION }}.msi -OutFile sDNA_setup_win_v${{ inputs.VERSION }}.msi
         .\sDNA_setup_win_v${{ inputs.VERSION }}.msi /passive
         Remove-Item .\sDNA_setup_win_v${{ inputs.VERSION }}.msi
 
   test_sDNA_msi:
     strategy:
       matrix:
-        python_version: ['3.12'] #, '2.7']
+        python_version: ['3.12', '2.7']
     name: "Run diff_tests.yml on the installed sDNA release"
     uses: ./.github/workflows/diff_tests.yml
