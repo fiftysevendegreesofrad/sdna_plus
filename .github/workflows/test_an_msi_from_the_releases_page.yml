@@ -52,3 +52,5 @@ jobs:
         python_version: ['3.12', '2.7']
     name: "Run diff_tests.yml on the installed sDNA release"
     uses: ./.github/workflows/diff_tests.yml
+    with:
+      python_version: ${{ matrix.python_version }}
