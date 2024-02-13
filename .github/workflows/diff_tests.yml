@@ -1,8 +1,7 @@
 name: run_diff_tests
 
 on:
-  # push:
-  #   branches: ["Test_releases_in_a_Github_Action"]
+
   # workflow_dispatch:
 
   workflow_call:
@@ -33,7 +32,7 @@ jobs:
       # https://github.com/pyenv-win/pyenv-win/blob/master/docs/installation.md#chocolatey
 
     - name: Install Python version with pyenv and set as global
-      working-directory: .\sdna_plus\sDNA\sdna_vs2008\tests\pytest
+      working-directory: .\sDNA\sdna_vs2008\tests\pytest
       run: |
         pyenv install ${{ inputs.python_version }}
         pyenv global ${{ inputs.python_version }}
@@ -42,11 +41,11 @@ jobs:
       #   python-version: '3.12' 
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
-      working-directory: .\sdna_plus\sDNA\sdna_vs2008\tests\pytest
+      working-directory: .\sDNA\sdna_vs2008\tests\pytest
       run: pip install pytest numpy
 
     - name: Show versions.
-      working-directory: '.\sdna_plus\sDNA\sdna_vs2008\tests\pytest'
+      working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
       run: |
         python --version
         python -c "import numpy; print(numpy.__version__)"
