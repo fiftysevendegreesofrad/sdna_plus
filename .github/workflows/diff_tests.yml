@@ -11,6 +11,10 @@ on:
         type: string
         default: "3.12.2"
 
+      test_index:
+        required: true
+        type: integer
+
 
 
 jobs:
@@ -42,22 +46,12 @@ jobs:
         python -c "import numpy; print('Numpy: %s' % numpy.__version__)"
         python -m pytest --version
 
-    - name: Run the diff tests with Pytest.
-      # TODO: This is an unrepresentative test under the 
-      # default values, when called from
-      # test_an_msi_from_the_releases_page.yml.  As the 
-      # sdna_vs2008.dll binary
-      # being tested is from the releases downloads page, but the sDNA Python
-      # glue code being tested, is from the source code repo.
+    # - name: Run the diff tests with Pytest.
     
-      # For the current question (of formally supporting Python 3, as well 
-      # as Python 2), this is fine until the C++ code is changed.  But should be
-      # addressed before this testing approach is relied on further.  
-      # 
-      # The test
-      # directory probably just needs to be copied from the repo, into the sDNA
-      # installation to be tested's tree, and pytest run from there.  
-    
-      working-directory: .\sDNA\sdna_vs2008\tests\pytest
-      run: pytest -rA
-      # -rA shows summary of tests, one per line, even when they all pass.
+    #   working-directory: .\sDNA\sdna_vs2008\tests\pytest
+    #   run: pytest -rA
+    #   # -rA shows summary of tests, one per line, even when they all pass.
+
+    - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
+      working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
+      run: python test_gathering_windows_command_line_tests.py ${{ inputs.test_index }}

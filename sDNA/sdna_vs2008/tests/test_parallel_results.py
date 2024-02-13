@@ -112,7 +112,7 @@ def test_net(dll,net_definition,euclidean_radii,cont_space,prob_link):
     
     n=[]
     for i in range(outlength):
-        n += [str(names[i],"ascii")]
+        n += [str(names[i].decode("ascii"))]
     
     out_buffer_type = ctypes.c_float * outlength
     out_buffer = out_buffer_type()

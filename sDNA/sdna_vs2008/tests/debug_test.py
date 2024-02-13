@@ -1,4 +1,5 @@
 from __future__ import print_function
+
 import ctypes
 import sys,os
 
@@ -17,6 +18,14 @@ print()
 # now using strings rather than enum so this looks a bit tautological, but:
 (ANGULAR, EUCLIDEAN, CUSTOM, HYBRID) = ("ANGULAR","EUCLIDEAN","CUSTOM","HYBRID")
 
+def bytes_to_ascii(x):
+    """ Python 2 compatible replacement for str(x, 'ascii').
+        str accepts one argument only, in Python 2.  
+        The extra str call converts a u string into an ascii str on Python 2, 
+        to prevent u'...' from going into the diff tests, which expect ascii strings.
+    """
+    return str(x.decode('ascii'))
+
 current_net_arcids = None
 
 # dummy progress bar callback func
@@ -26,7 +35,7 @@ def set_progressor(x):
 set_progressor_callback = CALLBACKFUNCTYPE(set_progressor)
 WARNINGCALLBACKFUNCTYPE = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_char_p)
 def warning(x):
-    print(str(x,"ascii"))
+    print(bytes_to_ascii(x))
     return 0
 warning_callback = WARNINGCALLBACKFUNCTYPE(warning)
 
@@ -154,17 +163,17 @@ def test_net(net_definition,euclidean_radii,analysis_type,cont_space,length_weig
     dll.icalc_get_output_length.restype = ctypes.c_int
     outlength = dll.icalc_get_output_length(calculation)
     names = dll.icalc_get_all_output_names(calculation)
-    names = [str(x,"ascii") for x in names[0:outlength]]
+    names = [bytes_to_ascii(x) for x in names[0:outlength]]
     dll.icalc_get_short_output_names.restype = ctypes.POINTER(ctypes.c_char_p)
     shortnames = dll.icalc_get_short_output_names(calculation)
     sn=[]
     for i in range(outlength):
-        sn += [str(shortnames[i],"ascii")]
+        sn += [bytes_to_ascii(shortnames[i])]
 
     dll.calc_expected_data_net_only.restype = ctypes.c_int
     expected_names_no = ctypes.POINTER(ctypes.c_char_p)()
     expected_names_no_length = dll.calc_expected_data_net_only(calculation,ctypes.byref(expected_names_no))
-    expected_names_no = [str(x,"ascii") for x in expected_names_no[0:expected_names_no_length]]
+    expected_names_no = [bytes_to_ascii(x) for x in expected_names_no[0:expected_names_no_length]]
     print("expected names net only:",expected_names_no)
     
     net_definition(net)
