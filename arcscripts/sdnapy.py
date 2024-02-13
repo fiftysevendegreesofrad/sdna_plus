@@ -27,7 +27,7 @@ __dll_instance = None
 __send_message_callback = None # for global issues only - there are other callbacks in constructor for Calculation()
 
 def set_dll_path(path):
-        if path is not "":
+        if path != "":
                 global __sdna_dll_path
                 __sdna_dll_path = path
 
