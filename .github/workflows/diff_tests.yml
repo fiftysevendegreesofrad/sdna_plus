@@ -7,17 +7,10 @@ on:
 
   workflow_call:
     inputs:
-      sdnadll: 
-        required: false
-        type: string
-        default: 'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
       python_version:
         required: false
         type: string
         default: "3.12.2"
-      outputsuffix:
-        required: false
-        type: string
 
 
 
@@ -52,6 +45,14 @@ jobs:
       working-directory: .\sdna_plus\sDNA\sdna_vs2008\tests\pytest
       run: pip install pytest numpy
 
-    - name: Run the diff tests with Pytest.
-      working-directory: .\sdna_plus\sDNA\sdna_vs2008\tests\pytest
-      run: python ssh_from_outside_container.py ssh Passw0rd 22
+    - name: Show versions.
+      working-directory: '.\sdna_plus\sDNA\sdna_vs2008\tests\pytest'
+      run: |
+        python --version
+        python -c "import numpy; print(numpy.__version__)"
+        python -m pytest --version
+
+    # - name: Run the diff tests with Pytest.
+    #   working-directory: .\sdna_plus\sDNA\sdna_vs2008\tests\pytest
+    #   run: pytest -rA
+    #   # -rA shows nice
