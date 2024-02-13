@@ -44,18 +44,27 @@ jobs:
     - name: List dir
       run: dir d:\a\
 
+    - name: dir sdna
+      working-directory: 'd:'
+      shell: cmd
+      run: dir d:\a\sdna_plus\
+
+    - name: dir sdna\sdna
+      working-directory: 'd:'
+      shell: cmd
+      run: dir d:\a\sdna_plus\sdna_plus
+
     - name: Echo path 
       shell: cmd
       run: echo %path%
 
 
-    - name: List dir
+    - name: List c:\
+      run: 'dir "C:\'
+
+    - name: List Program Files
       run: 'dir "C:\Program Files\"'
 
-    - name: dir sdna
-      working-directory: 'd:'
-      shell: cmd
-      run: dir d:\a\sdna_plus\sdna_plus
 
   # test_sDNA_msi:
   
