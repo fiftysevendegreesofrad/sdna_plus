@@ -56,7 +56,10 @@ jobs:
     #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
     #   run: python test_gathering_windows_command_line_tests.py ${{ inputs.test_index }}
 
+    - name: List dir
+      run: dir d:\
+
     - name: Run debug_test.py
       shell: cmd
       working-directory: '.\sDNA\sdna_vs2008\tests'
-      run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
+      run: set "sdnadll=%PROGRAMFILES(X86)%\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
