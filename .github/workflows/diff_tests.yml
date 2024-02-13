@@ -70,12 +70,12 @@ jobs:
     - name: dir sdna
       working-directory: 'd:'
       shell: cmd
-      run: dir d:\a\sdna_plus
+      run: dir d:\a\sdna_plus\sdna_plus
 
-    - name: Where sdna
-      working-directory: 'c:'
-      shell: cmd
-      run: Where /r c:\ sdna_plus
+    # - name: Where sdna
+    #   working-directory: 'c:'
+    #   shell: cmd
+    #   run: Where /r c:\ sdna_plus
 
     # - name: Run debug_test.py
     #   shell: cmd
