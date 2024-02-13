@@ -1,0 +1,57 @@
+name: run_diff_tests
+
+on:
+  # push:
+  #   branches: ["Test_releases_in_a_Github_Action"]
+  # workflow_dispatch:
+
+  workflow_call:
+    inputs:
+      sdnadll: 
+        required: false
+        type: string
+        default: 'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
+      python_version:
+        required: false
+        type: string
+        default: "3.12.2"
+      outputsuffix:
+        required: false
+        type: string
+
+
+
+jobs:
+
+
+
+
+  run_diff_tests:
+    name: "Run the diff tests, with pytest. "
+    
+    runs-on: windows-2022
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Pyenv-win
+      # For support for Python 2
+      run: choco install pyenv-win
+      # https://github.com/pyenv-win/pyenv-win/blob/master/docs/installation.md#chocolatey
+
+    - name: Install Python version with pyenv and set as global
+      working-directory: .\sdna_plus\sDNA\sdna_vs2008\tests\pytest
+      run: |
+        pyenv install ${{ inputs.python_version }}
+        pyenv global ${{ inputs.python_version }}
+      # uses: actions/setup-python@v5
+      # with:
+      #   python-version: '3.12' 
+
+    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
+      working-directory: .\sdna_plus\sDNA\sdna_vs2008\tests\pytest
+      run: pip install pytest numpy
+
+    - name: Run the diff tests with Pytest.
+      working-directory: .\sdna_plus\sDNA\sdna_vs2008\tests\pytest
+      run: python ssh_from_outside_container.py ssh Passw0rd 22
