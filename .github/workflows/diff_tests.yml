@@ -60,16 +60,17 @@ jobs:
       run: dir d:\a\
 
     - name: Echo path 
+      shell: cmd
       run: echo %path%
 
 
     - name: List dir
       run: 'dir "C:\Program Files\"'
 
-    - name: Where sdna
+    - name: dir sdna
       working-directory: 'd:'
       shell: cmd
-      run: Where /r d:\ sdna_plus
+      run: dir d:\a\sdna_plus
 
     - name: Where sdna
       working-directory: 'c:'
