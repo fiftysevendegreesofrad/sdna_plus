@@ -80,7 +80,9 @@ jobs:
       shell: cmd
       run: 'dir %appdata%'
 
-    
+    - name: 'Which %appdata%'
+      shell: cmd
+      run: which \r %appdata% sDNA
 
   # test_sDNA_msi:
   
