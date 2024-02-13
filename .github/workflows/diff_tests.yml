@@ -59,6 +59,10 @@ jobs:
     - name: List dir
       run: dir d:\a\
 
+    - name: Echo path 
+      run: echo %path%
+
+
     - name: List dir
       run: 'dir "C:\Program Files\"'
 

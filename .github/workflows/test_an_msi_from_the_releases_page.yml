@@ -42,6 +42,8 @@ jobs:
 
   test_sDNA_msi:
   
+
+    needs: download_and_install_sDNA_msi
       # TODO: This is an unrepresentative test. As the 
       # sdna_vs2008.dll binary
       # being tested is from the releases downloads page, but the sDNA Python
