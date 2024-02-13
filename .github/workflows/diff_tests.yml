@@ -52,6 +52,11 @@ jobs:
     #   run: pytest -rA
     #   # -rA shows summary of tests, one per line, even when they all pass.
 
-    - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
-      working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
-      run: python test_gathering_windows_command_line_tests.py ${{ inputs.test_index }}
+    # - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
+    #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
+    #   run: python test_gathering_windows_command_line_tests.py ${{ inputs.test_index }}
+
+    - name: Run debug_test.py
+      shell: cmd
+      working-directory: '.\sDNA\sdna_vs2008\tests'
+      run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
