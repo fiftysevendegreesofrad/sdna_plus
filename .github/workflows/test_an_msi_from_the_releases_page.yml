@@ -40,28 +40,45 @@ jobs:
         .\sDNA_setup_win_v${{ env.VERSION }}.msi /passive
         Remove-Item .\sDNA_setup_win_v${{ env.VERSION }}.msi
 
-  test_sDNA_msi:
+
+    - name: List dir
+      run: dir d:\a\
+
+    - name: Echo path 
+      shell: cmd
+      run: echo %path%
+
+
+    - name: List dir
+      run: 'dir "C:\Program Files\"'
+
+    - name: dir sdna
+      working-directory: 'd:'
+      shell: cmd
+      run: dir d:\a\sdna_plus\sdna_plus
+
+  # test_sDNA_msi:
   
 
-    needs: download_and_install_sDNA_msi
-      # TODO: This is an unrepresentative test. As the 
-      # sdna_vs2008.dll binary
-      # being tested is from the releases downloads page, but the sDNA Python
-      # glue code being tested, is from the source code repo.
+  #   needs: download_and_install_sDNA_msi
+  #     # TODO: This is an unrepresentative test. As the 
+  #     # sdna_vs2008.dll binary
+  #     # being tested is from the releases downloads page, but the sDNA Python
+  #     # glue code being tested, is from the source code repo.
     
-      # For the current question (of formally supporting Python 3, as well 
-      # as Python 2), this is fine until the C++ code is changed.  But should be
-      # addressed before this testing approach is relied on further.  
-      # 
-      # The test
-      # directory probably just needs to be copied from the repo, into the sDNA
-      # installation to be tested's tree, and pytest run from there.  
-    strategy:
-      matrix:
-        python_version: ['3.12'] #, '2.7']
-        test_index: [0]
-    name: "Run diff_tests.yml on the installed sDNA release"
-    uses: ./.github/workflows/diff_tests.yml
-    with:
-      python_version: ${{ matrix.python_version }}
-      test_index: ${{ matrix.test_index }}
+  #     # For the current question (of formally supporting Python 3, as well 
+  #     # as Python 2), this is fine until the C++ code is changed.  But should be
+  #     # addressed before this testing approach is relied on further.  
+  #     # 
+  #     # The test
+  #     # directory probably just needs to be copied from the repo, into the sDNA
+  #     # installation to be tested's tree, and pytest run from there.  
+  #   strategy:
+  #     matrix:
+  #       python_version: ['3.12'] #, '2.7']
+  #       test_index: [0]
+  #   name: "Run diff_tests.yml on the installed sDNA release"
+  #   uses: ./.github/workflows/diff_tests.yml
+  #   with:
+  #     python_version: ${{ matrix.python_version }}
+  #     test_index: ${{ matrix.test_index }}
