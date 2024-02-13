@@ -60,7 +60,7 @@ jobs:
 
 
     - name: List c:\
-      run: 'dir "C:\'
+      run: 'dir "C:\"'
 
     - name: List Program Files
       run: 'dir "C:\Program Files\"'
