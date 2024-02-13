@@ -60,7 +60,7 @@ jobs:
       run: dir d:\a\
 
     - name: List dir
-      run: dir C:\Program Files\
+      run: 'dir "C:\Program Files\"'
 
     - name: Where sdna
       working-directory: 'd:'
