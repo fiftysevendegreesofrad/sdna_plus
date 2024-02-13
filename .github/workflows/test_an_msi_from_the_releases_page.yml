@@ -1,6 +1,8 @@
 name: test_an_msi_from_the_releases_page
 
-on:
+on:  
+  push:
+    branches: ["Test_releases_in_a_Github_Action"]
   workflow_call:
     inputs:
       VERSION: 
