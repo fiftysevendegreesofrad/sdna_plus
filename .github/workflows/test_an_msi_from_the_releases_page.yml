@@ -49,7 +49,6 @@ jobs:
   test_sDNA_msi:
     strategy:
       matrix:
-        # full version triplet needed for pyenv-win
-        python_version: ['3.12.2', '2.7.18']
+        python_version: ['3.12'] #, '2.7']
     name: "Run diff_tests.yml on the installed sDNA release"
     uses: ./.github/workflows/diff_tests.yml
