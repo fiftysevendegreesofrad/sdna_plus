@@ -96,9 +96,10 @@ jobs:
     #   run: 'dir "c:\ProgramData"'
 
     - name: List "Program Files (x86)\sDNA\**"
-      run: 'dir "C:\Program Files (x86)\sDNA"'
-      run: 'dir "C:\Program Files (x86)\sDNA\x64"'
-      run: 'dir "C:\Program Files (x86)\sDNA\bin"'
+      run: |
+        dir "C:\Program Files (x86)\sDNA"
+        dir "C:\Program Files (x86)\sDNA\x64"
+        dir "C:\Program Files (x86)\sDNA\bin"
 
     # - name: List %appdata%
     #   shell: cmd
