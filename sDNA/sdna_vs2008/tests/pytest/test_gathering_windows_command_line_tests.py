@@ -23,6 +23,8 @@ OUTPUT_SUFFIX = 'py%s' % sys.version_info[0]
 
 ON_WINDOWS = (sys.platform == 'win32')
 
+print('ON_WINDOWS: %s' % ON_WINDOWS)
+
 SDNA_DLL = os.getenv('sdnadll', r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll')
 
 SDNA_DEBUG = bool(os.getenv('sdna_debug', ''))
@@ -452,28 +454,28 @@ class SedCommand(Command):
     def _run(self, output_so_far):
 
         tmp_file = os.path.join(TMP_SDNA_DIR, 'input_for_sed_command_buffer.txt')
-        try:
-            with open(tmp_file,'wt') as f:
-                f.write(output_so_far)
+        # try:
+        with open(tmp_file,'wt') as f:
+            f.write(output_so_far)
 
-                # The inefficiency of calling out, keeps the test(s) the same as before, 
-                # as far as possible.  And avoids inserting Python 'sed' 
-                # code into the existing sDNA tests.
+            # The inefficiency of calling out, keeps the test(s) the same as before, 
+            # as far as possible.  And avoids inserting Python 'sed' 
+            # code into the existing sDNA tests.
 
-                # cmd.exe treats single quotes the same as any other character, 
-                # but e.g. on bash, double quotes can trigger expansions, but
-                # single quotes are a literal string.
-            quote = '' if ON_WINDOWS else "'"
-            sed_command = ''.join([quote, self.sed_command, quote])
+            # cmd.exe treats single quotes the same as any other character, 
+            # but e.g. on bash, double quotes can trigger expansions, but
+            # single quotes are a literal string.
+        quote = '' if ON_WINDOWS else "'"
+        sed_command = ''.join([quote, self.sed_command, quote])
 
 
-            output = _run_insecurely_in_shell_without_catching_exceptions(
-                            'sed %s <%s' % (sed_command, tmp_file)
-                            )
+        output = _run_insecurely_in_shell_without_catching_exceptions(
+                        'sed %s <%s' % (sed_command, tmp_file)
+                        )
 
             # print('Sed output: %s' % output)
-        finally:
-            os.unlink(tmp_file)
+        # finally:
+        os.unlink(tmp_file)
 
         return output
 
@@ -518,7 +520,6 @@ class DiffCommand(Command):
             # SdnaShapefileEnvironment calls) which .splitlines splits on,
             # so split explicitly on '\n' and .strip afterwards
             actual_lines = iter(output_so_far.split('\n'))
-            n = 0
 
             def de_progress(str_):
                 return re.split(r'Progress: 1?\d?\d(\.\d)?%', str_)[-1]
@@ -538,11 +539,13 @@ class DiffCommand(Command):
 
 
             prev_expected = ''
+            num_lines_tested=0
             i=0
             for i, (expected, actual) in enumerate(tuples_of_nontrivial_nonProgress_strings(
                                                         expected_lines,
                                                         output_so_far.split('\n'),
-                                                        )
+                                                        ),
+                                                    start = 1
                                                    ):
                 # if prev_expected.startswith('Progress') and not expected:
                 # continue
@@ -587,9 +590,10 @@ class DiffCommand(Command):
                 assert actual.strip() == expected.strip(), '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: "%s", \n\n Actual: "%s"' % (i, buffer_size - 1,''.join(expected_buffer), '\n'.join(actual_buffer))
                 # assert actual.strip() == expected.strip(), 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
                 prev_expected = expected
-                n += 1
+                num_lines_tested += 1
 
-            print('[92mPassed![0m Num of equal expected & actual lines": %s. (Num lines skipped: %s exc debug etc.)' % (n,i-n))
+            skips = (i - num_lines_tested)
+            print('[92mPassed![0m Num of equal expected & actual lines": %s. (Num lines skipped: %s exc debug etc.)' % (num_lines_tested, skips))
 
 
         return output_so_far
