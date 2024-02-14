@@ -127,7 +127,7 @@ jobs:
     #   run: python test_gathering_windows_command_line_tests.py ${{ matrix.test_index }}
 
     - name: Run all the diff tests with Pytest.
-    
+      shell: cmd
       working-directory: .\sDNA\sdna_vs2008\tests\pytest
       run: set DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER=1 & pytest -rA
       # -rA shows summary of tests, one per line, even when they all pass.
