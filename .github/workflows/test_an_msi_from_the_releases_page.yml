@@ -103,26 +103,6 @@ jobs:
         python -c "import numpy; print('Numpy: %s' % numpy.__version__)"
         python -m pytest --version
 
-    # - name: Run debug_test.py
-    #   shell: cmd
-    #   working-directory: '.\sDNA\sdna_vs2008\tests'
-    #   # run: python -u debug_test.py
-    #   run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
-
-    - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
-      working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
-      run: python test_gathering_windows_command_line_tests.py ${{ matrix.test_index }}
-
-    # - name: Run the diff tests with Pytest.
-    
-    #   working-directory: .\sDNA\sdna_vs2008\tests\pytest
-    #   run: pytest -rA
-    #   # -rA shows summary of tests, one per line, even when they all pass.
-        
-  # test_sDNA_msi:
-  
-
-  #   needs: download_and_install_sDNA_msi
       # TODO: This is an unrepresentative test. As the 
       # sdna_vs2008.dll binary
       # being tested is from the releases downloads page, but the sDNA Python
@@ -135,12 +115,21 @@ jobs:
       # The test
       # directory probably just needs to be copied from the repo, into the sDNA
       # installation to be tested's tree, and pytest run from there.  
-    # strategy:
-    #   matrix:
-    #     python_version: ['3.12'] #, '2.7']
-    #     test_index: [0]
-    # name: "Run diff_tests.yml on the installed sDNA release"
-    # uses: ./.github/workflows/diff_tests.yml
-    # with:
-    #   python_version: ${{ matrix.python_version }}
-    #   test_index: ${{ matrix.test_index }}
+      
+    # - name: Run debug_test.py
+    #   shell: cmd
+    #   working-directory: '.\sDNA\sdna_vs2008\tests'
+    #   # run: python -u debug_test.py
+    #   run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
+
+    # - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
+    #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
+    #   run: python test_gathering_windows_command_line_tests.py ${{ matrix.test_index }}
+
+    - name: Run all the diff tests with Pytest.
+    
+      working-directory: .\sDNA\sdna_vs2008\tests\pytest
+      run: pytest -rA
+      # -rA shows summary of tests, one per line, even when they all pass.
+        
+  
