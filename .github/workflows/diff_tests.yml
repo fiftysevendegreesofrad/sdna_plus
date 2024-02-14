@@ -28,23 +28,23 @@ jobs:
     runs-on: windows-2022
 
     steps:
-    # - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
 
-    # - uses: LizardByte/setup-python-action@master
-    #   with:
-    #     python-version: ${{ inputs.python_version }}
+    - uses: LizardByte/setup-python-action@master
+      with:
+        python-version: ${{ inputs.python_version }}
 
-    # - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
-    #   working-directory: .\sDNA\sdna_vs2008\tests\pytest
-    #   run: pip install pytest numpy
+    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
+      working-directory: .\sDNA\sdna_vs2008\tests\pytest
+      run: pip install pytest numpy
 
-    # - name: Show versions.
-    #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
-    #   run: |
-    #     python --version
-    #     python -c "import numpy; print('Numpy: %s' % numpy.__version__)"
-    #     python -m pytest --version
+    - name: Show versions.
+      working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
+      run: |
+        python --version
+        python -c "import numpy; print('Numpy: %s' % numpy.__version__)"
+        python -m pytest --version
 
     # - name: Run the diff tests with Pytest.
     
@@ -56,28 +56,28 @@ jobs:
     #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
     #   run: python test_gathering_windows_command_line_tests.py ${{ inputs.test_index }}
 
-    - name: List dir
-      run: dir d:\a\
+    # - name: List dir
+    #   run: dir d:\a\
 
-    - name: Echo path 
-      shell: cmd
-      run: echo %path%
+    # - name: Echo path 
+    #   shell: cmd
+    #   run: echo %path%
 
 
-    - name: List dir
-      run: 'dir "C:\Program Files\"'
+    # - name: List dir
+    #   run: 'dir "C:\Program Files\"'
 
-    - name: dir sdna
-      working-directory: 'd:'
-      shell: cmd
-      run: dir d:\a\sdna_plus\sdna_plus
+    # - name: dir sdna
+    #   working-directory: 'd:'
+    #   shell: cmd
+    #   run: dir d:\a\sdna_plus\sdna_plus
 
     # - name: Where sdna
     #   working-directory: 'c:'
     #   shell: cmd
     #   run: Where /r c:\ sdna_plus
 
-    # - name: Run debug_test.py
-    #   shell: cmd
-    #   working-directory: '.\sDNA\sdna_vs2008\tests'
-    #   run: set "sdnadll=d:\a\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
+    - name: Run debug_test.py
+      shell: cmd
+      working-directory: '.\sDNA\sdna_vs2008\tests'
+      run: set "sdnadll=d:\a\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
