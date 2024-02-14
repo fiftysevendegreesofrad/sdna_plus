@@ -77,7 +77,16 @@ jobs:
     #   shell: cmd
     #   run: Where /r c:\ sdna_plus
 
+
+    - name: List "Program Files (x86)\sDNA\**"
+      run: |
+        dir "C:\Program Files (x86)\sDNA"
+        dir "C:\Program Files (x86)\sDNA\x64"
+        dir "C:\Program Files (x86)\sDNA\bin"
+        dir "c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll"
+
     - name: Run debug_test.py
       shell: cmd
       working-directory: '.\sDNA\sdna_vs2008\tests'
-      run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
+      run: python -u debug_test.py
+      # run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
