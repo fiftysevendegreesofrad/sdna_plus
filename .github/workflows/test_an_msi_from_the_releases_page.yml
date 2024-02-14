@@ -42,7 +42,7 @@ jobs:
     - name: Try script from Stack Overflow
       # https://stackoverflow.com/a/72291019/20785734
       run: |
-        $file = sDNA_setup_win_v${{ env.VERSION }}.msi
+        $file = "sDNA_setup_win_v${{ env.VERSION }}.msi"
         Invoke-WebRequest ${{ env.DOWNLOAD_URL_PREFIX }}${{ env.VERSION }}.msi -OutFile $file
         $log = "install.log" 
         $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
