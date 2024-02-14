@@ -80,4 +80,4 @@ jobs:
     - name: Run debug_test.py
       shell: cmd
       working-directory: '.\sDNA\sdna_vs2008\tests'
-      run: set "sdnadll=d:\a\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
+      run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
