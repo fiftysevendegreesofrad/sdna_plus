@@ -23,7 +23,8 @@ OUTPUT_SUFFIX = 'py%s' % sys.version_info[0]
 
 ON_WINDOWS = (sys.platform == 'win32')
 
-LOCATIONS = (os.path.join(os.path.dirname(__file__), r'..\..\..\..\output\Debug\x64\sdna_vs2008.dll'),
+SDNA_DLL_LOCATIONS = (
+             os.path.join(os.path.dirname(__file__), r'..\..\..\..\output\Debug\x64\sdna_vs2008.dll'),
              os.path.join(os.path.dirname(__file__), r'..\..\..\..\output\release\x64\sdna_vs2008.dll'),
              r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll',
             )
