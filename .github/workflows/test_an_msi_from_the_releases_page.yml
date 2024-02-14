@@ -34,12 +34,22 @@ jobs:
     # specified version of Python, and the dep for sDNA Learn (numpy), 
     # and Pytest. 
     steps:
-    - name: Download and install release of sDNA, then delete installer file.
+    # - name: Download and install release of sDNA, then delete installer file.
+    #   run: |
+    #     Invoke-WebRequest ${{ env.DOWNLOAD_URL_PREFIX }}${{ env.VERSION }}.msi -OutFile sDNA_setup_win_v${{ env.VERSION }}.msi
+    #     .\sDNA_setup_win_v${{ env.VERSION }}.msi /passive
+    #     Remove-Item .\sDNA_setup_win_v${{ env.VERSION }}.msi
+    - name: Try script from Stack Overflow
+      # https://stackoverflow.com/a/72291019/20785734
       run: |
-        Invoke-WebRequest ${{ env.DOWNLOAD_URL_PREFIX }}${{ env.VERSION }}.msi -OutFile sDNA_setup_win_v${{ env.VERSION }}.msi
-        .\sDNA_setup_win_v${{ env.VERSION }}.msi /passive
-        Remove-Item .\sDNA_setup_win_v${{ env.VERSION }}.msi
-
+        $file = sDNA_setup_win_v${{ env.VERSION }}.msi
+        Invoke-WebRequest ${{ env.DOWNLOAD_URL_PREFIX }}${{ env.VERSION }}.msi -OutFile $file
+        $log = "install.log" 
+        $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
+        $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
+        $procMain.WaitForExit() 
+        $procLog.Kill()
+        Remove-Item $file
 
     - name: List dir
       run: dir d:\a\
@@ -57,6 +67,9 @@ jobs:
     - name: Echo path 
       shell: cmd
       run: echo %path%
+
+    - name: Echo home 
+      run: echo %home%
 
 
     - name: List c:\
@@ -82,7 +95,7 @@ jobs:
 
     - name: 'Where %appdata%'
       shell: cmd
-      run: where \r %appdata% sDNA
+      run: where \r %appdata% sDNA*
 
   # test_sDNA_msi:
   
