@@ -13,7 +13,7 @@ env:
 
   DOWNLOAD_URL_PREFIX: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v
 #                e.g.: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v4_1_1.msi
-#                      https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/old%20versions/sDNA_setup_win_v3_4_5.msi
+#                  or: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/old%20versions/sDNA_setup_win_v3_4_5.msi
 
 
 
@@ -23,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        python_version: ['3.12'] #, '2.7']
+        python_version: ['2.7', '3.0', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
         test_index: [0]
 
     name: "Download and install a release of sDNA, and run diff tests on it. "
@@ -36,9 +36,6 @@ jobs:
     #
     # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
     #
-    # The test code this action calls (run_diff_tests.yml) installs the 
-    # specified version of Python, and the dep for sDNA Learn (numpy), 
-    # and Pytest. 
     steps:
 
 
