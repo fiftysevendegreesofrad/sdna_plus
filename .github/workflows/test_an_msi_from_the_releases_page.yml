@@ -19,8 +19,14 @@ env:
 
 jobs:
 
-  download_and_install_sDNA_msi:
-    name: "Download and install a release of sDNA. "
+  download_install_and_test_sDNA_msi:    
+
+    strategy:
+      matrix:
+        python_version: ['3.12'] #, '2.7']
+        test_index: [0]
+
+    name: "Download and install a release of sDNA, and run diff tests on it. "
     
     runs-on: windows-2022
     # Note:  The Windows server 2022 Github runner image already includes  
@@ -34,6 +40,11 @@ jobs:
     # specified version of Python, and the dep for sDNA Learn (numpy), 
     # and Pytest. 
     steps:
+
+
+    - uses: actions/checkout@v4
+
+
     # - name: Download and install release of sDNA, then delete installer file.
 
     #   run: |
@@ -61,25 +72,57 @@ jobs:
         Remove-Item $file
 
 
-    # - name: Echo path 
-    #   shell: cmd
-    #   run: echo %path%
+    # # - name: Echo path 
+    # #   shell: cmd
+    # #   run: echo %path%
 
-    # - name: Echo home 
-    #   run: echo %home%
+    # # - name: Echo home 
+    # #   run: echo %home%
 
 
-    - name: List "Program Files (x86)\sDNA\**"
+    # - name: List "Program Files (x86)\sDNA\**"
+    #   run: |
+    #     dir "C:\Program Files (x86)\sDNA"
+    #     dir "C:\Program Files (x86)\sDNA\x64"
+    #     dir "C:\Program Files (x86)\sDNA\bin"
+
+
+
+    - uses: LizardByte/setup-python-action@master
+      with:
+        python-version: ${{ inputs.python_version }}
+
+    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
+      working-directory: .\sDNA\sdna_vs2008\tests\pytest
+      run: pip install pytest numpy
+
+    - name: Show versions.
+      working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
       run: |
-        dir "C:\Program Files (x86)\sDNA"
-        dir "C:\Program Files (x86)\sDNA\x64"
-        dir "C:\Program Files (x86)\sDNA\bin"
+        python --version
+        python -c "import numpy; print('Numpy: %s' % numpy.__version__)"
+        python -m pytest --version
 
+    - name: Run debug_test.py
+      shell: cmd
+      working-directory: '.\sDNA\sdna_vs2008\tests'
+      # run: python -u debug_test.py
+      run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
 
-  test_sDNA_msi:
+    # - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
+    #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
+    #   run: python test_gathering_windows_command_line_tests.py ${{ inputs.test_index }}
+
+    # - name: Run the diff tests with Pytest.
+    
+    #   working-directory: .\sDNA\sdna_vs2008\tests\pytest
+    #   run: pytest -rA
+    #   # -rA shows summary of tests, one per line, even when they all pass.
+        
+  # test_sDNA_msi:
   
 
-    needs: download_and_install_sDNA_msi
+  #   needs: download_and_install_sDNA_msi
       # TODO: This is an unrepresentative test. As the 
       # sdna_vs2008.dll binary
       # being tested is from the releases downloads page, but the sDNA Python
@@ -92,12 +135,12 @@ jobs:
       # The test
       # directory probably just needs to be copied from the repo, into the sDNA
       # installation to be tested's tree, and pytest run from there.  
-    strategy:
-      matrix:
-        python_version: ['3.12'] #, '2.7']
-        test_index: [0]
-    name: "Run diff_tests.yml on the installed sDNA release"
-    uses: ./.github/workflows/diff_tests.yml
-    with:
-      python_version: ${{ matrix.python_version }}
-      test_index: ${{ matrix.test_index }}
+    # strategy:
+    #   matrix:
+    #     python_version: ['3.12'] #, '2.7']
+    #     test_index: [0]
+    # name: "Run diff_tests.yml on the installed sDNA release"
+    # uses: ./.github/workflows/diff_tests.yml
+    # with:
+    #   python_version: ${{ matrix.python_version }}
+    #   test_index: ${{ matrix.test_index }}
