@@ -23,9 +23,26 @@ OUTPUT_SUFFIX = 'py%s' % sys.version_info[0]
 
 ON_WINDOWS = (sys.platform == 'win32')
 
-print('ON_WINDOWS: %s' % ON_WINDOWS)
+LOCATIONS = (os.path.join(os.path.dirname(__file__), r'..\..\..\..\output\Debug\x64\sdna_vs2008.dll'),
+             os.path.join(os.path.dirname(__file__), r'..\..\..\..\output\release\x64\sdna_vs2008.dll'),
+             r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll',
+            )
 
-SDNA_DLL = os.getenv('sdnadll', r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll')
+SDNA_DLL = os.getenv('sdnadll', '')
+
+if not SDNA_DLL:
+    for sdna_dll_path in SDNA_DLL_LOCATIONS:
+        if os.path.isfile(sdna_dll_path):
+            SDNA_DLL = sdna_dll_path
+            break
+    else:
+        raise Exception(r'Env variable %sdnadll% not set, and no sdna_vs2008.dll found in locations: \n%s' % 
+                        '\n'.join(SDNA_DLL_LOCATIONS)
+                       )
+
+
+print(r'Using %sdnadll%==' + SDNA_DLL)
+
 
 SDNA_DEBUG = bool(os.getenv('sdna_debug', ''))
 
@@ -33,6 +50,8 @@ print('SDNA_DEBUG: %s' % SDNA_DEBUG)
 
 
 TMP_SDNA_DIR = os.path.join(tempfile.gettempdir(), 'sDNA', 'tests', 'pytest')
+
+DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER = bool(os.getenv('DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER', ''))
 
 if not os.path.isdir(TMP_SDNA_DIR):
     os.makedirs(TMP_SDNA_DIR)
@@ -268,7 +287,7 @@ class PythonCommand(Command):
 
 
     def _run(self, output_so_far):
-
+        print('self.command_str: %s' % self.command_str)
         if self.retcode_zero_expected:
             return output_so_far + _run_insecurely_in_shell_without_catching_exceptions(self.command_str)
 
@@ -443,9 +462,13 @@ class SedCommand(Command):
         after_sed = self.command_str[4:]
 
         # Sed commands containing whitespace will break this
-        self.sed_command, __, input_file = after_sed.strip().partition('/ ')
+        sed_command, __, input_file = after_sed.strip().partition(' ')
 
-        self.sed_command += '/'
+        # De-quote
+        if sed_command[0] == sed_command[-1] in ('"', "'"):
+            sed_command = sed_command[1:-1]
+
+        self.sed_command = sed_command
 
         self.requires.append(input_file)
 
@@ -454,28 +477,28 @@ class SedCommand(Command):
     def _run(self, output_so_far):
 
         tmp_file = os.path.join(TMP_SDNA_DIR, 'input_for_sed_command_buffer.txt')
-        # try:
-        with open(tmp_file,'wt') as f:
-            f.write(output_so_far)
+        try:
+            with open(tmp_file,'wt') as f:
+                f.write(output_so_far)
 
-            # The inefficiency of calling out, keeps the test(s) the same as before, 
-            # as far as possible.  And avoids inserting Python 'sed' 
-            # code into the existing sDNA tests.
+                # The inefficiency of calling out, keeps the test(s) the same as before, 
+                # as far as possible.  And avoids inserting Python 'sed' 
+                # code into the existing sDNA tests.
 
-            # cmd.exe treats single quotes the same as any other character, 
-            # but e.g. on bash, double quotes can trigger expansions, but
-            # single quotes are a literal string.
-        quote = '' if ON_WINDOWS else "'"
-        sed_command = ''.join([quote, self.sed_command, quote])
+                # cmd.exe treats single quotes the same as any other character, 
+                # but e.g. on bash, double quotes can trigger expansions, but
+                # single quotes are a literal string.
+            quote = '' if ON_WINDOWS else "'"
+            sed_command = ''.join([quote, self.sed_command, quote])
 
 
-        output = _run_insecurely_in_shell_without_catching_exceptions(
-                        'sed %s <%s' % (sed_command, tmp_file)
-                        )
+            output = _run_insecurely_in_shell_without_catching_exceptions(
+                            'sed %s <%s' % (sed_command, tmp_file)
+                            )
 
             # print('Sed output: %s' % output)
-        # finally:
-        os.unlink(tmp_file)
+        finally:
+            os.unlink(tmp_file)
 
         return output
 
@@ -506,6 +529,11 @@ class DiffCommand(Command):
         # with open('pytest_diff_output.txt', 'wt') as f:
         #     f.write(output_so_far)
 
+
+        if DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER:
+            actual_one_link_subsystems = collections.Counter()
+            expected_one_link_subsystems = collections.Counter()
+
         with open(self.expected_output_file, 'rt') as f:
             if SDNA_DEBUG:
                 expected_lines = f
@@ -520,6 +548,7 @@ class DiffCommand(Command):
             # SdnaShapefileEnvironment calls) which .splitlines splits on,
             # so split explicitly on '\n' and .strip afterwards
             actual_lines = iter(output_so_far.split('\n'))
+            n = 0
 
             def de_progress(str_):
                 return re.split(r'Progress: 1?\d?\d(\.\d)?%', str_)[-1]
@@ -539,13 +568,11 @@ class DiffCommand(Command):
 
 
             prev_expected = ''
-            num_lines_tested=0
             i=0
             for i, (expected, actual) in enumerate(tuples_of_nontrivial_nonProgress_strings(
                                                         expected_lines,
                                                         output_so_far.split('\n'),
-                                                        ),
-                                                    start = 1
+                                                        )
                                                    ):
                 # if prev_expected.startswith('Progress') and not expected:
                 # continue
@@ -572,6 +599,16 @@ class DiffCommand(Command):
                 if expected.startswith("sDNA processing"):
                     continue
 
+                prefix = '1-link subsystem contains link with id = '
+
+                if (DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER and 
+                    actual.startswith(prefix) and 
+                    expected.startswith(prefix)):
+                    #
+                    actual_one_link_subsystems.update([actual.split(prefix)[1].strip()])
+                    expected_one_link_subsystems.update([expected.split(prefix)[1].strip()])
+                    continue
+
                 # if actual.startswith('Progress: '):
                 #     continue
 
@@ -590,10 +627,17 @@ class DiffCommand(Command):
                 assert actual.strip() == expected.strip(), '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: "%s", \n\n Actual: "%s"' % (i, buffer_size - 1,''.join(expected_buffer), '\n'.join(actual_buffer))
                 # assert actual.strip() == expected.strip(), 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
                 prev_expected = expected
-                num_lines_tested += 1
+                n += 1
 
-            skips = (i - num_lines_tested)
-            print('[92mPassed![0m Num of equal expected & actual lines": %s. (Num lines skipped: %s exc debug etc.)' % (num_lines_tested, skips))
+            if DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER:
+                # collections.Counters.  Assert equal frequency accounts, but 1-link subsystem ids could 
+                # be returned in any order.
+                assert actual_one_link_subsystems == expected_one_link_subsystems, ("Expected - Actual: %s, \n\nActual - Expected: %s" % 
+                                                                                        (expected_one_link_subsystems - actual_one_link_subsystems, 
+                                                                                         actual_one_link_subsystems - expected_one_link_subsystems
+                                                                                        ))
+
+            print('[92mPassed![0m Num of equal expected & actual lines": %s. (Num lines skipped: %s exc debug etc.)' % (n,i-n))
 
 
         return output_so_far

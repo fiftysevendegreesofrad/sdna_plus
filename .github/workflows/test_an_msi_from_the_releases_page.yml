@@ -129,7 +129,7 @@ jobs:
     - name: Run all the diff tests with Pytest.
     
       working-directory: .\sDNA\sdna_vs2008\tests\pytest
-      run: pytest -rA
+      run: set DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER=1 & pytest -rA
       # -rA shows summary of tests, one per line, even when they all pass.
         
   
