@@ -103,15 +103,15 @@ jobs:
         python -c "import numpy; print('Numpy: %s' % numpy.__version__)"
         python -m pytest --version
 
-    - name: Run debug_test.py
-      shell: cmd
-      working-directory: '.\sDNA\sdna_vs2008\tests'
-      # run: python -u debug_test.py
-      run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
+    # - name: Run debug_test.py
+    #   shell: cmd
+    #   working-directory: '.\sDNA\sdna_vs2008\tests'
+    #   # run: python -u debug_test.py
+    #   run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
 
-    # - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
-    #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
-    #   run: python test_gathering_windows_command_line_tests.py ${{ matrix.test_index }}
+    - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
+      working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
+      run: python test_gathering_windows_command_line_tests.py ${{ matrix.test_index }}
 
     # - name: Run the diff tests with Pytest.
     
