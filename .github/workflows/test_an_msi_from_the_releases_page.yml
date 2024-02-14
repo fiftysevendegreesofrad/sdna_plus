@@ -25,7 +25,6 @@ jobs:
       fail-fast: false
       matrix:
         python_version: ['2.7',  '3.7', '3.8', '3.9', '3.10', '3.11', '3.12'] #'3.0', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6',
-        test_index: [0]
 
     name: "Download and install a release of sDNA, and run diff tests on it. "
     
@@ -70,20 +69,6 @@ jobs:
         Remove-Item $file
 
 
-    # # - name: Echo path 
-    # #   shell: cmd
-    # #   run: echo %path%
-
-    # # - name: Echo home 
-    # #   run: echo %home%
-
-
-    # - name: List "Program Files (x86)\sDNA\**"
-    #   run: |
-    #     dir "C:\Program Files (x86)\sDNA"
-    #     dir "C:\Program Files (x86)\sDNA\x64"
-    #     dir "C:\Program Files (x86)\sDNA\bin"
-
 
 
     - uses: LizardByte/setup-python-action@master
@@ -112,17 +97,20 @@ jobs:
       # 
       # The test
       # directory probably just needs to be copied from the repo, into the sDNA
-      # installation to be tested's tree, and pytest run from there.  
+      # installation to be tested's tree, and pytest run from there.  Or allow
+      # "..\..\..\arcscripts" to be replaced by an environment variable, pointing
+      # to the corresponsing directory of the sDNA installation to be tested.
       
-    # - name: Run debug_test.py
+    # - name: Run debug_test.py directly.
     #   shell: cmd
     #   working-directory: '.\sDNA\sdna_vs2008\tests'
     #   # run: python -u debug_test.py
     #   run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
 
-    # - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
+    # - name: Run diff test number 0 directly via
+    #   test_gathering_windows_command_line_tests.py, by test index
     #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
-    #   run: python test_gathering_windows_command_line_tests.py ${{ matrix.test_index }}
+    #   run: python test_gathering_windows_command_line_tests.py 0
 
     - name: Run all the diff tests with Pytest.
       shell: cmd
