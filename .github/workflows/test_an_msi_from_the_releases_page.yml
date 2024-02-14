@@ -90,7 +90,7 @@ jobs:
 
     - uses: LizardByte/setup-python-action@master
       with:
-        python-version: ${{ inputs.python_version }}
+        python-version: ${{ matrix.python_version }}
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
       working-directory: .\sDNA\sdna_vs2008\tests\pytest
@@ -111,7 +111,7 @@ jobs:
 
     # - name: Run a diff test directly from test_gathering_windows_command_line_tests.py
     #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
-    #   run: python test_gathering_windows_command_line_tests.py ${{ inputs.test_index }}
+    #   run: python test_gathering_windows_command_line_tests.py ${{ matrix.test_index }}
 
     # - name: Run the diff tests with Pytest.
     
