@@ -2,7 +2,7 @@ name: test_an_msi_from_the_releases_page
 
 on:  
   push:
-    branches: ["Test_releases_in_a_Github_Action"]
+    branches: ["main"]
   workflow_call:
 
   workflow_dispatch:
