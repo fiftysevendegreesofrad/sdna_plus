@@ -54,7 +54,11 @@ print('SDNA_DEBUG: %s' % SDNA_DEBUG)
 
 TMP_SDNA_DIR = os.path.join(tempfile.gettempdir(), 'sDNA', 'tests', 'pytest')
 
-DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER = bool(os.getenv('DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER', ''))
+DONT_TEST_N_LINK_SUBSYSTEMS_ORDER = bool(os.getenv('DONT_TEST_N_LINK_SUBSYSTEMS_ORDER', ''))
+
+N_LINK_SUBSYSTEMS_PATTERN = r'(?P<N>\d+)-link subsystem contains link with id = (?P<id>\d+)'
+
+SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF = (1, 3)
 
 if not os.path.isdir(TMP_SDNA_DIR):
     os.makedirs(TMP_SDNA_DIR)
@@ -68,6 +72,7 @@ os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 # but they are, and neither Python 2, nor Pytest versions that support Python 2 are 
 # accepting fixes.
 BATCH_FILES_GLOB = '*.bat' if (__name__=='__main__' and not PYTHON_3) else '../*.bat' 
+
 
 def batch_file_tests():
     for file_ in glob.glob(os.path.join(os.path.dirname(__file__), BATCH_FILES_GLOB)):
@@ -533,9 +538,9 @@ class DiffCommand(Command):
         #     f.write(output_so_far)
 
 
-        if DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER:
-            actual_one_link_subsystems = collections.Counter()
-            expected_one_link_subsystems = collections.Counter()
+        if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
+            actual_n_link_subsystems = collections.defaultdict(collections.Counter)
+            expected_n_link_subsystems = collections.defaultdict(collections.Counter)
 
         with open(self.expected_output_file, 'rt') as f:
             if SDNA_DEBUG:
@@ -551,7 +556,7 @@ class DiffCommand(Command):
             # SdnaShapefileEnvironment calls) which .splitlines splits on,
             # so split explicitly on '\n' and .strip afterwards
             actual_lines = iter(output_so_far.split('\n'))
-            n = 0
+            m = 0
 
             def de_progress(str_):
                 return re.split(r'Progress: 1?\d?\d(\.\d)?%', str_)[-1]
@@ -577,6 +582,9 @@ class DiffCommand(Command):
                                                         output_so_far.split('\n'),
                                                         )
                                                    ):
+
+                expected, actual = expected.rstrip(), actual.rstrip()
+
                 # if prev_expected.startswith('Progress') and not expected:
                 # continue
                 # actual = next(actual_lines)
@@ -588,7 +596,6 @@ class DiffCommand(Command):
 
 
                 # print('Expected: %s, \n\nActual: %s' % (expected, actual))
-
 
                 # Allow the result of a test, requiring most of 
                 # of correctout_prepbarns.txt to be exactly the same, 
@@ -602,15 +609,18 @@ class DiffCommand(Command):
                 if expected.startswith("sDNA processing"):
                     continue
 
-                prefix = '1-link subsystem contains link with id = '
+                if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER and 'prepare' in self.file:
 
-                if (DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER and 
-                    actual.startswith(prefix) and 
-                    expected.startswith(prefix)):
-                    #
-                    actual_one_link_subsystems.update([actual.split(prefix)[1].strip()])
-                    expected_one_link_subsystems.update([expected.split(prefix)[1].strip()])
-                    continue
+                    match_actual = re.match(N_LINK_SUBSYSTEMS_PATTERN, actual) 
+                    match_expected = re.match(N_LINK_SUBSYSTEMS_PATTERN, expected)
+
+                    if (match_actual and match_expected and 
+                        (match_actual['N'] == match_expected['N']) and
+                        int(match_actual['N']) in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF):
+                        #
+                        actual_n_link_subsystems[match_actual['N']].update([match_actual['id']])
+                        expected_n_link_subsystems[match_expected['N']].update([match_expected['id']])
+                        continue
 
                 # if actual.startswith('Progress: '):
                 #     continue
@@ -623,24 +633,25 @@ class DiffCommand(Command):
                 expected_buffer.append(expected)
 
                 if 'sDNA is running in ' in actual:
-                    actual = actual.strip()
                     if actual.startswith('Progress:') and actual.endswith('-bit mode'):
                         actual = ''.join(actual.partition('sDNA is running in ')[1:])
 
-                assert actual.strip() == expected.strip(), '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: "%s", \n\n Actual: "%s"' % (i, buffer_size - 1,''.join(expected_buffer), '\n'.join(actual_buffer))
-                # assert actual.strip() == expected.strip(), 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
+                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: "%s", \n\n Actual: "%s"' % (i, buffer_size - 1,''.join(expected_buffer), '\n'.join(actual_buffer))
+                # assert actual == expected, 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
                 prev_expected = expected
-                n += 1
+                m += 1
 
-            if DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER:
-                # collections.Counters.  Assert equal frequency accounts, but 1-link subsystem ids could 
-                # be returned in any order.
-                assert actual_one_link_subsystems == expected_one_link_subsystems, ("Expected - Actual: %s, \n\nActual - Expected: %s" % 
-                                                                                        (expected_one_link_subsystems - actual_one_link_subsystems, 
-                                                                                         actual_one_link_subsystems - expected_one_link_subsystems
-                                                                                        ))
+            if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
+                for N in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF:
+                    actual_counter, expected_counter = actual_one_link_subsystems[str(N)], expected_one_link_subsystems[str(N)]
 
-            print('[92mPassed![0m Num of equal expected & actual lines": %s. (Num lines skipped: %s exc debug etc.)' % (n,i-n))
+                    assert actual_counter == expected_counter, ("Num links in subsytem: %s\n, Expected - Actual: %s, \n\nActual - Expected: %s" % 
+                                                                (N,
+                                                                 expected_counter - actual_counter, 
+                                                                 actual_counter - expected_counter
+                                                                ))
+
+            print('[92mPassed![0m Num of equal expected & actual lines": %s. (Num lines skipped: %s exc debug etc.)' % (m,i-m))
 
 
         return output_so_far
