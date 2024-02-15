@@ -247,8 +247,8 @@ class Command(object):
 
             # output_so_far = output_so_far or self.pseudo_files_to_pipe_output_to.get(self.file, None)
 
-            print('Running command type: %s, file: %s, .bat command: %s\n, requires: %s\n, mutates: %s\n\n' % 
-                                    (self.__class__, self.file, self.unparsed_str, self.requires, self.mutates))
+            # print('Running command type: %s, file: %s, .bat command: %s\n, requires: %s\n, mutates: %s\n\n' % 
+            #                         (self.__class__, self.file, self.unparsed_str, self.requires, self.mutates))
 
             tmp_output = self._run(output_so_far)
 
@@ -297,7 +297,7 @@ class PythonCommand(Command):
 
 
     def _run(self, output_so_far):
-        print('self.command_str: %s' % self.command_str)
+        # print('self.command_str: %s' % self.command_str)
         if self.retcode_zero_expected:
             return output_so_far + _run_insecurely_in_shell_without_catching_exceptions(self.command_str)
 
@@ -643,6 +643,8 @@ class DiffCommand(Command):
                 # assert actual == expected, 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
                 prev_expected = expected
                 m += 1
+
+            assert m >= 1, 'm==%s tested from: %s. Raising AssertionError to avoid false positive. Fix this test!! ' % (m, self.file)
 
             if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
                 for N in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF:
