@@ -44,7 +44,7 @@ if not SDNA_DLL:
                        )
 
 
-print(r'Using %sdnadll%==' + SDNA_DLL)
+print('SDNA_DLL: %s' % SDNA_DLL)
 
 
 SDNA_DEBUG = bool(os.getenv('sdna_debug', ''))
@@ -56,7 +56,7 @@ TMP_SDNA_DIR = os.path.join(tempfile.gettempdir(), 'sDNA', 'tests', 'pytest')
 
 DONT_TEST_N_LINK_SUBSYSTEMS_ORDER = bool(os.getenv('DONT_TEST_N_LINK_SUBSYSTEMS_ORDER', ''))
 
-print('Using %%dont_test_n_link_subsystems_order%%==%s' % DONT_TEST_N_LINK_SUBSYSTEMS_ORDER)
+print('DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: %s' % DONT_TEST_N_LINK_SUBSYSTEMS_ORDER)
 
 N_LINK_SUBSYSTEMS_PATTERN = r'(?P<N>\d+)-link subsystem contains link with id = (?P<id>\d+)'
 
@@ -247,8 +247,8 @@ class Command(object):
 
             # output_so_far = output_so_far or self.pseudo_files_to_pipe_output_to.get(self.file, None)
 
-            # print('Running command type: %s, file: %s, .bat command: %s\n, requires: %s\n, mutates: %s\n\n' % 
-            #                         (self.__class__, self.file, self.unparsed_str, self.requires, self.mutates))
+            print('Running command type: %s, file: %s, .bat command: %s\n, requires: %s\n, mutates: %s\n\n' % 
+                                    (self.__class__, self.file, self.unparsed_str, self.requires, self.mutates))
 
             tmp_output = self._run(output_so_far)
 
@@ -377,7 +377,7 @@ class Shp2TxtCommand(PythonScriptCommand):
     # def _run(self, output_so_far):
     #     retval = super(Shp2TxtCommand, self)._run(output_so_far)
 
-
+    #     print('Shp2Txt, output_so_far: %r' % output_so_far)
     #     return retval
 
 
@@ -539,6 +539,8 @@ class DiffCommand(Command):
         # with open('pytest_diff_output.txt', 'wt') as f:
         #     f.write(output_so_far)
 
+        print('self.pseudo_files_to_pipe_output_to: %s\n' % self.pseudo_files_to_pipe_output_to)
+        # print('self.pseudo_files_state: %s' % self.pseudo_files_state)
 
         if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
             actual_n_link_subsystems = collections.defaultdict(collections.Counter)
@@ -552,7 +554,7 @@ class DiffCommand(Command):
 
             # expected = ''
             # print('Num of lines in actual output: %s' % len(output_so_far.splitlines()))
-            # print('output_so_far: %r' % output_so_far[:50])
+            print('output_so_far: %r' % output_so_far[:50])
             # actual_lines = iter(output_so_far.splitlines())
             # sDNA prepends Progress and other strings with '\r' (in 
             # SdnaShapefileEnvironment calls) which .splitlines splits on,
@@ -644,7 +646,7 @@ class DiffCommand(Command):
                 prev_expected = expected
                 m += 1
 
-            assert m >= 1, 'm==%s tested from: %s. Raising AssertionError to avoid false positive. Fix this test!! ' % (m, self.file)
+            assert m >= 1, 'm==%s lines tested from: %s. output_so_far: %s.  Raising AssertionError to avoid false positive. This test needs should be fixed!! ' % (m, self.file, output_so_far)
 
             if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
                 for N in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF:
@@ -762,7 +764,7 @@ if __name__=='__main__':
     # print('\n\n Test files for diffing: %s\n' % diff_tests)
     # print('\n\n Diffing test commands: %s\n' % [command.command_str for command in diff_tests])
 
-    print('diff_test_expected_files: %s' % diff_test_expected_files)
+    # print('diff_test_expected_files: %s' % diff_test_expected_files)
 
     # print('Hybrid command_strs: %s' % '\n'.join([str((command, vars(command))) for commands in Command.pseudo_files_state.values()
     #                                                        for command in commands
