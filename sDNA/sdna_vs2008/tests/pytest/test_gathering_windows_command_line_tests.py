@@ -56,9 +56,11 @@ TMP_SDNA_DIR = os.path.join(tempfile.gettempdir(), 'sDNA', 'tests', 'pytest')
 
 DONT_TEST_N_LINK_SUBSYSTEMS_ORDER = bool(os.getenv('DONT_TEST_N_LINK_SUBSYSTEMS_ORDER', ''))
 
+print('Using %%dont_test_n_link_subsystems_order%%==%s' % DONT_TEST_N_LINK_SUBSYSTEMS_ORDER)
+
 N_LINK_SUBSYSTEMS_PATTERN = r'(?P<N>\d+)-link subsystem contains link with id = (?P<id>\d+)'
 
-SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF = (1, 3)
+SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF = ('1', '3')
 
 if not os.path.isdir(TMP_SDNA_DIR):
     os.makedirs(TMP_SDNA_DIR)
@@ -608,15 +610,16 @@ class DiffCommand(Command):
                 # Can't capture this string from env for some reason?
                 if expected.startswith("sDNA processing"):
                     continue
+                
 
-                if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER and 'prepare' in self.file:
+                if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER and 'testout_prep_' in self.file:
 
                     match_actual = re.match(N_LINK_SUBSYSTEMS_PATTERN, actual) 
                     match_expected = re.match(N_LINK_SUBSYSTEMS_PATTERN, expected)
 
                     if (match_actual and match_expected and 
                         (match_actual['N'] == match_expected['N']) and
-                        int(match_actual['N']) in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF):
+                        match_actual['N'] in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF):
                         #
                         actual_n_link_subsystems[match_actual['N']].update([match_actual['id']])
                         expected_n_link_subsystems[match_expected['N']].update([match_expected['id']])
@@ -636,14 +639,14 @@ class DiffCommand(Command):
                     if actual.startswith('Progress:') and actual.endswith('-bit mode'):
                         actual = ''.join(actual.partition('sDNA is running in ')[1:])
 
-                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: "%s", \n\n Actual: "%s"' % (i, buffer_size - 1,''.join(expected_buffer), '\n'.join(actual_buffer))
+                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: "%s", \n\n Actual: "%s"' % (i, buffer_size - 1,'\n'.join(expected_buffer), '\n'.join(actual_buffer))
                 # assert actual == expected, 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
                 prev_expected = expected
                 m += 1
 
             if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
                 for N in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF:
-                    actual_counter, expected_counter = actual_one_link_subsystems[str(N)], expected_one_link_subsystems[str(N)]
+                    actual_counter, expected_counter = actual_n_link_subsystems[N], expected_n_link_subsystems[N]
 
                     assert actual_counter == expected_counter, ("Num links in subsytem: %s\n, Expected - Actual: %s, \n\nActual - Expected: %s" % 
                                                                 (N,
