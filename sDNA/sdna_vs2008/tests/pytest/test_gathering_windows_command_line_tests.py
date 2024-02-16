@@ -77,6 +77,10 @@ os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 # accepting fixes.
 BATCH_FILES_GLOB = '*.bat' if (__name__=='__main__' and not PYTHON_3) else '../*.bat' 
 
+ENV = os.environ.copy()
+
+ENV['sdnadll'] = SDNA_DLL
+
 
 def batch_file_tests():
     for file_ in glob.glob(os.path.join(os.path.dirname(__file__), BATCH_FILES_GLOB)):
@@ -101,7 +105,7 @@ def windows_test_commands():
                 command = command.replace(r'%outputsuffix%', OUTPUT_SUFFIX)
                 command = command.rstrip()
 
-                for suffix in ['2>&1', '2>>&1', '2>>NUL', '2>NUL', '>NUL']:
+                for suffix in ['2>&1', '2>>&1', '2>>NUL', '2>NUL', '>NUL', '>NUL 2>NUL']:
                     if command.endswith(suffix):
                         command = command[:-len(suffix)].rstrip()
                 
@@ -142,30 +146,18 @@ def path_to_file_in_dir_if_it_exists_there(path_str, dir_='.', exts = ('', '.shp
 
 
 class Command(object):
-    # Require output file name of each diff test to be unique.  Probably no bad thing
-    # to enforce well-designed, independent tests.  And tracking a list of lists of 
-    # commands could be nightmareish to debug.  But this is a limitation.
-    file = None
 
-    pseudo_files_state = collections.defaultdict(list)
+    pipe_to = ''
+
 
     pseudo_files_to_pipe_output_to = collections.defaultdict(str)
 
     # overwrite == False => piped output is appended.
     overwrite_file_to_pipe_output_to = False
 
-    def register_file_mutation(self, file_):
-        self.mutates.append(file_)
 
-        # mutates the shared, class-wide variable, not an instance variable.
-        self.pseudo_files_state[file_].append(self)
-
-
-    # def __init__(self, command_str = '', mutates = None, requires = None, target_dir='..'):
-    def __init__(self, command_str = '', mutates = None, requires = None, target_dir='.'):
+    def __init__(self, command_str = '', target_dir='.'):
         
-        self.mutates = mutates or []
-        self.requires = requires or []
         self.unparsed_str = command_str
 
 
@@ -178,9 +170,6 @@ class Command(object):
             new_arg = path_to_file_in_dir_if_it_exists_there(new_arg, dir_ = target_dir)
             args[i] = new_arg
 
-            # if 'hybrid' in arg:
-            #     print('arg: %s, new_arg: %s' % (arg, new_arg))
-
         command_str = ''.join(args)
 
 
@@ -192,89 +181,26 @@ class Command(object):
             else:
                 self.overwrite_file_to_pipe_output_to = True
                 
-            self.register_file_mutation(file_)
-            self.file = file_
+            self.pipe_to = file_
 
         self.command_str = command_str
 
-        # if 'hybrid_test.py' in self.command_str:
-        #     print('command: %s' % self.command_str)
 
         self.run_result = None
 
 
-    @classmethod
-    def _run_file_mutating_commands(cls, file_, input_ = ''):
-        commands = cls.pseudo_files_state[file_]
+    def run(self):
+        tmp_output = self._run()
 
-        if not isinstance(commands, str):
-
-            output = input_
-            prev_output_file = None
-
-            # Main command runner
-            for command in commands:
-                
-                if command.file is None or command.file != prev_output_file:
-                    output = input_
-                
-                output = command.run(output)
-
-                if command.file is not None:
-                    if command.overwrite_file_to_pipe_output_to:
-                        cls.pseudo_files_to_pipe_output_to[command.file] = output
-                    else:
-                        cls.pseudo_files_to_pipe_output_to[command.file] += output
-
-                prev_output_file = command.file
-
-            # Memoise result of running (replaces commands).
-            cls.pseudo_files_state[file_] = output
-
-        return cls.pseudo_files_state[file_]
-
-    # We assume each batch file only runs once, so cache the stdout & stderr.   
-    # But multiple commands therein might be affected by a mutation to a file 
-    # from a previous command.
-    def run(self, output_so_far = ''):
-        # if self.command_str.startswith('sed'):
-        if self.run_result is None:
-
-            output_from_requires = ''
-
-            for required_file in self.requires:
-                # Don't pass output_so_far to previous commands that produce a required file
-                output_from_requires = self._run_file_mutating_commands(required_file)
-                if required_file == self.file:
-                    output_so_far = output_so_far or output_from_requires
-
-            # output_so_far = output_so_far or self.pseudo_files_to_pipe_output_to.get(self.file, None)
-
-            print('Running command type: %s, file: %s, .bat command: %s\n, requires: %s\n, mutates: %s\n\n' % 
-                                    (self.__class__, self.file, self.unparsed_str, self.requires, self.mutates))
-
-            tmp_output = self._run(output_so_far)
-
+        if self.pipe_to is not None:
             if self.overwrite_file_to_pipe_output_to:
-                output_so_far = tmp_output
+                self.pseudo_files_to_pipe_output_to[self.pipe_to] = tmp_output
             else:
-                output_so_far += tmp_output
+                self.pseudo_files_to_pipe_output_to[self.pipe_to] += tmp_output
 
-            self.run_result = output_so_far
 
-        return self.run_result
-
-        def run2(self):
-            tmp_output = self._run2()
-
-            if self.file is not None:
-                if self.overwrite_file_to_pipe_output_to:
-                    self.pseudo_files_to_pipe_output_to[self.file] = output
-                else:
-                    self.pseudo_files_to_pipe_output_to[self.file] += output
-
-        def _run2(self):
-            return self._run(output_so_far = '')
+    def __str__(self):
+        return '<%s, pipe_to: %s>' % (self.__class__.__name__, self.pipe_to)
 
 
 def _run_insecurely_in_shell_without_catching_exceptions(command_str):
@@ -293,16 +219,11 @@ class PythonCommand(Command):
     def __init__(self, command_str, retcode_zero_expected = False, **kwargs): 
         super(PythonCommand, self).__init__(command_str, **kwargs)
 
-
-
-
         self.retcode_zero_expected = retcode_zero_expected
-
 
         args_to_python = self.command_str.lstrip()
 
         for prefix in ['%pythonexe%', '-u', '-m']:
-
             if args_to_python.startswith(prefix):
                 args_to_python = args_to_python[len(prefix):].lstrip()
 
@@ -311,10 +232,9 @@ class PythonCommand(Command):
         self.command_str = self.command_str.replace(r'%pythonexe%', sys.executable)
 
 
-    def _run(self, output_so_far):
-        # print('self.command_str: %s' % self.command_str)
+    def _run(self):
         if self.retcode_zero_expected:
-            return output_so_far + _run_insecurely_in_shell_without_catching_exceptions(self.command_str)
+            return _run_insecurely_in_shell_without_catching_exceptions(self.command_str)
 
         try:
             return _run_insecurely_in_shell_without_catching_exceptions(self.command_str)
@@ -355,45 +275,11 @@ class sDNACommand(PythonScriptCommand):
 
         self.command_str = self.command_str.replace(r'%sdnadll%', self.sdna_dll_cli_arg)
 
-        for pattern in [r' --om "net=(\S*)"', r' -o (\S*) ']:
-            for file_ in re.findall(pattern, self.command_str):
-
-                # shp2txt.py is called with file names only, 
-                # it appends '.shp' itself, so remove any .shp here.
-                # (so that this sDNACommand can be run from a
-                #  later Shp2TxtCommand on which it depends)
-                # sDNA accepts shapefile names without '.shp's
-                if file_.endswith('.shp'):
-                    file_ = file_[:-4]
-
-                self.register_file_mutation(file_)
 
 
-class Shp2TxtCommand(PythonScriptCommand):
-    def __init__(self, command_str, **kwargs): 
-        super(Shp2TxtCommand, self).__init__(command_str, **kwargs)
 
-        for pattern in self.args_to_python_file.split(' '):
-            if pattern and not pattern.isspace():
 
-                # TODO: Account for:
-                # The globs passed to shp2txt.py
-                # may refer to files that only exist at
-                # shp2txt.py's run time (e.g. only once
-                # created by a previous statement in a
-                # source batch file), that may not yet exist
-                # at the time of batch file parsing and pytest
-                # test gathering.
-                if pattern[-1] == '*':
-                    pattern = pattern[:-1]
 
-                self.requires.append(pattern)
-
-    # def _run(self, output_so_far):
-    #     retval = super(Shp2TxtCommand, self)._run(output_so_far)
-
-    #     print('Shp2Txt, output_so_far: %r' % output_so_far)
-    #     return retval
 
 
 def python_command_and_pytest_param_decorator_factory(windows_command):
@@ -432,8 +318,6 @@ def python_commands_and_pytest_params():
 
         yield py_command
 
-ENV = os.environ.copy()
-ENV['sdnadll'] = SDNA_DLL
 
 # @pytest.mark.parametrize('command',list(python_commands_and_pytest_params()))
 # def test_command(command):
@@ -465,7 +349,6 @@ ENV['sdnadll'] = SDNA_DLL
 
 
 
-
 class EchoCommand(Command):
     def __init__(self, command_str, **kwargs):
         super(EchoCommand, self).__init__(command_str, **kwargs)
@@ -473,12 +356,20 @@ class EchoCommand(Command):
         self.output_str = self.command_str[5:].strip()
         
 
-    def _run(self, output_so_far):
+    def _run(self):
         return self.output_str + '\n'
 
 
+class ReadsTextInputFile(Command):
+    # sub class constructors must set: self.input_file
+    # and sub classes must define: self._run_using_input(input_)
 
-class SedCommand(Command):
+    def _run(self):
+        
+        return self._run_using_input(self.pseudo_files_to_pipe_output_to[self.input_file])
+
+
+class SedCommand(ReadsTextInputFile):
     def __init__(self, command_str, **kwargs):
         super(SedCommand, self).__init__(command_str, **kwargs)
 
@@ -495,46 +386,54 @@ class SedCommand(Command):
 
         self.sed_command = sed_command
 
-        self.requires.append(input_file)
-
         self.input_file = os.path.basename(input_file)
 
+    def __str__(self):
+        return '<%s, input: %s>' % (super(SedCommand, self).__str__()[1:-1], self.input_file)
 
-
-    def _run(self, output_so_far):
+    def _run_using_input(self, output_so_far):
 
         tmp_file = os.path.join(TMP_SDNA_DIR, 'input_for_sed_command_buffer.txt')
-        try:
-            with open(tmp_file,'wt') as f:
-                f.write(output_so_far)
+        # try:
+        with open(tmp_file,'wt') as f:
+            f.write(output_so_far)
 
-                # The inefficiency of calling out, keeps the test(s) the same as before, 
-                # as far as possible.  And avoids inserting Python 'sed' 
-                # code into the existing sDNA tests.
+            # The inefficiency of calling out, keeps the test(s) the same as before, 
+            # as far as possible.  And avoids inserting Python 'sed' 
+            # code into the existing sDNA tests.
 
-                # cmd.exe treats single quotes the same as any other character, 
-                # but e.g. on bash, double quotes can trigger expansions, but
-                # single quotes are a literal string.
-            quote = '' if ON_WINDOWS else "'"
-            sed_command = ''.join([quote, self.sed_command, quote])
+            # cmd.exe treats single quotes the same as any other character, 
+            # but e.g. on bash, double quotes can trigger expansions, but
+            # single quotes are a literal string.
+        quote = '' if ON_WINDOWS else "'"
+        sed_command = ''.join([quote, self.sed_command, quote])
 
 
-            output = _run_insecurely_in_shell_without_catching_exceptions(
-                            'sed %s <%s' % (sed_command, tmp_file)
-                            )
+        output = _run_insecurely_in_shell_without_catching_exceptions(
+                        'sed %s <%s' % (sed_command, tmp_file)
+                        )
 
-            # print('Sed output: %s' % output)
-        finally:
-            os.unlink(tmp_file)
+        # print('Sed output: %s' % output)
+        # finally:
+        os.unlink(tmp_file)
 
         return output
 
-    def _run2(self):
+
+class CatCommand(Command):
+    def __init__(self, command_str, **kwargs):
+        super(CatCommand, self).__init__(command_str, **kwargs)
+
+
+        assert self.command_str.startswith('cat ')
+        self.input_file = self.command_str.partition('cat ')[2].strip()
         
-        self._run(output_so_far = self.pseudo_files_to_pipe_output_to[self.input_file])
+    def _run(self):
+        with open(self.input_file, 'rt') as f:
+            return f.read()
 
 
-class DiffCommand(Command):
+class DiffCommand(ReadsTextInputFile):
 
     def __init__(self, command_str, **kwargs):
         super(DiffCommand, self).__init__(command_str, **kwargs)
@@ -545,12 +444,10 @@ class DiffCommand(Command):
 
         self.expected_output_file = match.group('expected')
         
-        self.requires.append(match.group('actual'))
+        self.input_file = match.group('actual')
 
-        self.file = match.group('actual')
-
-    def _run(self, output_so_far):
-        # print('Expected: %s, actual: %s' % (self.expected_output_file, self.file))
+    def _run_using_input(self, output_so_far):
+        # print('Expected: %s, actual: %s' % (self.expected_output_file, self.input_file))
         buffer_size = 10
         actual_buffer = collections.deque([], maxlen=buffer_size)
         expected_buffer = collections.deque([], maxlen=buffer_size)
@@ -558,8 +455,7 @@ class DiffCommand(Command):
         # with open('pytest_diff_output.txt', 'wt') as f:
         #     f.write(output_so_far)
 
-        print('self.pseudo_files_to_pipe_output_to: %s\n' % self.pseudo_files_to_pipe_output_to)
-        # print('self.pseudo_files_state: %s' % self.pseudo_files_state)
+        # print('self.pseudo_files_to_pipe_output_to: %s\n' % self.pseudo_files_to_pipe_output_to)
 
         if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
             actual_n_link_subsystems = collections.defaultdict(collections.Counter)
@@ -606,7 +502,7 @@ class DiffCommand(Command):
                                                         )
                                                    ):
 
-                expected, actual = expected.rstrip(), actual.rstrip()
+                expected, actual = expected.rstrip().lstrip('\r'), actual.rstrip().lstrip('\r')
 
                 # if prev_expected.startswith('Progress') and not expected:
                 # continue
@@ -633,17 +529,18 @@ class DiffCommand(Command):
                     continue
                 
 
-                if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER and 'testout_prep_' in self.file:
+                if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER and 'testout_prep_' in self.input_file:
 
                     match_actual = re.match(N_LINK_SUBSYSTEMS_PATTERN, actual) 
                     match_expected = re.match(N_LINK_SUBSYSTEMS_PATTERN, expected)
 
                     if (match_actual and match_expected and 
-                        (match_actual['N'] == match_expected['N']) and
-                        match_actual['N'] in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF):
+                        (match_actual.group('N') == match_expected.group('N')) and
+                        match_actual.group('N') in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF):
                         #
-                        actual_n_link_subsystems[match_actual['N']].update([match_actual['id']])
-                        expected_n_link_subsystems[match_expected['N']].update([match_expected['id']])
+                        num_links = match_actual.group('N')
+                        actual_n_link_subsystems[num_links].update([match_actual.group('id')])
+                        expected_n_link_subsystems[num_links].update([match_expected.group('id')])
                         continue
 
                 # if actual.startswith('Progress: '):
@@ -653,19 +550,19 @@ class DiffCommand(Command):
                 if 'mydiff' in self.command_str:
                     actual = actual.replace('_%s' % OUTPUT_SUFFIX, '')
 
-                actual_buffer.append(actual)
-                expected_buffer.append(expected)
+                actual_buffer.append(repr(actual))
+                expected_buffer.append(repr(expected))
 
                 if 'sDNA is running in ' in actual:
                     if actual.startswith('Progress:') and actual.endswith('-bit mode'):
                         actual = ''.join(actual.partition('sDNA is running in ')[1:])
 
-                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: "%s", \n\n Actual: "%s"' % (i, buffer_size - 1,'\n'.join(expected_buffer), '\n'.join(actual_buffer))
+                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: %s, \n\n Actual: %s' % (i, buffer_size - 1,'\n'.join(expected_buffer), '\n'.join(actual_buffer))
                 # assert actual == expected, 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
                 prev_expected = expected
                 m += 1
 
-            assert m >= 1, 'm==%s lines tested from: %s. output_so_far: %s.  Raising AssertionError to avoid false positive. This test needs should be fixed!! ' % (m, self.file, output_so_far)
+            assert m >= 1, 'm==%s lines tested from: %s. output_so_far: %s.  Raising AssertionError to avoid false positive. This test needs should be fixed!! ' % (m, self.pipe_to, output_so_far)
 
             if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
                 for N in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF:
@@ -682,74 +579,11 @@ class DiffCommand(Command):
 
         return output_so_far
 
-    def _run2(self):
-        return self._run(output_so_far=self.pseudo_files_to_pipe_output_to[self.file])
+
+    def __str__(self):
+        return '<%s, input: %s, expected: %s>' % (super(DiffCommand, self).__str__()[1:-1], self.input_file, self.expected_output_file) 
 
 
-def command_and_decorator_factory(command_str):
-
-    if is_python_command(command_str):
-        if 'shp2txt.py' in command_str:
-            return Shp2TxtCommand(command_str), None
-        else:
-            return python_command_and_pytest_param_decorator_factory(command_str)
-    
-    if command_str.startswith('echo '):
-        return EchoCommand(command_str), None
-    
-    if command_str.startswith('sed'):
-        return SedCommand(command_str), None
-
-    if 'diff' in command_str:
-        return DiffCommand(command_str), None
-        # raise Exception('Could not process command: %s' % command_str)
-
-    return None, None
-
-
-
-def diff_tests_and_pytest_params():
-
-    pytest_param_decorators = {}
-    diff_tests = {}
-
-    for command_str in windows_test_commands():
-
-        command, deco = command_and_decorator_factory(command_str)
-
-        if command is None or not hasattr(command, 'file'):
-            continue
-            # raise Exception('Unclassifiable command %s' % command_str)
-
-        file_ = command.file
-
-        if isinstance(command, DiffCommand):
-            diff_tests[file_] = command
-
-        if deco is not None:
-            pytest_param_decorators[file_] = deco
-
-    # print("pseudo_file_state['testout_py3.txt']: %s" % Command.pseudo_files_state['testout_py3.txt'])
-
-    # print('diff_tests: %s' % diff_tests)
-
-    # print({file_: commands
-    #        for file_, commands in Command.pseudo_files_state.items()
-        #    if any(x in file_ for x in ['testout_learn_']) #, 'table'])
-        #    if any(isinstance(command, DiffCommand) for command in commands)
-        #   })
-
-    for file_, diff_test in diff_tests.items():
-            
-        if file_ in pytest_param_decorators:
-            yield pytest_param_decorators[file_](diff_test)
-            continue
-
-        yield diff_test
-
-
-# diff_tests = list(diff_tests_and_pytest_params())
-# diff_test_expected_files = [diff_test.expected_output_file for diff_test in diff_tests]
 
 
 
@@ -768,45 +602,51 @@ class DiffTest(object):
         for step in self.steps:
             # piped output is passed via Command.pseudo_files_to_pipe_output_to,
             # not via retvals.
-            step.run2()
+            step.run()
         
-        self.diff_command.run2()
+        self.diff_command.run()
 
     def __str__(self):
-        return '<%s: %s>\n[%s,\n%s]' % (self.__class__.__name__,
-                                 self.diff_command.expected_output_file,
-                                 ',\n'.join(str(command) for command in commands),
-                                 str(self.diff_command)
-                                ) 
+        sep = ',\n' + ' ' * (len(self.expected_output_file) + 4)
+        return '%s:  [%s%s%s]\n' % (
+                              self.expected_output_file,
+                              sep.join(str(step) for step in self.steps),
+                              sep,
+                              str(self.diff_command)
+                             ) 
 
+    @property
+    def expected_output_file(self):
+        return self.diff_command.expected_output_file
 
-def test_commands():
-    for command_str in windows_test_commands():
+def commands_generator_factory():
+    for command in windows_test_commands():
 
-        if is_python_command(command_str):
-            if 'shp2txt.py' in command_str:
-                yield Shp2TxtCommand(command_str)
-            elif any(('sdna%s.py' % suffix) in command_str 
+        if is_python_command(command):
+            if any(('sdna%s.py' % suffix) in command 
                        for suffix in SDNA_BIN_SUFFIXES):
-                yield sDNACommand(command_str)
+                yield sDNACommand(command)
             else:
-                yield PythonScriptCommand(command_str)
+                yield PythonScriptCommand(command)
         
-        elif command_str.startswith('echo '):
-            yield EchoCommand(command_str)
+        elif command.startswith('echo '):
+            yield EchoCommand(command)
         
-        elif command_str.startswith('sed '):
-            yield SedCommand(command_str)
+        elif command.startswith('sed '):
+            yield SedCommand(command)
 
-        elif 'diff' in command_str:
-            yield DiffCommand(command_str)
-        #else: raise Exception('Could not process command: %s' % command_str)
+        elif command.startswith('cat '):
+            yield CatCommand(command)
+
+        elif 'diff' in command:
+            yield DiffCommand(command)
+        #else: raise Exception('Could not process command: %s' % command)
 
 
 def sequential_diff_tests():
     diff_test_commands = []
 
-    for command in test_commands():
+    for command in commands_generator_factory():
 
         diff_test_commands.append(command)
 
@@ -833,30 +673,10 @@ if __name__=='__main__':
     for f in batch_file_tests():
         with open(f,'rt') as f:
             for l in f:
-                # first_word = l.split(maxsplit=1)[0] if ' ' in l else l
                 first_word = l.partition(' ')[0]
                 s.add(first_word)
 
-    # print('Set of initial batch file commands: %s' % s)
 
-    # print('Batch files: \n%s' % '\n'.join(
-    #                             os.path.basename(f) 
-    #                             for f in batch_file_tests()
-    #                             )
-    #      )
-    # print('\n\n  Windows test commands: \n%s' % '\n'.join(windows_test_commands()))
-    # print('\n\n  Python test commands for this platform: \n%s' % '\n\n'.join(command.command_str for command in commands()))
-
-    # print('\n\n Test files for diffing: %s\n' % diff_tests)
-    # print('\n\n Diffing test commands: %s\n' % [command.command_str for command in diff_tests])
-
-    # print('diff_test_expected_files: %s' % diff_test_expected_files)
-
-    # print('Hybrid command_strs: %s' % '\n'.join([str((command, vars(command))) for commands in Command.pseudo_files_state.values()
-    #                                                        for command in commands
-    #                                                        if 'hybrid_test.py' in command.command_str ]))
-
-    # print('patterns: %s' % '\n'.join(SDNA_DEBUG_STATEMENT_PREFIX_PATTERNS))
 
    
 
@@ -873,5 +693,6 @@ if __name__=='__main__':
                              if sys.argv[1] in diff_test.expected_output_file
                             )
 
-    print('Testing expected: %s' % diff_test.expected_output_file)
+    print(diff_test)
+
     diff_test.run()
