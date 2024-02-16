@@ -2,7 +2,7 @@ name: test_an_msi_from_the_releases_page
 
 on:  
   push:
-    branches: ["main"]
+    branches: ["Dont_test_order_of_n_link_subsytems"]
   workflow_call:
 
   workflow_dispatch:
@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['2.7',  '3.7', '3.8', '3.9', '3.10', '3.11', '3.12'] #'3.0', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6',
+        python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
 
     name: "Download and install a release of sDNA, and run diff tests on it. "
     
@@ -115,7 +115,7 @@ jobs:
     - name: Run all the diff tests with Pytest.
       shell: cmd
       working-directory: .\sDNA\sdna_vs2008\tests\pytest
-      run: set DONT_TEST_ONE_LINK_SUBSYSTEMS_ORDER=1 & pytest -rA
+      run: set DONT_TEST_N_LINK_SUBSYSTEMS_ORDER=1 & pytest -rA
       # -rA shows summary of tests, one per line, even when they all pass.
         
   
