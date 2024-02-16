@@ -33,6 +33,8 @@ SDNA_DLL_LOCATIONS = (
 
 SDNA_DLL = os.getenv('sdnadll', '')
 
+SDNA_BIN_SUFFIXES = ('integral', 'prepare', 'learn', 'predict')
+
 if not SDNA_DLL:
     for sdna_dll_path in SDNA_DLL_LOCATIONS:
         if os.path.isfile(sdna_dll_path):
@@ -85,6 +87,7 @@ def batch_file_tests():
                                        'run_tests_windows.bat',
                                        'sdnavars64.bat',
                                        'quick_test.bat', # Duplicates debug_test.py in pause_debug_test.bat
+                                       'run_benchmark.bat'
                                       }:
             continue
 
@@ -260,6 +263,18 @@ class Command(object):
             self.run_result = output_so_far
 
         return self.run_result
+
+        def run2(self):
+            tmp_output = self._run2()
+
+            if self.file is not None:
+                if self.overwrite_file_to_pipe_output_to:
+                    self.pseudo_files_to_pipe_output_to[self.file] = output
+                else:
+                    self.pseudo_files_to_pipe_output_to[self.file] += output
+
+        def _run2(self):
+            return self._run(output_so_far = '')
 
 
 def _run_insecurely_in_shell_without_catching_exceptions(command_str):
@@ -482,6 +497,8 @@ class SedCommand(Command):
 
         self.requires.append(input_file)
 
+        self.input_file = os.path.basename(input_file)
+
 
 
     def _run(self, output_so_far):
@@ -512,7 +529,9 @@ class SedCommand(Command):
 
         return output
 
-
+    def _run2(self):
+        
+        self._run(output_so_far = self.pseudo_files_to_pipe_output_to[self.input_file])
 
 
 class DiffCommand(Command):
@@ -663,7 +682,8 @@ class DiffCommand(Command):
 
         return output_so_far
 
-
+    def _run2(self):
+        return self._run(output_so_far=self.pseudo_files_to_pipe_output_to[self.file])
 
 
 def command_and_decorator_factory(command_str):
@@ -728,16 +748,82 @@ def diff_tests_and_pytest_params():
         yield diff_test
 
 
-diff_tests = list(diff_tests_and_pytest_params())
-diff_test_expected_files = [diff_test.expected_output_file for diff_test in diff_tests]
+# diff_tests = list(diff_tests_and_pytest_params())
+# diff_test_expected_files = [diff_test.expected_output_file for diff_test in diff_tests]
+
+
+
+    
+class DiffTest(object):
+    def __init__(self, commands):
+
+        steps, diff_command = commands[:-1], commands[-1]
+        assert all(isinstance(step, Command) for step in steps)
+        assert isinstance(diff_command, DiffCommand)
+
+        self.steps = steps
+        self.diff_command = diff_command
+
+    def run(self):
+        for step in self.steps:
+            # piped output is passed via Command.pseudo_files_to_pipe_output_to,
+            # not via retvals.
+            step.run2()
+        
+        self.diff_command.run2()
+
+    def __str__(self):
+        return '<%s: %s>\n[%s,\n%s]' % (self.__class__.__name__,
+                                 self.diff_command.expected_output_file,
+                                 ',\n'.join(str(command) for command in commands),
+                                 str(self.diff_command)
+                                ) 
+
+
+def test_commands():
+    for command_str in windows_test_commands():
+
+        if is_python_command(command_str):
+            if 'shp2txt.py' in command_str:
+                yield Shp2TxtCommand(command_str)
+            elif any(('sdna%s.py' % suffix) in command_str 
+                       for suffix in SDNA_BIN_SUFFIXES):
+                yield sDNACommand(command_str)
+            else:
+                yield PythonScriptCommand(command_str)
+        
+        elif command_str.startswith('echo '):
+            yield EchoCommand(command_str)
+        
+        elif command_str.startswith('sed '):
+            yield SedCommand(command_str)
+
+        elif 'diff' in command_str:
+            yield DiffCommand(command_str)
+        #else: raise Exception('Could not process command: %s' % command_str)
+
+
+def sequential_diff_tests():
+    diff_test_commands = []
+
+    for command in test_commands():
+
+        diff_test_commands.append(command)
+
+        if isinstance(command, DiffCommand):
+            yield DiffTest(diff_test_commands)
+            diff_test_commands = []
+
+
+diff_tests = list(sequential_diff_tests())
+diff_test_expected_files = [diff_test.diff_command.expected_output_file 
+                            for diff_test in diff_tests
+                           ]
 
 
 @pytest.mark.parametrize('diff_test', diff_tests, ids = diff_test_expected_files)
 def test_diff_(diff_test):
     diff_test.run()
-
-    
-
 
 
 if __name__=='__main__':
