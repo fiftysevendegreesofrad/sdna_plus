@@ -2,7 +2,7 @@ name: test_an_msi_from_the_releases_page
 
 on:  
   push:
-    branches: ["Dont_test_order_of_n_link_subsytems"]
+    branches: ["main"]
   workflow_call:
 
   workflow_dispatch:
