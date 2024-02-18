@@ -23,11 +23,13 @@ except ImportError:
 
 OUTPUT_SUFFIX = 'py%s' % sys.version_info[0]
 
+REPO_ROOT_DIR = os.path.join(os.path.dirname(__file__), r'..\..\..\..')
+
 ON_WINDOWS = (sys.platform == 'win32')
 
 SDNA_DLL_LOCATIONS = (
-             os.path.join(os.path.dirname(__file__), r'..\..\..\..\output\Debug\x64\sdna_vs2008.dll'),
-             os.path.join(os.path.dirname(__file__), r'..\..\..\..\output\release\x64\sdna_vs2008.dll'),
+             os.path.join(REPO_ROOT_DIR, r'\output\Debug\x64\sdna_vs2008.dll'),
+             os.path.join(REPO_ROOT_DIR, r'\output\release\x64\sdna_vs2008.dll'),
              r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll',
             )
 
@@ -47,6 +49,53 @@ if not SDNA_DLL:
 
 
 print('SDNA_DLL: %s' % SDNA_DLL)
+
+
+SDNA_BIN_DIR = os.getenv('sdna_bin_dir', '')
+DEFAULT_TEST_SDNA_BIN = r'..\..\..\arcscripts\bin'
+
+def is_sdna_bin_dir(dir_):
+    if not os.path.isdir(dir_):
+        return False
+        
+    return all(os.path.isfile(os.path.join(dir_,'sdna%s.py' % suffix))
+               for suffix in SDNA_BIN_SUFFIXES
+              )
+
+if not SDNA_BIN_DIR:
+    # .casefold is more aggressive and is best practise for 
+    # caseless matching of strings -- but only as a native 
+    # language speaking human would match those strings.  
+    # .casefold would not distinguish between the two dirs: c:\ss 
+    # and c:\ß (dir paths are case-insensitive on Windows, unlike Linux).
+    if SDNA_DLL.lower().startswith(REPO_ROOT_DIR.lower()):
+        dir_ = os.path.join(REPO_ROOT_DIR, 'arcscripts', 'bin')            
+    else:
+        # e.g. for SDNA_DLL == r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
+        dir_ = os.path.join(os.path.dirname(SDNA_DLL),'..','bin') 
+        if not is_sdna_bin_dir(dir_):
+            raise Exception(
+                "Could not find sDNA 'bin'/ python files"
+                "associated with SDNA_DLL: %s. "
+                "Set SDNA_BIN_DIR to the dir containing the "
+                "sDNA 'bin'/python files to be tested "
+                "(sdna+ %s +.py), or ensure  is part of a"
+                "complete sDNA installation. "
+                % (SDNA_DLL, SDNA_BIN_SUFFIXES, SDNA_DLL)
+                )
+
+    if is_sdna_bin_dir(dir_):
+        SDNA_BIN_DIR = dir_
+    elif not is_sdna_bin_dir(DEFAULT_TEST_SDNA_BIN):
+        raise Exception('Cannot find an sDNA binary directory '
+                        '(containing sdnaintegral.py etc.) to test with the dll. '
+                        r'Set %sdnadll% to the dll of a complete sDNA '
+                        'installation, test in the source code repo, or'
+                        r' set %SDNA_BIN_DIR%.'
+                       )
+
+
+print(r'Testing the sdnaintegral.py etc. in: %sdna_bin_dir%== ' + SDNA_BIN_DIR)
 
 
 SDNA_DEBUG = bool(os.getenv('sdna_debug', ''))
@@ -272,10 +321,13 @@ class sDNACommand(PythonScriptCommand):
     def __init__(self, command_str, **kwargs): 
         super(sDNACommand, self).__init__(command_str, **kwargs)
 
-
         self.command_str = self.command_str.replace(r'%sdnadll%', self.sdna_dll_cli_arg)
 
-
+        # Support testing the released Python files shipped with 
+        # sdna_vs2008.dll, not the source code repo's Python files 
+        # at '..\..\..\arcscripts\bin'
+        if SDNA_BIN_DIR and (DEFAULT_TEST_SDNA_BIN in self.python_file):
+            self.python_file = self.python_file.replace(DEFAULT_TEST_SDNA_BIN, SDNA_BIN_DIR)
 
 
 
@@ -469,7 +521,7 @@ class DiffCommand(ReadsTextInputFile):
 
             # expected = ''
             # print('Num of lines in actual output: %s' % len(output_so_far.splitlines()))
-            print('output_so_far: %r' % output_so_far[:50])
+            # print('output_so_far: %r' % output_so_far[:50])
             # actual_lines = iter(output_so_far.splitlines())
             # sDNA prepends Progress and other strings with '\r' (in 
             # SdnaShapefileEnvironment calls) which .splitlines splits on,
@@ -499,7 +551,8 @@ class DiffCommand(ReadsTextInputFile):
             for i, (expected, actual) in enumerate(tuples_of_nontrivial_nonProgress_strings(
                                                         expected_lines,
                                                         output_so_far.split('\n'),
-                                                        )
+                                                        ),
+                                                    start=1
                                                    ):
 
                 expected, actual = expected.rstrip().lstrip('\r'), actual.rstrip().lstrip('\r')
@@ -557,12 +610,12 @@ class DiffCommand(ReadsTextInputFile):
                     if actual.startswith('Progress:') and actual.endswith('-bit mode'):
                         actual = ''.join(actual.partition('sDNA is running in ')[1:])
 
-                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: %s, \n\n Actual: %s' % (i, buffer_size - 1,'\n'.join(expected_buffer), '\n'.join(actual_buffer))
+                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: %s, \n\n Actual: %s' % (i+1, buffer_size - 1,'\n'.join(expected_buffer), '\n'.join(actual_buffer))
                 # assert actual == expected, 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
                 prev_expected = expected
                 m += 1
 
-            assert m >= 1, 'm==%s lines tested from: %s. output_so_far: %s.  Raising AssertionError to avoid false positive. This test needs should be fixed!! ' % (m, self.pipe_to, output_so_far)
+            assert m >= 1, 'm==%s lines tested from: %s. output_so_far: %s.  Raising AssertionError to avoid false positive. This test should be fixed!! ' % (m, self.pipe_to, output_so_far)
 
             if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
                 for N in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF:
@@ -682,7 +735,8 @@ if __name__=='__main__':
 
 
     if len(sys.argv) == 1:
-        diff_test = diff_tests[8]
+        for diff_test in diff_tests:
+            diff_test.run()
     else:
         try:
             test_index = int(sys.argv[1])
@@ -693,6 +747,6 @@ if __name__=='__main__':
                              if sys.argv[1] in diff_test.expected_output_file
                             )
 
-    print(diff_test)
+        print(diff_test)
 
-    diff_test.run()
+        diff_test.run()
