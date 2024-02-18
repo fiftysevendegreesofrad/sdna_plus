@@ -521,7 +521,7 @@ class DiffCommand(ReadsTextInputFile):
 
             # expected = ''
             # print('Num of lines in actual output: %s' % len(output_so_far.splitlines()))
-            print('output_so_far: %r' % output_so_far[:50])
+            # print('output_so_far: %r' % output_so_far[:50])
             # actual_lines = iter(output_so_far.splitlines())
             # sDNA prepends Progress and other strings with '\r' (in 
             # SdnaShapefileEnvironment calls) which .splitlines splits on,
@@ -551,7 +551,8 @@ class DiffCommand(ReadsTextInputFile):
             for i, (expected, actual) in enumerate(tuples_of_nontrivial_nonProgress_strings(
                                                         expected_lines,
                                                         output_so_far.split('\n'),
-                                                        )
+                                                        ),
+                                                    start=1
                                                    ):
 
                 expected, actual = expected.rstrip().lstrip('\r'), actual.rstrip().lstrip('\r')
@@ -609,12 +610,12 @@ class DiffCommand(ReadsTextInputFile):
                     if actual.startswith('Progress:') and actual.endswith('-bit mode'):
                         actual = ''.join(actual.partition('sDNA is running in ')[1:])
 
-                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: %s, \n\n Actual: %s' % (i, buffer_size - 1,'\n'.join(expected_buffer), '\n'.join(actual_buffer))
+                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: %s, \n\n Actual: %s' % (i+1, buffer_size - 1,'\n'.join(expected_buffer), '\n'.join(actual_buffer))
                 # assert actual == expected, 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
                 prev_expected = expected
                 m += 1
 
-            assert m >= 1, 'm==%s lines tested from: %s. output_so_far: %s.  Raising AssertionError to avoid false positive. This test needs should be fixed!! ' % (m, self.pipe_to, output_so_far)
+            assert m >= 1, 'm==%s lines tested from: %s. output_so_far: %s.  Raising AssertionError to avoid false positive. This test should be fixed!! ' % (m, self.pipe_to, output_so_far)
 
             if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
                 for N in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF:
@@ -734,7 +735,8 @@ if __name__=='__main__':
 
 
     if len(sys.argv) == 1:
-        diff_test = diff_tests[8]
+        for diff_test in diff_tests:
+            diff_test.run()
     else:
         try:
             test_index = int(sys.argv[1])
@@ -745,6 +747,6 @@ if __name__=='__main__':
                              if sys.argv[1] in diff_test.expected_output_file
                             )
 
-    print(diff_test)
+        print(diff_test)
 
-    diff_test.run()
+        diff_test.run()

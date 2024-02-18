@@ -2,7 +2,7 @@ name: test_an_msi_from_the_releases_page
 
 on:  
   push:
-    branches: ["Dont_test_repos_python_code_if_releases_is_available"]
+    branches: ["main"]
   workflow_call:
 
   workflow_dispatch:
