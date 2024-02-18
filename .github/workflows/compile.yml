@@ -32,7 +32,7 @@ jobs:
       run: echo "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" >> $GITHUB_PATH
 
     - name: Deploy Advinst
-      uses: caphyon/advinst-github-action@main
+      uses: caphyon/advinst-github-action@v1.1
       with:
         advinst-version: '21.3'
 
@@ -73,7 +73,7 @@ jobs:
     - name: Cache Geos binary
       if: steps.cache-geos-restore.outputs.cache-hit != 'true'
       id: cache-geos-save
-      uses: actions/cache/save@v3
+      uses: actions/cache/save@v4
       with:
         path: |
           ${{ github.workspace }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}\geos_c.dll
@@ -81,7 +81,7 @@ jobs:
 
     - name: Restore vcpkg Deps
       id: cache-vcpkg-deps-restore
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@v4
       with:
         path: |
           C:\vcpkg\packages\
@@ -98,7 +98,7 @@ jobs:
     - name: Cache vcpkg Deps
       if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
       id: cache-deps-save
-      uses: actions/cache/save@v3
+      uses: actions/cache/save@v4
       with:
         path: |
           C:\vcpkg\packages\
