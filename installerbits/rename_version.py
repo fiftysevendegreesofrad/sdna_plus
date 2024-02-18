@@ -12,7 +12,7 @@ version = getVersion()
 
 filename_friendly_version = re.sub(r"\.","_",version)
 
-outfilename = "%s/sDNA_setup_win_v%s.msi"%(outputdir,filename_friendly_version)
+outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
 
 if (os.path.exists(outfilename)):
     os.unlink(outfilename)
