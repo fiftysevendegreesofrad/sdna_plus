@@ -32,7 +32,7 @@ jobs:
       run: echo "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" >> $GITHUB_PATH
 
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v2
 
     - name: Integrate vcpkg with Visual Studio
       run: vcpkg integrate install
@@ -40,7 +40,7 @@ jobs:
 
     - name: Restore Cache'd Geos binary
       id: cache-geos-restore
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@v4
       with:
         path: |
           ${{ github.workspace }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}\geos_c.dll
