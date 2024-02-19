@@ -176,8 +176,9 @@ jobs:
       # This is based on @Simran-B's powershell script (from Github Community forum),
       # according to GuiFalourd on Stack Overflow
       # https://stackoverflow.com/a/72291019/20785734
+        # $file = sDNA_setup_win_v4_1_1.msi
       run: |
-        $file = sDNA_setup_win_v4_1_1.msi
+        $file = installer_file
         $log = "install.log" 
         $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
         $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
