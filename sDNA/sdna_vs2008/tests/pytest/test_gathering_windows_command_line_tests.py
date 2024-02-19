@@ -69,7 +69,15 @@ if not SDNA_BIN_DIR:
     # .casefold would not distinguish between the two dirs: c:\ss 
     # and c:\ß (dir paths are case-insensitive on Windows, unlike Linux).
     if SDNA_DLL.lower().startswith(REPO_ROOT_DIR.lower()):
-        dir_ = os.path.join(REPO_ROOT_DIR, 'arcscripts', 'bin')            
+        dir_ = os.path.join(REPO_ROOT_DIR, 'arcscripts', 'bin')
+        
+        if not is_sdna_bin_dir(dir_):    
+            raise Exception('Cannot find an sDNA binary directory '
+                            '(containing sdnaintegral.py etc.) to test with the dll. '
+                            r'Set %sdnadll% to the dll of a complete sDNA '
+                            'installation, test in the source code repo, or'
+                            r' set %SDNA_BIN_DIR%.'
+                            )    
     else:
         # e.g. for SDNA_DLL == r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
         dir_ = os.path.join(os.path.dirname(SDNA_DLL),'..','bin') 
@@ -84,15 +92,7 @@ if not SDNA_BIN_DIR:
                 % (SDNA_DLL, SDNA_BIN_SUFFIXES, SDNA_DLL)
                 )
 
-    if is_sdna_bin_dir(dir_):
-        SDNA_BIN_DIR = dir_
-    elif not is_sdna_bin_dir(DEFAULT_TEST_SDNA_BIN):
-        raise Exception('Cannot find an sDNA binary directory '
-                        '(containing sdnaintegral.py etc.) to test with the dll. '
-                        r'Set %sdnadll% to the dll of a complete sDNA '
-                        'installation, test in the source code repo, or'
-                        r' set %SDNA_BIN_DIR%.'
-                       )
+    SDNA_BIN_DIR = dir_
 
 
 print(r'Testing the sdnaintegral.py etc. in: %sdna_bin_dir%== ' + SDNA_BIN_DIR)
