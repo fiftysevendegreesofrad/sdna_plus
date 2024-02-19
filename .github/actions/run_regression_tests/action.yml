@@ -17,7 +17,7 @@ inputs:
 
   DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
     required: true
-    description: 'In correctout_prep.txt, allow output lines of the form: -link subsystem contains link with id = , to be in any order'
+    description: "Non-empty string: In correctout_prep.txt, allow output lines of the form: -link subsystem contains link with id = , to be in any order.  Empty string ('') : require the orders of the lines to match."
   
   sdnadll:
     description: 'The path to the sdna_vs2008.dll of the installation to be tested.'
@@ -30,7 +30,7 @@ inputs:
     default: ''
 
   sdna_debug:
-    description: "False: filter out the lines in correctout*.txt that are only output by debug builds. True: don't. "
+    description: "'' (empty string): filter out the lines in correctout*.txt that are only output by debug builds. Non-empty string: don't. "
 
 runs:
   using: "composite"
