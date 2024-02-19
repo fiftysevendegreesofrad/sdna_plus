@@ -21,10 +21,6 @@ jobs:
   build_and_upload_installer:
     name: Try to compile on windows
     runs-on: windows-latest
-    env:
-      installer_file_name: sDNA_plus_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v${{ env.GEOS_VERSION }}_Boost_v${{ env.BOOST_VERSION }}_RTTI_on
-    outputs:
-      installer_file_name: ${{ steps.installer-upload-step.outputs.artifact-id }}
     steps:
     - uses: actions/checkout@v4
 
@@ -124,7 +120,7 @@ jobs:
       id: installer-upload-step
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ env.installer_file_name }}
+        name: installer_file
         # path: output/release
         path: sDNA_setup_win_v*.msi
 
@@ -150,8 +146,8 @@ jobs:
     # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
     #
 
-    env:
-      installer_file_name: ${{ needs.build_and_upload_installer.outputs.installer_file_name }}
+    # env:
+    #   installer_file_name: ${{ needs.build_and_upload_installer.outputs.installer_file_name }}
 
     steps:
 
@@ -161,7 +157,7 @@ jobs:
     - name: Download installer built in previous job
       uses: actions/download-artifact@v4
       with:
-        name: ${{ env.installer_file_name }}
+        name: installer_file
 
 
     # - name: Download and install release of sDNA, then delete installer file.

@@ -1,8 +1,8 @@
 name: test_an_msi_from_the_releases_page
 
 on:  
-  push:
-    branches: ["CI_refactor_tests_and_compile_workflows_into_Actions"]
+  # push:
+  #   branches: ["CI_refactor_tests_and_compile_workflows_into_Actions"]
   workflow_call:
 
   workflow_dispatch:
