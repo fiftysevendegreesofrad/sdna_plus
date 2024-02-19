@@ -3,10 +3,10 @@ name: "Compile with MSBuild and VS 2022 for Windows"
 on:
   workflow_dispatch:
   push:
-    branches: [ "Compile_sDNA_in_a_Windows_Github_Action" ]
+    branches: [ "main" ]
 
   # pull_request:
-  #   branches: [ "Compile_sDNA_in_a_Windows_Github_Action" ]
+  #   branches: [ "main" ]
 
 env:
   CONFIGURATION: Release
