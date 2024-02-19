@@ -1,0 +1,76 @@
+name: 
+  Run the regression tests.
+
+description:
+  Diff the output from the test steps, against correctout*.txt
+  
+inputs:
+  python_version:
+    required: false
+    default: "3.12"
+    description: 'The tests pass on Python 2.7 and Python 3.5, ..., 3.12'
+  
+  shell:
+    required: false
+    default: cmd
+    description: The shell to run the test commands in, e.g. cmd, powershell, bash.
+
+  DONT_TEST_N_LINK_SUBSYSTEMS_ORDER:
+    required: true
+    description: 'In correctout_prep.txt, allow output lines of the form: -link subsystem contains link with id = , to be in any order'
+  
+  sdnadll:
+    description: 'The path to the sdna_vs2008.dll of the installation to be tested.'
+    required: true
+
+
+  sdna_bin_dir:
+    description: 'The path to the python entry point files (sdnaintegral.py) to be tested.  Default: (dirname $sdnadll)/../bin/'
+    required: false
+    default: ''
+
+  sdna_debug:
+    description: "False: filter out the lines in correctout*.txt that are only output by debug builds. True: don't. "
+
+runs:
+  using: "composite"
+  steps:
+    - uses: LizardByte/setup-python-action@master
+      with:
+        python-version: ${{ inputs.python_version }}
+
+    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
+      shell: ${{ inputs.shell }}
+      working-directory: .\sDNA\sdna_vs2008\tests\pytest
+      run: pip install pytest numpy
+
+    - name: Show versions.
+      shell: ${{ inputs.shell }}
+      working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
+      run: |
+        python --version
+        python -c "import numpy; print('Numpy: %s' % numpy.__version__)"
+        python -m pytest --version
+
+     
+    # - name: Run debug_test.py directly.
+    #   shell: cmd
+    #   working-directory: '.\sDNA\sdna_vs2008\tests'
+    #   # run: python -u debug_test.py
+    #   run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
+
+    # - name: Run diff test number 0 directly via
+    #   test_gathering_windows_command_line_tests.py, by test index
+    #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
+    #   run: python test_gathering_windows_command_line_tests.py 0
+
+    - name: Run all the diff tests with Pytest.
+      shell: ${{ inputs.shell }}
+      working-directory: .\sDNA\sdna_vs2008\tests\pytest
+      env:
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: ${{ inputs.DONT_TEST_N_LINK_SUBSYSTEMS_ORDER }}
+        sdnadll: ${{ inputs.sdnadll }}
+        sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
+        sdna_debug: ${{ inputs.sdna_debug }}
+      run: pytest -rA
+      # -rA shows summary of tests, one per line, even when they all pass.
