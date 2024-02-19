@@ -75,5 +75,5 @@ jobs:
         python_version: ${{ matrix.python_version }}
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
         sdnadll: 'c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
-        sdna_debug: false
+        sdna_debug: ""
         
