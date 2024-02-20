@@ -161,6 +161,9 @@ jobs:
         name: installer_file.msi
 
 
+    - name: Allow .msi to be executed
+      run: Set-ItemProperty -Path installer_file.msi -Name IsReadOnly -Value $false
+
     # - name: Download and install release of sDNA, then delete installer file.
 
     #   run: |
@@ -178,13 +181,13 @@ jobs:
       # according to GuiFalourd on Stack Overflow
       # https://stackoverflow.com/a/72291019/20785734
         # $file = sDNA_setup_win_v4_1_1.msi
-        # $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
-        # $procLog.Kill()
       run: |
         $file = "installer_file.msi"
         $log = "install.log" 
         $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
+        $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
         $procMain.WaitForExit() 
+        $procLog.Kill()
         Remove-Item $file
 
     - name: Run regression tests
