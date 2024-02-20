@@ -3,10 +3,10 @@ name: "Compile with MSBuild and VS 2022 for Windows, and test"
 on:
   workflow_dispatch:
   push:
-    branches: [ "Test_if_Geos_binary_still_needs_to_be_downloaded" ]
+    branches: [ "CI_(Compile_and_test_in_a_Github_Action)" ]
 
   pull_request:
-    branches: [ "Test_if_Geos_binary_still_needs_to_be_downloaded" ]
+    branches: [ "CI_(Compile_and_test_in_a_Github_Action)" ]
 
 env:
   CONFIGURATION: Release
