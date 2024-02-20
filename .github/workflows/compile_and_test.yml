@@ -153,8 +153,8 @@ jobs:
     # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
     #
 
-    # env:
-    #   installer_file_name: ${{ needs.build_and_upload_installer.outputs.installer_file_name }}
+    env:
+      installer_file_name: ${{ needs.build_and_upload_installer.outputs.installer_file_name }}
 
     steps:
 
@@ -171,7 +171,7 @@ jobs:
 
 
     - name: Allow .msi to be executed
-      run: Set-ItemProperty -Path ${{ needs.build_and_upload_installer.outputs.installer_file_name }} -Name IsReadOnly -Value $false
+      run: Set-ItemProperty -Path ${{ env.installer_file_name }} -Name IsReadOnly -Value $false
 
     # - name: Download and install release of sDNA, then delete installer file.
 
@@ -191,7 +191,7 @@ jobs:
       # https://stackoverflow.com/a/72291019/20785734
         # $file = sDNA_setup_win_v4_1_1.msi
       run: |
-        $file = "${{ needs.build_and_upload_installer.outputs.installer_file_name }}"
+        $file = "${{ env.installer_file_name }}"
         $log = "install.log" 
         $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
         $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
