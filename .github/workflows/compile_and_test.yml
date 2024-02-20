@@ -20,6 +20,8 @@ jobs:
   build_and_upload_installer:
     name: Try to compile on windows
     runs-on: windows-2022
+    outputs:
+      installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
     steps:
     - uses: actions/checkout@v4
 
@@ -114,13 +116,18 @@ jobs:
         /p:Configuration=${{ env.CONFIGURATION }} 
         /p:VcpkgEnableManifest=true
 
-        
+    - name: Output the name of the .msi installer file
+      id: output_installer_file_name
+      shell: bash
+      run: echo "name=$(ls sDNA_setup_win_v*.msi)" >> "$GITHUB_OUTPUT"  
+
     - name: upload output dir
       id: installer-upload-step
       uses: actions/upload-artifact@v4
       with:
-        name: installer_file.msi
-        # path: output/release
+        name: installer_file
+        # this file name pattern is defined in installerbits\rename_version.py
+        # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
         path: sDNA_setup_win_v*.msi
 
       
@@ -157,14 +164,14 @@ jobs:
     - name: Download installer built in previous job
       uses: actions/download-artifact@v4
       with:
-        name: installer_file.msi
+        name: installer_file
 
     - shell: cmd
       run: dir .
 
 
     - name: Allow .msi to be executed
-      run: Set-ItemProperty -Path sDNA_setup_win_v4_1_1.msi -Name IsReadOnly -Value $false
+      run: Set-ItemProperty -Path ${{ needs.build_and_upload_installer.outputs.installer_file_name }} -Name IsReadOnly -Value $false
 
     # - name: Download and install release of sDNA, then delete installer file.
 
@@ -184,7 +191,7 @@ jobs:
       # https://stackoverflow.com/a/72291019/20785734
         # $file = sDNA_setup_win_v4_1_1.msi
       run: |
-        $file = "sDNA_setup_win_v4_1_1.msi"
+        $file = "${{ needs.build_and_upload_installer.outputs.installer_file_name }}"
         $log = "install.log" 
         $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
         $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
