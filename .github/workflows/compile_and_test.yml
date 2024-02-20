@@ -5,8 +5,8 @@ on:
   push:
     branches: [ "CI_refactor_tests_and_compile_workflows_into_Actions" ]
 
-  # pull_request:
-  #   branches: [ "CI_refactor_tests_and_compile_workflows_into_Actions" ]
+  pull_request:
+    branches: [ "CI_refactor_tests_and_compile_workflows_into_Actions" ]
 
 env:
   CONFIGURATION: Release
@@ -139,8 +139,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.12']
-        #'2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+        python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
 
     name: "Download and run sDNA installer, and run diff tests on it. "
     
