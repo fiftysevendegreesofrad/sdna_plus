@@ -2,7 +2,9 @@ name: test_a_released_sDNA_installer_(.msi)
 
 on:  
   workflow_dispatch:
-    
+
+  push:
+    branches: [ "CI_refactor_tests_and_compile_workflows_into_Actions" ]
 
 env:
   VERSION: 4_1_1
