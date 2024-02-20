@@ -1,26 +1,27 @@
-name: "Compile with MSBuild and VS 2022 for Windows"
+name: "Compile with MSBuild and VS 2022 for Windows, and test"
 
 on:
   workflow_dispatch:
   push:
     branches: [ "CI_(Compile_and_test_in_a_Github_Action)" ]
 
-  # pull_request:
-  #   branches: [ "CI_(Compile_and_test_in_a_Github_Action)" ]
+  pull_request:
+    branches: [ "CI_(Compile_and_test_in_a_Github_Action)" ]
 
 env:
   CONFIGURATION: Release
   PLATFORM: x64
   OSGEO4W_GEOS_URL: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos
   GEOS_VERSION: '3.12.0-1'
-  RELEASE: '4.1.1'
   BOOST_VERSION: '1.8.3'
 
 
 jobs:
-  compile:
+  build_and_upload_installer:
     name: Try to compile on windows
-    runs-on: windows-latest
+    runs-on: windows-2022
+    outputs:
+      installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
     steps:
     - uses: actions/checkout@v4
 
@@ -115,16 +116,92 @@ jobs:
         /p:Configuration=${{ env.CONFIGURATION }} 
         /p:VcpkgEnableManifest=true
 
-    # - name: Package sDNA
-    #   shell: cmd
-    #   run: |
-    #     mkdir release_zip_files_dir
-    #     cd release_zip_files_dir
-    #     ..\package_release.bat
+    - name: Output the name of the .msi installer file
+      id: output_installer_file_name
+      shell: bash
+      run: echo "name=$(ls sDNA_setup_win_v*.msi)" >> "$GITHUB_OUTPUT"  
 
     - name: upload output dir
+      id: installer-upload-step
       uses: actions/upload-artifact@v4
       with:
-        name: sDNA_plus_v${{ env.RELEASE }}_${{ env.PLATFORM }}_${{ env.CONFIGURATION }}_osgeo4w_geos_v${{ env.GEOS_VERSION }}_Boost_v${{ env.BOOST_VERSION }}_RTTI_on
-        # path: output/release
+        name: installer_file
+        # this file name pattern is defined in installerbits\rename_version.py
+        # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
         path: sDNA_setup_win_v*.msi
+
+      
+
+  test_installer:
+
+    needs: build_and_upload_installer
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+
+    name: "Download and run sDNA installer, and run diff tests on it. "
+    
+    runs-on: windows-2022
+    # Note:  The Windows server 2022 Github runner image already includes  
+    # Python (currently 6 versions from 3.7 to 3.12) and a couple of 
+    # VC++ redistributables.  Desktop users may need to install these 
+    # themselves, in addition to sDNA.      
+    #
+    # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
+    #
+
+    env:
+      installer_file_name: ${{ needs.build_and_upload_installer.outputs.installer_file_name }}
+
+    steps:
+
+
+    - uses: actions/checkout@v4
+
+    - name: Download installer built in previous job
+      uses: actions/download-artifact@v4
+      with:
+        name: installer_file
+
+    - shell: cmd
+      run: dir .
+
+
+    - name: Allow .msi to be executed
+      run: Set-ItemProperty -Path ${{ env.installer_file_name }} -Name IsReadOnly -Value $false
+
+    # - name: Download and install release of sDNA, then delete installer file.
+
+    #   run: |
+    #     Invoke-WebRequest ${{ env.DOWNLOAD_URL_PREFIX }}${{ env.VERSION }}.msi -OutFile sDNA_setup_win_v${{ env.VERSION }}.msi
+    #
+    #     # This command is all that is required to successfully run the sDNA installer
+    #     # on desktop Windows 11, silently.  Sadly it is not also sufficient on 
+    #     # the Github Actions Windows runner image (I know not why): 
+    #     .\sDNA_setup_win_v${{ env.VERSION }}.msi /passive
+    #
+    #     Remove-Item .\sDNA_setup_win_v${{ env.VERSION }}.msi
+
+    - name: Run sDNA installer using powershell script. 
+      # This is based on @Simran-B's powershell script (from Github Community forum),
+      # according to GuiFalourd on Stack Overflow
+      # https://stackoverflow.com/a/72291019/20785734
+        # $file = sDNA_setup_win_v4_1_1.msi
+      run: |
+        $file = "${{ env.installer_file_name }}"
+        $log = "install.log" 
+        $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
+        $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
+        $procMain.WaitForExit() 
+        $procLog.Kill()
+        Remove-Item $file
+
+    - name: Run regression tests
+      uses: ./.github/actions/run_regression_tests
+      with:
+        python_version: ${{ matrix.python_version }}
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+        sdnadll: 'c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
+        sdna_debug: ""

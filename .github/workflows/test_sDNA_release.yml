@@ -1,12 +1,8 @@
-name: test_an_msi_from_the_releases_page
+name: test_a_released_sDNA_installer_(.msi)
 
 on:  
-  push:
-    branches: ["main"]
-  workflow_call:
-
   workflow_dispatch:
-    
+
 
 env:
   VERSION: 4_1_1
@@ -25,6 +21,9 @@ jobs:
       fail-fast: false
       matrix:
         python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+        
+        # cannot install numpy on: ['3.13.0-alpha.4']
+        # https://github.com/JamesParrott/sdna_plus/issues/14
 
     name: "Download and install a release of sDNA, and run diff tests on it. "
     
@@ -68,40 +67,11 @@ jobs:
         $procLog.Kill()
         Remove-Item $file
 
-
-
-
-    - uses: LizardByte/setup-python-action@master
+    - name: Run regression tests
+      uses: ./.github/actions/run_regression_tests
       with:
-        python-version: ${{ matrix.python_version }}
-
-    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
-      working-directory: .\sDNA\sdna_vs2008\tests\pytest
-      run: pip install pytest numpy
-
-    - name: Show versions.
-      working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
-      run: |
-        python --version
-        python -c "import numpy; print('Numpy: %s' % numpy.__version__)"
-        python -m pytest --version
-
-     
-    # - name: Run debug_test.py directly.
-    #   shell: cmd
-    #   working-directory: '.\sDNA\sdna_vs2008\tests'
-    #   # run: python -u debug_test.py
-    #   run: set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" & python -u debug_test.py
-
-    # - name: Run diff test number 0 directly via
-    #   test_gathering_windows_command_line_tests.py, by test index
-    #   working-directory: '.\sDNA\sdna_vs2008\tests\pytest'
-    #   run: python test_gathering_windows_command_line_tests.py 0
-
-    - name: Run all the diff tests with Pytest.
-      shell: cmd
-      working-directory: .\sDNA\sdna_vs2008\tests\pytest
-      run: set DONT_TEST_N_LINK_SUBSYSTEMS_ORDER=1 & pytest -rA
-      # -rA shows summary of tests, one per line, even when they all pass.
+        python_version: ${{ matrix.python_version }}
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+        sdnadll: 'c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
+        sdna_debug: ""
         
-  
