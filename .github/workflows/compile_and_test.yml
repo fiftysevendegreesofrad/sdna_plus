@@ -49,36 +49,7 @@ jobs:
       run: vcpkg integrate install
 
 
-    - name: Restore Cache'd Geos binary
-      id: cache-geos-restore
-      uses: actions/cache/restore@v4
-      with:
-        path: |
-          ${{ github.workspace }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}\geos_c.dll
-        key: ${{ runner.os }}-geos_v${{ env.GEOS_VERSION }}
 
-    - name: Download and unzip Geos binary from OSGEO
-      if: steps.cache-geos-restore.outputs.cache-hit != 'true'
-      shell: bash
-      run: |
-        GEOS_FILE=geos-${{ env.GEOS_VERSION }}.tar.bz2
-        curl -L -o $GEOS_FILE ${{ env.OSGEO4W_GEOS_URL }}/$GEOS_FILE
-        tar -xf $GEOS_FILE
-        BUILD_CONFIG=${{ env.CONFIGURATION }}
-        mv bin/geos_c.dll $GITHUB_WORKSPACE/output/${BUILD_CONFIG,R}/${{ env.PLATFORM }}
-      # ${BUILD_CONFIG,R} Tries to make first letter of BUILD_CONFIG lowercase only if it is an R
-      # as the sDNA source tree has output/Debug
-      #                             output/release
-      # But the corresponding supported configs are Debug and Release
-
-    - name: Cache Geos binary
-      if: steps.cache-geos-restore.outputs.cache-hit != 'true'
-      id: cache-geos-save
-      uses: actions/cache/save@v4
-      with:
-        path: |
-          ${{ github.workspace }}\output\${{ env.CONFIGURATION }}\${{ env.PLATFORM }}\geos_c.dll
-        key: ${{ steps.cache-geos-restore.outputs.cache-primary-key }}
 
     - name: Restore vcpkg Deps
       id: cache-vcpkg-deps-restore
