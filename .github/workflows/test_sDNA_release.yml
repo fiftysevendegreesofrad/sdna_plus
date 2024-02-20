@@ -1,4 +1,4 @@
-name: test_an_msi_from_the_releases_page
+name: test_a_released_sDNA_installer_(.msi)
 
 on:  
   workflow_dispatch:
