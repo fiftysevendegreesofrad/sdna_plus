@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+        python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12', '3.13.0-alpha.4']
 
     name: "Download and install a release of sDNA, and run diff tests on it. "
     
@@ -70,7 +70,6 @@ jobs:
       uses: ./.github/actions/run_regression_tests
       with:
         python_version: ${{ matrix.python_version }}
-        allow_prereleases: true
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
         sdnadll: 'c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
         sdna_debug: ""

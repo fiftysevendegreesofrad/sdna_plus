@@ -9,11 +9,6 @@ inputs:
     required: false
     default: "3.12"
     description: 'The tests pass on Python 2.7 and Python 3.5, ..., 3.12'
-  
-  allow_prereleases:
-    required: false
-    default: 'false'
-    description: 'allow development alpha versions of Python.'
 
   shell:
     required: false
@@ -43,7 +38,6 @@ runs:
     - uses: LizardByte/setup-python-action@master
       with:
         python-version: ${{ inputs.python_version }}
-        allow-prereleases: ${{ inputs.allow_prereleases }}
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
       shell: ${{ inputs.shell }}
