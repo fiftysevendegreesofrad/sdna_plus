@@ -28,7 +28,7 @@ Installation
 
 sDNA can be downloaded an installed from our website_.  
 
-.. _website: http://www.cardiff.ac.uk/sdna/software/download/
+.. _website: http://sdna.cardiff.ac.uk/sdna/software/download/
 
 Further steps are then needed depending on how you plan to use sDNA.
 

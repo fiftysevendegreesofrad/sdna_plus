@@ -33,4 +33,4 @@ Research Evidence
 
 We are currently keeping our list of publications on sDNA on the `about`_ page of our website.
 
-.. _about: http://www.cardiff.ac.uk/sdna/about/sdna/
+.. _about: http://sdna.cardiff.ac.uk/sdna/about/sdna/

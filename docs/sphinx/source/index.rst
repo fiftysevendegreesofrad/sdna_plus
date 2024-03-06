@@ -10,7 +10,7 @@ This is the manual for sDNA_, the spatial network analysis toolbox for GIS and P
 
 **This manual can be cited as follows:**
 
-    Cooper, C. (|today|) Spatial Design Network Analysis (sDNA) version |version| Manual. Cardiff University.  Available, http://www.cardiff.ac.uk/sdna/software/documentation
+    Cooper, C. (|today|) Spatial Design Network Analysis (sDNA) version |version| Manual. Cardiff University.  Available, http://sdna.cardiff.ac.uk/sdna/software/documentation
 
 **Please also remember to cite the software itself in any published sDNA analysis:**
 
@@ -19,8 +19,8 @@ This is the manual for sDNA_, the spatial network analysis toolbox for GIS and P
 
 **Further help, feature requests, bug reports, errata:**  If you have any general questions about using sDNA, requests for features, or problems with the software or manual, please get in touch via our website_.
 
-.. _website: http://www.cardiff.ac.uk/sdna
-.. _sDNA: http://www.cardiff.ac.uk/sdna
+.. _website: http://sdna.cardiff.ac.uk/sdna
+.. _sDNA: http://sdna.cardiff.ac.uk/sdna
 
 **Acknowledgements:** This manual was originally put together under an Impact Accelerator grant from the Economic and Social Research Council.  The principal investigator was Alain Chiaradia and the co-investigator Crispin Cooper, based at Cardiff University department of Geography and Planning and the Sustainable Places Research Institute.
 
