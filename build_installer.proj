@@ -5,9 +5,9 @@
 
         <MSBuild Projects="build_output.proj" Targets="Rebuild"/>
 
-        <Exec Command="&quot;C:\Program Files (x86)\Caphyon\Advanced Installer 21.3\bin\x86\AdvancedInstaller.com&quot; /build installerbits\advanced\sdna.aip"/>
+        <Exec Command="&quot;AdvancedInstaller.com&quot; /build installerbits\advanced\sdna.aip"/>
     
-        <Exec Command="c:\Python27\ArcGIS10.8\python.exe -u installerbits\rename_version.py installerbits/advanced/output/sdna_setup.msi ."/>
+        <Exec Command="python -u installerbits\rename_version.py installerbits/advanced/output/sdna_setup.msi ."/>
 
     </Target>
 
