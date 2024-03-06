@@ -12,3 +12,8 @@ UpgradeLog*.htm
 .vscode
 vcpkg_installed
 output/
+*testout*
+sDNA/sdna_vs2008/tests/**/odtest.*
+sDNA/sdna_vs2008/tests/**/regtestresids_py3.*
+sDNA/sdna_vs2008/tests/**/tinypred_py3.*
+sDNA/sdna_vs2008/tests/**/geom_test_py3.txt
