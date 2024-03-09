@@ -4,6 +4,7 @@ venv/
 *.pyc
 *.ncb
 *.sdf
+*.db
 UpgradeLog*.htm
 */.vs/*
 *.sln.cache
