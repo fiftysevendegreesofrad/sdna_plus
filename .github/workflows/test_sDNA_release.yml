@@ -2,6 +2,8 @@ name: test_a_released_sDNA_installer_(.msi)
 
 on:  
   workflow_dispatch:
+  push:
+    branches: ["CI_(Compile_and_test_in_a_Github_Action)"]
 
 
 env:
