@@ -12,9 +12,9 @@ UpgradeLog*.htm
 .vscode
 vcpkg_installed
 *testout*
-sDNA/sdna_vs2008/tests/odtest.*
-sDNA/sdna_vs2008/tests/regtestresids_py?.*
-sDNA/sdna_vs2008/tests/tinypred_py?.*
-sDNA/sdna_vs2008/tests/tinyout_*
-sDNA/sdna_vs2008/tests/geom_test_py?.txt
+sDNA/sdna_vs2008/tests/**/odtest.*
+sDNA/sdna_vs2008/tests/**/regtestresids_py?.*
+sDNA/sdna_vs2008/tests/**/tinypred_py?.*
+sDNA/sdna_vs2008/tests/**/geom_test_py?.txt
 sDNA/sdna_vs2008/tests/**/out_py?.*
+sDNA/sdna_vs2008/tests/**/tinyout_*

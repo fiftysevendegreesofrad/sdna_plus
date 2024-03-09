@@ -10,6 +10,7 @@ class my_void_p(ctypes.c_void_p):
     pass
 
 sdnadll = os.environ["sdnadll"]
+
 dll = ctypes.windll.LoadLibrary(sdnadll)
 
 dll.run_unit_tests()
@@ -25,6 +26,7 @@ def bytes_to_ascii(x):
         to prevent u'...' from going into the diff tests, which expect ascii strings.
     """
     return str(x.decode('ascii'))
+
 
 current_net_arcids = None
 

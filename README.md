@@ -30,7 +30,7 @@ Hosted on [readthedocs](https://sdna-plus.readthedocs.io/en/latest/).
 
 ### Support
 
-Please see the original project [support page](https://www.cardiff.ac.uk/sdna/support/).
+Please see the original project [support page](https://sdna.cardiff.ac.uk/sdna/support/).
 
 If filing a bug, please file to the database here on github. 
 

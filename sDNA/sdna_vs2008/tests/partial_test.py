@@ -3,6 +3,7 @@ from __future__ import print_function
 import ctypes
 import sys,os
 
+
 # http://stackoverflow.com/questions/17840144/why-does-setting-ctypes-dll-function-restype-c-void-p-return-long
 class my_void_p(ctypes.c_void_p):
     pass
@@ -15,6 +16,14 @@ dll = ctypes.windll.LoadLibrary(os.environ["sdnadll"])
 (ANGULAR, EUCLIDEAN, CUSTOM) = ("ANGULAR","EUCLIDEAN","CUSTOM")
 
 current_net_arcids = None
+
+
+def bytes_to_ascii(x):
+    """ Python 2 compatible replacement for str(x, 'ascii').
+        str accepts one argument only, in Python 2.  
+    """
+    return x.decode('ascii')
+
 
 # dummy progress bar callback func
 CALLBACKFUNCTYPE = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_long)
@@ -134,7 +143,7 @@ def test_net(net_definition,euclidean_radii,analysis_type,cont_space,length_weig
                                                            warning_callback)
 
     if not calculation:
-        print ("config failed")
+        print("config failed")
         return
     
     dll.icalc_get_all_output_names.restype = ctypes.POINTER(ctypes.c_char_p)
@@ -150,16 +159,17 @@ def test_net(net_definition,euclidean_radii,analysis_type,cont_space,length_weig
     net_definition(net)
     
     if not dll.calc_run(calculation):
-        print ("run failed")
+        print("run failed")
         return
 
     dll.net_print(net)
     
     
-    print ('\nshortnames: '+','.join([bytes_to_ascii(x) for x in sn]))
-    print ('created output buffer size float *',outlength)
 
-    print ('\nOUTPUT DATA:')
+    print('\nshortnames: '+','.join([bytes_to_ascii(x) for x in sn]))
+    print('created output buffer size float *',outlength)
+
+    print('\nOUTPUT DATA:')
 
     # for debug display we want to invert output arrays
     out_buffer_type = ctypes.c_float * outlength
@@ -170,33 +180,33 @@ def test_net(net_definition,euclidean_radii,analysis_type,cont_space,length_weig
         out_array += [list(out_buffer)]
 
     for i in range(outlength):
-        print (names[i]+' '*(35-len(names[i]))+'  '.join("%.6g"%link_data[i] for link_data in out_array))
+        print(names[i]+' '*(35-len(names[i]))+'  '.join("%.6g"%link_data[i] for link_data in out_array))
 
-    print ()
-    print ('destroying')
+    print()
+    print('destroying')
     dll.net_destroy(net)
     dll.calc_destroy(calculation)
-    print ('done')
-    print ()
+    print('done')
+    print()
     
 def test_net_all_options(test_name,net_definition,euclidean_radii,problink,extra_config):
-    print ("%s, Angular analysis, discrete space, unweighted"%test_name)
+    print("%s, Angular analysis, discrete space, unweighted"%test_name)
     test_net(net_definition,euclidean_radii,ANGULAR,False,False,problink,extra_config)
-    print ("\n\n%s, Angular analysis, cont space, unweighted"%test_name)
+    print("\n\n%s, Angular analysis, cont space, unweighted"%test_name)
     test_net(net_definition,euclidean_radii,ANGULAR,True,False,problink,extra_config)
 
 def bigger_test(extra_config):
     test_net_all_options("Choice Test",choice_test,choice_test_radii,12,extra_config)
-    print ("Junction cost test")
+    print("Junction cost test")
     test_net(junction_cost_test,junction_cost_test_radii,EUCLIDEAN,False,False,1,extra_config)
-    print ("Split link test")
+    print("Split link test")
     test_net(split_link_test,split_link_test_radii,EUCLIDEAN,False,False,1,extra_config)
-    print ("Activity weight test")
+    print("Activity weight test")
     test_net(act_weight_test,act_weight_test_radii,EUCLIDEAN,False,False,10,extra_config)
     test_net_all_options("Global Radius Only Test",choice_test,["n"],12,extra_config)
-    print ("Nasty link test")
+    print("Nasty link test")
     test_net(nasty_link_test,nasty_link_test_radii,ANGULAR,False,False,1,extra_config)
-    print ("Triangle stick test")
+    print("Triangle stick test")
     test_net(triangle_stick_test,triangle_stick_test_radii,EUCLIDEAN,False,False,1,extra_config)
     
 bigger_test("linkonly")

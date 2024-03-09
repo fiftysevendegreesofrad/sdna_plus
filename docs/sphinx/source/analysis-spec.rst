@@ -8,8 +8,8 @@ This section outlines a more formal specification of the network analysis concep
 
 Note that as of sDNA Version 3, some of this specification has changed, in particular the handling of split links (the rationale for which is explained in a `blog post`_).  The `specification for versions 1 and 2`_ is still available.
 
-.. _blog post: http://www.cardiff.ac.uk/sdna/repairing-split-links-is-no-longer-necessary/
-.. _specification for versions 1 and 2: http://www.cardiff.ac.uk/sdna/software/documentation/
+.. _blog post: http://sdna.cardiff.ac.uk/sdna/repairing-split-links-is-no-longer-necessary/
+.. _specification for versions 1 and 2: http://sdna.cardiff.ac.uk/sdna/software/documentation/
 
 -----------
 Definitions
