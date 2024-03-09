@@ -105,13 +105,30 @@ print('SDNA_DEBUG: %s' % SDNA_DEBUG)
 
 TMP_SDNA_DIR = os.path.join(tempfile.gettempdir(), 'sDNA', 'tests', 'pytest')
 
+
+
+# Configure allowing regression tests to pass despite issue #20
+# https://github.com/fiftysevendegreesofrad/sdna_plus/issues/20
 DONT_TEST_N_LINK_SUBSYSTEMS_ORDER = bool(os.getenv('DONT_TEST_N_LINK_SUBSYSTEMS_ORDER', ''))
 
 print('DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: %s' % DONT_TEST_N_LINK_SUBSYSTEMS_ORDER)
 
-N_LINK_SUBSYSTEMS_PATTERN = r'(?P<N>\d+)-link subsystem contains link with id = (?P<id>\d+)'
+N_LINK_SUBSYSTEMS_PATTERN = r'^(?P<N>\d+)-link subsystem contains link with id = (?P<id>\d+)$'
 
 SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF = ('1', '3')
+
+
+
+# Configure allowing regression tests to pass despite issue #21
+# https://github.com/fiftysevendegreesofrad/sdna_plus/issues/21
+ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT = bool(os.getenv('ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT', ''))
+
+print('ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: %s' % ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT)
+
+NEGATIVE_FORMULA_ERROR_PATTERN = r'^ERROR: Formula evaluation gave negative result for link (?P<num>\d+)$'
+NEGATIVE_FORMULA_ERROR_LINK_PRESENT_PATTERN = r'^Polyline (?P<num>\d+) id=(?P<id>\d+)$'
+
+
 
 if not os.path.isdir(TMP_SDNA_DIR):
     os.makedirs(TMP_SDNA_DIR)
@@ -513,6 +530,10 @@ class DiffCommand(ReadsTextInputFile):
             actual_n_link_subsystems = collections.defaultdict(collections.Counter)
             expected_n_link_subsystems = collections.defaultdict(collections.Counter)
 
+        if ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT:
+            link_num_with_negative_formula_error = None
+            error_on_non_existent_link = False
+
         with open(self.expected_output_file, 'rt') as f:
             if SDNA_DEBUG:
                 expected_lines = f
@@ -557,17 +578,6 @@ class DiffCommand(ReadsTextInputFile):
 
                 expected, actual = expected.rstrip().lstrip('\r'), actual.rstrip().lstrip('\r')
 
-                # if prev_expected.startswith('Progress') and not expected:
-                # continue
-                # actual = next(actual_lines)
-                # if not expected:
-                #     continue
-                # for j, actual in actual_lines:
-                #     if actual:
-                #         break
-
-
-                # print('Expected: %s, \n\nActual: %s' % (expected, actual))
 
                 # Allow the result of a test, requiring most of 
                 # of correctout_prepbarns.txt to be exactly the same, 
@@ -584,20 +594,48 @@ class DiffCommand(ReadsTextInputFile):
 
                 if DONT_TEST_N_LINK_SUBSYSTEMS_ORDER and 'testout_prep_' in self.input_file:
 
-                    match_actual = re.match(N_LINK_SUBSYSTEMS_PATTERN, actual) 
-                    match_expected = re.match(N_LINK_SUBSYSTEMS_PATTERN, expected)
+                    match_n_link_actual = re.match(N_LINK_SUBSYSTEMS_PATTERN, actual) 
+                    match_n_link_expected = re.match(N_LINK_SUBSYSTEMS_PATTERN, expected)
 
-                    if (match_actual and match_expected and 
-                        (match_actual.group('N') == match_expected.group('N')) and
-                        match_actual.group('N') in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF):
+                    if (match_n_link_actual and match_n_link_expected and 
+                        (match_n_link_actual.group('N') == match_n_link_expected.group('N')) and
+                        match_n_link_actual.group('N') in SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF):
                         #
-                        num_links = match_actual.group('N')
-                        actual_n_link_subsystems[num_links].update([match_actual.group('id')])
-                        expected_n_link_subsystems[num_links].update([match_expected.group('id')])
+                        num_links = match_n_link_actual.group('N')
+
+                        # add to Counters, to be tested for equality at end
+                        actual_n_link_subsystems[num_links].update([match_n_link_actual.group('id')])
+                        expected_n_link_subsystems[num_links].update([match_n_link_expected.group('id')])
                         continue
 
-                # if actual.startswith('Progress: '):
-                #     continue
+                if ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT and 'correctout.txt' == self.expected_output_file:
+                    
+                    # Require that negative formula errors are only raised for links that exist.
+                    if error_on_non_existent_link:
+                        match_neg_formula_link_present = re.match(NEGATIVE_FORMULA_ERROR_LINK_PRESENT_PATTERN, actual)
+
+                        if (match_neg_formula_link_present and
+                            str(link_num_with_negative_formula_error) == match_neg_formula_link_present.group('num')):
+                            #
+                            error_on_non_existent_link = False
+
+                    match_neg_formula_actual = re.match(NEGATIVE_FORMULA_ERROR_PATTERN, actual)
+                    match_neg_formula_expected = re.match(NEGATIVE_FORMULA_ERROR_PATTERN, expected)
+                
+
+                    if (match_neg_formula_actual and match_neg_formula_expected):
+
+                        # Handle any uncleared previous negative formula error on a non-existing link
+                        # (no link found before the next negative formula error). 
+                        assert not error_on_non_existent_link, "Negative formula error raised on non-existent link: %s" % link_num_with_negative_formula_error
+                            
+                        link_num_with_negative_formula_error = match_neg_formula_actual.group('num')
+                        error_on_non_existent_link = True
+
+                        continue
+
+
+
 
                 # imitate "sed s/_%outputsuffix%//g <%2 >%2.fordiff.txt" from mydiff.bat
                 if 'mydiff' in self.command_str:
@@ -626,6 +664,9 @@ class DiffCommand(ReadsTextInputFile):
                                                                  expected_counter - actual_counter, 
                                                                  actual_counter - expected_counter
                                                                 ))
+
+            if ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT:
+                assert not error_on_non_existent_link, "Negative formula error raised on non-existent link at: %s." % match_neg_formula_actual.group(0)
 
             print('[92mPassed![0m Num of equal expected & actual lines": %s. (Num lines skipped: %s exc debug etc.)' % (m,i-m))
 

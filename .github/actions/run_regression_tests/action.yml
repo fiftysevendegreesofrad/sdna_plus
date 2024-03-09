@@ -19,6 +19,10 @@ inputs:
     required: true
     description: "Non-empty string: In correctout_prep.txt, allow output lines of the form: -link subsystem contains link with id = , to be in any order.  Empty string ('') : require the orders of the lines to match."
   
+  ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT:
+    required: true
+    description: "The negative formula is on all links, but the tests strictly require the first error to raised to be for the same link as in the original run. "
+
   sdnadll:
     description: 'The path to the sdna_vs2008.dll of the installation to be tested.'
     required: true
@@ -69,8 +73,18 @@ runs:
       working-directory: .\sDNA\sdna_vs2008\tests\pytest
       env:
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: ${{ inputs.DONT_TEST_N_LINK_SUBSYSTEMS_ORDER }}
+        ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: ${{ inputs.ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT }}
         sdnadll: ${{ inputs.sdnadll }}
         sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
         sdna_debug: ${{ inputs.sdna_debug }}
       run: pytest -rA
       # -rA shows summary of tests, one per line, even when they all pass.
+      #
+      # To run the same tests locally, the command is something like:
+      # run: >
+      #   set "sdnadll=c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll" &
+      #   set "sdna_bin_dir=c:\Program Files (x86)\sDNA\bin" &
+      #   set sdna_debug=False &
+      #   set DONT_TEST_N_LINK_SUBSYSTEMS_ORDER=1 &
+      #   set ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT=1 &
+      #   pytest -rA
