@@ -31,6 +31,15 @@ def set_progressor(x):
     return 0
 set_progressor_callback = CALLBACKFUNCTYPE(set_progressor)
 WARNINGCALLBACKFUNCTYPE = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_char_p)
+
+def bytes_to_ascii(x):
+    """ Python 2 compatible replacement for str(x, 'ascii').
+        str accepts one argument only, in Python 2.  
+        The extra str call converts a u string into an ascii str on Python 2, 
+        to prevent u'...' from going into the diff tests, which expect ascii strings.
+    """
+    return str(x.decode('ascii'))
+
 def warning(x):
     print(bytes_to_ascii(x))
     return 0
@@ -156,6 +165,7 @@ def test_net(net_definition,euclidean_radii,analysis_type,cont_space,length_weig
     dll.net_print(net)
     
     
+
     print('\nshortnames: '+','.join([bytes_to_ascii(x) for x in sn]))
     print('created output buffer size float *',outlength)
 

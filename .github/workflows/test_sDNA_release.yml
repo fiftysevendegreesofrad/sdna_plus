@@ -1,0 +1,79 @@
+name: test_a_released_sDNA_installer_(.msi)
+
+on:  
+  workflow_dispatch:
+
+
+
+env:
+  VERSION: 4_1_1
+
+  DOWNLOAD_URL_PREFIX: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v
+#                e.g.: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/sDNA_setup_win_v4_1_1.msi
+#                  or: https://sdna.cardiff.ac.uk/sdna/wp-content/downloads/old%20versions/sDNA_setup_win_v3_4_5.msi
+
+
+
+jobs:
+
+  download_install_and_test_sDNA_msi:    
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+        
+        # cannot install numpy on: ['3.13.0-alpha.4']
+        # https://github.com/JamesParrott/sdna_plus/issues/14
+
+    name: "Download and install a release of sDNA, and run diff tests on it. "
+    
+    runs-on: windows-2022
+    # Note:  The Windows server 2022 Github runner image already includes  
+    # Python (currently 6 versions from 3.7 to 3.12) and a couple of 
+    # VC++ redistributables.  Desktop users may need to install these 
+    # themselves, in addition to sDNA.      
+    #
+    # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
+    #
+    steps:
+
+
+    - uses: actions/checkout@v4
+
+
+    # - name: Download and install release of sDNA, then delete installer file.
+
+    #   run: |
+    #     Invoke-WebRequest ${{ env.DOWNLOAD_URL_PREFIX }}${{ env.VERSION }}.msi -OutFile sDNA_setup_win_v${{ env.VERSION }}.msi
+    #
+    #     # This command is all that is required to successfully run the sDNA installer
+    #     # on desktop Windows 11, silently.  Sadly it is not also sufficient on 
+    #     # the Github Actions Windows runner image (I know not why): 
+    #     .\sDNA_setup_win_v${{ env.VERSION }}.msi /passive
+    #
+    #     Remove-Item .\sDNA_setup_win_v${{ env.VERSION }}.msi
+
+    - name: Install sDNA using powershell script. 
+      # This is @Simran-B's powershell script (from Github Community forum),
+      # according to GuiFalourd on Stack Overflow
+      # https://stackoverflow.com/a/72291019/20785734
+      run: |
+        $file = "sDNA_setup_win_v${{ env.VERSION }}.msi"
+        Invoke-WebRequest ${{ env.DOWNLOAD_URL_PREFIX }}${{ env.VERSION }}.msi -OutFile $file
+        $log = "install.log" 
+        $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
+        $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
+        $procMain.WaitForExit() 
+        $procLog.Kill()
+        Remove-Item $file
+
+    - name: Run regression tests
+      uses: ./.github/actions/run_regression_tests
+      with:
+        python_version: ${{ matrix.python_version }}
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+        ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
+        sdnadll: 'c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
+        sdna_debug: ""
+        

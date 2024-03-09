@@ -1,4 +1,5 @@
 from __future__ import print_function
+
 import ctypes
 import sys,os
 
@@ -21,8 +22,11 @@ print()
 def bytes_to_ascii(x):
     """ Python 2 compatible replacement for str(x, 'ascii').
         str accepts one argument only, in Python 2.  
+        The extra str call converts a u string into an ascii str on Python 2, 
+        to prevent u'...' from going into the diff tests, which expect ascii strings.
     """
-    return x.decode('ascii')
+    return str(x.decode('ascii'))
+
 
 current_net_arcids = None
 

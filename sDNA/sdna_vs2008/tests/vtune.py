@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import ctypes
 import sys
 import numpy
@@ -75,10 +77,10 @@ def test_net(net_definition,euclidean_radii,analysis_type,cont_space,prob_link):
     after_time = time.clock()
 
     if cont_space:
-        print "cont,",
+        print ("cont,")
     else:
-        print "disc,",
-    print (after_time-before_time)*1000,"ms\n"
+        print ("disc,")
+    print ((after_time-before_time)*1000,"ms\n")
 
     dll.net_destroy(net)
     dll.calc_destroy(calculation)
