@@ -6,23 +6,23 @@ sDNA is running in 64-bit mode
 Building network and checking for tolerance errors...
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear
@@ -49,23 +49,23 @@ sDNA is running in 64-bit mode
 Building network and checking for tolerance errors...
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear
@@ -91,17 +91,17 @@ Building network and checking for tolerance errors...
 Polyline 1 id=0
     Points: (0,0) (-1,0) 
     edge 0 (s1+), conn: 
-    edge 1 (s1-), conn: 2(€ang45) 4(€ang45) 
+    edge 1 (s1-), conn: 2(ang45) 4(ang45) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,0) (1,1) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 0(€ang45) 4(€ang90) 
+    edge 3 (s2-), conn: 0(ang45) 4(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,0) (1,-1) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 0(€ang45) 2(€ang90) 
+    edge 5 (s3-), conn: 0(ang45) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear
@@ -126,13 +126,13 @@ sDNA is running in 64-bit mode
 Building network and checking for tolerance errors...
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang0) 
+    edge 0 (s1+), conn: 2(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,2) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 1(€ang0) 
+    edge 3 (s2-), conn: 1(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear
@@ -157,23 +157,23 @@ sDNA is running in 64-bit mode
 Building network and checking for tolerance errors...
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear
@@ -198,23 +198,23 @@ sDNA is running in 64-bit mode
 Building network and checking for tolerance errors...
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear
@@ -241,23 +241,23 @@ sDNA is running in 64-bit mode
 Building network and checking for tolerance errors...
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear
@@ -308,23 +308,23 @@ sDNA is running in 64-bit mode
 Building network and checking for tolerance errors...
 Polyline 1 id=0
     Points: (0,1) (1,1) 
-    edge 0 (s1+), conn: 2(€ang45) 3(€ang45) 
+    edge 0 (s1+), conn: 2(ang45) 3(ang45) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (1,1) (2,2) (2,0) (1,1) 
-    edge 2 (s2+), conn: 1(€ang45) 
-    edge 3 (s2-), conn: 1(€ang45) 
+    edge 2 (s2+), conn: 1(ang45) 
+    edge 3 (s2-), conn: 1(ang45) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (10,10) (11,10) 
-    edge 4 (s3+), conn: 6(€ang0) 
+    edge 4 (s3+), conn: 6(ang0) 
     edge 5 (s3-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 4 id=3
     Points: (11,10) (12,10) 
     edge 6 (s4+), conn: 
-    edge 7 (s4-), conn: 5(€ang0) 
+    edge 7 (s4-), conn: 5(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear
@@ -470,23 +470,23 @@ R1.79769e+308 origin 13   (linkid 3)
      adding points from edge 4 to hull of link 13 radius 1.79769e+308
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MAD5,NQPDA5,Lnk5,Len5,AngD5,Wt5,MAD6,NQPDA6,Lnk6,Len6,AngD6,Wt6,MAD10,NQPDA10,Lnk10,Len10,AngD10,Wt10,MAD50,NQPDA50,Lnk50,Len50,AngD50,Wt50,MAD63,NQPDA63,Lnk63,Len63,AngD63,Wt63,MADn,NQPDAn,Lnkn,Lenn,AngDn,Wtn
@@ -726,23 +726,23 @@ R1.79769e+308 origin 13   (linkid 3)
 adding origin points to hull for link 13
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MAD5c,NQPDA5c,Lnk5c,Len5c,AngD5c,Wt5c,MAD6c,NQPDA6c,Lnk6c,Len6c,AngD6c,Wt6c,MAD10c,NQPDA10c,Lnk10c,Len10c,AngD10c,Wt10c,MAD50c,NQPDA50c,Lnk50c,Len50c,AngD50c,Wt50c,MAD63c,NQPDA63c,Lnk63c,Len63c,AngD63c,Wt63c,MADnc,NQPDAnc,Lnknc,Lennc,AngDnc,Wtnc
@@ -826,17 +826,17 @@ R1.79769e+308 origin 3   (linkid 2)
 Polyline 1 id=0
     Points: (0,0) (-1,0) 
     edge 0 (s1+), conn: 
-    edge 1 (s1-), conn: 2(€ang45) 4(€ang45) 
+    edge 1 (s1-), conn: 2(ang45) 4(ang45) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,0) (1,1) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 0(€ang45) 4(€ang90) 
+    edge 3 (s2-), conn: 0(ang45) 4(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,0) (1,-1) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 0(€ang45) 2(€ang90) 
+    edge 5 (s3-), conn: 0(ang45) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,Lnkn,Lenn,AngDn,Wtn
@@ -878,13 +878,13 @@ R1.79769e+308 origin 2   (linkid 1)
      adding points from edge 1 to hull of link 2 radius 1.79769e+308
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang0) 
+    edge 0 (s1+), conn: 2(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,2) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 1(€ang0) 
+    edge 3 (s2-), conn: 1(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,Lnkn,Lenn,AngDn,Wtn
@@ -952,23 +952,23 @@ R1.79769e+308 origin 13   (linkid 3)
      adding points from edge 4 to hull of link 13 radius 1.79769e+308
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,Lnkn,Lenn,AngDn,Wtn
@@ -1036,23 +1036,23 @@ R1.79769e+308 origin 13   (linkid 3)
      adding points from edge 4 to hull of link 13 radius 1.79769e+308
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MADn,NQPDAn,Lnkn,Lenn,AngDn,Wtn
@@ -1126,23 +1126,23 @@ R1.79769e+308 origin 13   (linkid 3)
 adding origin points to hull for link 13
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MADnc,NQPDAnc,Lnknc,Lennc,AngDnc,Wtnc
@@ -1230,23 +1230,23 @@ R1.79769e+308 origin 4   (linkid 3)
      adding points from edge 5 to hull of link 4 radius 1.79769e+308
 Polyline 1 id=0
     Points: (0,1) (1,1) 
-    edge 0 (s1+), conn: 2(€ang45) 3(€ang45) 
+    edge 0 (s1+), conn: 2(ang45) 3(ang45) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (1,1) (2,2) (2,0) (1,1) 
-    edge 2 (s2+), conn: 1(€ang45) 
-    edge 3 (s2-), conn: 1(€ang45) 
+    edge 2 (s2+), conn: 1(ang45) 
+    edge 3 (s2-), conn: 1(ang45) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (10,10) (11,10) 
-    edge 4 (s3+), conn: 6(€ang0) 
+    edge 4 (s3+), conn: 6(ang0) 
     edge 5 (s3-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 4 id=3
     Points: (11,10) (12,10) 
     edge 6 (s4+), conn: 
-    edge 7 (s4-), conn: 5(€ang0) 
+    edge 7 (s4-), conn: 5(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,Lnkn,Lenn,AngDn,Wtn
@@ -1448,23 +1448,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MAD5,NQPDA5,BtA5,TPBtA5,TPD5,Lnk5,Len5,AngD5,Wt5,MGLA5,MCF5,DivA5,MAD6,NQPDA6,BtA6,TPBtA6,TPD6,Lnk6,Len6,AngD6,Wt6,MGLA6,MCF6,DivA6,MAD10,NQPDA10,BtA10,TPBtA10,TPD10,Lnk10,Len10,AngD10,Wt10,MGLA10,MCF10,DivA10,MAD50,NQPDA50,BtA50,TPBtA50,TPD50,Lnk50,Len50,AngD50,Wt50,MGLA50,MCF50,DivA50,MAD63,NQPDA63,BtA63,TPBtA63,TPD63,Lnk63,Len63,AngD63,Wt63,MGLA63,MCF63,DivA63,MADn,NQPDAn,BtAn,TPBtAn,TPDn,Lnkn,Lenn,AngDn,Wtn,MGLAn,MCFn,DivAn
@@ -1848,23 +1848,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MAD5c,NQPDA5c,BtA5c,TPBtA5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,MGLA5c,MCF5c,DivA5c,MAD6c,NQPDA6c,BtA6c,TPBtA6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,MGLA6c,MCF6c,DivA6c,MAD10c,NQPDA10c,BtA10c,TPBtA10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,MGLA10c,MCF10c,DivA10c,MAD50c,NQPDA50c,BtA50c,TPBtA50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,MGLA50c,MCF50c,DivA50c,MAD63c,NQPDA63c,BtA63c,TPBtA63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,MGLA63c,MCF63c,DivA63c,MADnc,NQPDAnc,BtAnc,TPBtAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,MGLAnc,MCFnc,DivAnc
@@ -1996,17 +1996,17 @@ crow flies distance is 1
 Polyline 1 id=0
     Points: (0,0) (-1,0) 
     edge 0 (s1+), conn: 
-    edge 1 (s1-), conn: 2(€ang45) 4(€ang45) 
+    edge 1 (s1-), conn: 2(ang45) 4(ang45) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,0) (1,1) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 0(€ang45) 4(€ang90) 
+    edge 3 (s2-), conn: 0(ang45) 4(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,0) (1,-1) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 0(€ang45) 2(€ang90) 
+    edge 5 (s3-), conn: 0(ang45) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,MGLEn,MCFn,DivEn
@@ -2058,13 +2058,13 @@ euclidean geodesic from link 2-1 is 1
 crow flies distance is 1
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang0) 
+    edge 0 (s1+), conn: 2(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,2) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 1(€ang0) 
+    edge 3 (s2-), conn: 1(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,MGLEn,MCFn,DivEn
@@ -2157,23 +2157,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,MGLEn,MCFn,DivEn
@@ -2273,23 +2273,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MADn,NQPDAn,BtAn,TPBtAn,TPDn,Lnkn,Lenn,AngDn,Wtn,MGLAn,MCFn,DivAn
@@ -2395,23 +2395,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MADnc,NQPDAnc,BtAnc,TPBtAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,MGLAnc,MCFnc,DivAnc
@@ -2519,23 +2519,23 @@ euclidean geodesic from link 4-3 is 1
 crow flies distance is 1
 Polyline 1 id=0
     Points: (0,1) (1,1) 
-    edge 0 (s1+), conn: 2(€ang45) 3(€ang45) 
+    edge 0 (s1+), conn: 2(ang45) 3(ang45) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (1,1) (2,2) (2,0) (1,1) 
-    edge 2 (s2+), conn: 1(€ang45) 
-    edge 3 (s2-), conn: 1(€ang45) 
+    edge 2 (s2+), conn: 1(ang45) 
+    edge 3 (s2-), conn: 1(ang45) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (10,10) (11,10) 
-    edge 4 (s3+), conn: 6(€ang0) 
+    edge 4 (s3+), conn: 6(ang0) 
     edge 5 (s3-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 4 id=3
     Points: (11,10) (12,10) 
     edge 6 (s4+), conn: 
-    edge 7 (s4-), conn: 5(€ang0) 
+    edge 7 (s4-), conn: 5(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,MGLEn,MCFn,DivEn
@@ -2861,23 +2861,23 @@ R1.79769e+308 origin 13   (linkid 3)
      (55,0,0)(105,0,0)
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MAD5,NQPDA5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,HullA5,HullP5,HullR5,HullB5,HullSI5,MAD6,NQPDA6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,HullA6,HullP6,HullR6,HullB6,HullSI6,MAD10,NQPDA10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,HullA10,HullP10,HullR10,HullB10,HullSI10,MAD50,NQPDA50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,HullA50,HullP50,HullR50,HullB50,HullSI50,MAD63,NQPDA63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,HullA63,HullP63,HullR63,HullB63,HullSI63,MADn,NQPDAn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,HullAn,HullPn,HullRn,HullBn,HullSIn
@@ -3359,23 +3359,23 @@ adding origin points to hull for link 13
      (55,0,0)(105,0,0)
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MAD5c,NQPDA5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,MAD6c,NQPDA6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,MAD10c,NQPDA10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,MAD50c,NQPDA50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,MAD63c,NQPDA63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,MADnc,NQPDAnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc
@@ -3528,17 +3528,17 @@ R1.79769e+308 origin 3   (linkid 2)
 Polyline 1 id=0
     Points: (0,0) (-1,0) 
     edge 0 (s1+), conn: 
-    edge 1 (s1-), conn: 2(€ang45) 4(€ang45) 
+    edge 1 (s1-), conn: 2(ang45) 4(ang45) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,0) (1,1) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 0(€ang45) 4(€ang90) 
+    edge 3 (s2-), conn: 0(ang45) 4(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,0) (1,-1) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 0(€ang45) 2(€ang90) 
+    edge 5 (s3-), conn: 0(ang45) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,HullAn,HullPn,HullRn,HullBn,HullSIn
@@ -3601,13 +3601,13 @@ R1.79769e+308 origin 2   (linkid 1)
      (0,1.5,0)(0,2,0)
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang0) 
+    edge 0 (s1+), conn: 2(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,2) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 1(€ang0) 
+    edge 3 (s2-), conn: 1(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,HullAn,HullPn,HullRn,HullBn,HullSIn
@@ -3726,23 +3726,23 @@ R1.79769e+308 origin 13   (linkid 3)
      (55,0,0)(105,0,0)
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,HullAn,HullPn,HullRn,HullBn,HullSIn
@@ -3861,23 +3861,23 @@ R1.79769e+308 origin 13   (linkid 3)
      (55,0,0)(105,0,0)
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MADn,NQPDAn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,HullAn,HullPn,HullRn,HullBn,HullSIn
@@ -4002,23 +4002,23 @@ adding origin points to hull for link 13
      (55,0,0)(105,0,0)
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MADnc,NQPDAnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc
@@ -4153,23 +4153,23 @@ R1.79769e+308 origin 4   (linkid 3)
      (11.5,10,0)(12,10,0)
 Polyline 1 id=0
     Points: (0,1) (1,1) 
-    edge 0 (s1+), conn: 2(€ang45) 3(€ang45) 
+    edge 0 (s1+), conn: 2(ang45) 3(ang45) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (1,1) (2,2) (2,0) (1,1) 
-    edge 2 (s2+), conn: 1(€ang45) 
-    edge 3 (s2-), conn: 1(€ang45) 
+    edge 2 (s2+), conn: 1(ang45) 
+    edge 3 (s2-), conn: 1(ang45) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (10,10) (11,10) 
-    edge 4 (s3+), conn: 6(€ang0) 
+    edge 4 (s3+), conn: 6(ang0) 
     edge 5 (s3-), conn: 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 Polyline 4 id=3
     Points: (11,10) (12,10) 
     edge 6 (s4+), conn: 
-    edge 7 (s4-), conn: 5(€ang0) 
+    edge 7 (s4-), conn: 5(ang0) 
     custom_cost=1 end_gs=0 is_island=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MEDn,NQPDEn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,HullAn,HullPn,HullRn,HullBn,HullSIn

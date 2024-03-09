@@ -19,9 +19,7 @@ class my_void_p(ctypes.c_void_p):
 
 serial_dll_path = os.environ["sdnadll"]
 parallel_dll_path = re.sub("debug","parallel_debug",serial_dll_path,flags=re.IGNORECASE)
-abs_ser_dll_path =os.path.dirname(os.path.abspath(__file__))+os.path.sep+serial_dll_path
-eprint ("sdnapy dll path",abs_ser_dll_path)
-sdnapy.set_dll_path(abs_ser_dll_path)
+sdnapy.set_dll_path(serial_dll_path)
 
 if os.path.getmtime(serial_dll_path)-os.path.getmtime(parallel_dll_path) > 3600*10:
     eprint ("dlls built more than 10 hours apart")
@@ -114,7 +112,7 @@ def test_net(dll,net_definition,euclidean_radii,cont_space,prob_link):
     
     n=[]
     for i in range(outlength):
-        n += [str(names[i],"ascii")]
+        n += [str(names[i].decode("ascii"))]
     
     out_buffer_type = ctypes.c_float * outlength
     out_buffer = out_buffer_type()

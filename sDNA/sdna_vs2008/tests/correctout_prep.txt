@@ -174,9 +174,9 @@ moving junction at 530661,180659 to 530661,180659
 3-link subsystem contains link with id = 7162
 3-link subsystem contains link with id = 8468
 2-link subsystem contains link with id = 4103
+1-link subsystem contains link with id = 1073
 1-link subsystem contains link with id = 246
 1-link subsystem contains link with id = 272
-1-link subsystem contains link with id = 1073
 1-link subsystem contains link with id = 4251
 1-link subsystem contains link with id = 4651
 1-link subsystem contains link with id = 4901

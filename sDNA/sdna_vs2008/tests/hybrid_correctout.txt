@@ -491,23 +491,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     one=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     one=0 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     one=0 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     one=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,MHD5c,NQPDH5c,BtH5c,TPBtH5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,MGLH5c,MCF5c,DivH5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,MHD6c,NQPDH6c,BtH6c,TPBtH6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,MGLH6c,MCF6c,DivH6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,MHD10c,NQPDH10c,BtH10c,TPBtH10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,MGLH10c,MCF10c,DivH10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,MHD50c,NQPDH50c,BtH50c,TPBtH50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,MGLH50c,MCF50c,DivH50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,MHD63c,NQPDH63c,BtH63c,TPBtH63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,MGLH63c,MCF63c,DivH63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,MHDnc,NQPDHnc,BtHnc,TPBtHnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,MGLHnc,MCFnc,DivHnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc
@@ -762,23 +762,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     one=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     one=0 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     one=0 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     one=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,MHDnc,NQPDHnc,BtHnc,TPBtHnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,MGLHnc,MCFnc,DivHnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc
@@ -2286,23 +2286,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     one=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     one=0 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     one=0 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     one=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,MHD5c,NQPDH5c,BtH5c,TPBtH5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,MGLH5c,MCF5c,DivH5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,MHD6c,NQPDH6c,BtH6c,TPBtH6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,MGLH6c,MCF6c,DivH6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,MHD10c,NQPDH10c,BtH10c,TPBtH10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,MGLH10c,MCF10c,DivH10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,MHD50c,NQPDH50c,BtH50c,TPBtH50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,MGLH50c,MCF50c,DivH50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,MHD63c,NQPDH63c,BtH63c,TPBtH63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,MGLH63c,MCF63c,DivH63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,MHDnc,NQPDHnc,BtHnc,TPBtHnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,MGLHnc,MCFnc,DivHnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc
@@ -2374,7 +2374,7 @@ Convex Hull Area R10c              33.5  27  0  0
 Convex Hull Perimeter R10c         27.4307  23.9941  40  40
 Convex Hull Max Radius R10c        7.07107  9.05538  10  10
 Convex Hull Bearing R10c           98.1301  263.66  180  270
-Convex Hull Shape Index R10c       1.7874  1.69682  inf  inf
+Convex Hull Shape Index R10c       1.7874  1.69683  inf  inf
 Mean Hybrid Dist R50c              373.278  256.982  33.3333  33.3333
 NetQuantPD Hybrid R50c             0.00815469  0.0172812  0.03  0.03
 Betweenness Hybrid R50c            1.77333  1.74333  0.758333  0.758333
@@ -2619,28 +2619,28 @@ euclidean geodesic from link 24-23 is 1.20711
 crow flies distance is 0.866025
 Polyline 20 id=0
     Points: (0,0) (1,0) 
-    edge 0 (s20+), conn: 2(€ang45) 6(€ang90) 
+    edge 0 (s20+), conn: 2(ang45) 6(ang90) 
     edge 1 (s20-), conn: 
     is_escalator=0 
 Polyline 21 id=1
     Points: (1,0) (2,0) 
-    edge 2 (s21+), conn: 4(€ang45) 
-    edge 3 (s21-), conn: 1(€ang45) 6(€ang120) 
+    edge 2 (s21+), conn: 4(ang45) 
+    edge 3 (s21-), conn: 1(ang45) 6(ang120) 
     is_escalator=0 
 Polyline 22 id=2
     Points: (2,0) (3,0) 
     edge 4 (s22+), conn: 
-    edge 5 (s22-), conn: 3(€ang45) 
+    edge 5 (s22-), conn: 3(ang45) 
     is_escalator=0 
 Polyline 23 id=3
     Points: (1,0) (1,1) 
-    edge 6 (s23+), conn: 8(€ang90) 
-    edge 7 (s23-), conn: 1(€ang90) 2(€ang120) 
+    edge 6 (s23+), conn: 8(ang90) 
+    edge 7 (s23-), conn: 1(ang90) 2(ang120) 
     is_escalator=1 
 Polyline 24 id=4
     Points: (1,1) (2,1) 
     edge 8 (s24+), conn: 
-    edge 9 (s24-), conn: 7(€ang90) 
+    edge 9 (s24-), conn: 7(ang90) 
     is_escalator=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,MHDn,NQPDHn,BtHn,TPBtHn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,MGLHn,MCFn,DivHn,HullAn,HullPn,HullRn,HullBn,HullSIn
@@ -2862,28 +2862,28 @@ euclidean geodesic from link 24-23 is 1.20711
 crow flies distance is 0.866025
 Polyline 20 id=0
     Points: (0,0) (1,0) 
-    edge 0 (s20+), conn: 2(€ang45) 6(€ang90) 
+    edge 0 (s20+), conn: 2(ang45) 6(ang90) 
     edge 1 (s20-), conn: 
     is_escalator=0 
 Polyline 21 id=1
     Points: (1,0) (2,0) 
-    edge 2 (s21+), conn: 4(€ang45) 
-    edge 3 (s21-), conn: 1(€ang45) 6(€ang120) 
+    edge 2 (s21+), conn: 4(ang45) 
+    edge 3 (s21-), conn: 1(ang45) 6(ang120) 
     is_escalator=0 
 Polyline 22 id=2
     Points: (2,0) (3,0) 
     edge 4 (s22+), conn: 
-    edge 5 (s22-), conn: 3(€ang45) 
+    edge 5 (s22-), conn: 3(ang45) 
     is_escalator=0 
 Polyline 23 id=3
     Points: (1,0) (1,1) 
-    edge 6 (s23+), conn: 8(€ang90) 
-    edge 7 (s23-), conn: 1(€ang90) 2(€ang120) 
+    edge 6 (s23+), conn: 8(ang90) 
+    edge 7 (s23-), conn: 1(ang90) 2(ang120) 
     is_escalator=1 
 Polyline 24 id=4
     Points: (1,1) (2,1) 
     edge 8 (s24+), conn: 
-    edge 9 (s24-), conn: 7(€ang90) 
+    edge 9 (s24-), conn: 7(ang90) 
     is_escalator=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,MHDn,NQPDHn,BtHn,TPBtHn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,MGLHn,MCFn,DivHn,HullAn,HullPn,HullRn,HullBn,HullSIn
@@ -3211,18 +3211,18 @@ R1.79769e+308 origin 3   (linkid 2)
      (2.5,0,0)(3,0,0)
 Polyline 1 id=0
     Points: (0,0) (1,0) 
-    edge 0 (s1+), conn: 2(€ang0) 
+    edge 0 (s1+), conn: 2(ang0) 
     edge 1 (s1-), conn: 
     oneway=0 weight=1 
 Polyline 2 id=1
     Points: (1,0) (2,0) 
-    edge 2 (s2+), conn: 4(€ang0) 
-    edge 3 (s2-), conn: 1(€ang0) 
+    edge 2 (s2+), conn: 4(ang0) 
+    edge 3 (s2-), conn: 1(ang0) 
     oneway=1 weight=0 
 Polyline 3 id=2
     Points: (2,0) (3,0) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 3(€ang0) 
+    edge 5 (s3-), conn: 3(ang0) 
     oneway=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,MADn,NQPDAn,BtAn,TPBtAn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,MGLAn,MCFn,DivAn,HullAn,HullPn,HullRn,HullBn,HullSIn

@@ -1,35 +1,35 @@
 PartialEdge test
 ANGULAR, CENTRE ON CORNER
 full traversal
-partial edge called length=1.#INF e(0,0,0)m1a45(1,0,0)c(1,0,0)a45(1,0,0)m1e(1,1,0)
+partial edge called length=inf e(0,0,0)m1a45(1,0,0)c(1,0,0)a45(1,0,0)m1e(1,1,0)
 half traversal ending exactly on centre
 partial edge called length=1 e(0,0,0)m1a22.5(1,0,0)c(1,0,0)a22.5(1,0,0)m0e(1,0,0)
 quarter traversal starting from centre
 partial edge called length=0.5 c(1,0,0)a45(1,0,0)m0.5e(1,0.5,0)
 EUCLIDEAN, CENTRE ON CORNER
 full traversal
-partial edge called length=1.#INF e(0,0,0)m1a45(1,0,0)c(1,0,0)a45(1,0,0)m1e(1,1,0)
+partial edge called length=inf e(0,0,0)m1a45(1,0,0)c(1,0,0)a45(1,0,0)m1e(1,1,0)
 half traversal ending exactly on centre
 partial edge called length=1 e(0,0,0)m1a22.5(1,0,0)c(1,0,0)a22.5(1,0,0)m0e(1,0,0)
 quarter traversal starting from centre
 partial edge called length=0.5 c(1,0,0)a45(1,0,0)m0.5e(1,0.5,0)
 ANGULAR, CENTRE ON STRAIGHT
 full traversal
-partial edge called length=1.#INF e(0,0,0)m1a90(1,0,0)m0.5c(1,0.5,0)m0.5a90(1,1,0)m1e(2,1,0)
+partial edge called length=inf e(0,0,0)m1a90(1,0,0)m0.5c(1,0.5,0)m0.5a90(1,1,0)m1e(2,1,0)
 half traversal ending exactly on centre
 partial edge called length=1.5 e(0,0,0)m1a90(1,0,0)m0.5c(1,0.5,0)m0e(1,0.5,0)
 quarter traversal starting from centre
 partial edge called length=0.75 c(1,0.5,0)m0.5a90(1,1,0)m0.25e(1.25,1,0)
 EUCLIDEAN, CENTRE ON STRAIGHT
 full traversal
-partial edge called length=1.#INF e(0,0,0)m1a90(1,0,0)m0.5c(1,0.5,0)m0.5a90(1,1,0)m1e(2,1,0)
+partial edge called length=inf e(0,0,0)m1a90(1,0,0)m0.5c(1,0.5,0)m0.5a90(1,1,0)m1e(2,1,0)
 half traversal ending exactly on centre
 partial edge called length=1.5 e(0,0,0)m1a90(1,0,0)m0.5c(1,0.5,0)m0e(1,0.5,0)
 quarter traversal starting from centre
 partial edge called length=0.75 c(1,0.5,0)m0.5a90(1,1,0)m0.25e(1.25,1,0)
 EUCLIDEAN ASYMMETRIC
 full traversal
-partial edge called length=1.#INF e(0,0,0)m1a90(1,0,0)m1c(1,1,0)m2e(1,3,0)
+partial edge called length=inf e(0,0,0)m1a90(1,0,0)m1c(1,1,0)m2e(1,3,0)
 half traversal ending exactly on centre
 partial edge called length=2 e(0,0,0)m1a90(1,0,0)m1c(1,1,0)m0e(1,1,0)
 quarter traversal starting from centre
@@ -51,13 +51,13 @@ hl: fwd=2 bwd=1
 hg+2.2*(hl+1.01): fwd=7.622 bwd=6.422 TESTED NONLINEAR
 WARNING: Formula evaluation gave infinite result for link 0
 (Further infinities may exist but may not be reported)
-inf: fwd=1.#INF bwd=1.#INF
+inf: fwd=inf bwd=inf
 -inf: threw runtime exception Formula evaluation gave negative result for link 0
 0/0: threw runtime exception Formula evaluation gave NaN (not a number) result for link 0
 (This is usually the result of dividing zero by zero)
 WARNING: Formula evaluation gave infinite result for link 0
 (Further infinities may exist but may not be reported)
-1/0: fwd=1.#INF bwd=1.#INF
+1/0: fwd=inf bwd=inf
 -1/0: threw runtime exception Formula evaluation gave negative result for link 0
 proportion(0,0): fwd=0 bwd=0
 proportion(1,0): threw runtime exception proportion() function returned infinity (something divided by zero)
@@ -70,8 +70,8 @@ x=2,x: did not compile
 _x=2,_x: fwd=2 bwd=2 TESTED NONLINEAR
 _x: fwd=0 bwd=0 TESTED NONLINEAR
 _x=fwd?one:two,_x*2+1: fwd=3 bwd=5 TESTED NONLINEAR
-randnorm(0,1): fwd=1.83927 bwd=1.57538 TESTED NONLINEAR
-randuni(0,1): fwd=0.957167 bwd=0.98111 TESTED NONLINEAR
+randnorm(0,1): threw runtime exception Formula evaluation gave negative result for link 0
+randuni(0,1): fwd=0.126987 bwd=0.835009 TESTED NONLINEAR
 ERROR: in formula for link metric
 1+*)
 Unexpected operator "*" found at position 2
@@ -433,23 +433,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5,MAD5,NQPDA5,BtA5,TPBtA5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLA5,MGLA5,SCF5,MCF5,DivA5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SAD6,MAD6,NQPDA6,BtA6,TPBtA6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLA6,MGLA6,SCF6,MCF6,DivA6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SAD10,MAD10,NQPDA10,BtA10,TPBtA10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLA10,MGLA10,SCF10,MCF10,DivA10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SAD50,MAD50,NQPDA50,BtA50,TPBtA50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLA50,MGLA50,SCF50,MCF50,DivA50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SAD63,MAD63,NQPDA63,BtA63,TPBtA63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLA63,MGLA63,SCF63,MCF63,DivA63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SADn,MADn,NQPDAn,BtAn,TPBtAn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLAn,MGLAn,SCFn,MCFn,DivAn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -1108,23 +1108,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5c,MAD5c,NQPDA5c,BtA5c,TPBtA5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLA5c,MGLA5c,SCF5c,MCF5c,DivA5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SAD6c,MAD6c,NQPDA6c,BtA6c,TPBtA6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLA6c,MGLA6c,SCF6c,MCF6c,DivA6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SAD10c,MAD10c,NQPDA10c,BtA10c,TPBtA10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLA10c,MGLA10c,SCF10c,MCF10c,DivA10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SAD50c,MAD50c,NQPDA50c,BtA50c,TPBtA50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLA50c,MGLA50c,SCF50c,MCF50c,DivA50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SAD63c,MAD63c,NQPDA63c,BtA63c,TPBtA63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLA63c,MGLA63c,SCF63c,MCF63c,DivA63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SADnc,MADnc,NQPDAnc,BtAnc,TPBtAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLAnc,MGLAnc,SCFnc,MCFnc,DivAnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -1637,23 +1637,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED5,MED5,NQPDE5,BtE5,TPBtE5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLE5,MGLE5,SCF5,MCF5,DivE5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SED6,MED6,NQPDE6,BtE6,TPBtE6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLE6,MGLE6,SCF6,MCF6,DivE6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SED10,MED10,NQPDE10,BtE10,TPBtE10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLE10,MGLE10,SCF10,MCF10,DivE10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SED50,MED50,NQPDE50,BtE50,TPBtE50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLE50,MGLE50,SCF50,MCF50,DivE50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SED63,MED63,NQPDE63,BtE63,TPBtE63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLE63,MGLE63,SCF63,MCF63,DivE63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -2312,23 +2312,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED5c,MED5c,NQPDE5c,BtE5c,TPBtE5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLE5c,MGLE5c,SCF5c,MCF5c,DivE5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SED6c,MED6c,NQPDE6c,BtE6c,TPBtE6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLE6c,MGLE6c,SCF6c,MCF6c,DivE6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SED10c,MED10c,NQPDE10c,BtE10c,TPBtE10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLE10c,MGLE10c,SCF10c,MCF10c,DivE10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SED50c,MED50c,NQPDE50c,BtE50c,TPBtE50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLE50c,MGLE50c,SCF50c,MCF50c,DivE50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SED63c,MED63c,NQPDE63c,BtE63c,TPBtE63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLE63c,MGLE63c,SCF63c,MCF63c,DivE63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SEDnc,MEDnc,NQPDEnc,BtEnc,TPBtEnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLEnc,MGLEnc,SCFnc,MCFnc,DivEnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -2839,23 +2839,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SADWl5,MADWl5,NQPDAWl5,BtAWl5,TPBtAWl5,TPDWl5,Lnk5,Len5,AngD5,WtWl5,Jnc5,Con5,SGLAWl5,MGLAWl5,SCFWl5,MCFWl5,DivAWl5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbWWl5,PrbEWl5,SADWl6,MADWl6,NQPDAWl6,BtAWl6,TPBtAWl6,TPDWl6,Lnk6,Len6,AngD6,WtWl6,Jnc6,Con6,SGLAWl6,MGLAWl6,SCFWl6,MCFWl6,DivAWl6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbWWl6,PrbEWl6,SADWl10,MADWl10,NQPDAWl10,BtAWl10,TPBtAWl10,TPDWl10,Lnk10,Len10,AngD10,WtWl10,Jnc10,Con10,SGLAWl10,MGLAWl10,SCFWl10,MCFWl10,DivAWl10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbWWl10,PrbEWl10,SADWl50,MADWl50,NQPDAWl50,BtAWl50,TPBtAWl50,TPDWl50,Lnk50,Len50,AngD50,WtWl50,Jnc50,Con50,SGLAWl50,MGLAWl50,SCFWl50,MCFWl50,DivAWl50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbWWl50,PrbEWl50,SADWl63,MADWl63,NQPDAWl63,BtAWl63,TPBtAWl63,TPDWl63,Lnk63,Len63,AngD63,WtWl63,Jnc63,Con63,SGLAWl63,MGLAWl63,SCFWl63,MCFWl63,DivAWl63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbWWl63,PrbEWl63,SADWln,MADWln,NQPDAWln,BtAWln,TPBtAWln,TPDWln,Lnkn,Lenn,AngDn,WtWln,Jncn,Conn,SGLAWln,MGLAWln,SCFWln,MCFWln,DivAWln,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWWln,PrbEWln
@@ -3514,23 +3514,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SADWl5c,MADWl5c,NQPDAWl5c,BtAWl5c,TPBtAWl5c,TPDWl5c,Lnk5c,Len5c,AngD5c,WtWl5c,Jnc5c,Con5c,SGLAWl5c,MGLAWl5c,SCFWl5c,MCFWl5c,DivAWl5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbWWl5c,PrbEWl5c,SADWl6c,MADWl6c,NQPDAWl6c,BtAWl6c,TPBtAWl6c,TPDWl6c,Lnk6c,Len6c,AngD6c,WtWl6c,Jnc6c,Con6c,SGLAWl6c,MGLAWl6c,SCFWl6c,MCFWl6c,DivAWl6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbWWl6c,PrbEWl6c,SADWl10c,MADWl10c,NQPDAWl10c,BtAWl10c,TPBtAWl10c,TPDWl10c,Lnk10c,Len10c,AngD10c,WtWl10c,Jnc10c,Con10c,SGLAWl10c,MGLAWl10c,SCFWl10c,MCFWl10c,DivAWl10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbWWl10c,PrbEWl10c,SADWl50c,MADWl50c,NQPDAWl50c,BtAWl50c,TPBtAWl50c,TPDWl50c,Lnk50c,Len50c,AngD50c,WtWl50c,Jnc50c,Con50c,SGLAWl50c,MGLAWl50c,SCFWl50c,MCFWl50c,DivAWl50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbWWl50c,PrbEWl50c,SADWl63c,MADWl63c,NQPDAWl63c,BtAWl63c,TPBtAWl63c,TPDWl63c,Lnk63c,Len63c,AngD63c,WtWl63c,Jnc63c,Con63c,SGLAWl63c,MGLAWl63c,SCFWl63c,MCFWl63c,DivAWl63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbWWl63c,PrbEWl63c,SADWlnc,MADWlnc,NQPDAWlnc,BtAWlnc,TPBtAWlnc,TPDWlnc,Lnknc,Lennc,AngDnc,WtWlnc,Jncnc,Connc,SGLAWlnc,MGLAWlnc,SCFWlnc,MCFWlnc,DivAWlnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWWlnc,PrbEWlnc
@@ -4043,23 +4043,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDWl5,MEDWl5,NQPDEWl5,BtEWl5,TPBtEWl5,TPDWl5,Lnk5,Len5,AngD5,WtWl5,Jnc5,Con5,SGLEWl5,MGLEWl5,SCFWl5,MCFWl5,DivEWl5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbWWl5,PrbEWl5,SEDWl6,MEDWl6,NQPDEWl6,BtEWl6,TPBtEWl6,TPDWl6,Lnk6,Len6,AngD6,WtWl6,Jnc6,Con6,SGLEWl6,MGLEWl6,SCFWl6,MCFWl6,DivEWl6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbWWl6,PrbEWl6,SEDWl10,MEDWl10,NQPDEWl10,BtEWl10,TPBtEWl10,TPDWl10,Lnk10,Len10,AngD10,WtWl10,Jnc10,Con10,SGLEWl10,MGLEWl10,SCFWl10,MCFWl10,DivEWl10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbWWl10,PrbEWl10,SEDWl50,MEDWl50,NQPDEWl50,BtEWl50,TPBtEWl50,TPDWl50,Lnk50,Len50,AngD50,WtWl50,Jnc50,Con50,SGLEWl50,MGLEWl50,SCFWl50,MCFWl50,DivEWl50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbWWl50,PrbEWl50,SEDWl63,MEDWl63,NQPDEWl63,BtEWl63,TPBtEWl63,TPDWl63,Lnk63,Len63,AngD63,WtWl63,Jnc63,Con63,SGLEWl63,MGLEWl63,SCFWl63,MCFWl63,DivEWl63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbWWl63,PrbEWl63,SEDWln,MEDWln,NQPDEWln,BtEWln,TPBtEWln,TPDWln,Lnkn,Lenn,AngDn,WtWln,Jncn,Conn,SGLEWln,MGLEWln,SCFWln,MCFWln,DivEWln,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWWln,PrbEWln
@@ -4718,23 +4718,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDWl5c,MEDWl5c,NQPDEWl5c,BtEWl5c,TPBtEWl5c,TPDWl5c,Lnk5c,Len5c,AngD5c,WtWl5c,Jnc5c,Con5c,SGLEWl5c,MGLEWl5c,SCFWl5c,MCFWl5c,DivEWl5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbWWl5c,PrbEWl5c,SEDWl6c,MEDWl6c,NQPDEWl6c,BtEWl6c,TPBtEWl6c,TPDWl6c,Lnk6c,Len6c,AngD6c,WtWl6c,Jnc6c,Con6c,SGLEWl6c,MGLEWl6c,SCFWl6c,MCFWl6c,DivEWl6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbWWl6c,PrbEWl6c,SEDWl10c,MEDWl10c,NQPDEWl10c,BtEWl10c,TPBtEWl10c,TPDWl10c,Lnk10c,Len10c,AngD10c,WtWl10c,Jnc10c,Con10c,SGLEWl10c,MGLEWl10c,SCFWl10c,MCFWl10c,DivEWl10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbWWl10c,PrbEWl10c,SEDWl50c,MEDWl50c,NQPDEWl50c,BtEWl50c,TPBtEWl50c,TPDWl50c,Lnk50c,Len50c,AngD50c,WtWl50c,Jnc50c,Con50c,SGLEWl50c,MGLEWl50c,SCFWl50c,MCFWl50c,DivEWl50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbWWl50c,PrbEWl50c,SEDWl63c,MEDWl63c,NQPDEWl63c,BtEWl63c,TPBtEWl63c,TPDWl63c,Lnk63c,Len63c,AngD63c,WtWl63c,Jnc63c,Con63c,SGLEWl63c,MGLEWl63c,SCFWl63c,MCFWl63c,DivEWl63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbWWl63c,PrbEWl63c,SEDWlnc,MEDWlnc,NQPDEWlnc,BtEWlnc,TPBtEWlnc,TPDWlnc,Lnknc,Lennc,AngDnc,WtWlnc,Jncnc,Connc,SGLEWlnc,MGLEWlnc,SCFWlnc,MCFWlnc,DivEWlnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWWlnc,PrbEWlnc
@@ -5248,23 +5248,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SCD5,MCD5,NQPDC5,BtC5,TPBtC5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLC5,MGLC5,SCF5,MCF5,DivC5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SCD6,MCD6,NQPDC6,BtC6,TPBtC6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLC6,MGLC6,SCF6,MCF6,DivC6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SCD10,MCD10,NQPDC10,BtC10,TPBtC10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLC10,MGLC10,SCF10,MCF10,DivC10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SCD50,MCD50,NQPDC50,BtC50,TPBtC50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLC50,MGLC50,SCF50,MCF50,DivC50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SCD63,MCD63,NQPDC63,BtC63,TPBtC63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLC63,MGLC63,SCF63,MCF63,DivC63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SCDn,MCDn,NQPDCn,BtCn,TPBtCn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLCn,MGLCn,SCFn,MCFn,DivCn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -5923,23 +5923,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SCD5c,MCD5c,NQPDC5c,BtC5c,TPBtC5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLC5c,MGLC5c,SCF5c,MCF5c,DivC5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SCD6c,MCD6c,NQPDC6c,BtC6c,TPBtC6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLC6c,MGLC6c,SCF6c,MCF6c,DivC6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SCD10c,MCD10c,NQPDC10c,BtC10c,TPBtC10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLC10c,MGLC10c,SCF10c,MCF10c,DivC10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SCD50c,MCD50c,NQPDC50c,BtC50c,TPBtC50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLC50c,MGLC50c,SCF50c,MCF50c,DivC50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SCD63c,MCD63c,NQPDC63c,BtC63c,TPBtC63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLC63c,MGLC63c,SCF63c,MCF63c,DivC63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SCDnc,MCDnc,NQPDCnc,BtCnc,TPBtCnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLCnc,MGLCnc,SCFnc,MCFnc,DivCnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -6451,23 +6451,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,SHD5,MHD5,NQPDH5,BtH5,TPBtH5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLH5,MGLH5,SCF5,MCF5,DivH5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SHD6,MHD6,NQPDH6,BtH6,TPBtH6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLH6,MGLH6,SCF6,MCF6,DivH6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SHD10,MHD10,NQPDH10,BtH10,TPBtH10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLH10,MGLH10,SCF10,MCF10,DivH10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SHD50,MHD50,NQPDH50,BtH50,TPBtH50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLH50,MGLH50,SCF50,MCF50,DivH50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SHD63,MHD63,NQPDH63,BtH63,TPBtH63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLH63,MGLH63,SCF63,MCF63,DivH63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SHDn,MHDn,NQPDHn,BtHn,TPBtHn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLHn,MGLHn,SCFn,MCFn,DivHn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -7129,23 +7129,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,SHD5c,MHD5c,NQPDH5c,BtH5c,TPBtH5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLH5c,MGLH5c,SCF5c,MCF5c,DivH5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SHD6c,MHD6c,NQPDH6c,BtH6c,TPBtH6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLH6c,MGLH6c,SCF6c,MCF6c,DivH6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SHD10c,MHD10c,NQPDH10c,BtH10c,TPBtH10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLH10c,MGLH10c,SCF10c,MCF10c,DivH10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SHD50c,MHD50c,NQPDH50c,BtH50c,TPBtH50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLH50c,MGLH50c,SCF50c,MCF50c,DivH50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SHD63c,MHD63c,NQPDH63c,BtH63c,TPBtH63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLH63c,MGLH63c,SCF63c,MCF63c,DivH63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SHDnc,MHDnc,NQPDHnc,BtHnc,TPBtHnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLHnc,MGLHnc,SCFnc,MCFnc,DivHnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -7323,23 +7323,23 @@ Running sDNA Integral calculation...
 ERROR: Formula evaluation gave negative result for link 10
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 destroying
 done
@@ -7693,23 +7693,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5,MAD5,NQPDA5,BtA5,TPBtA5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLA5,MGLA5,SCF5,MCF5,DivA5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SAD6,MAD6,NQPDA6,BtA6,TPBtA6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLA6,MGLA6,SCF6,MCF6,DivA6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SAD10,MAD10,NQPDA10,BtA10,TPBtA10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLA10,MGLA10,SCF10,MCF10,DivA10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SAD50,MAD50,NQPDA50,BtA50,TPBtA50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLA50,MGLA50,SCF50,MCF50,DivA50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SAD63,MAD63,NQPDA63,BtA63,TPBtA63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLA63,MGLA63,SCF63,MCF63,DivA63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SADn,MADn,NQPDAn,BtAn,TPBtAn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLAn,MGLAn,SCFn,MCFn,DivAn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -8366,23 +8366,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5c,MAD5c,NQPDA5c,BtA5c,TPBtA5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLA5c,MGLA5c,SCF5c,MCF5c,DivA5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SAD6c,MAD6c,NQPDA6c,BtA6c,TPBtA6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLA6c,MGLA6c,SCF6c,MCF6c,DivA6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SAD10c,MAD10c,NQPDA10c,BtA10c,TPBtA10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLA10c,MGLA10c,SCF10c,MCF10c,DivA10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SAD50c,MAD50c,NQPDA50c,BtA50c,TPBtA50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLA50c,MGLA50c,SCF50c,MCF50c,DivA50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SAD63c,MAD63c,NQPDA63c,BtA63c,TPBtA63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLA63c,MGLA63c,SCF63c,MCF63c,DivA63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SADnc,MADnc,NQPDAnc,BtAnc,TPBtAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLAnc,MGLAnc,SCFnc,MCFnc,DivAnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -8895,23 +8895,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED5,MED5,NQPDE5,BtE5,TPBtE5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLE5,MGLE5,SCF5,MCF5,DivE5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SED6,MED6,NQPDE6,BtE6,TPBtE6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLE6,MGLE6,SCF6,MCF6,DivE6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SED10,MED10,NQPDE10,BtE10,TPBtE10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLE10,MGLE10,SCF10,MCF10,DivE10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SED50,MED50,NQPDE50,BtE50,TPBtE50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLE50,MGLE50,SCF50,MCF50,DivE50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SED63,MED63,NQPDE63,BtE63,TPBtE63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLE63,MGLE63,SCF63,MCF63,DivE63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -9570,23 +9570,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED5c,MED5c,NQPDE5c,BtE5c,TPBtE5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLE5c,MGLE5c,SCF5c,MCF5c,DivE5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SED6c,MED6c,NQPDE6c,BtE6c,TPBtE6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLE6c,MGLE6c,SCF6c,MCF6c,DivE6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SED10c,MED10c,NQPDE10c,BtE10c,TPBtE10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLE10c,MGLE10c,SCF10c,MCF10c,DivE10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SED50c,MED50c,NQPDE50c,BtE50c,TPBtE50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLE50c,MGLE50c,SCF50c,MCF50c,DivE50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SED63c,MED63c,NQPDE63c,BtE63c,TPBtE63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLE63c,MGLE63c,SCF63c,MCF63c,DivE63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SEDnc,MEDnc,NQPDEnc,BtEnc,TPBtEnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLEnc,MGLEnc,SCFnc,MCFnc,DivEnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -10097,23 +10097,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5,MAD5,NQPDA5,BtA5,TPBtA5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLA5,MGLA5,SCF5,MCF5,DivA5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SAD6,MAD6,NQPDA6,BtA6,TPBtA6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLA6,MGLA6,SCF6,MCF6,DivA6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SAD10,MAD10,NQPDA10,BtA10,TPBtA10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLA10,MGLA10,SCF10,MCF10,DivA10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SAD50,MAD50,NQPDA50,BtA50,TPBtA50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLA50,MGLA50,SCF50,MCF50,DivA50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SAD63,MAD63,NQPDA63,BtA63,TPBtA63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLA63,MGLA63,SCF63,MCF63,DivA63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SADn,MADn,NQPDAn,BtAn,TPBtAn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLAn,MGLAn,SCFn,MCFn,DivAn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -10776,23 +10776,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5c,MAD5c,NQPDA5c,BtA5c,TPBtA5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLA5c,MGLA5c,SCF5c,MCF5c,DivA5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SAD6c,MAD6c,NQPDA6c,BtA6c,TPBtA6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLA6c,MGLA6c,SCF6c,MCF6c,DivA6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SAD10c,MAD10c,NQPDA10c,BtA10c,TPBtA10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLA10c,MGLA10c,SCF10c,MCF10c,DivA10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SAD50c,MAD50c,NQPDA50c,BtA50c,TPBtA50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLA50c,MGLA50c,SCF50c,MCF50c,DivA50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SAD63c,MAD63c,NQPDA63c,BtA63c,TPBtA63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLA63c,MGLA63c,SCF63c,MCF63c,DivA63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SADnc,MADnc,NQPDAnc,BtAnc,TPBtAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLAnc,MGLAnc,SCFnc,MCFnc,DivAnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -11305,23 +11305,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED5,MED5,NQPDE5,BtE5,TPBtE5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLE5,MGLE5,SCF5,MCF5,DivE5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SED6,MED6,NQPDE6,BtE6,TPBtE6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLE6,MGLE6,SCF6,MCF6,DivE6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SED10,MED10,NQPDE10,BtE10,TPBtE10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLE10,MGLE10,SCF10,MCF10,DivE10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SED50,MED50,NQPDE50,BtE50,TPBtE50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLE50,MGLE50,SCF50,MCF50,DivE50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SED63,MED63,NQPDE63,BtE63,TPBtE63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLE63,MGLE63,SCF63,MCF63,DivE63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -11980,23 +11980,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED5c,MED5c,NQPDE5c,BtE5c,TPBtE5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLE5c,MGLE5c,SCF5c,MCF5c,DivE5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SED6c,MED6c,NQPDE6c,BtE6c,TPBtE6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLE6c,MGLE6c,SCF6c,MCF6c,DivE6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SED10c,MED10c,NQPDE10c,BtE10c,TPBtE10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLE10c,MGLE10c,SCF10c,MCF10c,DivE10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SED50c,MED50c,NQPDE50c,BtE50c,TPBtE50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLE50c,MGLE50c,SCF50c,MCF50c,DivE50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SED63c,MED63c,NQPDE63c,BtE63c,TPBtE63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLE63c,MGLE63c,SCF63c,MCF63c,DivE63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SEDnc,MEDnc,NQPDEnc,BtEnc,TPBtEnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLEnc,MGLEnc,SCFnc,MCFnc,DivEnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -12507,23 +12507,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5,MAD5,NQPDA5,BtA5,TPBtA5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLA5,MGLA5,SCF5,MCF5,DivA5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SAD6,MAD6,NQPDA6,BtA6,TPBtA6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLA6,MGLA6,SCF6,MCF6,DivA6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SAD10,MAD10,NQPDA10,BtA10,TPBtA10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLA10,MGLA10,SCF10,MCF10,DivA10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SAD50,MAD50,NQPDA50,BtA50,TPBtA50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLA50,MGLA50,SCF50,MCF50,DivA50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SAD63,MAD63,NQPDA63,BtA63,TPBtA63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLA63,MGLA63,SCF63,MCF63,DivA63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SADn,MADn,NQPDAn,BtAn,TPBtAn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLAn,MGLAn,SCFn,MCFn,DivAn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -13170,23 +13170,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5c,MAD5c,NQPDA5c,BtA5c,TPBtA5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLA5c,MGLA5c,SCF5c,MCF5c,DivA5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SAD6c,MAD6c,NQPDA6c,BtA6c,TPBtA6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLA6c,MGLA6c,SCF6c,MCF6c,DivA6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SAD10c,MAD10c,NQPDA10c,BtA10c,TPBtA10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLA10c,MGLA10c,SCF10c,MCF10c,DivA10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SAD50c,MAD50c,NQPDA50c,BtA50c,TPBtA50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLA50c,MGLA50c,SCF50c,MCF50c,DivA50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SAD63c,MAD63c,NQPDA63c,BtA63c,TPBtA63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLA63c,MGLA63c,SCF63c,MCF63c,DivA63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SADnc,MADnc,NQPDAnc,BtAnc,TPBtAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLAnc,MGLAnc,SCFnc,MCFnc,DivAnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -13699,23 +13699,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED5,MED5,NQPDE5,BtE5,TPBtE5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLE5,MGLE5,SCF5,MCF5,DivE5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SED6,MED6,NQPDE6,BtE6,TPBtE6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLE6,MGLE6,SCF6,MCF6,DivE6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SED10,MED10,NQPDE10,BtE10,TPBtE10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLE10,MGLE10,SCF10,MCF10,DivE10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SED50,MED50,NQPDE50,BtE50,TPBtE50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLE50,MGLE50,SCF50,MCF50,DivE50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SED63,MED63,NQPDE63,BtE63,TPBtE63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLE63,MGLE63,SCF63,MCF63,DivE63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -14374,23 +14374,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED5c,MED5c,NQPDE5c,BtE5c,TPBtE5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLE5c,MGLE5c,SCF5c,MCF5c,DivE5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SED6c,MED6c,NQPDE6c,BtE6c,TPBtE6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLE6c,MGLE6c,SCF6c,MCF6c,DivE6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SED10c,MED10c,NQPDE10c,BtE10c,TPBtE10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLE10c,MGLE10c,SCF10c,MCF10c,DivE10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SED50c,MED50c,NQPDE50c,BtE50c,TPBtE50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLE50c,MGLE50c,SCF50c,MCF50c,DivE50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SED63c,MED63c,NQPDE63c,BtE63c,TPBtE63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLE63c,MGLE63c,SCF63c,MCF63c,DivE63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SEDnc,MEDnc,NQPDEnc,BtEnc,TPBtEnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLEnc,MGLEnc,SCFnc,MCFnc,DivEnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -14624,17 +14624,17 @@ crow flies distance is 1
 Polyline 1 id=0
     Points: (0,0) (-1,0) 
     edge 0 (s1+), conn: 
-    edge 1 (s1-), conn: 2(€ang45) 4(€ang45) 
+    edge 1 (s1-), conn: 2(ang45) 4(ang45) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,0) (1,1) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 0(€ang45) 4(€ang90) 
+    edge 3 (s2-), conn: 0(ang45) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,0) (1,-1) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 0(€ang45) 2(€ang90) 
+    edge 5 (s3-), conn: 0(ang45) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -14715,13 +14715,13 @@ euclidean geodesic from link 2-1 is 1
 crow flies distance is 1
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang0) 
+    edge 0 (s1+), conn: 2(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,2) 
     edge 2 (s2+), conn: 
-    edge 3 (s2-), conn: 1(€ang0) 
+    edge 3 (s2-), conn: 1(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -14873,23 +14873,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=0 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -15048,23 +15048,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SADn,MADn,NQPDAn,BtAn,TPBtAn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLAn,MGLAn,SCFn,MCFn,DivAn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -15229,23 +15229,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SADnc,MADnc,NQPDAnc,BtAnc,TPBtAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLAnc,MGLAnc,SCFnc,MCFnc,DivAnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -15406,23 +15406,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -15587,23 +15587,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDnc,MEDnc,NQPDEnc,BtEnc,TPBtEnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLEnc,MGLEnc,SCFnc,MCFnc,DivEnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -15762,23 +15762,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SADWln,MADWln,NQPDAWln,BtAWln,TPBtAWln,TPDWln,Lnkn,Lenn,AngDn,WtWln,Jncn,Conn,SGLAWln,MGLAWln,SCFWln,MCFWln,DivAWln,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWWln,PrbEWln
@@ -15943,23 +15943,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SADWlnc,MADWlnc,NQPDAWlnc,BtAWlnc,TPBtAWlnc,TPDWlnc,Lnknc,Lennc,AngDnc,WtWlnc,Jncnc,Connc,SGLAWlnc,MGLAWlnc,SCFWlnc,MCFWlnc,DivAWlnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWWlnc,PrbEWlnc
@@ -16120,23 +16120,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDWln,MEDWln,NQPDEWln,BtEWln,TPBtEWln,TPDWln,Lnkn,Lenn,AngDn,WtWln,Jncn,Conn,SGLEWln,MGLEWln,SCFWln,MCFWln,DivEWln,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWWln,PrbEWln
@@ -16301,23 +16301,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDWlnc,MEDWlnc,NQPDEWlnc,BtEWlnc,TPBtEWlnc,TPDWlnc,Lnknc,Lennc,AngDnc,WtWlnc,Jncnc,Connc,SGLEWlnc,MGLEWlnc,SCFWlnc,MCFWlnc,DivEWlnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWWlnc,PrbEWlnc
@@ -16479,23 +16479,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SCDn,MCDn,NQPDCn,BtCn,TPBtCn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLCn,MGLCn,SCFn,MCFn,DivCn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -16660,23 +16660,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SCDnc,MCDnc,NQPDCnc,BtCnc,TPBtCnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLCnc,MGLCnc,SCFnc,MCFnc,DivCnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -16836,23 +16836,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,SHDn,MHDn,NQPDHn,BtHn,TPBtHn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLHn,MGLHn,SCFn,MCFn,DivHn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -17020,23 +17020,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,SHDnc,MHDnc,NQPDHnc,BtHnc,TPBtHnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLHnc,MGLHnc,SCFnc,MCFnc,DivHnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -17094,23 +17094,23 @@ Running sDNA Integral calculation...
 ERROR: Formula evaluation gave negative result for link 10
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 destroying
 done
@@ -17244,23 +17244,23 @@ euclidean geodesic from link 4-3 is 1
 crow flies distance is 1
 Polyline 1 id=0
     Points: (0,1) (1,1) 
-    edge 0 (s1+), conn: 2(€ang45) 3(€ang45) 
+    edge 0 (s1+), conn: 2(ang45) 3(ang45) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (1,1) (2,2) (2,0) (1,1) 
-    edge 2 (s2+), conn: 1(€ang45) 
-    edge 3 (s2-), conn: 1(€ang45) 
+    edge 2 (s2+), conn: 1(ang45) 
+    edge 3 (s2-), conn: 1(ang45) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (10,10) (11,10) 
-    edge 4 (s3+), conn: 6(€ang0) 
+    edge 4 (s3+), conn: 6(ang0) 
     edge 5 (s3-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 4 id=3
     Points: (11,10) (12,10) 
     edge 6 (s4+), conn: 
-    edge 7 (s4-), conn: 5(€ang0) 
+    edge 7 (s4-), conn: 5(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -17876,23 +17876,23 @@ euclidean geodesic from link 13-12 is 118
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 oneway=-1 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 oneway=1 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 oneway=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 oneway=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5c,MAD5c,NQPDA5c,BtFA5c,BtBA5c,TPBtFA5c,TPBtBA5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLA5c,MGLA5c,SCF5c,MCF5c,DivA5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SAD6c,MAD6c,NQPDA6c,BtFA6c,BtBA6c,TPBtFA6c,TPBtBA6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLA6c,MGLA6c,SCF6c,MCF6c,DivA6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SAD10c,MAD10c,NQPDA10c,BtFA10c,BtBA10c,TPBtFA10c,TPBtBA10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLA10c,MGLA10c,SCF10c,MCF10c,DivA10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SAD50c,MAD50c,NQPDA50c,BtFA50c,BtBA50c,TPBtFA50c,TPBtBA50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLA50c,MGLA50c,SCF50c,MCF50c,DivA50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SAD63c,MAD63c,NQPDA63c,BtFA63c,BtBA63c,TPBtFA63c,TPBtBA63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLA63c,MGLA63c,SCF63c,MCF63c,DivA63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SADnc,MADnc,NQPDAnc,BtFAnc,BtBAnc,TPBtFAnc,TPBtBAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLAnc,MGLAnc,SCFnc,MCFnc,DivAnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -18512,23 +18512,23 @@ euclidean geodesic from link 13-12 is 112
 crow flies distance is 76.3806
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 oneway=-1 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 oneway=1 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 oneway=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 oneway=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SAD5c,MAD5c,NQPDA5c,BtFA5c,BtBA5c,TPBtFA5c,TPBtBA5c,TPD5c,Lnk5c,Len5c,AngD5c,Wt5c,Jnc5c,Con5c,SGLA5c,MGLA5c,SCF5c,MCF5c,DivA5c,HullA5c,HullP5c,HullR5c,HullB5c,HullSI5c,PrbW5c,PrbE5c,SAD6c,MAD6c,NQPDA6c,BtFA6c,BtBA6c,TPBtFA6c,TPBtBA6c,TPD6c,Lnk6c,Len6c,AngD6c,Wt6c,Jnc6c,Con6c,SGLA6c,MGLA6c,SCF6c,MCF6c,DivA6c,HullA6c,HullP6c,HullR6c,HullB6c,HullSI6c,PrbW6c,PrbE6c,SAD10c,MAD10c,NQPDA10c,BtFA10c,BtBA10c,TPBtFA10c,TPBtBA10c,TPD10c,Lnk10c,Len10c,AngD10c,Wt10c,Jnc10c,Con10c,SGLA10c,MGLA10c,SCF10c,MCF10c,DivA10c,HullA10c,HullP10c,HullR10c,HullB10c,HullSI10c,PrbW10c,PrbE10c,SAD50c,MAD50c,NQPDA50c,BtFA50c,BtBA50c,TPBtFA50c,TPBtBA50c,TPD50c,Lnk50c,Len50c,AngD50c,Wt50c,Jnc50c,Con50c,SGLA50c,MGLA50c,SCF50c,MCF50c,DivA50c,HullA50c,HullP50c,HullR50c,HullB50c,HullSI50c,PrbW50c,PrbE50c,SAD63c,MAD63c,NQPDA63c,BtFA63c,BtBA63c,TPBtFA63c,TPBtBA63c,TPD63c,Lnk63c,Len63c,AngD63c,Wt63c,Jnc63c,Con63c,SGLA63c,MGLA63c,SCF63c,MCF63c,DivA63c,HullA63c,HullP63c,HullR63c,HullB63c,HullSI63c,PrbW63c,PrbE63c,SADnc,MADnc,NQPDAnc,BtFAnc,BtBAnc,TPBtFAnc,TPBtBAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLAnc,MGLAnc,SCFnc,MCFnc,DivAnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -18718,7 +18718,7 @@ Running sDNA Integral calculation...
 R1.79769e+308 origin 1   (linkid 0)
      analytical costs per edge: 0,0,90,90,0,-,
      analytical backlinks per edge: -,-,0,0,0,-,
-      R1.79769e+308 cost from link 1-2 adds 90 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 1-2 adds 90 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 1 radius 1.79769e+308
       R1.79769e+308 cost from link 1-3 adds 0 to closeness with prop 1 weight 1
      adding points from edge 4 to hull of link 1 radius 1.79769e+308
@@ -18760,7 +18760,7 @@ R1.79769e+308 origin 3   (linkid 2)
      analytical backlinks per edge: -,5,5,5,-,-,
       R1.79769e+308 cost from link 3-1 adds 0 to closeness with prop 1 weight 1
      adding points from edge 1 to hull of link 3 radius 1.79769e+308
-      R1.79769e+308 cost from link 3-2 adds 90 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 3-2 adds 90 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 3 radius 1.79769e+308
      unpacking radius geometry
      unpacking partial points from end of edge 1
@@ -18777,18 +18777,18 @@ euclidean geodesic from link 3-2 is 0.5
 crow flies distance is 0.5
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang90) 3(€ang90) 4(€ang0) 
+    edge 0 (s1+), conn: 2(ang90) 3(ang90) 4(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,1) 
-    edge 2 (s2+), conn: 1(€ang90) 4(€ang90) 
-    edge 3 (s2-), conn: 1(€ang90) 4(€ang90) 
+    edge 2 (s2+), conn: 1(ang90) 4(ang90) 
+    edge 3 (s2-), conn: 1(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,1) (0,2) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 1(€ang0) 2(€ang90) 3(€ang90) 
+    edge 5 (s3-), conn: 1(ang0) 2(ang90) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SADn,MADn,NQPDAn,BtAn,TPBtAn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLAn,MGLAn,SCFn,MCFn,DivAn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -18848,7 +18848,7 @@ Running sDNA Integral calculation...
 R1.79769e+308 origin 1   (linkid 0)
      analytical costs per edge: 0,0,90,90,0,-,
      analytical backlinks per edge: -,-,0,0,0,-,
-      R1.79769e+308 cost from link 1-2 adds 90 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 1-2 adds 90 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 1 radius 1.79769e+308
       R1.79769e+308 cost from link 1-3 adds 0 to closeness with prop 1 weight 1
      adding points from edge 4 to hull of link 1 radius 1.79769e+308
@@ -18892,7 +18892,7 @@ R1.79769e+308 origin 3   (linkid 2)
      analytical backlinks per edge: -,5,5,5,-,-,
       R1.79769e+308 cost from link 3-1 adds 0 to closeness with prop 1 weight 1
      adding points from edge 1 to hull of link 3 radius 1.79769e+308
-      R1.79769e+308 cost from link 3-2 adds 90 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 3-2 adds 90 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 3 radius 1.79769e+308
 adding origin points to hull for link 3
      unpacking radius geometry
@@ -18910,18 +18910,18 @@ euclidean geodesic from link 3-2 is 0.5
 crow flies distance is 0.5
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang90) 3(€ang90) 4(€ang0) 
+    edge 0 (s1+), conn: 2(ang90) 3(ang90) 4(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,1) 
-    edge 2 (s2+), conn: 1(€ang90) 4(€ang90) 
-    edge 3 (s2-), conn: 1(€ang90) 4(€ang90) 
+    edge 2 (s2+), conn: 1(ang90) 4(ang90) 
+    edge 3 (s2-), conn: 1(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,1) (0,2) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 1(€ang0) 2(€ang90) 3(€ang90) 
+    edge 5 (s3-), conn: 1(ang0) 2(ang90) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SADnc,MADnc,NQPDAnc,BtAnc,TPBtAnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLAnc,MGLAnc,SCFnc,MCFnc,DivAnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -18981,7 +18981,7 @@ Running sDNA Integral calculation...
 R1.79769e+308 origin 1   (linkid 0)
      analytical costs per edge: 0,0,0.5,0.5,0.5,-,
      analytical backlinks per edge: -,-,0,0,0,-,
-      R1.79769e+308 cost from link 1-2 adds 0.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 1-2 adds 0.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 1 radius 1.79769e+308
       R1.79769e+308 cost from link 1-3 adds 1 to closeness with prop 1 weight 1
      adding points from edge 4 to hull of link 1 radius 1.79769e+308
@@ -19023,7 +19023,7 @@ R1.79769e+308 origin 3   (linkid 2)
      analytical backlinks per edge: -,5,5,5,-,-,
       R1.79769e+308 cost from link 3-1 adds 1 to closeness with prop 1 weight 1
      adding points from edge 1 to hull of link 3 radius 1.79769e+308
-      R1.79769e+308 cost from link 3-2 adds 0.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 3-2 adds 0.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 3 radius 1.79769e+308
      unpacking radius geometry
      unpacking partial points from end of edge 1
@@ -19040,18 +19040,18 @@ euclidean geodesic from link 3-2 is 0.5
 crow flies distance is 0.5
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang90) 3(€ang90) 4(€ang0) 
+    edge 0 (s1+), conn: 2(ang90) 3(ang90) 4(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,1) 
-    edge 2 (s2+), conn: 1(€ang90) 4(€ang90) 
-    edge 3 (s2-), conn: 1(€ang90) 4(€ang90) 
+    edge 2 (s2+), conn: 1(ang90) 4(ang90) 
+    edge 3 (s2-), conn: 1(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,1) (0,2) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 1(€ang0) 2(€ang90) 3(€ang90) 
+    edge 5 (s3-), conn: 1(ang0) 2(ang90) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDn,MEDn,NQPDEn,BtEn,TPBtEn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLEn,MGLEn,SCFn,MCFn,DivEn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -19111,7 +19111,7 @@ Running sDNA Integral calculation...
 R1.79769e+308 origin 1   (linkid 0)
      analytical costs per edge: 0,0,0.5,0.5,0.5,-,
      analytical backlinks per edge: -,-,0,0,0,-,
-      R1.79769e+308 cost from link 1-2 adds 0.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 1-2 adds 0.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 1 radius 1.79769e+308
       R1.79769e+308 cost from link 1-3 adds 1 to closeness with prop 1 weight 1
      adding points from edge 4 to hull of link 1 radius 1.79769e+308
@@ -19155,7 +19155,7 @@ R1.79769e+308 origin 3   (linkid 2)
      analytical backlinks per edge: -,5,5,5,-,-,
       R1.79769e+308 cost from link 3-1 adds 1 to closeness with prop 1 weight 1
      adding points from edge 1 to hull of link 3 radius 1.79769e+308
-      R1.79769e+308 cost from link 3-2 adds 0.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 3-2 adds 0.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 3 radius 1.79769e+308
 adding origin points to hull for link 3
      unpacking radius geometry
@@ -19173,18 +19173,18 @@ euclidean geodesic from link 3-2 is 0.5
 crow flies distance is 0.5
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang90) 3(€ang90) 4(€ang0) 
+    edge 0 (s1+), conn: 2(ang90) 3(ang90) 4(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,1) 
-    edge 2 (s2+), conn: 1(€ang90) 4(€ang90) 
-    edge 3 (s2-), conn: 1(€ang90) 4(€ang90) 
+    edge 2 (s2+), conn: 1(ang90) 4(ang90) 
+    edge 3 (s2-), conn: 1(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,1) (0,2) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 1(€ang0) 2(€ang90) 3(€ang90) 
+    edge 5 (s3-), conn: 1(ang0) 2(ang90) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SEDnc,MEDnc,NQPDEnc,BtEnc,TPBtEnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLEnc,MGLEnc,SCFnc,MCFnc,DivEnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -19242,7 +19242,7 @@ Running sDNA Integral calculation...
 R1.79769e+308 origin 1   (linkid 0)
      analytical costs per edge: 0,0,0.5,0.5,0.5,-,
      analytical backlinks per edge: -,-,0,0,0,-,
-      R1.79769e+308 cost from link 1-2 adds 1.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 1-2 adds 1.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 1 radius 1.79769e+308
       R1.79769e+308 cost from link 1-3 adds 1 to closeness with prop 1 weight 1
      adding points from edge 4 to hull of link 1 radius 1.79769e+308
@@ -19284,7 +19284,7 @@ R1.79769e+308 origin 3   (linkid 2)
      analytical backlinks per edge: -,5,5,5,-,-,
       R1.79769e+308 cost from link 3-1 adds 1 to closeness with prop 1 weight 1
      adding points from edge 1 to hull of link 3 radius 1.79769e+308
-      R1.79769e+308 cost from link 3-2 adds 1.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 3-2 adds 1.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 3 radius 1.79769e+308
      unpacking radius geometry
      unpacking partial points from end of edge 1
@@ -19301,18 +19301,18 @@ euclidean geodesic from link 3-2 is 0.5
 crow flies distance is 0.5
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang90) 3(€ang90) 4(€ang0) 
+    edge 0 (s1+), conn: 2(ang90) 3(ang90) 4(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,1) 
-    edge 2 (s2+), conn: 1(€ang90) 4(€ang90) 
-    edge 3 (s2-), conn: 1(€ang90) 4(€ang90) 
+    edge 2 (s2+), conn: 1(ang90) 4(ang90) 
+    edge 3 (s2-), conn: 1(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,1) (0,2) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 1(€ang0) 2(€ang90) 3(€ang90) 
+    edge 5 (s3-), conn: 1(ang0) 2(ang90) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SCDn,MCDn,NQPDCn,BtCn,TPBtCn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLCn,MGLCn,SCFn,MCFn,DivCn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -19372,7 +19372,7 @@ Running sDNA Integral calculation...
 R1.79769e+308 origin 1   (linkid 0)
      analytical costs per edge: 0,0,0.5,0.5,0.5,-,
      analytical backlinks per edge: -,-,0,0,0,-,
-      R1.79769e+308 cost from link 1-2 adds 1.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 1-2 adds 1.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 1 radius 1.79769e+308
       R1.79769e+308 cost from link 1-3 adds 1 to closeness with prop 1 weight 1
      adding points from edge 4 to hull of link 1 radius 1.79769e+308
@@ -19416,7 +19416,7 @@ R1.79769e+308 origin 3   (linkid 2)
      analytical backlinks per edge: -,5,5,5,-,-,
       R1.79769e+308 cost from link 3-1 adds 1 to closeness with prop 1 weight 1
      adding points from edge 1 to hull of link 3 radius 1.79769e+308
-      R1.79769e+308 cost from link 3-2 adds 1.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 3-2 adds 1.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 3 radius 1.79769e+308
 adding origin points to hull for link 3
      unpacking radius geometry
@@ -19434,18 +19434,18 @@ euclidean geodesic from link 3-2 is 0.5
 crow flies distance is 0.5
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang90) 3(€ang90) 4(€ang0) 
+    edge 0 (s1+), conn: 2(ang90) 3(ang90) 4(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,1) 
-    edge 2 (s2+), conn: 1(€ang90) 4(€ang90) 
-    edge 3 (s2-), conn: 1(€ang90) 4(€ang90) 
+    edge 2 (s2+), conn: 1(ang90) 4(ang90) 
+    edge 3 (s2-), conn: 1(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,1) (0,2) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 1(€ang0) 2(€ang90) 3(€ang90) 
+    edge 5 (s3-), conn: 1(ang0) 2(ang90) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SCDnc,MCDnc,NQPDCnc,BtCnc,TPBtCnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLCnc,MGLCnc,SCFnc,MCFnc,DivCnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -19504,7 +19504,7 @@ Running sDNA Integral calculation...
 R1.79769e+308 origin 1   (linkid 0)
      analytical costs per edge: 0,0,0.5,0.5,0.5,-,
      analytical backlinks per edge: -,-,0,0,0,-,
-      R1.79769e+308 cost from link 1-2 adds 1.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 1-2 adds 1.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 1 radius 1.79769e+308
       R1.79769e+308 cost from link 1-3 adds 1 to closeness with prop 1 weight 1
      adding points from edge 4 to hull of link 1 radius 1.79769e+308
@@ -19546,7 +19546,7 @@ R1.79769e+308 origin 3   (linkid 2)
      analytical backlinks per edge: -,5,5,5,-,-,
       R1.79769e+308 cost from link 3-1 adds 1 to closeness with prop 1 weight 1
      adding points from edge 1 to hull of link 3 radius 1.79769e+308
-      R1.79769e+308 cost from link 3-2 adds 1.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 3-2 adds 1.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 3 radius 1.79769e+308
      unpacking radius geometry
      unpacking partial points from end of edge 1
@@ -19563,18 +19563,18 @@ euclidean geodesic from link 3-2 is 0.5
 crow flies distance is 0.5
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang90) 3(€ang90) 4(€ang0) 
+    edge 0 (s1+), conn: 2(ang90) 3(ang90) 4(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,1) 
-    edge 2 (s2+), conn: 1(€ang90) 4(€ang90) 
-    edge 3 (s2-), conn: 1(€ang90) 4(€ang90) 
+    edge 2 (s2+), conn: 1(ang90) 4(ang90) 
+    edge 3 (s2-), conn: 1(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,1) (0,2) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 1(€ang0) 2(€ang90) 3(€ang90) 
+    edge 5 (s3-), conn: 1(ang0) 2(ang90) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,SHDn,MHDn,NQPDHn,BtHn,TPBtHn,TPDn,Lnkn,Lenn,AngDn,Wtn,Jncn,Conn,SGLHn,MGLHn,SCFn,MCFn,DivHn,HullAn,HullPn,HullRn,HullBn,HullSIn,PrbWn,PrbEn
@@ -19637,7 +19637,7 @@ Running sDNA Integral calculation...
 R1.79769e+308 origin 1   (linkid 0)
      analytical costs per edge: 0,0,0.5,0.5,0.5,-,
      analytical backlinks per edge: -,-,0,0,0,-,
-      R1.79769e+308 cost from link 1-2 adds 1.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 1-2 adds 1.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 1 radius 1.79769e+308
       R1.79769e+308 cost from link 1-3 adds 1 to closeness with prop 1 weight 1
      adding points from edge 4 to hull of link 1 radius 1.79769e+308
@@ -19681,7 +19681,7 @@ R1.79769e+308 origin 3   (linkid 2)
      analytical backlinks per edge: -,5,5,5,-,-,
       R1.79769e+308 cost from link 3-1 adds 1 to closeness with prop 1 weight 1
      adding points from edge 1 to hull of link 3 radius 1.79769e+308
-      R1.79769e+308 cost from link 3-2 adds 1.5 to closeness with prop 1 weight -1.#IND
+      R1.79769e+308 cost from link 3-2 adds 1.5 to closeness with prop 1 weight -nan(ind)
      adding points from edge 2 to hull of link 3 radius 1.79769e+308
 adding origin points to hull for link 3
      unpacking radius geometry
@@ -19699,18 +19699,18 @@ euclidean geodesic from link 3-2 is 0.5
 crow flies distance is 0.5
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang90) 3(€ang90) 4(€ang0) 
+    edge 0 (s1+), conn: 2(ang90) 3(ang90) 4(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,1) 
-    edge 2 (s2+), conn: 1(€ang90) 4(€ang90) 
-    edge 3 (s2-), conn: 1(€ang90) 4(€ang90) 
+    edge 2 (s2+), conn: 1(ang90) 4(ang90) 
+    edge 3 (s2-), conn: 1(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,1) (0,2) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 1(€ang0) 2(€ang90) 3(€ang90) 
+    edge 5 (s3-), conn: 1(ang0) 2(ang90) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,HMf,HMb,SHDnc,MHDnc,NQPDHnc,BtHnc,TPBtHnc,TPDnc,Lnknc,Lennc,AngDnc,Wtnc,Jncnc,Connc,SGLHnc,MGLHnc,SCFnc,MCFnc,DivHnc,HullAnc,HullPnc,HullRnc,HullBnc,HullSInc,PrbWnc,PrbEnc
@@ -19772,18 +19772,18 @@ Running sDNA Integral calculation...
 ERROR: Formula evaluation gave negative result for link 1
 Polyline 1 id=0
     Points: (0,0) (0,1) 
-    edge 0 (s1+), conn: 2(€ang90) 3(€ang90) 4(€ang0) 
+    edge 0 (s1+), conn: 2(ang90) 3(ang90) 4(ang0) 
     edge 1 (s1-), conn: 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 2 id=1
     Points: (0,1) (0,1) 
-    edge 2 (s2+), conn: 1(€ang90) 4(€ang90) 
-    edge 3 (s2-), conn: 1(€ang90) 4(€ang90) 
+    edge 2 (s2+), conn: 1(ang90) 4(ang90) 
+    edge 3 (s2-), conn: 1(ang90) 4(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 3 id=2
     Points: (0,1) (0,2) 
     edge 4 (s3+), conn: 
-    edge 5 (s3-), conn: 1(€ang0) 2(€ang90) 3(€ang90) 
+    edge 5 (s3-), conn: 1(ang0) 2(ang90) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 destroying
 done
@@ -20031,23 +20031,23 @@ euclidean geodesic from link 13-11 is 59
 crow flies distance is 46.0977
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED5,MED5,NQPDE5,BtE5,TPBtE5,TPD5,Lnk5,Len5,AngD5,Wt5,Jnc5,Con5,SGLE5,MGLE5,SCF5,MCF5,DivE5,HullA5,HullP5,HullR5,HullB5,HullSI5,PrbW5,PrbE5,SED6,MED6,NQPDE6,BtE6,TPBtE6,TPD6,Lnk6,Len6,AngD6,Wt6,Jnc6,Con6,SGLE6,MGLE6,SCF6,MCF6,DivE6,HullA6,HullP6,HullR6,HullB6,HullSI6,PrbW6,PrbE6,SED10,MED10,NQPDE10,BtE10,TPBtE10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLE10,MGLE10,SCF10,MCF10,DivE10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SED50,MED50,NQPDE50,BtE50,TPBtE50,TPD50,Lnk50,Len50,AngD50,Wt50,Jnc50,Con50,SGLE50,MGLE50,SCF50,MCF50,DivE50,HullA50,HullP50,HullR50,HullB50,HullSI50,PrbW50,PrbE50,SED63,MED63,NQPDE63,BtE63,TPBtE63,TPD63,Lnk63,Len63,AngD63,Wt63,Jnc63,Con63,SGLE63,MGLE63,SCF63,MCF63,DivE63,HullA63,HullP63,HullR63,HullB63,HullSI63,PrbW63,PrbE63
@@ -20428,23 +20428,23 @@ euclidean geodesic from link 13-11 is 59
 crow flies distance is 46.0977
 Polyline 10 id=0
     Points: (0,3) (0,0) (1,0) (1,1) (2,1) (2,0) (3,0) (3,1) (4,1) (4,0) (5,0) 
-    edge 0 (s10+), conn: 3(€ang90) 6(€ang0) 
-    edge 1 (s10-), conn: 2(€ang90) 4(€ang0) 
+    edge 0 (s10+), conn: 3(ang90) 6(ang0) 
+    edge 1 (s10-), conn: 2(ang90) 4(ang0) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 11 id=1
     Points: (0,3) (10,3) (10,2) (5,2) (5,0) 
-    edge 2 (s11+), conn: 1(€ang90) 6(€ang90) 
-    edge 3 (s11-), conn: 0(€ang90) 4(€ang90) 
+    edge 2 (s11+), conn: 1(ang90) 6(ang90) 
+    edge 3 (s11-), conn: 0(ang90) 4(ang90) 
     custom_cost=2 end_gs=0 start_gs=0 weight=1 
 Polyline 12 id=2
     Points: (0,3) (0,103) 
     edge 4 (s12+), conn: 
-    edge 5 (s12-), conn: 0(€ang0) 2(€ang90) 
+    edge 5 (s12-), conn: 0(ang0) 2(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 Polyline 13 id=3
     Points: (5,0) (105,0) 
     edge 6 (s13+), conn: 
-    edge 7 (s13-), conn: 1(€ang0) 3(€ang90) 
+    edge 7 (s13-), conn: 1(ang0) 3(ang90) 
     custom_cost=1 end_gs=0 start_gs=0 weight=1 
 
 shortnames: LConn,LLen,LFrac,LAC,LSin,LBear,SED10,MED10,NQPDE10,BtE10,TPBtE10,TPD10,Lnk10,Len10,AngD10,Wt10,Jnc10,Con10,SGLE10,MGLE10,SCF10,MCF10,DivE10,HullA10,HullP10,HullR10,HullB10,HullSI10,PrbW10,PrbE10,SED12,MED12,NQPDE12,BtE12,TPBtE12,TPD12,Lnk12,Len12,AngD12,Wt12,Jnc12,Con12,SGLE12,MGLE12,SCF12,MCF12,DivE12,HullA12,HullP12,HullR12,HullB12,HullSI12,PrbW12,PrbE12,SED20,MED20,NQPDE20,BtE20,TPBtE20,TPD20,Lnk20,Len20,AngD20,Wt20,Jnc20,Con20,SGLE20,MGLE20,SCF20,MCF20,DivE20,HullA20,HullP20,HullR20,HullB20,HullSI20,PrbW20,PrbE20,SED100,MED100,NQPDE100,BtE100,TPBtE100,TPD100,Lnk100,Len100,AngD100,Wt100,Jnc100,Con100,SGLE100,MGLE100,SCF100,MCF100,DivE100,HullA100,HullP100,HullR100,HullB100,HullSI100,PrbW100,PrbE100,SED126,MED126,NQPDE126,BtE126,TPBtE126,TPD126,Lnk126,Len126,AngD126,Wt126,Jnc126,Con126,SGLE126,MGLE126,SCF126,MCF126,DivE126,HullA126,HullP126,HullR126,HullB126,HullSI126,PrbW126,PrbE126
