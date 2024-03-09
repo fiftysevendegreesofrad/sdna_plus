@@ -77,9 +77,11 @@ The CI test runner parses every `.bat` file in `sDNA\sdna_vs2008\tests` except t
 To run the CI tests locally, something like the following commands are required:
 
 ```
+cd your_venvs_directory
 python -m venv sdna_testing_venv
 .\sdna_testing_venv\Scripts\activate
 pip install numpy pytest
+cd path_to_sdna_plus_repo\sdna_plus\sDNA\sdna_vs2008\tests\pytest
 set DONT_TEST_N_LINK_SUBSYSTEMS_ORDER=1 & set ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT=1 & pytest -rA
 ```
 
