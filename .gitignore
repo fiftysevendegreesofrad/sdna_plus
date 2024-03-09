@@ -9,7 +9,8 @@ UpgradeLog*.htm
 */.vs/*
 *.sln.cache
 .vs
-.vscode
+.vscode/settings.json
+version_generated.h
 vcpkg_installed
 *testout*
 sDNA/sdna_vs2008/tests/**/odtest.*

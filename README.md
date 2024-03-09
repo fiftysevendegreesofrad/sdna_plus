@@ -67,9 +67,37 @@ Some key folders:
 
 The test code needs updating (plan to do this with the port to Linux).
 
+#### Continuous Integration Tests.
+
+Currently, the CI tests are a subset of sDNA's regression tests, which diff the test output against that produced by a previous build (eight of the expected output files can be recreated using `sDNA\sdna_vs2008\tests\approve_debug_output.bat`, but `correctout_learn.txt` and `correctout_table.txt` require other means).
+
+The CI test runner parses every `.bat` file in `sDNA\sdna_vs2008\tests` except the following which are filtered out:
+`colourdiff.bat`, `mydiff.bat`, `awkward_test.bat`, `arc_script_test.bat`,`run_tests_windows.bat`, `sdnavars64.bat`,`quick_test.bat` ( as it reruns `debug_test.py` which is already tested in `pause_debug_test.bat`) and `run_benchmark.bat` (to avoid issue 11, an unexplained "Access violation on Python 3").
+
+To run the CI tests locally, something like the following commands are required:
+
+```
+cd your_venvs_directory
+python -m venv sdna_testing_venv
+.\sdna_testing_venv\Scripts\activate
+pip install numpy pytest
+cd path_to_sdna_plus_repo\sdna_plus\sDNA\sdna_vs2008\tests\pytest
+set DONT_TEST_N_LINK_SUBSYSTEMS_ORDER=1 & set ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT=1 & pytest -rA
+```
+
+The CI test runner is designed to use Pytest, but can also run its tests only requiring pytest as an import (if run as a script).  It is influenced by the following environment variables:
+ - `sdna_debug` - By default it is assumed release builds are tested, so this is Falsey - i.e. an empty string (do not use 0 or "False" as in Python `bool("0") is True` and `bool("False") is True`).  If so, then the output lines resulting from the parts of sDNA's C++ source code, that are only compiled if the pre_processor directive `_SDNADEBUG` is set, are omitted from the "expected" output.  Set this to something Truthy (any non-empty string other than `False`) if testing a debug build.
+ - `sdna_dll` - the path to the `sdna_vs2008.dll` to test.  By default the test runner tries to run a fair test, by using the Python files associated with an sDNA installation, or those in a repo containing a `sdna_vs2008.dll` resulting from running the compilation process.  It is also possible to set `sdna_bin_dir` to any directory containing the required sDNA `.py` files.
+ - `DONT_TEST_N_LINK_SUBSYSTEMS_ORDER` - must be set to something Truthy, to work around issue 20.
+ - `ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT` - must be set to something Truthy, to work around issue 21.
+
+Various other quality of life adjustments are made, such as ignoring blank lines, and Progress bar percentage lines.
+
+#### Old testing routine.
+
 Currently the steps outlined below may not work, but what *does* work is setting appriate paths for `python2exe`, `python3exe`, and `sdnadll` (which should be 32 or 64 bit depending on the Python executable) then calling `pause_debug_test.bat`.
 
-Old routine: for testing the core network processing and numerical routines, fire up the `sdna_vs2008.sln` solution in `sDNA\sDNA_vs2008`. 
+For testing the core network processing and numerical routines, fire up the `sdna_vs2008.sln` solution in `sDNA\sDNA_vs2008`. 
 You will need the correct debug settings; unfortunately Visual Studio stores these with user information. Copy `sdna\sdna_vs2008\sdna_vs2008.vcproj.octopi.Crispin.user.sample` on top of your own `sdna_vs2008.vcproj.yourmachine.yourusername.user` file.
 Set build configuration to `Debug Win32`, and run. This calls scripts in `sDNA\sDNA_vs2008\tests` and diffs the output with correct outputs (the core of which are originally hand computed) in that directory. Any call to `diff` that shows differences is a test fail.
 
