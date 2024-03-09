@@ -1,0 +1,14 @@
+Metric,Variable,Default,Meaning
+Vehicle,jp,0,Tendency of drivers to avoid junctions
+Vehicle,a,1,Tendency of drivers to avoid angular change
+Pedestrian,a,0.5,"Blend of angular and Euclidean metric: 0 for full Euclidean, 1 for full Angular"
+Pedestrian,linerand,0,Standard deviation of random factor introduced to line traversal metric
+Pedestrian,juncrand,0,Standard deviation of random factor introduced to junction traversal metric
+Cycle,aadtfield,aadt,Name of data field containing annual average daily vehicle traffic estimate
+Cycle,t,0.04,Tendency of cyclists to avoid vehicle traffic
+Cycle,a,0.3,Tendency of cyclists to avoid angular change
+Cycle,s,0.5,Tendency of cyclists to avoid slope
+Public Transport,linefield,line,"Name of data field containing ID for each public transport ""line"""
+Public Transport,c,3,"Penalty for changing line (applied whenever ""line"" field changes)"
+Public Transport,s,1,Penalty per stop (applied per polyline)
+Public Transport,e,0.001,Penalty multiplier for Euclidean distance

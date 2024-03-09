@@ -9,24 +9,6 @@ import abc,sys,os,re,shutil,csv,codecs
 from os import path
 from collections import defaultdict
 
-import time
-
-try:
-    time.process_time 
-    try:
-        time.clock 
-    except AttributeError:
-        time.clock = time.process_time
-except AttributeError:
-    try:
-        time.clock
-        time.process_time = time.clock
-    except AttributeError:
-        raise NotImplementedError(
-            'No suitable timer can be found in this Python environment. '
-            'time.clock or time.process_time are required'
-            )
-
 PY3 = sys.version_info > (3,)
 
 if PY3:
@@ -558,27 +540,6 @@ class ShapefileCreateCursor(CreateCursor):
             
     def Close(self):
         self.env.SetProgressorPosition(self.numitems)
-
-
-        # __del__ is notoriously glitchy.  
-        # 
-        # In some Python environments, especially IronPython, GC calls
-        # are an implementation detail. 
-        # 
-        # As such, it cannot be guaranteed when exactly 
-        # __del__ will be called by the garbage collector (even if 
-        # del was being used to call .close on a context manager).  
-        # 
-        # Therefore, until sDNA is refactored to use 
-        # the context managers with "with", an explicit call to .close
-        # will ensure correct behaviour across multiple Python
-        # environments (instead of relying on del self.writer to clean
-        # up all resources, as it will by no means necessarily do so 
-        # immediately).
-        #
-        # Fixes https://github.com/fiftysevendegreesofrad/sdna_open/issues/11
-        self.writer.close()
-
         del self.writer
 
 class SdnaArcpyEnvironment(SdnaEnvironment):
