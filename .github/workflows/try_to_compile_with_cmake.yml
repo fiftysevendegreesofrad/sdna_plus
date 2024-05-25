@@ -1,4 +1,4 @@
-name: "Compile with MSBuild and VS 2022 for Windows, and test"
+name: "Try_to_compile_with_cmake"
 
 on:
   workflow_dispatch:
