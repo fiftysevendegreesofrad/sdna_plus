@@ -40,11 +40,13 @@ If filing a bug, please file to the database here on github.
 
 Build requirements:
 
-* Microsoft Visual Studio (tested on 2022) with C++ extensions
+* Microsoft Visual Studio (tested on 2022) with C++ extensions and vcpkg
 * Python 2.7
 * Advanced Installer
 
-Fire up the Visual Studio Developer Command Prompt. Then call `build_release.bat` in project root which should do what it says on the tin.
+Fire up the Visual Studio Developer Command Prompt. 
+ - On first use of vcpkg call [`vcpkg integrate install`](https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/msbuild-integration)
+ - Then call `build_release.bat` in project root which should do what it says on the tin.
 
 ### Project Structure
 

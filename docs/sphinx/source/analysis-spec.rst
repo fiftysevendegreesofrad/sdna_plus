@@ -21,7 +21,7 @@ Link
 One or more polylines spanning the gap between two junctions, or a
 junction and an end point.  
 
-sDNA accepts data in *link-node format* (though strictly speaking, the nodes aren't necessary).  It also accepts data in *polyline-node* format.  Note that we make a distinction between *link* and *polyline*: some users of these formats don't, and will treat them as the same thing.  This is importatant for your understanding of sDNA, but not important when using the software as it will accept either format.
+sDNA accepts data in *link-node format* (though strictly speaking, the nodes aren't necessary).  It also accepts data in *polyline-node* format.  Note that we make a distinction between *link* and *polyline*: some users of these formats don't, and will treat them as the same thing.  This is important for your understanding of sDNA, but not important when using the software as it will accept either format.
 
 To represent transport networks, polylines can be centred on a road or path centre line.
 Polylines can also be used to outline pedestrian paths and pedestrian
