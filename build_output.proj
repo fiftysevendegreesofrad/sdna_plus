@@ -16,9 +16,9 @@
 <scripts Include="arcscripts\arc_import_itn.py"/>
 <scripts Include="arcscripts\arc_matchsymbologyranges.py"/>
 <scripts Include="arcscripts\sdnaregutilities.py"/>
-<scripts Include="arcscripts\boxcox.R"/>
-<scripts Include="arcscripts\boxtidwell.R"/>
-<scripts Include="arcscripts\regularizedregression.R"/>
+<!-- <scripts Include="arcscripts\boxcox.R"/> -->
+<!-- <scripts Include="arcscripts\boxtidwell.R"/> -->
+<!-- <scripts Include="arcscripts\regularizedregression.R"/> -->
 <scripts Include="arcscripts\runsdnacommand.py"/>
 <scripts Include="arcscripts\sdnaexception.py"/>
 
@@ -53,7 +53,7 @@
              DestinationFolder="output\$(Configuration)"
         />
 
-        <Copy SourceFiles="@(rportable)" DestinationFolder="output\$(Configuration)\rportable\%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <!-- <Copy SourceFiles="@(rportable)" DestinationFolder="output\$(Configuration)\rportable\%(RecursiveDir)" SkipUnchangedFiles="true" /> -->
 
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=Win32" Targets="Rebuild"/>
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=x64" Targets="Rebuild"/>
