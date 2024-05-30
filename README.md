@@ -43,7 +43,6 @@ If filing a bug, please file to the database here on github.
 * Microsoft Visual Studio (tested on 2022) with C++ extensions
 * Python 2.7
 * Advanced Installer
-* sed, e.g. in admin cmd [`choco install sed`](https://community.chocolatey.org/packages/sed)
 * Vcpkg built from commit `d6945642......` (`2024-04-23-`) 
    - (`git clone --depth=1 https://github.com/microsoft/vcpkg/`)
    - (`.\vcpkg\bootstrap-vckg.bat`)

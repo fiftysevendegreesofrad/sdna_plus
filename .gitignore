@@ -19,3 +19,16 @@ sDNA/sdna_vs2008/tests/**/tinypred_py?.*
 sDNA/sdna_vs2008/tests/**/geom_test_py?.txt
 sDNA/sdna_vs2008/tests/**/out_py?.*
 sDNA/sdna_vs2008/tests/**/tinyout_*
+
+output/release/sdna_vs2008.dll
+output/release/*.py
+output/release/*.R
+output/release/bin/*.py
+output/release/rportable/**/*
+output/release/bin/README.txt
+output/release/license.rtf
+output/release/sDNA.pyt
+output/release/sDNA_ArcGIS_extra_tools.tbx
+
+sDNA/sdna_vs2008/Release
+sDNA/sdna_vs2008/x64/Release
