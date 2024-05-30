@@ -46,6 +46,7 @@ If filing a bug, please file to the database here on github.
 * Vcpkg built from commit `d6945642......` (`2024-04-23-`) 
    - (`git clone --depth=1 https://github.com/microsoft/vcpkg/`)
    - (`.\vcpkg\bootstrap-vckg.bat`)
+* 5-6 GB free disk space (to be safe).
 
 Fire up the Visual Studio Developer Command Prompt. 
  - Before the first use of vcpkg, call [`vcpkg integrate install`](https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/msbuild-integration)

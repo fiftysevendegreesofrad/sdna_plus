@@ -5,7 +5,7 @@
 
         <MSBuild Projects="build_output.proj" Targets="Rebuild"/>
 
-        <Exec Command="&quot;AdvancedInstaller.com&quot; /build installerbits\advanced\sdna.aip"/>
+        <Exec Command="&quot;C:\Program Files (x86)\Caphyon\Advanced Installer 21.7.1\bin\x86\AdvancedInstaller.com&quot; /build installerbits\advanced\sdna.aip"/>
     
         <Exec Command="python -u installerbits\rename_version.py installerbits/advanced/output/sdna_setup.msi ."/>
 
