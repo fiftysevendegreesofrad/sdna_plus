@@ -38,15 +38,23 @@ If filing a bug, please file to the database here on github.
 
 ### Building the software
 
-Build requirements:
+#### Local build requirements:
 
-* Microsoft Visual Studio (tested on 2022) with C++ extensions and vcpkg
+* Microsoft Visual Studio (tested on 2022) with C++ extensions
 * Python 2.7
 * Advanced Installer
+* Vcpkg built from commit `d6945642......` (`2024-04-23-`).  E.g. in the dir to install it in:
+   - `git clone --depth=1 https://github.com/microsoft/vcpkg/`
+   - `cd vcpkg`
+   - `.\bootstrap-vckg.bat`
+* 5-6 GB free disk space (to be safe).
 
 Fire up the Visual Studio Developer Command Prompt. 
- - On first use of vcpkg call [`vcpkg integrate install`](https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/msbuild-integration)
- - Then call `build_release.bat` in project root which should do what it says on the tin.
+ - Before the first use of vcpkg, in the vcpkg repo root call [`.\vcpkg.exe integrate install`](https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/msbuild-integration)
+ - Then in the sDNA repo's root call `build_release.bat` which should do what it says on the tin.
+
+#### CI build and test requirements:
+* Run the Github Action `.github\workflows\compile_and_test.yml`
 
 ### Project Structure
 
