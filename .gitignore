@@ -34,3 +34,7 @@ output/release/sDNA_ArcGIS_extra_tools.tbx
 
 sDNA/sdna_vs2008/Release
 sDNA/sdna_vs2008/x64/Release
+
+installerbits/advanced/sdna-cache
+
+sDNA_setup*.msi
