@@ -29,7 +29,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -113,7 +113,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -200,7 +200,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -292,7 +292,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -385,7 +385,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -477,7 +477,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -570,7 +570,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -663,7 +663,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -757,7 +757,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -849,7 +849,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -942,7 +942,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1033,7 +1033,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1124,7 +1124,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1208,7 +1208,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1293,7 +1293,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1378,7 +1378,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1465,7 +1465,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1557,7 +1557,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1649,7 +1649,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1733,7 +1733,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1818,7 +1818,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -1902,7 +1902,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Getting version number"
-				CommandLine="python create_version_generated.h.py"
+				CommandLine="python version_generated.h.creator.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
