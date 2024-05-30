@@ -42,7 +42,7 @@ If filing a bug, please file to the database here on github.
 
 * Microsoft Visual Studio (tested on 2022) with C++ extensions
 * Python 2.7
-* Advanced Installer
+* Advanced Installer.  Add the location of `AdvancedInstaller.com` either to your path (`%PATH%`) or to line 8 of `build_installer.proj`.
 * Vcpkg built from commit `d6945642......` (`2024-04-23-`).  E.g. in the dir to install it in:
    - `git clone --depth=1 https://github.com/microsoft/vcpkg/`
    - `cd vcpkg`
