@@ -1,8 +1,8 @@
 import subprocess
 
 
-version_template = r'sDNA\sdna_vs2008\version_template.h'
-version_generated = r'sDNA\sdna_vs2008\version_generated.h'
+version_template = r'version_template.h'
+version_generated = r'version_generated.h'
 
 git_hash = subprocess.check_output('git rev-parse HEAD').decode('utf8').rstrip()
 
