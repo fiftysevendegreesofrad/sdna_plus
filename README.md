@@ -46,7 +46,9 @@ If filing a bug, please file to the database here on github.
 * Vcpkg (tested with vcpkg.exe `version 2024-04-23-d6945642ee5c3076addd1a42c331bbf4cfc97457`).  E.g. in the chosen parent dir:
    - `git clone --depth=1 https://github.com/microsoft/vcpkg/`
    - `cd vcpkg`
+   - (optional) `setx VCPKG_ROOT c:\path_to_vcpkg_repo\vcpkg`
    - `.\bootstrap-vckg.bat`
+
 * 5-6 GB free disk space (to be safe).
 
 Fire up the Visual Studio Developer Command Prompt. 
