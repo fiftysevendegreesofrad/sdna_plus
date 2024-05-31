@@ -57,12 +57,12 @@ jobs:
         path: |
           C:\vcpkg\packages\
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-        key: ${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
+          C:\Users\runneradmin\AppData\Local\vcpkg\
+        key: ${{ runner.os }}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
 
-    # Let vcpkg do its thing with the cache and don't skip this step
-    # if there is a cache hit. Vcpkg will detect pre existing files.
-    # that it previously installed.
+
     - name: Install Boost from vcpkg.json
+      if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
       run: vcpkg install
 
 
@@ -74,6 +74,7 @@ jobs:
         path: |
           C:\vcpkg\packages\
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
+          C:\Users\runneradmin\AppData\Local\vcpkg\
         key: ${{ steps.cache-vcpkg-deps-restore.outputs.cache-primary-key }}
 
 
