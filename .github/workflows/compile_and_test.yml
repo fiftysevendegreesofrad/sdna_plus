@@ -55,8 +55,9 @@ jobs:
       uses: actions/cache/restore@v4
       with:
         path: |
-          C:\vcpkg\packages\
+          C:\vcpkg\
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
+          D:\a\sdna_plus\sdna_plus\sDNA\sdna_vs2008\vcpkg_installed\
           C:\Users\runneradmin\AppData\Local\vcpkg\
         key: ${{ runner.os }}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
 
@@ -66,16 +67,6 @@ jobs:
       run: vcpkg install
 
 
-    - name: Cache vcpkg Deps
-      if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
-      id: cache-deps-save
-      uses: actions/cache/save@v4
-      with:
-        path: |
-          C:\vcpkg\packages\
-          D:\a\sdna_plus\sdna_plus\vcpkg_installed\
-          C:\Users\runneradmin\AppData\Local\vcpkg\
-        key: ${{ steps.cache-vcpkg-deps-restore.outputs.cache-primary-key }}
 
 
     - name: Build sDNA
@@ -87,6 +78,18 @@ jobs:
         /p:Configuration=${{ env.CONFIGURATION }} 
         /p:VcpkgEnableManifest=true
 
+    - name: Cache vcpkg Deps
+      if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
+      id: cache-deps-save
+      uses: actions/cache/save@v4
+      with:
+        path: |
+          C:\vcpkg\
+          D:\a\sdna_plus\sdna_plus\vcpkg_installed\
+          D:\a\sdna_plus\sdna_plus\sDNA\sdna_vs2008\vcpkg_installed\
+          C:\Users\runneradmin\AppData\Local\vcpkg\
+
+        key: ${{ steps.cache-vcpkg-deps-restore.outputs.cache-primary-key }}
     - name: Output the name of the .msi installer file
       id: output_installer_file_name
       shell: bash
