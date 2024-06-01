@@ -59,13 +59,10 @@ jobs:
       run: vcpkg install
 
     - name: Build sDNA
-      working-directory: ${{ github.workspace }}
+      working-directory: ${{ github.workspace }}\sDNA\sdna_vs2008
       run: > 
-        msbuild build_installer.proj 
-        /t:rebuild 
-        /p:Platform=${{ env.PLATFORM }}  
-        /p:Configuration=${{ env.CONFIGURATION }} 
-        /p:VcpkgEnableManifest=true
+        create_build_system.bat
+        build.bat
 
     - name: Cache vcpkg Deps
       if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
