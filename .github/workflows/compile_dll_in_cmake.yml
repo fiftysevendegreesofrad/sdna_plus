@@ -59,10 +59,11 @@ jobs:
       run: vcpkg install
 
     - name: Build sDNA
+      shell: cmd
       working-directory: ${{ github.workspace }}\sDNA\sdna_vs2008
       run: > 
-        create_build_system.bat
-        build.bat
+        .\create_build_system.bat
+        .\build.bat
 
     - name: Cache vcpkg Deps
       if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
