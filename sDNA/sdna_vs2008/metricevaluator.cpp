@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "metricevaluator.h"
 #include "dataacquisitionstrategy.h"
 #include "edge.h"

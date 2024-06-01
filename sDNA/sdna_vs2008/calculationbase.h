@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "net.h"
 #include "sdna_geometry_collections.h"
 #include "tables.h"

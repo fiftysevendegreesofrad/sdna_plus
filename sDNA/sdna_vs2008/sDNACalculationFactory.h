@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "calculationbase.h"
 
 Calculation* sDNACalculationFactory(char *name, char *config, Net *net,

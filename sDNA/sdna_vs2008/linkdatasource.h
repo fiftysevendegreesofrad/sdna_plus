@@ -1,4 +1,3 @@
-#include "stdafx.h"
 
 //string class that uses only one pointer internally for space saving in variant
 class HeapString

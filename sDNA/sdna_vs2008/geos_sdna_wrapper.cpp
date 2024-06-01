@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "geos_sdna_wrapper.h"
 
 void my_geos_message_handler(const char *fmt, ...)

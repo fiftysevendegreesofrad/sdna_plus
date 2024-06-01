@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "random.h"
 
 //will have to move random number generator to stack of calculation::run_internal

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "prepareoperations.h"
 #include "geos_sdna_wrapper.h"
 

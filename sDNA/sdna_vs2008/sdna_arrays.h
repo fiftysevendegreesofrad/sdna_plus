@@ -2,7 +2,6 @@
 // they can also be indexed by Edge rather than SdnaId - the Edge's id is automatically looked up
 // useful for algorithm code, especially when parallel
 
-#include "stdafx.h"
 #pragma once
 #pragma warning( disable : 4996 )
 #include "edge.h"

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 using namespace boost;
 #pragma once 
 

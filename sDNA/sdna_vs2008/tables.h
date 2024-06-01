@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #pragma once 
 #include "sdna_arrays.h"
 #include "dataacquisitionstrategy.h"

@@ -38,3 +38,5 @@ sDNA/sdna_vs2008/x64/Release
 installerbits/advanced/sdna-cache
 
 sDNA_setup*.msi
+
+build_cmake

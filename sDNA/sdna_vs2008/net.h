@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #pragma once
 #include "edge.h"
 #include "sdna_output_utils.h"

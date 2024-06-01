@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "calculation.h"
 
 // Here be Dragons!

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "sdna_spatial_accumulators.h"
 #include "linkdatasource.h"
 #pragma once 

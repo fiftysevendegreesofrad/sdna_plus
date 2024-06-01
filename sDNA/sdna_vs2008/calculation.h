@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "calculationbase.h"
 #include "sdna_output_utils.h"
 #include "sdna_spatial_accumulators.h"

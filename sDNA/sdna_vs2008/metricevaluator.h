@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "point.h"
 #include "dataacquisitionstrategy.h"
 

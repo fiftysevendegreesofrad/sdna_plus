@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "calculation.h"
 
 class to_union_visitor

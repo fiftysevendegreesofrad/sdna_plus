@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "net.h"
 #include "calculationbase.h"
 #pragma once 
