@@ -43,9 +43,10 @@ If filing a bug, please file to the database here on github.
 * Microsoft Visual Studio (tested on 2022) with C++ extensions
 * Python
 * Advanced Installer.  Add the location of `AdvancedInstaller.com` either to your path (`%PATH%`) or to line 8 of `build_installer.proj`.
-* Vcpkg built from commit `d6945642......` (`2024-04-23-`).  E.g. in the dir to install it in:
+* Vcpkg (tested with vcpkg.exe `version 2024-04-23-d6945642ee5c3076addd1a42c331bbf4cfc97457`).  E.g. in the chosen parent dir:
    - `git clone --depth=1 https://github.com/microsoft/vcpkg/`
    - `cd vcpkg`
+   - (optional) `setx VCPKG_ROOT c:\path_to_vcpkg_repo\vcpkg`
    - `.\bootstrap-vckg.bat`
 * 5-6 GB free disk space (to be safe).
 
@@ -59,12 +60,14 @@ Fire up the Visual Studio Developer Command Prompt.
 #### CMake build requirements:
 * CMake (tested on 3.27.7.  At least 3.16 is required for precompiled headers),
 * as for "Local build requirements" above (except Advanced Installer).
-CMake ideally wants build trees to be separate from source trees.  But in order for `sDNA\sdna_vs2008\version_generated.h.creator.py` to be able to extract a commit hash, the build tree must at the very least live within a copy of the sDNA Git repo.  So for now we'll pretend the source tree is `sDNA\**\*` and put the 'build tree' in `build_cmake`.
+CMake ideally wants build trees to be separate from source trees.  But in order for `sDNA\sdna_vs2008\version_generated.h.creator.py` to be 
+able to extract a commit hash, the build tree must at the very least live within a copy of the sDNA Git repo.  So for now we'll pretend the 
+source tree is `.\sDNA\` and put the 'build tree' in `.\build_cmake`.
 
 Running (in a normal cmd.exe, not the VS Developer Command Prompt):
  - `cd sDNA\sdna_vs2008`
  - `.\create_build_system.bat`
- - `build.bat`
+ - `.\build.bat`
 
 should create `sdna_vs2008.dll` and three debug files in `sDNA\sdna_vs2008\x64\Debug`
 
