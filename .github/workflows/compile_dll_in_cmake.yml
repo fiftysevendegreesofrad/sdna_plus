@@ -64,11 +64,6 @@ jobs:
         set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
         .\create_build_system_with_CMake.bat
 
-    - name: Build sDNA
-      shell: cmd
-      run: |
-        set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
-        .\run_CMake_build_system.bat
 
     - name: Cache vcpkg Deps
       if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
@@ -83,6 +78,15 @@ jobs:
           D:\a\sdna_plus\sdna_plus\build_cmake\vcpkg_installed
 
         key: ${{ steps.cache-vcpkg-deps-restore.outputs.cache-primary-key }}
+
+
+    - name: Build sDNA
+      shell: cmd
+      run: |
+        set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
+        .\run_CMake_build_system.bat
+
+
     # - name: Output the name of the .msi installer file
     #   id: output_installer_file_name
     #   shell: bash
