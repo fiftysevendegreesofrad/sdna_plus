@@ -3,13 +3,13 @@
   
     "configurePresets": [
         {
-          "name": "Debug",
+          "name": "release",
           "cacheVariables": {
             "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
           }
         },
         {
-          "name": "release",
+          "name": "Debug",
           "cacheVariables": {
             "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
           }
