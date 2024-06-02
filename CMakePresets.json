@@ -1,0 +1,18 @@
+{
+    "version": 2,
+  
+    "configurePresets": [
+        {
+          "name": "release",
+          "cacheVariables": {
+            "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+          }
+        },
+        {
+          "name": "Debug",
+          "cacheVariables": {
+            "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+          }
+        }
+    ]
+  }
