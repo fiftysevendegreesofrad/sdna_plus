@@ -88,10 +88,18 @@ Geos is dynamically linked at run-time.  A custom build step copies in the `geos
 and `sDNA\geos\x86\src`), originally compiled for OSGEO4W available hereabouts: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos/
 
 #### Muparser
+```
+Rev 2.2.3: 22.12.2012
+```
 
 #### Anyiterator
-
-#### R-portable
+```
+// Revision History
+// ================
+//
+// 12 Jul 2010 
+```
+<!-- #### R-portable -->
 
 ### Packaging
 The Windows installer contains x64 and Win32 binaries (for both `sdna_vs2008.dll` and `geos_c.dll`)

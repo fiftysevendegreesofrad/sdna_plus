@@ -94,7 +94,7 @@ jobs:
       id: installer-upload-step
       uses: actions/upload-artifact@v4
       with:
-        name: dll
+        name: sDNA_DLLs_and_debug_symbols
         # this file name pattern is defined in installerbits\rename_version.py
         # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
-        path: sDNA\sdna_vs2008\x64\Debug\sdna_vs2008.dll
+        path: build_cmake\x64\*
