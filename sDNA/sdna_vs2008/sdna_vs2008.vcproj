@@ -2034,6 +2034,10 @@
 			<File
 				RelativePath=".\stdafx.cpp"
 				>
+			</File>
+			<File
+				RelativePath=".\stdafx_force_includable.cpp"
+				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
@@ -2321,6 +2325,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\stdafx_force_includable.h"
 				>
 			</File>
 			<File
