@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.20)
 
 # set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
@@ -14,9 +14,9 @@ set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
 # set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
 # Alternatively add this line:
-set(CMAKE_TOOLCHAIN_FILE
- "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
- )
+# set(CMAKE_TOOLCHAIN_FILE
+#  "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+#  )
 
 set(PROJECT_NAME sdna_vs2008)
 
@@ -205,55 +205,57 @@ link_directories(${Boost_LIBRARY_DIRS})
 # Source groups
 ################################################################################
 set(Headers
-    "calculation.h"
-    "calculationbase.h"
-    "config_string_parser.h"
-    "dataacquisitionstrategy.h"
-    "edge.h"
-    "geos_sdna_wrapper.h"
-    "linkdatasource.h"
-    "metricevaluator.h"
-    "net.h"
-    "point.h"
-    "prepareoperations.h"
-    "random.h"
-    "sdna.h"
-    "sdna_arrays.h"
-    "sdna_geometry_collections.h"
-    "sdna_output_utils.h"
-    "sdna_spatial_accumulators.h"
-    "sDNACalculationFactory.h"
-    "stdafx.h"
-    "tables.h"
-    "targetver.h"
-    "unique_id.h"
-    "version_template.h"
-    "version_generated.h.creator.py"
+    "sDNA/sdna_vs2008/calculation.h"
+    "sDNA/sdna_vs2008/calculationbase.h"
+    "sDNA/sdna_vs2008/config_string_parser.h"
+    "sDNA/sdna_vs2008/dataacquisitionstrategy.h"
+    "sDNA/sdna_vs2008/edge.h"
+    "sDNA/sdna_vs2008/geos_sdna_wrapper.h"
+    "sDNA/sdna_vs2008/linkdatasource.h"
+    "sDNA/sdna_vs2008/metricevaluator.h"
+    "sDNA/sdna_vs2008/net.h"
+    "sDNA/sdna_vs2008/point.h"
+    "sDNA/sdna_vs2008/prepareoperations.h"
+    "sDNA/sdna_vs2008/random.h"
+    "sDNA/sdna_vs2008/sdna.h"
+    "sDNA/sdna_vs2008/sdna_arrays.h"
+    "sDNA/sdna_vs2008/sdna_geometry_collections.h"
+    "sDNA/sdna_vs2008/sdna_output_utils.h"
+    "sDNA/sdna_vs2008/sdna_spatial_accumulators.h"
+    "sDNA/sdna_vs2008/sDNACalculationFactory.h"
+    "sDNA/sdna_vs2008/stdafx.h"
+    "sDNA/sdna_vs2008/stdafx_force_includable.h"
+    "sDNA/sdna_vs2008/tables.h"
+    "sDNA/sdna_vs2008/targetver.h"
+    "sDNA/sdna_vs2008/unique_id.h"
+    "sDNA/sdna_vs2008/version_template.h"
+    "sDNA/sdna_vs2008/version_generated.h.creator.py"
 )
 source_group("Headers" FILES ${Headers})
 
 set(Sources
-    "../muparser/drop/src/muParser.cpp"
-    "../muparser/drop/src/muParserBase.cpp"
-    "../muparser/drop/src/muParserBytecode.cpp"
-    "../muparser/drop/src/muParserCallback.cpp"
-    "../muparser/drop/src/muParserError.cpp"
-    "../muparser/drop/src/muParserTokenReader.cpp"
-    "calc_output_code.cpp"
-    "calculation.cpp"
-    "dijkstra.cpp"
-    "dllmain.cpp"
-    "edge.cpp"
-    "geos_sdna_wrapper.cpp"
-    "interface_funcs.cpp"
-    "metricevaluator.cpp"
-    "net.cpp"
-    "prepareoperations.cpp"
-    "random.cpp"
-    "sdna_geometry_collections.cpp"
-    "sDNACalculationFactory.cpp"
-    "stdafx.cpp"
-    "unit_tests.cpp"
+    "sDNA/muparser/drop/src/muParser.cpp"
+    "sDNA/muparser/drop/src/muParserBase.cpp"
+    "sDNA/muparser/drop/src/muParserBytecode.cpp"
+    "sDNA/muparser/drop/src/muParserCallback.cpp"
+    "sDNA/muparser/drop/src/muParserError.cpp"
+    "sDNA/muparser/drop/src/muParserTokenReader.cpp"
+    "sDNA/sdna_vs2008/calc_output_code.cpp"
+    "sDNA/sdna_vs2008/calculation.cpp"
+    "sDNA/sdna_vs2008/dijkstra.cpp"
+    "sDNA/sdna_vs2008/dllmain.cpp"
+    "sDNA/sdna_vs2008/edge.cpp"
+    "sDNA/sdna_vs2008/geos_sdna_wrapper.cpp"
+    "sDNA/sdna_vs2008/interface_funcs.cpp"
+    "sDNA/sdna_vs2008/metricevaluator.cpp"
+    "sDNA/sdna_vs2008/net.cpp"
+    "sDNA/sdna_vs2008/prepareoperations.cpp"
+    "sDNA/sdna_vs2008/random.cpp"
+    "sDNA/sdna_vs2008/sdna_geometry_collections.cpp"
+    "sDNA/sdna_vs2008/sDNACalculationFactory.cpp"
+    "sDNA/sdna_vs2008/stdafx.cpp"
+    "sDNA/sdna_vs2008/stdafx_force_includable.cpp"
+    "sDNA/sdna_vs2008/unit_tests.cpp"
 )
 source_group("Sources" FILES ${Sources})
 
@@ -290,9 +292,9 @@ add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE
-    "$<$<COMPILE_LANGUAGE:CXX>:${CMAKE_CURRENT_SOURCE_DIR}/stdafx.h>"
-)
+target_precompile_headers(${PROJECT_NAME} PRIVATE "sDNA/sdna_vs2008/stdafx_force_includable.h")
+
+add_compile_definitions(FORCE_INCLUDE_PRECOMPILED_HEADER 1)
 
 use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
 set(ROOT_NAMESPACE sdna_vs2008)
@@ -418,7 +420,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY ${MSVC_RUN
 # Include directories
 ################################################################################
 target_include_directories(${PROJECT_NAME} PUBLIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/../muparser/drop/include"
+    "sDNA/muparser/drop/include"
 )
 
 ################################################################################
