@@ -60,17 +60,15 @@ jobs:
 
     - name: Create Visual Studio build system from CMake
       shell: cmd
-      working-directory: ${{ github.workspace }}\sDNA\sdna_vs2008
       run: |
         set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
-        .\create_build_system.bat
+        .\create_build_system_with_CMake.bat
 
     - name: Build sDNA
       shell: cmd
-      working-directory: ${{ github.workspace }}\sDNA\sdna_vs2008
       run: |
         set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
-        .\build.bat
+        .\run_CMake_build_system.bat
 
     - name: Cache vcpkg Deps
       if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
