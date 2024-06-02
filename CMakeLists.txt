@@ -910,7 +910,7 @@ endif()
 # https://cmake.org/cmake/help/latest/command/add_custom_command.html#build-events
 add_custom_command(
     TARGET ${PROJECT_NAME} PRE_BUILD
-    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/"version_generated.h.creator.py"
+    COMMAND python "sDNA/sdna_vs2008/version_generated.h.creator.py"
 )
 
 
