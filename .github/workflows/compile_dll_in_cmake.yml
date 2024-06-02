@@ -95,4 +95,4 @@ jobs:
         name: sDNA_DLLs_and_debug_symbols
         # this file name pattern is defined in installerbits\rename_version.py
         # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
-        path: build_cmake\x64\*
+        path: build_cmake\Debug\*
