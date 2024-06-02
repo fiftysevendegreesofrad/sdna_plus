@@ -60,9 +60,10 @@ Fire up the Visual Studio Developer Command Prompt.
 #### CMake build requirements:
 * CMake (tested on 3.27.7.  At least 3.16 is required for precompiled headers),
 * as for "Local build requirements" above (except Advanced Installer).
-CMake ideally wants build trees to be separate from source trees.  But in order for `sDNA\sdna_vs2008\version_generated.h.creator.py` to be 
-able to extract a commit hash, the build tree must at the very least live within a copy of the sDNA Git repo.  So for now we'll pretend the 
-source tree is `.\sDNA\` and put the 'build tree' in `.\build_cmake`.
+CMake ideally wants build trees to be separate from source trees.  But in order 
+for `sDNA\sdna_vs2008\version_generated.h.creator.py` to be able to extract a commit hash, 
+the build tree must at the very least live within a copy of the sDNA Git repo.  So for now 
+we'll pretend the source tree is `.\sDNA\` and put the 'build tree' in `.\build_cmake`.
 
 Running (in a normal cmd.exe, not the VS Developer Command Prompt):
  - `cd sDNA\sdna_vs2008`
