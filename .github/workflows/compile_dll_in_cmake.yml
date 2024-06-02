@@ -60,7 +60,6 @@ jobs:
 
     - name: Build sDNA
       shell: cmd
-      env: 
       working-directory: ${{ github.workspace }}\sDNA\sdna_vs2008
       run: |
         set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
