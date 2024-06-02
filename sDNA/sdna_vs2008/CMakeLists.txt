@@ -14,7 +14,7 @@ set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
 # set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
 set(CMAKE_TOOLCHAIN_FILE
-  "../../../vcpkg/scripts/buildsystems/vcpkg.cmake"
+  "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
   )
 
 # "This will become the name of the resulting Visual Studio solution. "

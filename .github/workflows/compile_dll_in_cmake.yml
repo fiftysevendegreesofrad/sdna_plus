@@ -61,7 +61,7 @@ jobs:
     - name: Build sDNA
       shell: cmd
       working-directory: ${{ github.workspace }}\sDNA\sdna_vs2008
-      run: > 
+      run: |
         .\create_build_system.bat
         .\build.bat
 
