@@ -180,7 +180,7 @@ set(boost_packages
 #   REQUIRED COMPONENTS ${boost_packages}
 # )
 
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED CONFIG)
 
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
