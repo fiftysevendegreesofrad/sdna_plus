@@ -18,9 +18,11 @@ set(CMAKE_TOOLCHAIN_FILE
  "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
  )
 
+set(PROJECT_NAME sdna_vs2008)
+
 # "This will become the name of the resulting Visual Studio solution. "
 # https://cmake.org/cmake/help/book/mastering-cmake/chapter/Converting%20Existing%20Systems%20To%20CMake.html#converting-windows-based-workspaces
-project(sdna_vs2008 CXX)
+project(${PROJECT_NAME} CXX)
 
 # In CMake, the target Platform can be set for all Visual Studio Generators 
 # as far back as VS 2008 by setting
@@ -183,8 +185,6 @@ find_package(Boost REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
-# To be used in project() below
-set(PROJECT_NAME sdna_vs2008)
 
 ################################################################################
 # Source groups
