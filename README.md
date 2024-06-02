@@ -59,7 +59,7 @@ Fire up the Visual Studio Developer Command Prompt.
 
 #### CMake build requirements:
 * CMake (tested on 3.27.7.  At least 3.16 is required for precompiled headers),
-* as for "Local build requirements" above (except Advanced Installer).
+* as for "Local build requirements" above (without Advanced Installer and without integrating vcpkg).
 CMake ideally wants build trees to be separate from source trees.  But in order 
 for `sDNA\sdna_vs2008\version_generated.h.creator.py` to be able to extract a commit hash, 
 the build tree must at the very least live within a copy of the sDNA Git repo.  So for now 
@@ -74,6 +74,27 @@ Then
  - `.\build.bat`
 
 should create `sdna_vs2008.dll` and three debug files in `sDNA\sdna_vs2008\x64\Debug`
+
+### Dependencies
+
+#### Boost
+It is not immediately visible, but Boost 1.83 is used currently. Vcpkg manifest mode uses hashes of git commits of its own repo to define baselines from which dependencies are drawn.  These are in `sDNA\sdna_vs2008\vcpkg-configuration.json`.  For example `61f610845fb206298a69f708104a51d651872877` refers to https://github.com/microsoft/vcpkg/commit/61f610845fb206298a69f708104a51d651872877 of Nov 11th 2023, on which date the latest version of Boost in vcpkg was 1.83
+https://learn.microsoft.com/en-gb/vcpkg/consume/boost-versions
+
+It is possible to use an override mechanism to pin deps instead, but this would make `sDNA\sdna_vs2008\vcpkg.json` much longer.  https://learn.microsoft.com/en-gb/vcpkg/consume/lock-package-versions?tabs=inspect-powershell#5---force-a-specific-version
+
+#### Geos
+Geos is dynamically linked at run-time.  A custom build step copies in the `geos_c.dll`s (from `sDNA\geos\x64\src`
+and `sDNA\geos\x86\src`), originally compiled for OSGEO4W available hereabouts: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos/
+
+#### Muparser
+
+#### Anyiterator
+
+#### R-portable
+
+### Packaging
+The Windows installer contains x64 and Win32 binaries (for both `sdna_vs2008.dll` and `geos_c.dll`)
 
 ### Project Structure
 
