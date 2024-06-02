@@ -1,7 +1,7 @@
 name: "Compile with CMake, MSBuild and VS 2022 for Windows"
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
 
   push:
     branches: [ "CMake_no_R", "No_R_CMake_(Boost_1.83)"]
@@ -35,8 +35,8 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
 
-    - name: Integrate vcpkg with Visual Studio
-      run: vcpkg integrate install
+    # - name: Integrate vcpkg with Visual Studio
+    #   run: vcpkg integrate install
 
 
 
