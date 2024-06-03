@@ -60,7 +60,7 @@ jobs:
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
           D:\a\sdna_plus\sdna_plus\sDNA\sdna_vs2008\vcpkg_installed\
           C:\Users\runneradmin\AppData\Local\vcpkg\
-        key: ${{ runner.os }}-${{ hashFiles('sDNA\sdna_vs2008\vcpkg.json', 'sDNA\sdna_vs2008\vcpkg-configuration.json') }}
+        key: ${{ runner.os }}-${{ hashFiles('sDNA/sdna_vs2008/vcpkg.json', 'sDNA/sdna_vs2008/vcpkg-configuration.json') }}
 
 
     - name: Install Boost from vcpkg.json
@@ -68,16 +68,6 @@ jobs:
       if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
       run: vcpkg install
 
-
-
-
-    - name: Build sDNA
-      run: > 
-        msbuild build_installer.proj 
-        /t:rebuild 
-        /p:Platform=${{ env.PLATFORM }}  
-        /p:Configuration=${{ env.CONFIGURATION }} 
-        /p:VcpkgEnableManifest=true
 
     - name: Cache vcpkg Deps
       if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
@@ -89,6 +79,16 @@ jobs:
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
           D:\a\sdna_plus\sdna_plus\sDNA\sdna_vs2008\vcpkg_installed\
           C:\Users\runneradmin\AppData\Local\vcpkg\
+
+
+    - name: Build sDNA
+      run: > 
+        msbuild build_installer.proj 
+        /t:rebuild 
+        /p:Platform=${{ env.PLATFORM }}  
+        /p:Configuration=${{ env.CONFIGURATION }} 
+        /p:VcpkgEnableManifest=true
+
 
         key: ${{ steps.cache-vcpkg-deps-restore.outputs.cache-primary-key }}
     - name: Output the name of the .msi installer file
