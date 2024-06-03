@@ -73,6 +73,7 @@ using boost::numeric_cast;
 
 #define UNICODE_SAVE _UNICODE
 #undef _UNICODE
+#define MUP_BASETYPE float
 #include "muparser.h"
 #define _UNICODE UNICODE_SAVE
 
