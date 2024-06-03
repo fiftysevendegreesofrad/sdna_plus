@@ -295,7 +295,7 @@ add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
-target_precompile_headers(${PROJECT_NAME} PUBLIC "stdafx.h")
+target_precompile_headers(${PROJECT_NAME} PRIVATE "stdafx.h")
 
 use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
 set(ROOT_NAMESPACE sdna_vs2008)
