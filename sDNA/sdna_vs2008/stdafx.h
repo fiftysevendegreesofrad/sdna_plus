@@ -73,14 +73,8 @@ using boost::numeric_cast;
 
 #define UNICODE_SAVE _UNICODE
 #undef _UNICODE
-
-#ifdef MUP_BASETYPE 
-#undef MUP_BASETYPE
 #define MUP_BASETYPE float
-#endif
-
-#include <muParser.h>
-
+#include "muparser.h"
 #define _UNICODE UNICODE_SAVE
 
 using boost::geometry::model::d2::point_xy;
