@@ -224,7 +224,6 @@ set(Headers
     "sdna_spatial_accumulators.h"
     "sDNACalculationFactory.h"
     "stdafx.h"
-    "stdafx_force_includable.h"
     "tables.h"
     "targetver.h"
     "unique_id.h"
@@ -260,7 +259,6 @@ set(Sources
     "sdna_geometry_collections.cpp"
     "sDNACalculationFactory.cpp"
     "stdafx.cpp"
-    "stdafx_force_includable.cpp"
     "unit_tests.cpp"
 )
 source_group("Sources" FILES ${Sources})
@@ -299,9 +297,7 @@ add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE "stdafx_force_includable.h")
-
-add_compile_definitions(FORCE_INCLUDE_PRECOMPILED_HEADER 1)
+target_precompile_headers(${PROJECT_NAME} PRIVATE "stdafx.h")
 
 use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
 set(ROOT_NAMESPACE sdna_vs2008)
