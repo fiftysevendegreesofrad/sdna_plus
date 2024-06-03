@@ -233,13 +233,19 @@ set(Headers
 )
 source_group("Headers" FILES ${Headers})
 
-set(Sources
+set(MuParser
     "../muparser/drop/src/muParser.cpp"
     "../muparser/drop/src/muParserBase.cpp"
     "../muparser/drop/src/muParserBytecode.cpp"
     "../muparser/drop/src/muParserCallback.cpp"
     "../muparser/drop/src/muParserError.cpp"
     "../muparser/drop/src/muParserTokenReader.cpp"
+)
+source_group("MuParser" FILES ${MuParser})
+
+set_source_files_properties(${MuParser} PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
+
+set(Sources
     "calc_output_code.cpp"
     "calculation.cpp"
     "dijkstra.cpp"
@@ -263,6 +269,7 @@ source_group("Sources" FILES ${Sources})
 set(ALL_FILES
     ${Headers}
     ${Sources}
+    ${MuParser}
 )
 
 ################################################################################
