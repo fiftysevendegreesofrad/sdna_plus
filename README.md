@@ -88,9 +88,9 @@ Geos is dynamically linked at run-time.  A custom build step copies in the `geos
 and `sDNA\geos\x86\src`), originally compiled for OSGEO4W available hereabouts: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos/
 
 #### Muparser
-A static copy of a slightly modified [`Rev 2.2.3: 22.12.2012`](https://launchpad.net/ubuntu/+source/muparser/2.2.3-6).  Changes:
- * `#define MUP_BASETYPE float` in sDNA\muparser\drop\include\muParserDef.h
- * `#include "stdafx.h"` in 6 of the sDNA\muparser\drop\src\muParser*.cpp (to work with Visual Studio's chosen configuration for the pre-compiled headers).
+```
+Rev 2.2.3: 22.12.2012
+```
 
 #### Anyiterator
 ```
@@ -99,8 +99,7 @@ A static copy of a slightly modified [`Rev 2.2.3: 22.12.2012`](https://launchpad
 //
 // 12 Jul 2010 
 ```
-#### R-portable
-TODO
+<!-- #### R-portable -->
 
 ### Packaging
 The Windows installer contains x64 and Win32 binaries (for both `sdna_vs2008.dll` and `geos_c.dll`)

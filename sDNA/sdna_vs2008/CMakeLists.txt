@@ -242,8 +242,6 @@ set(MuParser
 )
 source_group("MuParser" FILES ${MuParser})
 
-set_source_files_properties(${MuParser} PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
-
 set(Sources
     "calc_output_code.cpp"
     "calculation.cpp"
@@ -297,7 +295,7 @@ add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE "stdafx.h")
+target_precompile_headers(${PROJECT_NAME} PUBLIC "stdafx.h")
 
 use_props(${PROJECT_NAME} "${CMAKE_CONFIGURATION_TYPES}" "${DEFAULT_CXX_PROPS}")
 set(ROOT_NAMESPACE sdna_vs2008)
@@ -722,24 +720,12 @@ if(MSVC)
             ${DEFAULT_CXX_EXCEPTION_HANDLING}
         )
     endif()
-    if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Any CPU")
-        string(CONCAT FILE_CL_OPTIONS
-            "/Zm140"
-        )
-    elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Mixed Platforms")
-        string(CONCAT FILE_CL_OPTIONS
-            "/Zm140"
-        )
-    elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Win32")
-        string(CONCAT FILE_CL_OPTIONS
-            "/Zm140"
-        )
-    elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
-        string(CONCAT FILE_CL_OPTIONS
-            "/Zm140"
-        )
-    endif()
+
+    string(CONCAT FILE_CL_OPTIONS
+        "/Zm140"
+    )
     source_file_compile_options(stdafx.cpp ${FILE_CL_OPTIONS})
+    
     if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Any CPU")
         target_link_options(${PROJECT_NAME} PRIVATE
             $<$<CONFIG:benchmark_probroutes>:
