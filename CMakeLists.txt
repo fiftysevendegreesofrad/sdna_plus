@@ -234,6 +234,12 @@ set(Headers
 source_group("Headers" FILES ${Headers})
 
 set(Sources
+    "sDNA/muparser/drop/src/muParser.cpp"
+    "sDNA/muparser/drop/src/muParserBase.cpp"
+    "sDNA/muparser/drop/src/muParserBytecode.cpp"
+    "sDNA/muparser/drop/src/muParserCallback.cpp"
+    "sDNA/muparser/drop/src/muParserError.cpp"
+    "sDNA/muparser/drop/src/muParserTokenReader.cpp"
     "sDNA/sdna_vs2008/calc_output_code.cpp"
     "sDNA/sdna_vs2008/calculation.cpp"
     "sDNA/sdna_vs2008/dijkstra.cpp"
