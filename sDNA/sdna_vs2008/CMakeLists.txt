@@ -205,57 +205,57 @@ link_directories(${Boost_LIBRARY_DIRS})
 # Source groups
 ################################################################################
 set(Headers
-    "sDNA/sdna_vs2008/calculation.h"
-    "sDNA/sdna_vs2008/calculationbase.h"
-    "sDNA/sdna_vs2008/config_string_parser.h"
-    "sDNA/sdna_vs2008/dataacquisitionstrategy.h"
-    "sDNA/sdna_vs2008/edge.h"
-    "sDNA/sdna_vs2008/geos_sdna_wrapper.h"
-    "sDNA/sdna_vs2008/linkdatasource.h"
-    "sDNA/sdna_vs2008/metricevaluator.h"
-    "sDNA/sdna_vs2008/net.h"
-    "sDNA/sdna_vs2008/point.h"
-    "sDNA/sdna_vs2008/prepareoperations.h"
-    "sDNA/sdna_vs2008/random.h"
-    "sDNA/sdna_vs2008/sdna.h"
-    "sDNA/sdna_vs2008/sdna_arrays.h"
-    "sDNA/sdna_vs2008/sdna_geometry_collections.h"
-    "sDNA/sdna_vs2008/sdna_output_utils.h"
-    "sDNA/sdna_vs2008/sdna_spatial_accumulators.h"
-    "sDNA/sdna_vs2008/sDNACalculationFactory.h"
-    "sDNA/sdna_vs2008/stdafx.h"
-    "sDNA/sdna_vs2008/stdafx_force_includable.h"
-    "sDNA/sdna_vs2008/tables.h"
-    "sDNA/sdna_vs2008/targetver.h"
-    "sDNA/sdna_vs2008/unique_id.h"
-    "sDNA/sdna_vs2008/version_template.h"
-    "sDNA/sdna_vs2008/version_generated.h.creator.py"
+    "calculation.h"
+    "calculationbase.h"
+    "config_string_parser.h"
+    "dataacquisitionstrategy.h"
+    "edge.h"
+    "geos_sdna_wrapper.h"
+    "linkdatasource.h"
+    "metricevaluator.h"
+    "net.h"
+    "point.h"
+    "prepareoperations.h"
+    "random.h"
+    "sdna.h"
+    "sdna_arrays.h"
+    "sdna_geometry_collections.h"
+    "sdna_output_utils.h"
+    "sdna_spatial_accumulators.h"
+    "sDNACalculationFactory.h"
+    "stdafx.h"
+    "stdafx_force_includable.h"
+    "tables.h"
+    "targetver.h"
+    "unique_id.h"
+    "version_template.h"
+    "version_generated.h.creator.py"
 )
 source_group("Headers" FILES ${Headers})
 
 set(Sources
-    "sDNA/muparser/drop/src/muParser.cpp"
-    "sDNA/muparser/drop/src/muParserBase.cpp"
-    "sDNA/muparser/drop/src/muParserBytecode.cpp"
-    "sDNA/muparser/drop/src/muParserCallback.cpp"
-    "sDNA/muparser/drop/src/muParserError.cpp"
-    "sDNA/muparser/drop/src/muParserTokenReader.cpp"
-    "sDNA/sdna_vs2008/calc_output_code.cpp"
-    "sDNA/sdna_vs2008/calculation.cpp"
-    "sDNA/sdna_vs2008/dijkstra.cpp"
-    "sDNA/sdna_vs2008/dllmain.cpp"
-    "sDNA/sdna_vs2008/edge.cpp"
-    "sDNA/sdna_vs2008/geos_sdna_wrapper.cpp"
-    "sDNA/sdna_vs2008/interface_funcs.cpp"
-    "sDNA/sdna_vs2008/metricevaluator.cpp"
-    "sDNA/sdna_vs2008/net.cpp"
-    "sDNA/sdna_vs2008/prepareoperations.cpp"
-    "sDNA/sdna_vs2008/random.cpp"
-    "sDNA/sdna_vs2008/sdna_geometry_collections.cpp"
-    "sDNA/sdna_vs2008/sDNACalculationFactory.cpp"
-    "sDNA/sdna_vs2008/stdafx.cpp"
-    "sDNA/sdna_vs2008/stdafx_force_includable.cpp"
-    "sDNA/sdna_vs2008/unit_tests.cpp"
+    "../muparser/drop/src/muParser.cpp"
+    "../muparser/drop/src/muParserBase.cpp"
+    "../muparser/drop/src/muParserBytecode.cpp"
+    "../muparser/drop/src/muParserCallback.cpp"
+    "../muparser/drop/src/muParserError.cpp"
+    "../muparser/drop/src/muParserTokenReader.cpp"
+    "calc_output_code.cpp"
+    "calculation.cpp"
+    "dijkstra.cpp"
+    "dllmain.cpp"
+    "edge.cpp"
+    "geos_sdna_wrapper.cpp"
+    "interface_funcs.cpp"
+    "metricevaluator.cpp"
+    "net.cpp"
+    "prepareoperations.cpp"
+    "random.cpp"
+    "sdna_geometry_collections.cpp"
+    "sDNACalculationFactory.cpp"
+    "stdafx.cpp"
+    "stdafx_force_includable.cpp"
+    "unit_tests.cpp"
 )
 source_group("Sources" FILES ${Sources})
 
@@ -292,7 +292,7 @@ add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE "sDNA/sdna_vs2008/stdafx_force_includable.h")
+target_precompile_headers(${PROJECT_NAME} PRIVATE "stdafx_force_includable.h")
 
 add_compile_definitions(FORCE_INCLUDE_PRECOMPILED_HEADER 1)
 
@@ -420,7 +420,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY ${MSVC_RUN
 # Include directories
 ################################################################################
 target_include_directories(${PROJECT_NAME} PUBLIC
-    "sDNA/muparser/drop/include"
+    "../muparser/drop/include"
 )
 
 ################################################################################
@@ -910,7 +910,8 @@ endif()
 # https://cmake.org/cmake/help/latest/command/add_custom_command.html#build-events
 add_custom_command(
     TARGET ${PROJECT_NAME} PRE_BUILD
-    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/sDNA/sdna_vs2008/version_generated.h.creator.py"
+    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
+    # COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/sDNA/sdna_vs2008/version_generated.h.creator.py"
 )
 
 
