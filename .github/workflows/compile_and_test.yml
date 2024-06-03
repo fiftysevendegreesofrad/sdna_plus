@@ -60,10 +60,11 @@ jobs:
           D:\a\sdna_plus\sdna_plus\vcpkg_installed\
           D:\a\sdna_plus\sdna_plus\sDNA\sdna_vs2008\vcpkg_installed\
           C:\Users\runneradmin\AppData\Local\vcpkg\
-        key: ${{ runner.os }}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
+        key: ${{ runner.os }}-${{ hashFiles('sDNA\sdna_vs2008\vcpkg.json', 'sDNA\sdna_vs2008\vcpkg-configuration.json') }}
 
 
     - name: Install Boost from vcpkg.json
+      working-directory: 'sDNA\sdna_vs2008'
       if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
       run: vcpkg install
 
@@ -71,7 +72,6 @@ jobs:
 
 
     - name: Build sDNA
-      working-directory: ${{ github.workspace }}
       run: > 
         msbuild build_installer.proj 
         /t:rebuild 
