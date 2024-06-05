@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "main", "Compiles_with_CMake"]
+    branches: [ "main", "Compiles_with_CMake", "CMake"]
 
   pull_request:
-    branches: [ "main", "Compiles_with_CMake" ]
+    branches: [ "main", "Compiles_with_CMake", "CMake" ]
 
 env:
   CONFIGURATION: Release
