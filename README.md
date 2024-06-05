@@ -36,6 +36,8 @@ If filing a bug, please file to the database here on github.
 
 ## For Developers
 
+See BUILD.md for notes regarding the impact of switching to CMake from sdna_vs2008.vcxproj
+
 ### Building the software
 
 #### Local build requirements:
@@ -54,8 +56,8 @@ Fire up the Visual Studio Developer Command Prompt.
  - Before the first use of vcpkg, in the vcpkg repo root call [`.\vcpkg.exe integrate install`](https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/msbuild-integration)
  - Then in the sDNA repo's root call `build_release.bat` which should do what it says on the tin.
 
-#### CI build and test requirements:
-* Run the Github Action `.github\workflows\compile_and_test.yml`
+#### CI build requirements:
+* Run the Github Action `.github\workflows\compile_dll_in_cmake.yml`
 
 #### CMake build requirements:
 * CMake (tested on 3.27.7.  At least 3.16 is required for precompiled headers),
