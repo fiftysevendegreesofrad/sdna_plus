@@ -201,6 +201,9 @@ include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
 
+
+
+
 ################################################################################
 # Source groups
 ################################################################################
@@ -267,6 +270,62 @@ set(ALL_FILES
     ${Sources}
     ${MuParser}
 )
+
+
+set(Scripts
+    "arcscripts/sDNA_ArcGIS_extra_tools.tbx"
+    "arcscripts/runcalculation.py"
+    "arcscripts/sDNA.pyt"
+    "arcscripts/sDNAUISpec.py"
+    "arcscripts/commandline_integral_prepare.py"
+    "arcscripts/arc_utils.py"
+    "arcscripts/sdna_environment.py"
+    "arcscripts/sdnapy.py"
+    "arcscripts/shapefile.py"
+    "arcscripts/arc_import_itn.py"
+    "arcscripts/arc_matchsymbologyranges.py"
+    "arcscripts/sdnaregutilities.py"
+    "arcscripts/boxcox.R"
+    "arcscripts/boxtidwell.R"
+    "arcscripts/regularizedregression.R"
+    "arcscripts/runsdnacommand.py"
+    "arcscripts/sdnaexception.py"
+)
+source_group("Scripts" FILES ${Scripts})
+
+set(ScriptsBin
+    "arcscripts/bin/_parentdir.py"
+    "arcscripts/bin/README.txt"
+    "arcscripts/bin/sdnaintegral.py"
+    "arcscripts/bin/sdnaprepare.py"
+    "arcscripts/bin/sdnalearn.py"
+    "arcscripts/bin/sdnapredict.py"
+)
+source_group("ScriptsBin" FILES ${ScriptsBin})
+
+set(InstallerBits
+    "installerbits/license.rtf"
+)
+source_group("InstallerBits" FILES ${InstallerBits})
+
+
+
+################################################################################
+# Extra files packaged at build time
+################################################################################
+foreach(script IN LISTS ${Scripts})
+  file(COPY "../../${script}" DESTINATION "../../output/$<CONFIG>/${script}")
+endforeach()
+
+foreach(script IN LISTS ${ScriptsBin})
+  file(COPY "../../${script}" DESTINATION "../../output/$<CONFIG>/bin/${script}")
+endforeach()
+
+foreach(installer_bit IN LISTS ${InstallerBits})
+  file(COPY "../../${installer_bit}" DESTINATION "../../output/$<CONFIG>/${installer_bit}")
+endforeach()
+
+file(COPY "../../arcscripts/rportable" DESTINATION "../../output/$<CONFIG>")
 
 ################################################################################
 # Target
