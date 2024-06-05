@@ -36,19 +36,20 @@ If filing a bug, please file to the database here on github.
 
 ## For Developers
 
+See BUILD.md for notes regarding the impact of switching to CMake from sdna_vs2008.vcxproj
+
 ### Building the software
 
 #### Local build requirements:
 
 * Microsoft Visual Studio (tested on 2022) with C++ extensions
-* Python 2.7
+* Python
 * Advanced Installer.  Add the location of `AdvancedInstaller.com` either to your path (`%PATH%`) or to line 8 of `build_installer.proj`.
 * Vcpkg (tested with vcpkg.exe `version 2024-04-23-d6945642ee5c3076addd1a42c331bbf4cfc97457`).  E.g. in the chosen parent dir:
    - `git clone --depth=1 https://github.com/microsoft/vcpkg/`
    - `cd vcpkg`
-   - (optional) `setx VCPKG_ROOT c:\path_to_vcpkg_repo\vcpkg`
+   - `setx VCPKG_ROOT c:\path_to_vcpkg_repo\vcpkg`
    - `.\bootstrap-vckg.bat`
-
 * 5-6 GB free disk space (to be safe).
 
 Fire up the Visual Studio Developer Command Prompt. 
@@ -57,6 +58,53 @@ Fire up the Visual Studio Developer Command Prompt.
 
 #### CI build and test requirements:
 * Run the Github Action `.github\workflows\compile_and_test.yml`
+
+#### CMake build requirements:
+* CMake (tested on 3.27.7.  At least 3.16 is required for precompiled headers),
+* as for "Local build requirements" above (without Advanced Installer and without integrating vcpkg).
+CMake ideally wants build trees to be separate from source trees.  But in order 
+for `sDNA\sdna_vs2008\version_generated.h.creator.py` to be able to extract a commit hash, 
+the build tree must at the very least live within a copy of the sDNA Git repo.  So for now 
+we'll pretend the source tree is `.\sDNA\` and put the 'build tree' in `.\build_cmake`.
+
+Running (in a normal cmd.exe, not the VS Developer Command Prompt):
+ - `.\create_build_system_with_CMake.bat`
+Boost etc. may be installed in this step, instead of in actual the build step, like with a local build above.
+
+Then
+ - `.\run_CMake_build_system.bat`
+
+should create `sdna_vs2008.dll` and three debug files.
+
+### Dependencies
+
+#### Boost
+It is not immediately visible, but Boost 1.83 is used currently. Vcpkg manifest mode uses hashes of git commits of its own repo to define baselines from which dependencies are drawn.  These are in `sDNA\sdna_vs2008\vcpkg-configuration.json`.  For example `61f610845fb206298a69f708104a51d651872877` refers to https://github.com/microsoft/vcpkg/commit/61f610845fb206298a69f708104a51d651872877 of Nov 11th 2023, on which date the latest version of Boost in vcpkg was 1.83
+https://learn.microsoft.com/en-gb/vcpkg/consume/boost-versions
+
+It is possible to use an override mechanism to pin deps instead, but this would make `sDNA\sdna_vs2008\vcpkg.json` much longer.  https://learn.microsoft.com/en-gb/vcpkg/consume/lock-package-versions?tabs=inspect-powershell#5---force-a-specific-version
+
+#### Geos
+Geos is dynamically linked at run-time.  A custom build step copies in the `geos_c.dll`s (from `sDNA\geos\x64\src`
+and `sDNA\geos\x86\src`), originally compiled for OSGEO4W available hereabouts: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos/
+
+#### Muparser
+A static copy of a slightly modified [`Rev 2.2.3: 22.12.2012`](https://launchpad.net/ubuntu/+source/muparser/2.2.3-6).  Changes:
+ * `#define MUP_BASETYPE float` in sDNA\muparser\drop\include\muParserDef.h
+ * `#include "stdafx.h"` in 6 of the sDNA\muparser\drop\src\muParser*.cpp (to work with Visual Studio's chosen configuration for the pre-compiled headers).
+
+#### Anyiterator
+```
+// Revision History
+// ================
+//
+// 12 Jul 2010 
+```
+#### R-portable
+TODO
+
+### Packaging
+The Windows installer contains x64 and Win32 binaries (for both `sdna_vs2008.dll` and `geos_c.dll`)
 
 ### Project Structure
 
