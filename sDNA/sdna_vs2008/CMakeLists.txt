@@ -14,6 +14,9 @@ set(CMAKE_TOOLCHAIN_FILE
  "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
  )
 
+ 
+set(VCPKG_MANIFEST_DIR "${CMAKE_SOURCE_DIR}/../..")
+
 set(PROJECT_NAME sdna_vs2008)
 
 # "This will become the name of the resulting Visual Studio solution. "
