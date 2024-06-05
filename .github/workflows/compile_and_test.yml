@@ -64,7 +64,6 @@ jobs:
 
 
     - name: Install Boost from vcpkg.json
-      working-directory: 'sDNA/sdna_vs2008'
       if: steps.cache-vcpkg-deps-restore.outputs.cache-hit != 'true'
       run: vcpkg install
 
