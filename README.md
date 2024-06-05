@@ -68,14 +68,13 @@ the build tree must at the very least live within a copy of the sDNA Git repo.  
 we'll pretend the source tree is `.\sDNA\` and put the 'build tree' in `.\build_cmake`.
 
 Running (in a normal cmd.exe, not the VS Developer Command Prompt):
- - `cd sDNA\sdna_vs2008`
- - `.\create_build_system.bat`
+ - `.\create_build_system_with_CMake.bat`
 Boost etc. may be installed in this step, instead of in actual the build step, like with a local build above.
 
 Then
- - `.\build.bat`
+ - `.\run_CMake_build_system.bat`
 
-should create `sdna_vs2008.dll` and three debug files in `sDNA\sdna_vs2008\x64\Debug`
+should create `sdna_vs2008.dll` and three debug files.
 
 ### Dependencies
 
