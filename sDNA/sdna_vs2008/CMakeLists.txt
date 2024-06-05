@@ -1,14 +1,10 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.26)
 
-# set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended
-# https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
-# set(CMAKE_TOOLCHAIN_FILE
-#   ../vcpkg/scripts/buildsystems/vcpkg.cmake
-#   )
 
 # "The version of the operating system for which CMake is to build."
 # https://cmake.org/cmake/help/latest/variable/CMAKE_SYSTEM_VERSION.html
 set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
+# (i.e. Windows 10)
 
 
 # set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended
@@ -47,7 +43,7 @@ set(Supported_platforms
   )
 
 if ("${CMAKE_VS_PLATFORM_NAME}" IN_LIST Supported_platforms)  
-   message("${CMAKE_VS_PLATFORM_NAME} architecture in use")
+    message("${CMAKE_VS_PLATFORM_NAME} architecture in use")
 else()
     message(FATAL_ERROR "${CMAKE_VS_PLATFORM_NAME} arch is not supported!")
 endif()
@@ -245,6 +241,23 @@ set(MuParser
 )
 source_group("MuParser" FILES ${MuParser})
 
+if (WIN32)
+    if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "x64")
+        set(Geos_sub_dir "x64")
+    elseif (${CMAKE_GENERATOR_PLATFORM} IN_LIST Supported_platforms)
+        # set(Supported_platforms
+        #     "Any CPU"  
+        #     "Mixed Platforms"                                     
+        #     "Win32"                              
+        #     "x64"
+        #     )
+        set(Geos_sub_dir "x86")
+    endif()
+    set(Geos_binary
+        "../geos/${Geos_sub_dir}/src/geos_c.dll"
+    )
+endif()
+
 set(Sources
     "calc_output_code.cpp"
     "calculation.cpp"
@@ -272,60 +285,10 @@ set(ALL_FILES
 )
 
 
-set(Scripts
-    "arcscripts/sDNA_ArcGIS_extra_tools.tbx"
-    "arcscripts/runcalculation.py"
-    "arcscripts/sDNA.pyt"
-    "arcscripts/sDNAUISpec.py"
-    "arcscripts/commandline_integral_prepare.py"
-    "arcscripts/arc_utils.py"
-    "arcscripts/sdna_environment.py"
-    "arcscripts/sdnapy.py"
-    "arcscripts/shapefile.py"
-    "arcscripts/arc_import_itn.py"
-    "arcscripts/arc_matchsymbologyranges.py"
-    "arcscripts/sdnaregutilities.py"
-    "arcscripts/boxcox.R"
-    "arcscripts/boxtidwell.R"
-    "arcscripts/regularizedregression.R"
-    "arcscripts/runsdnacommand.py"
-    "arcscripts/sdnaexception.py"
-)
-source_group("Scripts" FILES ${Scripts})
-
-set(ScriptsBin
-    "arcscripts/bin/_parentdir.py"
-    "arcscripts/bin/README.txt"
-    "arcscripts/bin/sdnaintegral.py"
-    "arcscripts/bin/sdnaprepare.py"
-    "arcscripts/bin/sdnalearn.py"
-    "arcscripts/bin/sdnapredict.py"
-)
-source_group("ScriptsBin" FILES ${ScriptsBin})
-
-set(InstallerBits
-    "installerbits/license.rtf"
-)
-source_group("InstallerBits" FILES ${InstallerBits})
 
 
 
-################################################################################
-# Extra files packaged at build time
-################################################################################
-foreach(script IN LISTS ${Scripts})
-  file(COPY "../../${script}" DESTINATION "../../output/$<CONFIG>/${script}")
-endforeach()
 
-foreach(script IN LISTS ${ScriptsBin})
-  file(COPY "../../${script}" DESTINATION "../../output/$<CONFIG>/bin/${script}")
-endforeach()
-
-foreach(installer_bit IN LISTS ${InstallerBits})
-  file(COPY "../../${installer_bit}" DESTINATION "../../output/$<CONFIG>/${installer_bit}")
-endforeach()
-
-file(COPY "../../arcscripts/rportable" DESTINATION "../../output/$<CONFIG>")
 
 ################################################################################
 # Target
@@ -964,7 +927,19 @@ endif()
 add_custom_command(
     TARGET ${PROJECT_NAME} PRE_BUILD
     COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
-    # COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/sDNA/sdna_vs2008/version_generated.h.creator.py"
+)
+
+
+################################################################################
+# Post build events
+################################################################################
+
+################################################################################
+# Extra files packaged at build time (pre built geos dlls)
+################################################################################
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} ${PROJECT_BINARY_DIR}
 )
 
 
