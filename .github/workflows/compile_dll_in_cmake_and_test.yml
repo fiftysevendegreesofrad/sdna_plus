@@ -1,0 +1,155 @@
+name: "Compile with CMake, MSBuild and VS 2022 for Windows, and test"
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: [ "CMake"]
+
+  pull_request:
+    branches: [ "CMake" ]
+
+env:
+  CONFIGURATION: Release
+  PLATFORM: x64
+  BOOST_VERSION: '1.8.3'
+
+
+jobs:
+  build_and_upload_installer:
+    name: Try to compile on windows with CMake
+    runs-on: windows-2022
+    outputs:
+      installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
+    steps:
+    - uses: actions/checkout@v4
+
+
+
+
+    - name: 'Add "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" to path'
+      shell: bash
+      run: echo "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" >> $GITHUB_PATH
+
+    - name: Deploy Advinst
+      uses: caphyon/advinst-github-action@v2.0
+      with:
+        # advinst-version: '21.3'
+        advinst-version: '21.7.1'
+
+        # advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
+        # " advinst-license
+        # Advanced Installer license ID. This parameter is optional if you are using a simple project type.
+        # "
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v2
+
+
+
+    # - name: Create Visual Studio build system from CMake
+    #   shell: cmd
+    #   run: |
+    #     set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
+    #     cmake -B output -S .
+
+
+
+
+    # - name: Build sDNA
+    #   shell: cmd
+    #   run: |
+    #     set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
+    #     cmake --build output
+
+    - name: Create_sDNA_Installer_with_CMake
+      shell: cmd
+      # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
+      run: |
+        set VCPKG_ROOT=C:/vcpkg
+        .\create_installer_with_CMake.bat
+
+    # - name: Output the name of the .msi installer file
+    #   id: output_installer_file_name
+    #   shell: bash
+    #   run: echo "name=$(ls sDNA_setup_win_v*.msi)" >> "$GITHUB_OUTPUT"  
+
+
+    - name: Output the name of the .msi installer file
+      id: output_installer_file_name
+      shell: bash
+      run: echo "name=$(ls sDNA_setup_win_v*.msi)" >> "$GITHUB_OUTPUT"  
+
+    - name: upload_installer_msi
+      id: installer-upload-step
+      uses: actions/upload-artifact@v4
+      with:
+        name: installer_file
+        # this file name pattern is defined in installerbits\rename_version.py
+        # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
+        path: sDNA_setup_win_v*.msi
+
+
+  test_installer:
+
+    needs: build_and_upload_installer
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+
+    name: "Download and run sDNA installer, and run diff tests on it. "
+    
+    runs-on: windows-2022
+    # Note:  The Windows server 2022 Github runner image already includes  
+    # Python (currently 6 versions from 3.7 to 3.12) and a couple of 
+    # VC++ redistributables.  Desktop users may need to install these 
+    # themselves, in addition to sDNA.      
+    #
+    # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
+    #
+
+    env:
+      installer_file_name: ${{ needs.build_and_upload_installer.outputs.installer_file_name }}
+
+    steps:
+
+
+    - uses: actions/checkout@v4
+
+    - name: Download installer built in previous job
+      uses: actions/download-artifact@v4
+      with:
+        name: installer_file
+
+    - shell: cmd
+      run: dir .
+
+
+    - name: Allow the .msi to be executed
+      run: Set-ItemProperty -Path ${{ env.installer_file_name }} -Name IsReadOnly -Value $false
+
+
+    - name: Run sDNA installer using powershell script. 
+      # This is based on @Simran-B's powershell script (from Github Community forum),
+      # according to GuiFalourd on Stack Overflow
+      # https://stackoverflow.com/a/72291019/20785734
+      run: |
+        $file = "${{ env.installer_file_name }}"
+        $log = "install.log" 
+        $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
+        $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
+        $procMain.WaitForExit() 
+        $procLog.Kill()
+        Remove-Item $file
+
+
+    - name: Run regression tests
+      uses: ./.github/actions/run_regression_tests
+      with:
+        python_version: ${{ matrix.python_version }}
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+        ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
+        sdnadll: 'c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
+        sdna_debug: ""

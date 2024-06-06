@@ -62,19 +62,25 @@ Fire up the Visual Studio Developer Command Prompt.
 #### CMake build requirements:
 * CMake (tested on 3.27.7.  At least 3.16 is required for precompiled headers),
 * as for "Local build requirements" above (without Advanced Installer and without integrating vcpkg).
+* To build in cmd (or a shell with a character limit too low for CMake and the deeply nested R-portable tree) it may be
+necessary to open an admin Powershell terminal and run: 
+```
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" 
+-Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+```
 CMake ideally wants build trees to be separate from source trees.  But in order 
 for `sDNA\sdna_vs2008\version_generated.h.creator.py` to be able to extract a commit hash, 
 the build tree must at the very least live within a copy of the sDNA Git repo.  So for now 
 we'll pretend the source tree is `.\sDNA\` and put the 'build tree' in `.\build_cmake`.
 
+CMake's Visual Studio Generator is a multi-config generator.  This would be handy for
+creating a Release build in parallel with a Debug build.  Unfortunately it is not a 
+multi-platform generator (sDNA's installer contains Release Win32 and Release x64 DLLs).
+CMakeLists.txt needs to be invoked and built from twice therefore, to produce a Windows installer.
+
 Running (in a normal cmd.exe, not the VS Developer Command Prompt):
- - `.\create_build_system_with_CMake.bat`
-Boost etc. may be installed in this step, instead of in actual the build step, like with a local build above.
-
-Then
- - `.\run_CMake_build_system.bat`
-
-should create `sdna_vs2008.dll` and three debug files.
+ - `.\create_installer_with_CMake.bat`
+should create `sDNA_setup_win_vX.msi`.
 
 ### Dependencies
 
