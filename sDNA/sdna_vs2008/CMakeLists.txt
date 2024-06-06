@@ -1,22 +1,21 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.26)
 
-# set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended
-# https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
-# set(CMAKE_TOOLCHAIN_FILE
-#   ../vcpkg/scripts/buildsystems/vcpkg.cmake
-#   )
 
 # "The version of the operating system for which CMake is to build."
 # https://cmake.org/cmake/help/latest/variable/CMAKE_SYSTEM_VERSION.html
 set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
+# (i.e. Windows 10)
 
 
-# set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended
+
+# I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
-# Alternatively add this line:
 set(CMAKE_TOOLCHAIN_FILE
  "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
  )
+
+ 
+set(VCPKG_MANIFEST_DIR "${CMAKE_SOURCE_DIR}/../..")
 
 set(PROJECT_NAME sdna_vs2008)
 
@@ -28,7 +27,7 @@ project(${PROJECT_NAME} CXX)
 # as far back as VS 2008 by setting
 # https://cmake.org/cmake/help/latest/generator/Visual%20Studio%2017%202022.html
 
-# CMAKE_VS_PLATFORM_NAME can be set via CMAKE_GENERATOR_PLATFORM
+# CMAKE_VS_PLATFORM_NAME can be set via CMAKE_GENERATOR_PLATFORM (e.g. via "cmake -A ... ")
 # https://cmake.org/cmake/help/latest/variable/CMAKE_GENERATOR_PLATFORM.html#variable:CMAKE_GENERATOR_PLATFORM
 
 # https://cmake.org/cmake/help/latest/variable/CMAKE_VS_PLATFORM_NAME.html#cmake-vs-platform-name
@@ -47,7 +46,7 @@ set(Supported_platforms
   )
 
 if ("${CMAKE_VS_PLATFORM_NAME}" IN_LIST Supported_platforms)  
-   message("${CMAKE_VS_PLATFORM_NAME} architecture in use")
+    message("${CMAKE_VS_PLATFORM_NAME} architecture in use")
 else()
     message(FATAL_ERROR "${CMAKE_VS_PLATFORM_NAME} arch is not supported!")
 endif()
@@ -65,6 +64,7 @@ endif()
 # https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting%20Started.html#build-configurations
 # https://cmake.org/cmake/help/latest/variable/CMAKE_CONFIGURATION_TYPES.html#variable:CMAKE_CONFIGURATION_TYPES
 set(CMAKE_CONFIGURATION_TYPES
+    "Release"
     "Debug"
     "Debug_speedup"
     "Debug64"
@@ -73,7 +73,6 @@ set(CMAKE_CONFIGURATION_TYPES
     "package"
     "benchmark_probroutes"
     "prob_route_release"
-    "Release"
     "vtune"
     CACHE STRING "" FORCE
 )
@@ -201,6 +200,9 @@ include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
 
+
+
+
 ################################################################################
 # Source groups
 ################################################################################
@@ -242,6 +244,28 @@ set(MuParser
 )
 source_group("MuParser" FILES ${MuParser})
 
+if (WIN32)
+    if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "x64")
+        set(Geos_sub_dir 
+            "x64"
+        )
+    else()
+        #if ("${CMAKE_GENERATOR_PLATFORM}" IN_LIST Supported_platforms)
+        # set(Supported_platforms
+        #     "Any CPU"  
+        #     "Mixed Platforms"                                     
+        #     "Win32"                              
+        #     "x64"
+        #     )
+        set(Geos_sub_dir 
+            "x86"
+        )
+    endif()
+    set(Geos_binary
+        "${CMAKE_CURRENT_SOURCE_DIR}/../geos/${Geos_sub_dir}/src/geos_c.dll"
+    )
+endif()
+
 set(Sources
     "calc_output_code.cpp"
     "calculation.cpp"
@@ -268,6 +292,12 @@ set(ALL_FILES
     ${MuParser}
 )
 
+
+
+
+
+
+
 ################################################################################
 # Target
 ################################################################################
@@ -290,6 +320,13 @@ set(ALL_FILES
 # https://cmake.org/cmake/help/latest/command/add_library.html#command:add_library
 #  add_library(<name> [<type>] [EXCLUDE_FROM_ALL] <sources>...)
 # "CMake expects a SHARED library to always have an associated import library on Windows."
+
+
+
+set(LIBRARY_OUTPUT_DIRECTORY
+    "${CMAKE_CURRENT_BINARY_DIR}"
+)
+
 add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
 
@@ -905,7 +942,19 @@ endif()
 add_custom_command(
     TARGET ${PROJECT_NAME} PRE_BUILD
     COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
-    # COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/sDNA/sdna_vs2008/version_generated.h.creator.py"
+)
+
+
+################################################################################
+# Post build events
+################################################################################
+
+################################################################################
+# Extra files packaged at build time (pre built geos dlls)
+################################################################################
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} "${LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>"
 )
 
 
