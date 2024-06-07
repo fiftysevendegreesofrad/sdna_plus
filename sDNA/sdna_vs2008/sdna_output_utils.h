@@ -179,7 +179,7 @@ public:
 	virtual string get_shortname_prefix() { return "HullSI";}
 	virtual string get_name_suffix() { return suffix;}
 	virtual string get_shortname_suffix() { return shortsuffix;}
-	virtual HullShapeIndexWrapper* clone() { return new HullShapeIndexWrapper(*this);}
+	virtual HullShapeIndexWrapper* clone() const { return new HullShapeIndexWrapper(*this);}
 	virtual bool enabled() const {return perim->is_enabled() && area->is_enabled();}
 	HullShapeIndexWrapper(SDNAPolylineIdRadiusIndexed2dArrayBase *area, SDNAPolylineIdRadiusIndexed2dArrayBase *perim,
 		int radius_index, vector<double> &radii, bool cont_space)
@@ -227,7 +227,7 @@ public:
 class SDNAPolylineAngularCostOutputDataWrapper : public OutputDataWrapper
 {
 public:
-	virtual SDNAPolylineAngularCostOutputDataWrapper* clone() { return new SDNAPolylineAngularCostOutputDataWrapper(*this); }
+	virtual SDNAPolylineAngularCostOutputDataWrapper* clone() const { return new SDNAPolylineAngularCostOutputDataWrapper(*this); }
 	virtual bool enabled() const {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
@@ -246,7 +246,7 @@ public:
 class SDNAPolylineLengthOutputDataWrapper : public OutputDataWrapper
 {
 public:
-	virtual SDNAPolylineLengthOutputDataWrapper* clone() { return new SDNAPolylineLengthOutputDataWrapper(*this); }
+	virtual SDNAPolylineLengthOutputDataWrapper* clone() const { return new SDNAPolylineLengthOutputDataWrapper(*this); }
 	virtual bool enabled() const {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
@@ -276,7 +276,7 @@ public:
 	{
 		return shortname;
 	}
-	virtual PolylineIndexedArrayOutputDataWrapper* clone() { return new PolylineIndexedArrayOutputDataWrapper(*this); }
+	virtual PolylineIndexedArrayOutputDataWrapper* clone() const { return new PolylineIndexedArrayOutputDataWrapper(*this); }
 	PolylineIndexedArrayOutputDataWrapper(string name,string shortname,SDNAPolylineIdIndexedArray<float> *data)
 				: name(name),shortname(shortname),data(data)
 	{}
@@ -290,7 +290,7 @@ public:
 class SDNAPolylineSinuosityOutputDataWrapper : public OutputDataWrapper
 {
 public:
-	virtual SDNAPolylineSinuosityOutputDataWrapper* clone() { return new SDNAPolylineSinuosityOutputDataWrapper(*this); }
+	virtual SDNAPolylineSinuosityOutputDataWrapper* clone() const { return new SDNAPolylineSinuosityOutputDataWrapper(*this); }
 	virtual bool enabled() const {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
@@ -310,7 +310,7 @@ public:
 class SDNAPolylineBearingOutputDataWrapper : public OutputDataWrapper
 {
 public:
-	virtual SDNAPolylineBearingOutputDataWrapper* clone() { return new SDNAPolylineBearingOutputDataWrapper(*this); }
+	virtual SDNAPolylineBearingOutputDataWrapper* clone() const { return new SDNAPolylineBearingOutputDataWrapper(*this); }
 	virtual bool enabled() const {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
@@ -333,7 +333,7 @@ private:
 	polarity direction;
 public:
 	SDNAPolylineMetricOutputDataWrapper (HybridMetricEvaluator *e,polarity d) : eval(e), direction(d) {}
-	virtual SDNAPolylineMetricOutputDataWrapper * clone() { return new SDNAPolylineMetricOutputDataWrapper (*this); }
+	virtual SDNAPolylineMetricOutputDataWrapper * clone() const { return new SDNAPolylineMetricOutputDataWrapper (*this); }
 	virtual bool enabled() const {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
@@ -363,7 +363,7 @@ public:
 class SDNAPolylineConnectivityOutputDataWrapper : public OutputDataWrapper
 {
 public:
-	virtual SDNAPolylineConnectivityOutputDataWrapper* clone() { return new SDNAPolylineConnectivityOutputDataWrapper(*this); }
+	virtual SDNAPolylineConnectivityOutputDataWrapper* clone() const { return new SDNAPolylineConnectivityOutputDataWrapper(*this); }
 	virtual bool enabled() const {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
