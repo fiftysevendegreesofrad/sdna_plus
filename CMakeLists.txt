@@ -26,7 +26,7 @@ else()
     message("Configuring for ${CMAKE_GENERATOR}")
 endif()
 
-if (${CMAKE_GENERATOR_PLATFORM} STREQUAL "x64")
+if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "x64")
     set(Bin_sub_dir 
         "/x64"
     )
