@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.26)
 # set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
 # # (i.e. Windows 10)
 
+set(CMAKE_CXX_STANDARD 14)
+
 # https://learn.microsoft.com/en-us/vcpkg/users/triplets#vcpkg_chainload_toolchain_file
 set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE
     "${CMAKE_CURRENT_SOURCE_DIR}/zigcross-cmake/zig-toolchain-aarch64.cmake"

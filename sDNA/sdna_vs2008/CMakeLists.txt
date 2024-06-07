@@ -23,6 +23,8 @@ set(PROJECT_NAME sdna_vs2008)
 # https://cmake.org/cmake/help/book/mastering-cmake/chapter/Converting%20Existing%20Systems%20To%20CMake.html#converting-windows-based-workspaces
 project(${PROJECT_NAME} CXX)
 
+set(CMAKE_CXX_STANDARD 14)
+
 # In CMake, the target Platform can be set for all Visual Studio Generators 
 # as far back as VS 2008 by setting
 # https://cmake.org/cmake/help/latest/generator/Visual%20Studio%2017%202022.html
