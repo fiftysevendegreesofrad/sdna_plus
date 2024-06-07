@@ -14,8 +14,8 @@ public:
 	virtual float get_output(SDNAPolyline* x,int oversample) = 0;
 	virtual string get_name() = 0;
 	virtual string get_shortname() = 0;
-	virtual OutputDataWrapper* clone() = 0;
-	const virtual bool enabled() = 0;
+	virtual const OutputDataWrapper* clone() = 0;
+	virtual const bool enabled() = 0;
 };
 
 //much of the remainder of this class hierarchy exists only to produce output wrappers that 
@@ -46,8 +46,8 @@ public:
 	virtual string get_name_suffix() { return suffix;}
 	virtual string get_shortname_prefix() { return shortname;}
 	virtual string get_shortname_suffix() { return shortsuffix;}
-	virtual RadialOutputDataWrapper* clone() { return new RadialOutputDataWrapper(*this); }
-	const virtual bool enabled() {return data->is_enabled();}
+	virtual const RadialOutputDataWrapper* clone() { return new RadialOutputDataWrapper(*this); }
+	virtual const bool enabled() {return data->is_enabled();}
 	RadialOutputDataWrapper(string name_base, string shortname_base,
 							SDNAPolylineIdRadiusIndexed2dArrayBase *data,int radius_index,vector<double> &radii,
 							bool cont_space,string weighting,oversample_handling_t os)
@@ -119,8 +119,8 @@ public:
 	virtual string get_shortname_prefix() { return data->get_shortname_prefix() + control_description;}
 	virtual string get_shortname_suffix() { return data->get_shortname_suffix();}
 	virtual ControlledRadialOutputDataWrapper* clone() { return new ControlledRadialOutputDataWrapper(*this);}
-	const virtual bool enabled() {return data->enabled() && control_data->is_enabled();}
-	ControlledRadialOutputDataWrapper(RadialOutputDataWrapper &data,
+	virtual const bool enabled() {return data->enabled() && control_data->is_enabled();}
+	ControlledRadialOutputDataWrapper(const RadialOutputDataWrapper &data,
 									  string control_desc, SDNAPolylineIdRadiusIndexed2dArrayBase *control_data)
 					: data(boost::shared_ptr<SplitNameRadialOutputDataWrapper>(data.clone())),
 					  control_data(control_data)
@@ -129,12 +129,12 @@ public:
 		cd << "C" << control_desc;
 		control_description = cd.str();
 	}
-	ControlledRadialOutputDataWrapper(ControlledRadialOutputDataWrapper &data,
+	ControlledRadialOutputDataWrapper(const ControlledRadialOutputDataWrapper &data,
 									  string control_desc, SDNAPolylineIdRadiusIndexed2dArrayBase *control_data)
 					: data(boost::shared_ptr<SplitNameRadialOutputDataWrapper>(data.clone())),
 					  control_data(control_data), control_description(control_desc)
 	{}
-	ControlledRadialOutputDataWrapper(RadialOutputDataWrapper &data,
+	ControlledRadialOutputDataWrapper(const RadialOutputDataWrapper &data,
 									  SDNAPolylineIdRadiusIndexed2dArrayBase *control_data)
 							  : data(boost::shared_ptr<SplitNameRadialOutputDataWrapper>(data.clone())),
 							    control_data(control_data),
@@ -180,7 +180,7 @@ public:
 	virtual string get_name_suffix() { return suffix;}
 	virtual string get_shortname_suffix() { return shortsuffix;}
 	virtual HullShapeIndexWrapper* clone() { return new HullShapeIndexWrapper(*this);}
-	const virtual bool enabled() {return perim->is_enabled() && area->is_enabled();}
+	virtual const bool enabled() {return perim->is_enabled() && area->is_enabled();}
 	HullShapeIndexWrapper(SDNAPolylineIdRadiusIndexed2dArrayBase *area, SDNAPolylineIdRadiusIndexed2dArrayBase *perim,
 		int radius_index, vector<double> &radii, bool cont_space)
 					: area(area), perim(perim), radius_index(radius_index)
@@ -228,7 +228,7 @@ class SDNAPolylineAngularCostOutputDataWrapper : public OutputDataWrapper
 {
 public:
 	virtual SDNAPolylineAngularCostOutputDataWrapper* clone() { return new SDNAPolylineAngularCostOutputDataWrapper(*this); }
-	const virtual bool enabled() {return true;}
+	virtual const bool enabled() {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
 		return x->full_link_cost_ignoring_oneway(PLUS).angular;
@@ -247,7 +247,7 @@ class SDNAPolylineLengthOutputDataWrapper : public OutputDataWrapper
 {
 public:
 	virtual SDNAPolylineLengthOutputDataWrapper* clone() { return new SDNAPolylineLengthOutputDataWrapper(*this); }
-	const virtual bool enabled() {return true;}
+	virtual const bool enabled() {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
 		return x->full_link_cost_ignoring_oneway(PLUS).euclidean;
@@ -291,7 +291,7 @@ class SDNAPolylineSinuosityOutputDataWrapper : public OutputDataWrapper
 {
 public:
 	virtual SDNAPolylineSinuosityOutputDataWrapper* clone() { return new SDNAPolylineSinuosityOutputDataWrapper(*this); }
-	const virtual bool enabled() {return true;}
+	virtual const bool enabled() {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
 		const double crow_flight_length = Point::distance(x->get_point(EDGE_START),x->get_point(EDGE_END));
@@ -311,7 +311,7 @@ class SDNAPolylineBearingOutputDataWrapper : public OutputDataWrapper
 {
 public:
 	virtual SDNAPolylineBearingOutputDataWrapper* clone() { return new SDNAPolylineBearingOutputDataWrapper(*this); }
-	const virtual bool enabled() {return true;}
+	virtual const bool enabled() {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
 		return Point::bearing(x->get_point(EDGE_START),x->get_point(EDGE_END));
@@ -334,7 +334,7 @@ private:
 public:
 	SDNAPolylineMetricOutputDataWrapper (HybridMetricEvaluator *e,polarity d) : eval(e), direction(d) {}
 	virtual SDNAPolylineMetricOutputDataWrapper * clone() { return new SDNAPolylineMetricOutputDataWrapper (*this); }
-	const virtual bool enabled() {return true;}
+	virtual const bool enabled() {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
 		Edge *e;
@@ -364,7 +364,7 @@ class SDNAPolylineConnectivityOutputDataWrapper : public OutputDataWrapper
 {
 public:
 	virtual SDNAPolylineConnectivityOutputDataWrapper* clone() { return new SDNAPolylineConnectivityOutputDataWrapper(*this); }
-	const virtual bool enabled() {return true;}
+	virtual const bool enabled() {return true;}
 	virtual float get_output(SDNAPolyline* x, int oversample)
 	{
 		//connectivity is defined as number of ends of other links a link is connected to
@@ -401,10 +401,10 @@ private:
 	boost::shared_ptr<OutputDataWrapper> odw;
 	string prefix,postfix;
 public:
-	ExtraNameWrapper(OutputDataWrapper &od,string pre,string post)
+	ExtraNameWrapper(const OutputDataWrapper &od,string pre,string post)
 		: odw(boost::shared_ptr<OutputDataWrapper>(od.clone())), 
 		  prefix(pre), postfix(post) {}
-	const virtual bool enabled() {return odw->enabled();}
+	virtual const bool enabled() {return odw->enabled();}
 	virtual float get_output(SDNAPolyline *x, int oversample)
 	{
 		return odw->get_output(x,oversample);
