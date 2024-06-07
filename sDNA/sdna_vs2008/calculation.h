@@ -572,7 +572,7 @@ private:
 
 		if (output_skim)
 		{
-			skim_geom = new sDNAGeometryCollection(output_name_prefix+"skim"+output_name_postfix,NO_GEOM,get_skim_field_metadata());
+			skim_geom.set_metadataoutput_name_prefix+"skim"+output_name_postfix,NO_GEOM,get_skim_field_metadata());
 		  	geometry_outputs.push_back(&skim_geom);
 
 			string origzone = config.get_string("skimorigzone");
@@ -605,25 +605,25 @@ private:
 			geometry_outputs.push_back(&netdata);
 		if (output_geodesics)
 		{
-			geodesics = new sDNAGeometryCollection(output_name_prefix+"geodesics"+output_name_postfix,POLYLINEZ,get_geodesic_field_metadata());
+			geodesics.set_metadataoutput_name_prefix+"geodesics"+output_name_postfix,POLYLINEZ,get_geodesic_field_metadata());
 		  	geometry_outputs.push_back(&geodesics);
 			
 		}
 		if (output_hulls)
 		{
-			hulls = new sDNAGeometryCollection(output_name_prefix+"hulls"+output_name_postfix,POLYGON,get_hull_or_netradius_field_metadata());
+			hulls.set_metadataoutput_name_prefix+"hulls"+output_name_postfix,POLYGON,get_hull_or_netradius_field_metadata());
 		  	geometry_outputs.push_back(&hulls);
 			
 		}
 		if (output_netradii)
 		{
-			netradii = new sDNAGeometryCollection(output_name_prefix+"netradii"+output_name_postfix,MULTIPOLYLINEZ,get_hull_or_netradius_field_metadata());
+			netradii.set_metadataoutput_name_prefix+"netradii"+output_name_postfix,MULTIPOLYLINEZ,get_hull_or_netradius_field_metadata());
 			geometry_outputs.push_back(&netradii);
 			
 		}
 		if (output_destinations)
 		{
-			destinationgeoms = new sDNAGeometryCollection(output_name_prefix+"destinations"+output_name_postfix,POLYLINEZ,get_destination_field_metadata());
+			destinationgeoms.set_metadataoutput_name_prefix+"destinations"+output_name_postfix,POLYLINEZ,get_destination_field_metadata());
 			geometry_outputs.push_back(&destinationgeoms);
 			
 		}

@@ -861,7 +861,7 @@ DestinationEdgeProcessingTask DestinationEdgeProcessingTask::getRadialEquivalent
 	return DestinationSDNAPolylineSegment(geom_edge,length_of_edge_inside_radius).getDestinationEdgeProcessingTaskRadial(radialcosts,metric_eval);
 }
 
-double SDNAIntegralCalculation::backtrace(DestinationEdgeProcessingTask &t,SDNAPolyline * const origin_link,
+double SDNAIntegralCalculation::backtrace(const DestinationEdgeProcessingTask &t,SDNAPolyline * const origin_link,
 										  IdIndexedArray<Edge *  ,EdgeId> &backlinks_edge,
 										  vector<Edge*> &intermediate_edges,Edge **origin_exit_edge,bool& passed_intermediate_filter)
 {

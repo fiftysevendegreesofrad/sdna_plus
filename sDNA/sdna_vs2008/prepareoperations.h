@@ -66,7 +66,7 @@ public:
 	bool handle_near_misses, handle_traffic_islands, handle_duplicates, handle_isolated, handle_split_links;
 	bool prepare_no_operation; // overrides above and does nothing except initialize data - useful for debug. differs from internal interface which expects run() not to be called and doesn't init data
 
-	PrepareOperation(Net *net, char *configstring,int (__cdecl *print_warning_callback)(const char*)) 
+	PrepareOperation(Net *net, const char *configstring,int (__cdecl *print_warning_callback)(const char*)) 
 		: next_new_arcid(-1), 
 		Calculation(net,print_warning_callback)
 	{
@@ -176,7 +176,7 @@ public:
 				vector<FieldMetaData> error_metadata;
 				error_metadata.push_back(FieldMetaData(fLONG,"Original id","id"));
 				error_metadata.push_back(FieldMetaData(fSTRING,"Error","Error"));
-				errors = sDNAGeometryCollection("errors",POLYLINEZ,error_metadata);
+				errors.set_metadata"errors",POLYLINEZ,error_metadata);
 				geometry_outputs.push_back(&errors);
 			}
 		}
