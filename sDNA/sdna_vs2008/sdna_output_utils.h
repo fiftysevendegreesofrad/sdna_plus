@@ -520,7 +520,7 @@ private:
 
 public:
 	OutputMap() : finalized(false) {}
-	void add_output(OutputDataWrapper &output)
+	void add_output(const OutputDataWrapper &output)
 	{
 		assert(!finalized);
 		if (output.enabled())
@@ -537,7 +537,7 @@ public:
 	}
 
 	void add_extra(OutputDataWrapper &output) {
-		add_output(ExtraNameWrapper(output, pre, post))
+		add_output(ExtraNameWrapper(output, pre, post));
 	}
 
 	//deprecated - autocad
