@@ -9,7 +9,7 @@ void SDNAIntegralCalculation::assign_output_names()
 	if (suppress_net_data)
 		return;
 	
-	output_map.set_pre_and_post(output_name_prefix,output_name_postfix)
+	output_map.set_pre_and_post(output_name_prefix,output_name_postfix);
 
 	output_map.add_extra(SDNAPolylineConnectivityOutputDataWrapper());
 	output_map.add_extra(SDNAPolylineLengthOutputDataWrapper());

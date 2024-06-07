@@ -536,7 +536,7 @@ public:
 		 post = postfix;
 	}
 
-	void add_extra(OutputDataWrapper &output) {
+	void add_extra(const OutputDataWrapper &output) {
 		add_output(ExtraNameWrapper(output, pre, post));
 	}
 
