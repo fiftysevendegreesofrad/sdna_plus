@@ -263,9 +263,9 @@ struct Edge : public IndexedObject<EdgeId> // the algorithm edge structure
 	}
 
 private:
-	TraversalEventIterator Edge::traversal_events_begin() const;
-	TraversalEventIterator Edge::traversal_events_end() const;
-	TraversalEventIterator Edge::traversal_events_centre() const;
+	TraversalEventIterator traversal_events_begin() const;
+	TraversalEventIterator traversal_events_end() const;
+	TraversalEventIterator traversal_events_centre() const;
 
 	void get_outgoing_connections(CandidateEdgeVector &options,double cost_to_date,double remaining_radius,
 		MetricEvaluator* anal_evaluator,MetricEvaluator* radial_evaluator,edge_position from,
