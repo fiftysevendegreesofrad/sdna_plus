@@ -284,7 +284,7 @@ public:
 	{
 		return (*data)[*x];
 	}
-	const bool enabled() {return true;}
+	bool enabled() const {return true;}
 };
 
 class SDNAPolylineSinuosityOutputDataWrapper : public OutputDataWrapper
@@ -409,7 +409,7 @@ public:
 	{
 		return odw->get_output(x,oversample);
 	}
-	virtual ExtraNameWrapper *clone() 
+	virtual ExtraNameWrapper *clone() const
 	{
 		return new ExtraNameWrapper(*this);
 	}
