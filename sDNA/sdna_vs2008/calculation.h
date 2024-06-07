@@ -7,9 +7,6 @@
 #include "tables.h"
 #pragma once
 
-void run_dijkstra(PartialNet &partialnet, 
-	IdIndexedArray<double,EdgeId> &costs_to_edge_start, MetricEvaluator*, double max_depth,
-	IdIndexedArray <Edge *,EdgeId> *backlinks = NULL, JunctionCosts *jcosts = NULL);
 
 enum prob_route_action_t {DISCARD, REROUTE};
 
@@ -463,12 +460,12 @@ private:
 
 		sort(radii.begin(),radii.end());
 		if (!config.get_bool("bandedradii"))
-			lower_bound_radii.swap(vector<double>(radii.size(),0.));
+			lower_bound_radii.assign(radii.size(),0.);
 		else
 		{
 			if (cont_space)
 				throw BadConfigException("Cannot use banded radius and continuous space together.\nIf you need this feature, please contact the sDNA team.");
-			lower_bound_radii.swap(vector<double>(1,0.));
+			lower_bound_radii.assign(1,0.);
 			lower_bound_radii.insert(lower_bound_radii.end(),radii.begin(),radii.end()-1);
 		}
 
@@ -1132,3 +1129,8 @@ public:
 		return pn;
 	}
 };
+
+
+void run_dijkstra(PartialNet &partialnet, 
+	IdIndexedArray<double,EdgeId> &costs_to_edge_start, MetricEvaluator*, double max_depth,
+	IdIndexedArray <Edge *,EdgeId> *backlinks = NULL, JunctionCosts *jcosts = NULL);

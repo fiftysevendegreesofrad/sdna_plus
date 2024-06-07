@@ -232,7 +232,7 @@ public:
 		const size_t size = zoneset.size();
 		//construct data table
 		index_to_data.assign(size,default_table_value);
-		BOOST_FOREACH(const MAPTYPE::value_type& myPair, zone_to_data)
+		BOOST_FOREACH(const typename MAPTYPE::value_type& myPair, zone_to_data)
 		{
 			const string zone = myPair.first;
 			const T data = myPair.second;

@@ -289,9 +289,9 @@ bool SDNAIntegralCalculation::run_internal_throwing_exceptions()
 	if (output_skim)
 	{
 		initialize_skim_zones();
-		skim_matrix_sum_distance.swap(vector<vector<long double>>(skim_origins.size(),vector<long double>(skim_destinations.size(),0.)));
-		skim_matrix_weight.swap(vector<vector<long double>>(skim_origins.size(),vector<long double>(skim_destinations.size(),0.)));
-		skim_matrix_n.swap(vector<vector<unsigned long>>(skim_origins.size(),vector<unsigned long>(skim_destinations.size(),0l)));
+		skim_matrix_sum_distance.assign(skim_origins.size(),vector<long double>(skim_destinations.size(),0.));
+		skim_matrix_weight.assign(skim_origins.size(),vector<long double>(skim_destinations.size(),0.));
+		skim_matrix_n.assign(skim_origins.size(),vector<unsigned long>(skim_destinations.size(),0l));
 	}
 
 	//initialize sdna integral arrays (computed once, by this calculation)
