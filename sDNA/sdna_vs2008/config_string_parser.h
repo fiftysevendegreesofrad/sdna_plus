@@ -94,7 +94,7 @@ private:
 	}
 
 public:
-	ConfigStringParser(char *allowable_keywords,char *defaults,char *config)
+	ConfigStringParser(const char *allowable_keywords,const char *defaults,char *config)
 	{
 		setup_allowable(allowable_keywords);
 		parse_string(defaults);
