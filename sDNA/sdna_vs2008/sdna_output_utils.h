@@ -495,8 +495,12 @@ public:
 
 // OutputMap: holds the names and retrieval methods of all outputs
 class OutputMap
+	
 {
 private:
+	// prefix and postfix to be used to construct ExtraNameWrapper in add_extra
+	string pre = "";
+	string post = "";
 	typedef vector<boost::shared_ptr<OutputDataWrapper> > OutputVector;
 	OutputVector outputs;
 	bool finalized;
@@ -525,6 +529,17 @@ public:
 			outputs.push_back(output_ptr);
 		}
 	}
+	
+	void set_pre_and_post(string prefix, string postfix) {
+		// Must be called before add_extra
+		 pre = prefix;
+		 post = postfix;
+	}
+
+	void add_extra(OutputDataWrapper &output) {
+		add_output(ExtraNameWrapper(output, pre, post))
+	}
+
 	//deprecated - autocad
 	inline void get_outputs_c(float* buffer, SDNAPolyline* link, int oversample)
 	{

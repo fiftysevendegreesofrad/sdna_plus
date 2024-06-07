@@ -75,9 +75,9 @@ void run_dijkstra(PartialNet &partialnet,
 	DijkstraQueue::iterator last_insert = pq.begin(); //insert position hint to speed up queue build
 	for (PartialNet::RoutingEdgeIter it = partialnet.get_routing_edges_begin(); it!=partialnet.get_routing_edges_end(); ++it)
 	{
-		#if __cplusplus > 199711L
-			#error priority queue behaviour has changed - sort out the next line for it+1
-		#endif
+		// #if __cplusplus > 199711L
+		// 	#error priority queue behaviour has changed - sort out the next line for it+1
+		// #endif
 		last_insert = pq.insert(last_insert,*it);
 	}
 

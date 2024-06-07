@@ -278,7 +278,7 @@ public:
 	
 	sDNAGeometryCollection(string name,sDNAGeom_t type) : name(name), type(type) {}
 	
-	set_metadata(string name,sDNAGeom_t type,vector<FieldMetaData> fieldmetadata) {
+	void set_metadata(string name,sDNAGeom_t type,vector<FieldMetaData> fieldmetadata) {
 		BOOST_FOREACH (FieldMetaData &fmd , fieldmetadata)
 		{
 			m_datanames.add_string(fmd.name);
@@ -290,9 +290,9 @@ public:
 	sDNAGeometryCollection(string name,sDNAGeom_t type,vector<FieldMetaData> fieldmetadata)
 		: sDNAGeometryCollection(name, type)
 	{ 
-        set_metadata(name, type, fieldmetadata)
+        set_metadata(name, type, fieldmetadata);
 	}
-	
+
 	void reserve(size_t n)
 	{
 		items.reserve(n); 

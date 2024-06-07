@@ -695,7 +695,7 @@ void SDNAIntegralCalculation::process_destination(DestinationEdgeProcessingTask 
 	}
 }
 
-void SDNAIntegralCalculation::process_geodesic(DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
+void SDNAIntegralCalculation::process_geodesic(const DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
 											  vector<Edge*> &intermediate_edges,
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
 											  MetricEvaluator *analysis_evaluator,
