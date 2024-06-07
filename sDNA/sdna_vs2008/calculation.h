@@ -27,7 +27,7 @@ struct DestinationEdgeProcessingTask
 		//cout << "constructed DEPT redge=" << re->get_id().id << " cc=" << cc << " length_inside=" << len << endl; 
 	}
 	DestinationEdgeProcessingTask getRadialEquivalent(IdIndexedArray<double,EdgeId> &radialcosts,
-																			MetricEvaluator* metric_eval);
+																			MetricEvaluator* metric_eval) const;
 };
 
 //This represents a segment of a link to process as a destination
@@ -427,12 +427,12 @@ private:
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
 											  boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
 											  double& total_weight_this_origin_sample_radius);
-	void process_geodesic(DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
+	void process_geodesic(const DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
 											  vector<Edge*> &intermediate_edges,
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
 											  MetricEvaluator *analysis_evaluator,
 											  double& total_weight_this_origin_sample_radius);
-	double backtrace(DestinationEdgeProcessingTask &t,SDNAPolyline * origin_link,
+	double backtrace(const DestinationEdgeProcessingTask &t,SDNAPolyline * origin_link,
 										  IdIndexedArray<Edge *  ,EdgeId> &anal_backlinks_edge,
 										  vector<Edge*> &intermediate_edges,Edge **origin_exit_edge,bool &passed_intermediate_filter);
 	void process_origin(SDNAPolyline *origin,int r,boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,

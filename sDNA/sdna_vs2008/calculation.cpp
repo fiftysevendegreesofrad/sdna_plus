@@ -627,7 +627,7 @@ void SDNAIntegralCalculation::process_origin(SDNAPolyline *origin,int r,boost::s
 	}
 }
 
-double SDNAIntegralCalculation::get_geodesic_analytical_cost(DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge)
+double SDNAIntegralCalculation::get_geodesic_analytical_cost(const DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge)
 {
 	return anal_best_costs_reaching_edge[*dest.routing_edge] + dest.cost_to_centre;
 }

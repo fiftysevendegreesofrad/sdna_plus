@@ -25,7 +25,7 @@ private:
 	void move_junction(JunctionMapKey &key, double new_x, double new_y, float new_z);
 	void move_link_endpoint(SDNAPolyline* link, junction_option_type end, double new_x, double new_y, float new_z);
 	void get_duplicate_links(vector<SDNAPolyline*> &duplicates, vector<SDNAPolyline*> &originals,
-		bool partial_search = false, vector<SDNAPolyline*> &subset = vector<SDNAPolyline*>());
+		bool partial_search = false, const vector<SDNAPolyline*> &subset = vector<SDNAPolyline*>());
 	hash_t get_link_hash(SDNAPolyline *s);
 	bool all_enforced_data_identical(SDNAPolyline *s1,SDNAPolyline *s2);
 	
