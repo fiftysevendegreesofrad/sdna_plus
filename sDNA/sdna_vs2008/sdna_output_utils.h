@@ -520,7 +520,7 @@ private:
 
 public:
 	OutputMap() : finalized(false) {}
-	void add_output(const OutputDataWrapper &output)
+	const void add_output(const OutputDataWrapper &output)
 	{
 		assert(!finalized);
 		if (output.enabled())
@@ -536,7 +536,7 @@ public:
 		 post = postfix;
 	}
 
-	void add_extra(const OutputDataWrapper &output) {
+	const void add_extra(const OutputDataWrapper &output) {
 		add_output(ExtraNameWrapper(output, pre, post));
 	}
 
