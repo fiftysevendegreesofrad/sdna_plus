@@ -342,7 +342,7 @@ public:
 	}
 
 	//does not return costs - intended for finding subsystems not navigation
-	vector<SDNAPolyline*> SDNAPolyline::get_linked_links();
+	vector<SDNAPolyline*> get_linked_links();
 
 	void assign_id(size_t id_in)
 	{
