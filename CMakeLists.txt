@@ -15,6 +15,11 @@ set(PROJECT_NAME sdna_output)
 
 project(${PROJECT_NAME})
 
+if (MSVC)
+    message("Configuring for Visual Studio")
+else()
+    message("Configuring for ${CMAKE_GENERATOR}")
+endif()
 
 if (${CMAKE_GENERATOR_PLATFORM} STREQUAL "x64")
     set(Bin_sub_dir 
