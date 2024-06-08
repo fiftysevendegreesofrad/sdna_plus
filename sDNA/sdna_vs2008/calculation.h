@@ -480,7 +480,7 @@ private:
 	vector<LengthWeightingStrategy> datatokeep;
 	vector<NetExpectedDataSource<string>> textdatatokeep;
 
-	void unpack_config(char *configstring)
+	void unpack_config(const char *configstring)
 	{
 		ConfigStringParser config(//allowable keywords
 								  "preserve_net_config;start_gs;end_gs;radii;cont;metric;pre;post;nobetweenness;nojunctions;nohull;linkonly;forcecontorigin;nqpdn;nqpdd;"
@@ -1031,7 +1031,7 @@ public:
 	char ** get_short_output_names_c() { return output_map.get_short_output_names_c(); }
 	void get_all_outputs_c(float* buffer, long arcid)	{ output_map.get_outputs_c(buffer,net->link_container[arcid],oversample); }
 	
-	SDNAIntegralCalculation(Net *net,char *configstring,
+	SDNAIntegralCalculation(Net *net,const char *configstring,
 		int (__cdecl *set_progressor_callback)(float), int(__cdecl *print_warning_callback)(const char*), vector<boost::shared_ptr<Table<float>>>* tables1d_in=NULL)
 		: Calculation(net,print_warning_callback), 
 	      set_progressor_callback(set_progressor_callback),

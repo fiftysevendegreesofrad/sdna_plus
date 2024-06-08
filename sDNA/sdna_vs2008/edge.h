@@ -222,7 +222,7 @@ struct Edge : public IndexedObject<EdgeId> // the algorithm edge structure
 	Junction* end_junction;
 
 	//evaluates TraversalEventAccumulator in the context of this edge
-	float evaluate_me(MetricEvaluator* e,TraversalEventAccumulator& acc) const;
+	float evaluate_me(MetricEvaluator* e,const TraversalEventAccumulator& acc) const;
 
 	//inner methods
 	TraversalEventAccumulator get_start_traversal_cost_ignoring_oneway() const;
