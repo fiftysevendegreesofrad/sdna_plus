@@ -47,6 +47,8 @@ jobs:
       with:
         version: 0.13.0
 
+    - name: Install Ninja
+      run: pip install ninja
 
 
     - name: Create Visual Studio build system from CMake
