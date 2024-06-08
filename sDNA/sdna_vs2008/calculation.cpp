@@ -856,7 +856,7 @@ void SDNAIntegralCalculation::process_geodesic(const DestinationEdgeProcessingTa
 }
 
 DestinationEdgeProcessingTask DestinationEdgeProcessingTask::getRadialEquivalent(IdIndexedArray<double,EdgeId> &radialcosts,
-																			MetricEvaluator* metric_eval)
+																			MetricEvaluator* metric_eval) const
 {
 	return DestinationSDNAPolylineSegment(geom_edge,length_of_edge_inside_radius).getDestinationEdgeProcessingTaskRadial(radialcosts,metric_eval);
 }
