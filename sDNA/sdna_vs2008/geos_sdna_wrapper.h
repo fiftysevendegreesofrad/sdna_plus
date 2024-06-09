@@ -75,7 +75,7 @@ public:
 		//find path of this dll and look for geos_c.dll in the same place
 		HMODULE this_dll_handle;
 		HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-			// (LPCTSTR)&address_in_this_module,
+			(LPCTSTR)&address_in_this_module,
 			&this_dll_handle
 			);
 		assert(retval);
