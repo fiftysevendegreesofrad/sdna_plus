@@ -61,6 +61,7 @@ jobs:
       #   # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
       run: |
         set VCPKG_ROOT=c:/vcpkg
+        set BUILD_DIR=build_output_cmake_zig
         .\run_CMake_output_build_system.bat
 
 
