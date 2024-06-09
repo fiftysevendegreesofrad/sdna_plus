@@ -36,17 +36,18 @@ jobs:
     #     # Advanced Installer license ID. This parameter is optional if you are using a simple project type.
     #     # "
 
+    - name: Install Ninja
+      run: pip install ninja
+
     - name: Install Zig
       uses: goto-bus-stop/setup-zig@v2
       with:
         version: 0.13.0
 
-    - name: Install Ninja
-      run: pip install ninja
 
 
-    - name: Create Visual Studio build system from CMake
-      #   shell: cmd
+    - name: Create Ninja build system from CMake
+      shell: cmd
       #   # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
       run: |
         set VCPKG_ROOT=c:/vcpkg
@@ -56,11 +57,11 @@ jobs:
 
 
     - name: Build sDNA
-      #   shell: cmd
+      shell: cmd
       #   # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
       run: |
         set VCPKG_ROOT=c:/vcpkg
-        cmake --build build_output_cmake_zig
+        .\run_CMake_output_build_system.bat
 
 
 
@@ -70,10 +71,6 @@ jobs:
     #   run: echo "name=$(ls sDNA_setup_win_v*.msi)" >> "$GITHUB_OUTPUT"  
 
 
-    # - name: Output the name of the .msi installer file
-    #   id: output_installer_file_name
-    #   shell: bash
-    #   run: echo "name=$(ls sDNA_setup_win_v*.msi)" >> "$GITHUB_OUTPUT"  
 
     - name: upload_output
       id: installer-upload-step
