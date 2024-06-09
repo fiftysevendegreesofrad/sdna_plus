@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "main" ]
+    branches: [ "main", "Zig_MuParser_Include_stdafx.h" ]
 
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "Zig_MuParser_Include_stdafx.h" ]
 
 env:
   CONFIGURATION: Release
