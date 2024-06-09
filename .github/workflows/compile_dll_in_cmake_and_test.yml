@@ -65,6 +65,7 @@ jobs:
     - name: Create_sDNA_Installer_with_CMake
       shell: cmd
       # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
+      # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
       run: |
         set VCPKG_ROOT=C:/vcpkg
         .\create_installer_with_CMake.bat
