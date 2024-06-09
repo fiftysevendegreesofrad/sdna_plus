@@ -4,11 +4,15 @@ cmake_minimum_required(VERSION 3.26)
 # # (i.e. Windows 10)
 
 set(CMAKE_CXX_STANDARD 14)
-
-# https://learn.microsoft.com/en-us/vcpkg/users/triplets#vcpkg_chainload_toolchain_file
-set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE
-    "${CMAKE_CURRENT_SOURCE_DIR}/zigcross-cmake/zig-toolchain-aarch64.cmake"
-)
+if (MSVC)
+    message("Configuring for Visual Studio")
+else()
+    message("Configuring for ${CMAKE_GENERATOR}")
+    # https://learn.microsoft.com/en-us/vcpkg/users/triplets#vcpkg_chainload_toolchain_file
+    set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE
+        "${CMAKE_CURRENT_SOURCE_DIR}/zigcross-cmake/zig-toolchain-aarch64.cmake"
+    )
+endif()
 
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
@@ -22,11 +26,7 @@ set(PROJECT_NAME sdna_output)
 
 project(${PROJECT_NAME})
 
-if (MSVC)
-    message("Configuring for Visual Studio")
-else()
-    message("Configuring for ${CMAKE_GENERATOR}")
-endif()
+
 
 if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "x64")
     set(Bin_sub_dir 
