@@ -1,4 +1,4 @@
-name: "Compile with CMake, MSBuild and VS 2022 for Windows, and test"
+name: "Compile with CMake and Zig for Windows"
 
 on:
   workflow_dispatch:
@@ -80,7 +80,7 @@ jobs:
         name: output
         # this file name pattern is defined in installerbits\rename_version.py
         # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
-        path: output/Release
+        path: output
 
 
   # test_installer:
