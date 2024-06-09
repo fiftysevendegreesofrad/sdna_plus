@@ -69,7 +69,7 @@ public:
 	GEOSGeometry *UnaryUnion(GEOSGeometry *g1) {return (*GEOSUnaryUnion)(g1);}
 	int GeomTypeId(const GEOSGeometry *g1) {return (*GEOSGeomTypeId)(g1);}
 
-	static char address_in_this_module = 0;
+	char address_in_this_module = 0;
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
 		//find path of this dll and look for geos_c.dll in the same place
