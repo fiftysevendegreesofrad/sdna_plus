@@ -9,6 +9,12 @@ if [%~1]==[] (
     set PLATFORM=%~1
 )
 
+if [%~2]==[] (
+    set GENERATOR="Visual Studio 17 2022"
+) else (
+    set GENERATOR=%~2
+)
+
 set BUILD_DIR=%THIS_FILE_DIR%\build_output_cmake_%PLATFORM%
 
-cmake -B %BUILD_DIR% -S %SRC_DIR% -A %PLATFORM%
+cmake -G %GENERATOR% -B %BUILD_DIR% -S %SRC_DIR% -A %PLATFORM%
