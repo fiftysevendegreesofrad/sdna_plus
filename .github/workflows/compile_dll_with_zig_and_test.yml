@@ -52,27 +52,18 @@ jobs:
 
 
 
-    - name: Create Ninja and Zig build system from CMake
-      shell: cmd
-      # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
-      # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
-      run: |
-        set VCPKG_ROOT=C:/vcpkg
-        .\configure_for_zig.bat
 
 
 
 
     - name: Build sDNA with Ninja and Zig (via CMake)
       shell: cmd
+      # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
+      # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
       run: |
         set VCPKG_ROOT=C:/vcpkg
-        set BUILD_DIR=build_output_cmake_zig
-        .\run_CMake_output_build_system_and_create_installer.bat
+        .\create_installer_with_CMake.bat Ninja
 
-    - name: Create_sDNA_Installer
-      shell: cmd
-      run: AdvancedInstaller.com /build installerbits\advanced\sdna.aip && ^
 
     - name: Output the name of the .msi installer file
       id: output_installer_file_name
