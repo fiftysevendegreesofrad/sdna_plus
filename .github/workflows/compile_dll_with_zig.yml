@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Zig"]
+    branches: [ "Compile_with_Zig_('Clang')", "Zig"]
 
   pull_request:
-    branches: [ "Zig" ]
+    branches: [ "Compile_with_Zig_('Clang')", "Zig" ]
 
 env:
   CONFIGURATION: Release
