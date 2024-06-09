@@ -334,6 +334,8 @@ set(LIBRARY_OUTPUT_DIRECTORY
 
 add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
+# If building with Ninja, by default libraries are prefixed with "lib"
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
