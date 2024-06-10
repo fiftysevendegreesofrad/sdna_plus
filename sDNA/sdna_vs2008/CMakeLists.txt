@@ -236,6 +236,7 @@ set(Headers
     "unique_id.h"
     "version_template.h"
     "version_generated.h.creator.py"
+    "IteratorTypeErasure/any_iterator/any_iterator.hpp"
 )
 source_group("Headers" FILES ${Headers})
 
