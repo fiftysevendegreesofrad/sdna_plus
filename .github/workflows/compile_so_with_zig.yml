@@ -36,6 +36,10 @@ jobs:
     #     # Advanced Installer license ID. This parameter is optional if you are using a simple project type.
     #     # "
 
+    - uses: LizardByte/setup-python-action@master
+      with:
+        python-version: "3.12"
+
     - name: Install Ninja
       run: pip install ninja
 
