@@ -72,25 +72,38 @@ public:
 	char address_in_this_module = 0;
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
+		// Not needed on Linux?
 		//find path of this dll and look for geos_c.dll in the same place
 		HMODULE this_dll_handle;
+
+		// long? https://stackoverflow.com/a/17736648
+		// dlopen(NULL)? https://stackoverflow.com/a/6972229/20785734
 		HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
 			(LPCTSTR)&address_in_this_module,
 			&this_dll_handle
 			);
 		assert(retval);
+
+		// 
 		string this_dll_path = dllPathFromHMODULE(this_dll_handle);
 		char drive[_MAX_DRIVE];
 	    char dir[_MAX_DIR];
 	    char fname[_MAX_FNAME];
 	    char ext[_MAX_EXT];
+
+		//  https://stackoverflow.com/a/675193/20785734 ?
 		_splitpath(this_dll_path.c_str(),drive,dir,fname,ext);
 		//fname holds filename of this dll, but is now discarded
 		assert(0==strcmp(ext,".dll"));
 		char geos_dll_path[_MAX_PATH];
+
+		// https://stackoverflow.com/a/675193/20785734
 		_makepath(geos_dll_path,drive,dir,"geos_c",ext);
 		wchar_t geos_dll_path_w[_MAX_PATH];
+		
+		// https://man7.org/linux/man-pages/man3/mbstowcs.3.html
 		mbstowcs(geos_dll_path_w, geos_dll_path, strlen(geos_dll_path)+1);//Plus null
+
 				
 		hDLL = LoadLibrary(geos_dll_path_w);
 		if (hDLL == NULL)
@@ -99,6 +112,7 @@ public:
 		}
 		else
 		{
+			// dlsym https://stackoverflow.com/a/4651841/20785734
 			initGEOS = (initGEOS_t)GetProcAddress(hDLL,"initGEOS");
 			assert(initGEOS != NULL);
 			finishGEOS = (finishGEOS_t)GetProcAddress(hDLL,"finishGEOS");
@@ -163,6 +177,7 @@ public:
 	}
 	~ExplicitSDNAPolylineToGeosWrapper()
 	{
+		// dlclose https://stackoverflow.com/a/4651841/20785734
 		FreeLibrary(hDLL);
 	}
 
