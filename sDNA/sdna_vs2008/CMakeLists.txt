@@ -502,8 +502,6 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 "$<$<CONFIG:vtune>:"
     "_DEBUG"
 ">"
-"WIN32;"
-"_WINDOWS;"
 "_USRDLL;"
 "SDNA_VS2008_EXPORTS;"
 "UNICODE;"
