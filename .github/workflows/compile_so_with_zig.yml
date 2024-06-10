@@ -46,9 +46,10 @@ jobs:
 
     # Install vcpkg?
 
+    # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
     - name: Create Ninja build system from CMake
       run: |
-        VCPKG_ROOT=$VCPKG_INSTALL_ROOT
+        VCPKG_ROOT=$VCPKG_INSTALLATION_ROOT
         cmake -G Ninja -B build_output_cmake_zig -S .
 
 
@@ -64,6 +65,7 @@ jobs:
     #   shell: bash
     #   run: echo "name=$(ls sDNA_setup_win_v*.msi)" >> "$GITHUB_OUTPUT"  
 
+    # - name: assemble_output
 
 
     - name: upload_output
