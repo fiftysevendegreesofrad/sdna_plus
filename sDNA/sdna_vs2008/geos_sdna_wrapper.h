@@ -72,6 +72,8 @@ public:
 	char address_in_this_module = 0;
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
+
+		#ifdef _WINDOWS
 		// Not needed on Linux?
 		//find path of this dll and look for geos_c.dll in the same place
 		HMODULE this_dll_handle;
@@ -82,6 +84,7 @@ public:
 			(LPCTSTR)&address_in_this_module,
 			&this_dll_handle
 			);
+
 		assert(retval);
 
 		// 
@@ -106,9 +109,20 @@ public:
 
 				
 		hDLL = LoadLibrary(geos_dll_path_w);
+
+		#define LOAD_SYMBOL GetProcAddress
+
+		#else
+
+		#define LOAD_SYMBOL dlsym
+
+    	void* handle = dlopen("~/sDNA/output/Release/x64/geos_c.so", RTLD_NOW);
+
+		#endif
+
 		if (hDLL == NULL)
 		{
-			cout << "GEOS DLL not found" << endl;
+			cout << "geos_c.dll / geos_c.so not found" << endl;
 		}
 		else
 		{
@@ -178,7 +192,11 @@ public:
 	~ExplicitSDNAPolylineToGeosWrapper()
 	{
 		// dlclose https://stackoverflow.com/a/4651841/20785734
-		FreeLibrary(hDLL);
+		#ifdef _WINDOWS
+		  FreeLibrary(hDLL);
+		#else
+		  dlclose(hDLL);
+		#endif
 	}
 
 

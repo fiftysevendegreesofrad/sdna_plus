@@ -16,11 +16,15 @@
 #define _SECURE_SCL 0 //disable iterator bounds checking for release builds
 #endif
 
+#ifdef _WINDOWS
 // Windows Header Files:
 #define NOMINMAX
 #include <windows.h>
 #include <wininet.h>
 #include <stdlib.h>
+#else
+#include <dlfcn.h>
+#endif
 
 #include <vector>
 #include "IteratorTypeErasure\any_iterator\any_iterator.hpp"
