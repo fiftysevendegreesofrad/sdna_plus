@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
@@ -17,6 +16,8 @@
 #endif
 
 #ifdef _WINDOWS
+
+#include "targetver.h"
 // Windows Header Files:
 #define NOMINMAX
 #include <windows.h>
