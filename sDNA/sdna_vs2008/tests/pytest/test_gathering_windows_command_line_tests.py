@@ -512,10 +512,17 @@ def almost_equal(a, b):
     last_a = 0
     last_b = 0
 
-    for match_a, match_b in itertools.zip_longest(
-                                re.finditer(NUM_PATTERN, a), 
-                                re.finditer(NUM_PATTERN, b),
-                                fillvalue = None):
+    matches_a = re.finditer(NUM_PATTERN, a)
+    matches_b = re.finditer(NUM_PATTERN, b)
+
+    while True:
+
+        match_a = next(matches_a, None)
+        match_b = next(matches_b, None)
+
+        if match_a is None and match_b is None:
+            return a[last_a:] == b[last_b:]
+
         if not (match_a and match_b):
             print('match_a: %s, match_b: %s' % (match_a, match_b))
             return False
@@ -543,7 +550,6 @@ def almost_equal(a, b):
                  % (float(match_a.group(0)), float(match_b.group(0))))
             return False
 
-    return a[last_a:] == b[last_b:]
         
 
 
