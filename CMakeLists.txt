@@ -18,7 +18,7 @@ set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
 set(CMAKE_TOOLCHAIN_FILE
- "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+ "$ENV{VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake"
  )
 
 set(VCPKG_MANIFEST_DIR ${CMAKE_SOURCE_DIR})
