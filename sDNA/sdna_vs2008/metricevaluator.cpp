@@ -148,13 +148,10 @@ float truncate(float value,float lower,float upper)
 {
 	if (value<lower)
 		return lower;
-	else 
-	{
-		if (value>upper)
-			return upper;
-		else
-			return value;
-	}
+	else if (value>upper)
+		return upper;
+
+	return value;
 }
 
 float safedivide(float numerator,float denominator)
