@@ -58,7 +58,7 @@ jobs:
 
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_gcc --verbose -- -Wl --verbose
+        cmake --build build_output_cmake_gcc 
 
 
     # - name: Output the name of the .msi installer file
