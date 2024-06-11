@@ -55,14 +55,14 @@ jobs:
     - name: Create Ninja build system from CMake
       run: |
         VCPKG_ROOT=$VCPKG_INSTALLATION_ROOT
-        cmake -G Ninja -B build_output_cmake_zig -S .
+        cmake -G Ninja -B build_output_cmake_zig -S . 
 
 
 
 
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_zig --verbose -- --verbose-link
+        cmake --build build_output_cmake_zig
 
 
     # - name: Output the name of the .msi installer file
