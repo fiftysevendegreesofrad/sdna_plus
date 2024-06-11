@@ -1,11 +1,14 @@
 import os
+import sys
 import subprocess
 
 
 version_template = r'version_template.h'
 version_generated = r'version_generated.h'
 
-git_hash = subprocess.check_output('git rev-parse HEAD').decode('utf8').rstrip()
+kwargs = {} if sys.platform == 'win32' else {'shell' : True}
+
+git_hash = subprocess.check_output('git rev-parse HEAD', **kwargs).decode('utf8').rstrip()
 
 with open(os.path.join(os.path.dirname(__file__), version_template), 'rt') as f:
     template_content = f.read()
