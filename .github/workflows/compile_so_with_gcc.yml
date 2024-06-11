@@ -51,7 +51,7 @@ jobs:
     - name: Create Ninja build system from CMake
       run: |
         VCPKG_ROOT=$VCPKG_INSTALLATION_ROOT
-        cmake -G Ninja -B build_output_cmake_gcc -S . -- -Wl --verbose
+        cmake -G Ninja -B build_output_cmake_gcc -S .
 
 
 
