@@ -541,7 +541,7 @@ def almost_equal(a, b, abs_tol = 2e-15):
         last_a = match_a.end(0)
         last_b = match_b.end(0)
 
-        if math.abs(float(match_a.group(0)) - float(match_b.group(0))) > abs_tol:
+        if abs(float(match_a.group(0)) - float(match_b.group(0))) > abs_tol:
             print('float(match_a.group(0)): %s, float(match_b.group(0)): %s' 
                  % (float(match_a.group(0)), float(match_b.group(0))))
             return False
