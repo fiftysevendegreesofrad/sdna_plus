@@ -73,7 +73,7 @@ jobs:
       id: installer-upload-step
       uses: actions/upload-artifact@v4
       with:
-        name: output
+        name: output_gcc_linux
         # this file name pattern is defined in installerbits\rename_version.py
         # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
         path: output

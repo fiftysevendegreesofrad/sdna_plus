@@ -54,8 +54,8 @@ add_custom_target(${PROJECT_NAME} ALL)
 add_dependencies(${PROJECT_NAME} "sdna_vs2008")
 
 set(DLLs
-    "sdna_vs2008.dll"
-    "geos_c.dll"
+    "sdna_vs2008.so"
+    # "geos_c.dll"
 )
 
 set(Scripts
