@@ -62,7 +62,7 @@ jobs:
 
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_zig --trace --debug-output --debug-trycompile
+        cmake --build build_output_cmake_zig --verbose -- --verbose-link
 
 
     # - name: Output the name of the .msi installer file
