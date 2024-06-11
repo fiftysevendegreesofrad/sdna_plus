@@ -276,7 +276,7 @@ set(Sources
     "calc_output_code.cpp"
     "calculation.cpp"
     "dijkstra.cpp"
-    "dllmain.cpp"
+    # "dllmain.cpp"
     "edge.cpp"
     "geos_sdna_wrapper.cpp"
     "interface_funcs.cpp"
