@@ -505,7 +505,7 @@ class CatCommand(Command):
 
 NUM_PATTERN = r'([+-]?\d+(\.\d*)?([eE][+-]?\d+)?)'
 
-def almost_equal(a, b):
+def almost_equal(a, b, abs_tol = 2e-15):
     # Whereas "0.000001E-17" != "0.0"
     # almost_equal("0.000001E-17", "0.0") is True
 
@@ -541,11 +541,7 @@ def almost_equal(a, b):
         last_a = match_a.end(0)
         last_b = match_b.end(0)
 
-        if not math.isclose(
-            float(match_a.group(0)),
-            float(match_b.group(0)),
-            abs_tol = 2e-15
-            ):
+        if math.abs(float(match_a.group(0)) - float(match_b.group(0))) > abs_tol:
             print('float(match_a.group(0)): %s, float(match_b.group(0)): %s' 
                  % (float(match_a.group(0)), float(match_b.group(0))))
             return False
