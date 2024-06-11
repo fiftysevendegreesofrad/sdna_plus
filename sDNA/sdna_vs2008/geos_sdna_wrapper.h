@@ -110,13 +110,12 @@ public:
 				
 		hDLL = LoadLibrary(geos_dll_path_w);
 
-		#define LOAD_SYMBOL GetProcAddress
 
 		#else
 
-		#define LOAD_SYMBOL dlsym
+		#define GetProcAddress dlsym
 
-    	void* handle = dlopen("~/sDNA/output/Release/x64/geos_c.so", RTLD_NOW);
+    	hDLL = dlopen("~/sDNA/output/Release/x64/geos_c.so", RTLD_NOW);
 
 		#endif
 
@@ -201,7 +200,12 @@ public:
 
 
 private:
+
+#ifdef _WINDOWS
 	HINSTANCE hDLL;
+#else
+    void* hDLL;
+#endif
 
 	typedef GEOSCoordSequence* (*GEOSCoordSeq_create_t)(unsigned int size,unsigned int dims);
 	GEOSCoordSeq_create_t GEOSCoordSeq_create;
@@ -261,6 +265,7 @@ private:
 	typedef int (*GEOSGeomTypeId_t)(const GEOSGeometry*);
 	GEOSGeomTypeId_t GEOSGeomTypeId;
 
+	#ifdef _WINDOWS
 	std::string dllPathFromHMODULE(HMODULE hm) {
 		std::vector<char> executablePath(256);
 
@@ -286,6 +291,7 @@ private:
 	  // We've got the path, construct a standard string from it
 	  return std::string(executablePath.begin(), executablePath.begin() + result);
 	}
+	#endif
 
 };
 

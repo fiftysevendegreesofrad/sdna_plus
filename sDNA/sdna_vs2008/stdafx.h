@@ -28,7 +28,9 @@
 
 #include <dlfcn.h>
 #define __stdcall
-
+// typedef unsigned long long LARGE_INTEGER;
+// typedef unsigned long DWORD;
+// typedef long HRESULT;
 #endif
 
 #include <vector>
