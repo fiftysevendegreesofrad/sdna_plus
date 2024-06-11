@@ -23,8 +23,12 @@
 #include <windows.h>
 #include <wininet.h>
 #include <stdlib.h>
+
 #else
+
 #include <dlfcn.h>
+#define __stdcall
+
 #endif
 
 #include <vector>
