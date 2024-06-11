@@ -958,9 +958,11 @@ endif()
 ################################################################################
 # Extra files packaged at build time (pre built geos dlls)
 ################################################################################
-# add_custom_command(
-#     TARGET ${PROJECT_NAME} POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} "${LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>"
-# )
+if (Geos_binary)
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} "${LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>"
+)
+endif()
 
 
