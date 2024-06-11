@@ -15,7 +15,7 @@ class Calculation;
 class SDNAIntegralCalculation;
 template <class T> class Table;
 
-float truncate(float value,float lower,float upper);
+// float truncate(float value,float lower,float upper);
 
 class DataExpectedByExpression //data that an expression expects to appear
 {

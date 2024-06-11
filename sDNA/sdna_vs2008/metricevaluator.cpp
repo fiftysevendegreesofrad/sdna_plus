@@ -185,7 +185,7 @@ void HybridMetricEvaluator::set_buffer_pointers()
 	parser.DefineFun("randnorm",&randnorm,true);
 	parser.DefineFun("randuni",&randuni,true);
 	parser.DefineFun("proportion",&safedivide,true);
-	parser.DefineFun("trunc",&truncate,true);
+	// parser.DefineFun("trunc",&truncate,true);
 	parser.SetVarFactory(&staticvariablefactory,this);
 	
 	junction_parser.DefineVar("ang",&junction_turn_angle_variable);
@@ -194,7 +194,7 @@ void HybridMetricEvaluator::set_buffer_pointers()
 	junction_parser.DefineFun("randnorm",&randnorm,true);
 	junction_parser.DefineFun("randuni",&randuni,true);
 	junction_parser.DefineFun("proportion",&safedivide,true);
-	junction_parser.DefineFun("trunc",&truncate,true);
+	// junction_parser.DefineFun("trunc",&truncate,true);
 	junction_parser.SetVarFactory(&staticjuncvariablefactory,this);
 	
 	buffers_set = true;
