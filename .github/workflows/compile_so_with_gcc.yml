@@ -1,13 +1,13 @@
-name: "Compile with CMake and Zig for Ubuntu"
+name: "Compile with CMake and GCC for Ubuntu"
 
 on:
   workflow_dispatch:
 
   push:
-    branches: [ "Compile_with_Zig_('Clang')", "Zig_Linux"]
+    branches: [ "GCC_Linux"]
 
   pull_request:
-    branches: [ "Compile_with_Zig_('Clang')", "Zig_Linux" ]
+    branches: [ "GCC_Linux" ]
 
 env:
   CONFIGURATION: Release
@@ -44,10 +44,6 @@ jobs:
 
     - uses: lukka/get-cmake@latest
 
-    - name: Install Zig
-      uses: goto-bus-stop/setup-zig@v2
-      with:
-        version: 0.13.0
 
     # Install vcpkg?
 
@@ -55,14 +51,14 @@ jobs:
     - name: Create Ninja build system from CMake
       run: |
         VCPKG_ROOT=$VCPKG_INSTALLATION_ROOT
-        cmake -G Ninja -B build_output_cmake_zig -S .
+        cmake -G Ninja -B build_output_cmake_gcc -S .
 
 
 
 
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_zig
+        cmake --build build_output_cmake_gcc
 
 
     # - name: Output the name of the .msi installer file

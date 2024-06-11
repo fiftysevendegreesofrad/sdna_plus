@@ -11,9 +11,12 @@ else()
     # https://learn.microsoft.com/en-us/vcpkg/users/triplets#vcpkg_chainload_toolchain_file
 endif()
 
-set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE
-"${CMAKE_CURRENT_SOURCE_DIR}/zigcross-cmake/zig-toolchain-aarch64.cmake"
-)
+# set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE
+# "${CMAKE_CURRENT_SOURCE_DIR}/zigcross-cmake/zig-toolchain-aarch64.cmake"
+# )
+
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "g++")
 
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
