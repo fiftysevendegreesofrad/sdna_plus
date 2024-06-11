@@ -9,6 +9,7 @@ on:
   pull_request:
     branches: [ "Compile_with_Zig_('Clang')", "Zig" ]
 
+
 env:
   CONFIGURATION: Release
   PLATFORM: x64
