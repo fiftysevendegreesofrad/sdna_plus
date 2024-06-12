@@ -11,4 +11,5 @@ set BUILD_DIR=%THIS_FILE_DIR%\build_output_cmake_zig
 
 cmake -G "Ninja Multi-Config" ^
       -B %BUILD_DIR% ^
-      -S %SRC_DIR%
+      -S %SRC_DIR% ^
+      -D USE_ZIG ON

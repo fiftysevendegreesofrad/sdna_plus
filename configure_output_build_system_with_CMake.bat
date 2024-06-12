@@ -15,6 +15,17 @@ if [%~2]==[] (
     set GENERATOR=%~2
 )
 
+
+if [%~3]==[] (
+    set USE_ZIG=OFF
+) else (
+    set USE_ZIG=%~3
+)
+
+
 set BUILD_DIR=%THIS_FILE_DIR%\build_output_cmake_%PLATFORM%
 
-cmake -G %GENERATOR% -B %BUILD_DIR% -S %SRC_DIR% -A %PLATFORM%
+cmake -G "Ninja Multi-Config" ^
+      -B %BUILD_DIR% ^
+      -S %SRC_DIR% ^
+      -D USE_ZIG=%USE_ZIG%
