@@ -9,7 +9,7 @@ if [%~1]==[] (
     set PLATFORM=%~1
 )
 
-if [%~2]==[] (
+if ["%~2"]==[""] (
     set GENERATOR="Visual Studio 17 2022"
 ) else (
     set GENERATOR=%~2
