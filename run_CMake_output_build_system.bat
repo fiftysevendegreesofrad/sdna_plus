@@ -9,5 +9,9 @@ if [%~1]==[] (
     set CONFIG=%~1
 )
 
+@REM echo Build_Dir %BUILD_DIR%
+
+@REM echo Config %CONFIG%
+
 cmake --build %BUILD_DIR% --config %CONFIG%
 

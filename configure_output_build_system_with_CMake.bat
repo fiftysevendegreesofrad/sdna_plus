@@ -22,11 +22,11 @@ if [%~3]==[] (
     set USE_ZIG=%~3
 )
 
-echo %PLATFORM%
+@REM echo %PLATFORM%
 
-echo %GENERATOR%
+@REM echo %GENERATOR%
 
-echo %USE_ZIG%
+@REM echo %USE_ZIG%
 
 set BUILD_DIR=%THIS_FILE_DIR%\build_output_cmake_%PLATFORM%
 
