@@ -5,6 +5,8 @@ import os.path
 import sys
 import glob
 import re
+import math
+import itertools
 import subprocess
 import collections
 import tempfile
@@ -501,6 +503,54 @@ class CatCommand(Command):
         with open(self.input_file, 'rt') as f:
             return f.read()
 
+NUM_PATTERN = r'([+-]?\d+(\.\d*)?([eE][+-]?\d+)?)'
+
+def almost_equal(a, b, abs_tol = 2e-15):
+    # Whereas "0.000001E-17" != "0.0"
+    # almost_equal("0.000001E-17", "0.0") is True
+
+    last_a = 0
+    last_b = 0
+
+    matches_a = re.finditer(NUM_PATTERN, a)
+    matches_b = re.finditer(NUM_PATTERN, b)
+
+    while True:
+
+        match_a = next(matches_a, None)
+        match_b = next(matches_b, None)
+
+        if match_a is None and match_b is None:
+            return a[last_a:] == b[last_b:]
+
+        if not (match_a and match_b):
+            print('match_a: %s, match_b: %s' % (match_a, match_b))
+            return False
+
+        
+        start_a = match_a.start(0)
+        start_b = match_b.start(0)
+
+        if a[last_a:start_a] != b[last_b:start_b]:
+            
+            print('a[last_a:start_a]: %s,  b[last_b:start_b]: %s' 
+                 % (a[last_a:start_a],  b[last_b:start_b]))
+            return False
+
+        
+        last_a = match_a.end(0)
+        last_b = match_b.end(0)
+
+        if abs(float(match_a.group(0)) - float(match_b.group(0))) > abs_tol:
+            print('float(match_a.group(0)): %s, float(match_b.group(0)): %s' 
+                 % (float(match_a.group(0)), float(match_b.group(0))))
+            return False
+
+        
+
+
+
+
 
 class DiffCommand(ReadsTextInputFile):
 
@@ -648,7 +698,7 @@ class DiffCommand(ReadsTextInputFile):
                     if actual.startswith('Progress:') and actual.endswith('-bit mode'):
                         actual = ''.join(actual.partition('sDNA is running in ')[1:])
 
-                assert actual == expected, '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: %s, \n\n Actual: %s' % (i+1, buffer_size - 1,'\n'.join(expected_buffer), '\n'.join(actual_buffer))
+                assert almost_equal(actual, expected), '[101mError[0m on line num i: %s.  This line (and up to the %s previous ones):\nExpected: %s, \n\n Actual: %s' % (i+1, buffer_size - 1,'\n'.join(expected_buffer), '\n'.join(actual_buffer))
                 # assert actual == expected, 'i: %s, Expected: "%s", Actual: "%s"' % (i, expected, actual)
                 prev_expected = expected
                 m += 1
