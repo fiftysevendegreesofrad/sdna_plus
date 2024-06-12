@@ -1,9 +1,9 @@
 setlocal
 
-if [%~1]==[] (
-    set GENERATOR="Visual Studio 17 2022"
+if ["%~1"]==[""] (
+    set "GENERATOR=Visual Studio 17 2022"
 ) else (
-    set GENERATOR=%~1
+    set "GENERATOR=%~1"
 )
 
 
