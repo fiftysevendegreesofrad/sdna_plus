@@ -15,7 +15,7 @@ if not os.path.isdir(TMP_DIR):
 MUPARSER_SRC_DIR =  os.path.join(os.path.dirname(os.path.dirname(__file__)), *MUPARSER_DIRS)
 files_glob = os.path.join(MUPARSER_SRC_DIR, 'muParser*.cpp')
 
-
+PREFIX = '#include "stdafx.h"'
 
 prepended = False
 
@@ -25,10 +25,11 @@ for file_ in glob.glob(files_glob):
     with open(file_, 'rt') as f:
         content = f.read()
 
-    new_content = '#include "stdafx.h"\n' + content
+    if not content.starts_with(PREFIX):
+        content =  PREFIX + content
 
     with open(file_, 'wt') as f:
-        f.write(new_content)
+        f.write(content)
 
 
     prepended = True

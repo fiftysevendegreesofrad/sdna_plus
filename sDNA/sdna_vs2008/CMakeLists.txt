@@ -944,10 +944,6 @@ endif()
 # not defined for targets created by the add_custom_target() command.
 # "
 # https://cmake.org/cmake/help/latest/command/add_custom_command.html#build-events
-add_custom_command(
-    TARGET ${PROJECT_NAME} PRE_BUILD
-    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/preppend_muparser_cpps_with_include_stdafx.h.py"
-)
 
 add_custom_command(
     TARGET ${PROJECT_NAME} PRE_BUILD
