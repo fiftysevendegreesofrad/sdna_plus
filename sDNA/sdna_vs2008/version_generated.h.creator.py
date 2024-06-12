@@ -1,6 +1,7 @@
 import os
 import subprocess
 
+raise Exception(f'{__file__} did run!')
 
 version_template = r'version_template.h'
 version_generated = r'version_generated.h'
