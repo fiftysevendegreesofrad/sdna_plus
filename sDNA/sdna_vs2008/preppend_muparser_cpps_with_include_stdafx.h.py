@@ -25,8 +25,8 @@ for file_ in glob.glob(files_glob):
     with open(file_, 'rt') as f:
         content = f.read()
 
-    if not content.starts_with(PREFIX):
-        content =  PREFIX + content
+    if not content.startswith(PREFIX):
+        content =  PREFIX + '\n' + content
 
     with open(file_, 'wt') as f:
         f.write(content)
