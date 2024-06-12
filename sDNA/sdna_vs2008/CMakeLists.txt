@@ -337,9 +337,7 @@ add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
-if (NOT NO_PRECOMPILED_HEADER)
-    target_precompile_headers(${PROJECT_NAME} PRIVATE "stdafx.h")
-endif()
+target_precompile_headers(${PROJECT_NAME} PRIVATE "stdafx.h")
 
 # Uncommenting this line without the #include stdafx.hs in MuParser will recreate
 # the linker errors seen when attempting a build without a pre-compiled header.
@@ -946,12 +944,10 @@ endif()
 # not defined for targets created by the add_custom_target() command.
 # "
 # https://cmake.org/cmake/help/latest/command/add_custom_command.html#build-events
-if (MSVC AND (NOT NO_PRECOMPILED_HEADER))
-    add_custom_command(
-        TARGET ${PROJECT_NAME} PRE_BUILD
-        COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/preppend_muparser_cpps_with_include_stdafx.h.py"
-    )
-endif()
+add_custom_command(
+    TARGET ${PROJECT_NAME} PRE_BUILD
+    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/preppend_muparser_cpps_with_include_stdafx.h.py"
+)
 
 add_custom_command(
     TARGET ${PROJECT_NAME} PRE_BUILD

@@ -428,9 +428,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -466,9 +465,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -508,9 +506,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -553,9 +550,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -601,9 +597,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='prob_route_release|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -646,9 +641,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='prob_route_release|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -694,9 +688,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='benchmark|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -740,9 +733,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='benchmark|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -789,9 +781,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='benchmark_probroutes|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -833,9 +824,8 @@ python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='benchmark_probroutes|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -881,9 +871,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='package|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -925,9 +914,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='package|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -972,9 +960,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='vtune|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -1010,9 +997,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='vtune|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -1051,9 +1037,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_speedup|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -1090,9 +1075,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_speedup|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -1132,9 +1116,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='fast_debug|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -1177,9 +1160,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='fast_debug|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -1225,9 +1207,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug64|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -1263,9 +1244,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug64|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
@@ -1304,9 +1284,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='parallel_debug|Win32'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copy geos dll</Message>
@@ -1342,9 +1321,8 @@ IF "$(Platform)"=="x64" ( copy $(TargetDir)\geos_c.dll $(ProjectDir)\..\..\outpu
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='parallel_debug|x64'">
     <PreBuildEvent>
-      <Message>Getting version number and adjusting MuParser source to use precompiled header in MSVC</Message>
-      <Command>python version_generated.h.creator.py &amp;&amp;
-python preppend_muparser_cpps_with_include_stdafx.h.py</Command>
+      <Message>Getting version number</Message>
+      <Command>python version_generated.h.creator.py</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>copying geos dll</Message>
