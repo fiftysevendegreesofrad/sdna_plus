@@ -1,4 +1,4 @@
-name: "Compile with CMake, MSBuild and VS 2022 for Windows, and test"
+name: "Compile with CMake, and Zig for Windows, and test"
 
 on:
   workflow_dispatch:
@@ -51,7 +51,7 @@ jobs:
       run: pip install ninja
 
 
-    - name: Create Visual Studio build system from CMake
+    - name: Create Ninja build system from CMake
       shell: cmd
       run: |
         set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
