@@ -25,7 +25,7 @@ if [%~3]==[] (
 
 set BUILD_DIR=%THIS_FILE_DIR%\build_output_cmake_%PLATFORM%
 
-cmake -G "Ninja Multi-Config" ^
+cmake -G "%GENERATOR%" ^
       -B %BUILD_DIR% ^
       -S %SRC_DIR% ^
       -D USE_ZIG=%USE_ZIG%

@@ -1,7 +1,7 @@
 setlocal
 
 if [%~1]==[] (
-    set "GENERATOR=Visual Studio 17 2022"
+    set GENERATOR="Visual Studio 17 2022"
 ) else (
     set GENERATOR=%~1
 )
