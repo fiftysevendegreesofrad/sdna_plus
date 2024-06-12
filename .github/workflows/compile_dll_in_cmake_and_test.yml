@@ -7,7 +7,7 @@ on:
     branches: [ "CMake", "Zig_MuParser_Include_stdafx.h"]
 
   pull_request:
-    branches: [ "CMake" "Zig_MuParser_Include_stdafx.h"]
+    branches: [ "CMake", "Zig_MuParser_Include_stdafx.h"]
 
 env:
   CONFIGURATION: Release
