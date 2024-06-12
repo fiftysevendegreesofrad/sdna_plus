@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "CMake"]
+    branches: [ "CMake", "Zig_MuParser_Include_stdafx.h"]
 
   pull_request:
-    branches: [ "CMake" ]
+    branches: [ "CMake" "Zig_MuParser_Include_stdafx.h"]
 
 env:
   CONFIGURATION: Release
