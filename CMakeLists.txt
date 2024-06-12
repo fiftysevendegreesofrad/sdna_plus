@@ -5,10 +5,14 @@ cmake_minimum_required(VERSION 3.26)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(USE_ZIG OFF CACHE BOOL "Pull in the Zigcross tool chain, set CMAKE_CXX_COMPILER to 'zig c++' etc." )
+
+if (USE_ZIG)
 # https://learn.microsoft.com/en-us/vcpkg/users/triplets#vcpkg_chainload_toolchain_file
 set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE
     "${CMAKE_CURRENT_SOURCE_DIR}/zigcross-cmake/zig-toolchain-aarch64.cmake"
 )
+endif()
 
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
