@@ -1,13 +1,13 @@
-name: "Compile with CMake, and VS 2022 for Windows, and test"
+name: "Compile with CMake, MSBuild and VS 2022 for Windows, and test"
 
 on:
   workflow_dispatch:
 
   push:
-    branches: [ "CMake", "Zig_MuParser_Include_stdafx.h"]
+    branches: [ "CMake"]
 
   pull_request:
-    branches: [ "CMake", "Zig_MuParser_Include_stdafx.h"]
+    branches: [ "CMake" ]
 
 env:
   CONFIGURATION: Release
@@ -65,6 +65,7 @@ jobs:
     - name: Create_sDNA_Installer_with_CMake
       shell: cmd
       # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
+      # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
       run: |
         set VCPKG_ROOT=C:/vcpkg
         .\create_installer_with_CMake.bat

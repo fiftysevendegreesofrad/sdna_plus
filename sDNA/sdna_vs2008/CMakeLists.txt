@@ -334,6 +334,8 @@ set(LIBRARY_OUTPUT_DIRECTORY
 
 add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
+# If building with Ninja, by default libraries are prefixed with "lib"
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
@@ -944,7 +946,6 @@ endif()
 # not defined for targets created by the add_custom_target() command.
 # "
 # https://cmake.org/cmake/help/latest/command/add_custom_command.html#build-events
-
 add_custom_command(
     TARGET ${PROJECT_NAME} PRE_BUILD
     COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
