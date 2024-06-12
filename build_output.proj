@@ -1,6 +1,11 @@
 <!-- Build both 32 and 64 bit versions and put in output folder along with docs and scripts -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+<!-- Stop Visual Studio skipping the Prebuild step -->
+<!-- https://stackoverflow.com/a/29050247/20785734 -->
+<PropertyGroup>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+</PropertyGroup> 
 
 <ItemGroup>
 

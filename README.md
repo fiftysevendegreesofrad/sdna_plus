@@ -49,7 +49,7 @@ See BUILD.md for notes regarding the impact of switching to CMake from sdna_vs20
    - `git clone --depth=1 https://github.com/microsoft/vcpkg/`
    - `cd vcpkg`
    - `setx VCPKG_ROOT c:\path_to_vcpkg_repo\vcpkg`
-   - `.\bootstrap-vckg.bat`
+   - `.\bootstrap-vcpkg.bat`
 * 5-6 GB free disk space (to be safe).
 
 Fire up the Visual Studio Developer Command Prompt. 

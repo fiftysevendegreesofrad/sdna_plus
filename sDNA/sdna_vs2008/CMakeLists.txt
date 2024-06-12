@@ -10,10 +10,21 @@ set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
 
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
-set(CMAKE_TOOLCHAIN_FILE
- "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
- )
 
+
+if (IS_READABLE ENV{VCPKG_ROOT})
+    SET(VCPKG_ROOT 
+    "$ENV{VCPKG_ROOT}"
+    )
+else()
+    SET(VCPKG_ROOT 
+    "$ENV{VCPKG_INSTALLATION_ROOT}"
+    )
+endif()
+
+set(CMAKE_TOOLCHAIN_FILE
+    "{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+)
  
 set(VCPKG_MANIFEST_DIR "${CMAKE_SOURCE_DIR}/../..")
 
@@ -236,6 +247,7 @@ set(Headers
     "unique_id.h"
     "version_template.h"
     "version_generated.h.creator.py"
+    "IteratorTypeErasure/any_iterator/any_iterator.hpp"
 )
 source_group("Headers" FILES ${Headers})
 
@@ -334,6 +346,8 @@ set(LIBRARY_OUTPUT_DIRECTORY
 
 add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
+# If building with Ninja, by default libraries are prefixed with "lib"
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
@@ -471,47 +485,48 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     "../muparser/drop/include"
 )
 
+
+
+if(MSVC)
 ################################################################################
 # Compile definitions
 ################################################################################
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-"$<$<CONFIG:benchmark_probroutes>:"
-    "NDEBUG;"
-    "BENCHMARK;"
-    "PROB_ROUTE_CODE"
-">"
-"$<$<CONFIG:Debug_speedup>:"
-    "_DEBUG"
-">"
-"$<$<CONFIG:Debug>:"
-    "_DEBUG;"
-    "_SDNADEBUG"
-">"
-"$<$<CONFIG:fast_debug>:"
-    "NDEBUG"
-">"
-"$<$<CONFIG:parallel_debug>:"
-    "_DEBUG;"
-    "_SDNADEBUG"
-">"
-"$<$<CONFIG:Release>:"
-    "NDEBUG"
-">"
-"$<$<CONFIG:vtune>:"
-    "_DEBUG"
-">"
-"WIN32;"
-"_WINDOWS;"
-"_USRDLL;"
-"SDNA_VS2008_EXPORTS;"
-"UNICODE;"
-"_UNICODE"
-)
-
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        "$<$<CONFIG:benchmark_probroutes>:"
+            "NDEBUG;"
+            "BENCHMARK;"
+            "PROB_ROUTE_CODE"
+        ">"
+        "$<$<CONFIG:Debug_speedup>:"
+            "_DEBUG"
+        ">"
+        "$<$<CONFIG:Debug>:"
+            "_DEBUG;"
+            "_SDNADEBUG"
+        ">"
+        "$<$<CONFIG:fast_debug>:"
+            "NDEBUG"
+        ">"
+        "$<$<CONFIG:parallel_debug>:"
+            "_DEBUG;"
+            "_SDNADEBUG"
+        ">"
+        "$<$<CONFIG:Release>:"
+            "NDEBUG"
+        ">"
+        "$<$<CONFIG:vtune>:"
+            "_DEBUG"
+        ">"
+        "WIN32;"
+        "_WINDOWS;"
+        "_USRDLL;"
+        "SDNA_VS2008_EXPORTS;"
+        "UNICODE;"
+        "_UNICODE"
+    )
 ################################################################################
 # Compile and link options
 ################################################################################
-if(MSVC)
     if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Any CPU")
         target_compile_options(${PROJECT_NAME} PRIVATE
             $<$<CONFIG:benchmark_probroutes>:
@@ -918,6 +933,27 @@ if(MSVC)
             /SUBSYSTEM:WINDOWS
         )
     endif()
+elseif(WIN32) # E.g. zig c++ for Windows
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        "$<$<CONFIG:Debug>:"
+            "_DEBUG;"
+            "_SDNADEBUG"
+        ">"
+        "$<$<CONFIG:Release>:"
+            "NDEBUG"
+        ">"
+        "WIN32;"
+        "_WINDOWS;"
+        "_USRDLL;"
+        "SDNA_VS2008_EXPORTS;"
+        "UNICODE;"
+        "_UNICODE"
+    )
+else() # Not MSVC
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        "UNICODE;"
+        "_UNICODE"
+    )
 endif()
 
 ################################################################################
@@ -957,9 +993,11 @@ add_custom_command(
 ################################################################################
 # Extra files packaged at build time (pre built geos dlls)
 ################################################################################
-add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} "${LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>"
-)
+if (Geos_binary)
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} "${LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>"
+    )
+endif()
 
 

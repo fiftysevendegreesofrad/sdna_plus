@@ -145,7 +145,7 @@ struct Point
 	}
 	static Point proportional_midpoint(Point *a,Point *b,float proportion)
 	{
-		if (!_isnan(proportion))
+		if (!isnan(proportion))
 		{
 			assert (a != NULL);
 			assert (b != NULL);

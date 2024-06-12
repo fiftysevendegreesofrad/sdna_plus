@@ -1,13 +1,27 @@
 #pragma once
+
 #ifdef SDNA_EXPORTS
 
+// Tricky.  See https://stackoverflow.com/a/2164853/20785734
+#ifdef _WINDOWS
 #define SDNA_API extern "C" __declspec(dllexport) 
+#else
+#define SDNA_API extern "C"
+#endif
 
 #else
 
+#ifdef _WINDOWS
 #define SDNA_API extern "C" __declspec(dllimport) 
+#else
+#define SDNA_API
+#endif
+
+
 #include <boost/shared_ptr.hpp>
 #include <vector>
+
+
 
 #endif
 

@@ -204,7 +204,7 @@ public:
 #elif defined(_AMD64_)
 	typedef long long point_index_t;
 #else
-#error "Unrecognised architecture"
+	typedef long long point_index_t;
 #endif
 
 struct Edge : public IndexedObject<EdgeId> // the algorithm edge structure

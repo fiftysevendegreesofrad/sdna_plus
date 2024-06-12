@@ -187,7 +187,7 @@ class HybridMetricEvaluator : public MetricEvaluator
 	bool buffers_set, no_infinity_warning;
 	
 	void set_buffer_pointers();
-	HybridMetricEvaluator& operator=(const HybridMetricEvaluator&) {assert(false);}
+	HybridMetricEvaluator& operator=(const HybridMetricEvaluator& other) {assert(false); return *this;}
 	bool test_linearity_inner(float val,float fwd);
 
 public:
