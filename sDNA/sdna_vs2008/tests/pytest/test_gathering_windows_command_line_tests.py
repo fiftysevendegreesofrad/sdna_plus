@@ -83,7 +83,7 @@ if not SDNA_BIN_DIR:
         dir_ = os.path.join(os.path.dirname(SDNA_DLL),'..','bin') 
         if not is_sdna_bin_dir(dir_):
             raise Exception(
-                ("Could not find sDNA 'bin'/ python files"
+                ("Could not find sDNA 'bin'/ python files "
                 "associated with SDNA_DLL: %s. "
                 "Set SDNA_BIN_DIR to the dir containing the "
                 "sDNA 'bin'/python files to be tested "
@@ -164,6 +164,7 @@ def batch_file_tests():
 
         yield file_
 
+print('Batch files being parsed: %s' % '\n'.join(batch_file_tests()))
 
 def windows_test_commands():
     for file_ in batch_file_tests():
