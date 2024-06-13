@@ -33,7 +33,10 @@ project(${PROJECT_NAME})
 
 
 
-if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "x64")
+if (("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "x64") OR (NOT MSVC))
+    # Default to x64 on the two Ninja generators. 
+    # Ninja takes the platform from the env apparently, 
+    # but that requires much more set up.  
     set(Bin_sub_dir 
         "/x64"
     )
