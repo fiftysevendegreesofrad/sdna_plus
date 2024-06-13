@@ -47,20 +47,6 @@ jobs:
 
 
 
-    # - name: Create Visual Studio build system from CMake
-    #   shell: cmd
-    #   run: |
-    #     set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
-    #     cmake -B output -S .
-
-
-
-
-    # - name: Build sDNA
-    #   shell: cmd
-    #   run: |
-    #     set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
-    #     cmake --build output
 
     - name: Create_sDNA_Installer_with_CMake
       shell: cmd
@@ -68,12 +54,7 @@ jobs:
       # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
       run: |
         set VCPKG_ROOT=C:/vcpkg
-        .\create_installer_with_CMake.bat
-
-    # - name: Output the name of the .msi installer file
-    #   id: output_installer_file_name
-    #   shell: bash
-    #   run: echo "name=$(ls sDNA_setup_win_v*.msi)" >> "$GITHUB_OUTPUT"  
+        .\create_installer_with_Visual_Studio_17_2022.bat
 
 
     - name: Output the name of the .msi installer file
