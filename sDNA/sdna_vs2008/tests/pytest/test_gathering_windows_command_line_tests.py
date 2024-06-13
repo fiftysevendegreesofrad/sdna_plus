@@ -25,7 +25,7 @@ except ImportError:
 
 OUTPUT_SUFFIX = 'py%s' % sys.version_info[0]
 
-REPO_ROOT_DIR = os.path.join(os.path.dirname(__file__), r'..\..\..\..')
+REPO_ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), r'..\..\..\..'))
 
 ON_WINDOWS = (sys.platform == 'win32')
 
@@ -35,7 +35,7 @@ SDNA_DLL_LOCATIONS = (
              r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll',
             )
 
-SDNA_DLL = os.getenv('sdnadll', '')
+SDNA_DLL = os.path.abspath(os.getenv('sdnadll', ''))
 
 SDNA_BIN_SUFFIXES = ('integral', 'prepare', 'learn', 'predict')
 
