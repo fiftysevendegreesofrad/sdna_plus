@@ -1,0 +1,122 @@
+name: "Debug tests of Zig build for Windows"
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: [ "Zig", "Zig_MuParser_Include_stdafx.h"]
+
+  pull_request:
+    branches: [ "Zig", "Zig_MuParser_Include_stdafx.h" ]
+
+env:
+  CONFIGURATION: Release
+  PLATFORM: x64
+  BOOST_VERSION: '1.8.3'
+
+
+jobs:
+  build_and_upload_installer:
+    name: Try to build output on Windows with Zig C++ (Ninja and CMake)
+    runs-on: windows-2022
+    outputs:
+      installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
+    steps:
+    - uses: actions/checkout@v4
+
+
+
+
+    - name: 'Add "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" to path'
+      shell: bash
+      run: echo "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" >> $GITHUB_PATH
+
+
+
+    - name: Install Zig
+      uses: goto-bus-stop/setup-zig@v2
+      with:
+        version: 0.13.0
+
+    - name: Install Ninja
+      run: pip install ninja
+
+
+    - name: Build sDNA output with Zig and Ninja 
+      shell: cmd
+      # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
+      # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
+      run: |
+        set VCPKG_ROOT=C:/vcpkg
+        .\create_output_with_Zig.bat
+
+
+
+
+
+
+    - name: upload_output
+      id: installer-upload-step
+      uses: actions/upload-artifact@v4
+      with:
+        name: output_installed_dir_tree
+        path: output
+
+
+  test_installer:
+
+    needs: build_and_upload_installer
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+
+    name: "Download and run sDNA installer, and run diff tests on it. "
+    
+    runs-on: windows-2022
+    # Note:  The Windows server 2022 Github runner image already includes  
+    # Python (currently 6 versions from 3.7 to 3.12) and a couple of 
+    # VC++ redistributables.  Desktop users may need to install these 
+    # themselves, in addition to sDNA.      
+    #
+    # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
+    #
+
+
+    steps:
+
+
+    - uses: actions/checkout@v4
+
+    - name: Download output tree built in previous job
+      uses: actions/download-artifact@v4
+      with:
+        name: output_installed_dir_tree
+        path: output
+
+    - shell: cmd
+      run: dir .
+
+    - shell: cmd
+      run: dir output
+
+    - shell: cmd
+      run: dir output\Release
+      
+    - shell: cmd
+      run: dir output\Release\bin
+
+    - shell: cmd
+      run: dir output\Release\x64
+
+
+
+    - name: Run regression tests
+      uses: ./.github/actions/run_regression_tests_without_pytest
+      with:
+        python_version: ${{ matrix.python_version }}
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+        ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
+        sdnadll: 'output\Release\x64\sdna_vs2008.dll'
+        sdna_debug: ""
