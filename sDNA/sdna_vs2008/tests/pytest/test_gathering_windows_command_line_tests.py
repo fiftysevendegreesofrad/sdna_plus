@@ -11,8 +11,6 @@ import subprocess
 import collections
 import tempfile
 
-import pytest
-
 import filter_out_debug_only_output
 
 PYTHON_3 = sys.version_info >= (3,)
@@ -805,11 +803,15 @@ diff_test_expected_files = [diff_test.diff_command.expected_output_file
                             for diff_test in diff_tests
                            ]
 
+try:
+    import pytest
 
-@pytest.mark.parametrize('diff_test', diff_tests, ids = diff_test_expected_files)
-def test_diff_(diff_test):
-    diff_test.run()
+    @pytest.mark.parametrize('diff_test', diff_tests, ids = diff_test_expected_files)
+    def test_diff_(diff_test):
+        diff_test.run()
 
+except ImportError:
+    pass
 
 if __name__=='__main__':
 
