@@ -85,13 +85,14 @@ if not SDNA_BIN_DIR:
         dir_ = os.path.join(os.path.dirname(SDNA_DLL),'..','bin') 
         if not is_sdna_bin_dir(dir_):
             raise Exception(
-                "Could not find sDNA 'bin'/ python files"
+                ("Could not find sDNA 'bin'/ python files"
                 "associated with SDNA_DLL: %s. "
                 "Set SDNA_BIN_DIR to the dir containing the "
                 "sDNA 'bin'/python files to be tested "
-                "(sdna+ %s +.py), or ensure  is part of a"
+                "(sdna+ %s +.py), or ensure the dll is part of a"
                 "complete sDNA installation. "
-                % (SDNA_DLL, SDNA_BIN_SUFFIXES, SDNA_DLL)
+                )
+                % (SDNA_DLL, SDNA_BIN_SUFFIXES)
                 )
 
     SDNA_BIN_DIR = dir_

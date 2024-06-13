@@ -103,6 +103,9 @@ jobs:
     - shell: cmd
       run: dir output\Release
 
+    - shell: cmd
+      run: dir output\Release\x64
+
 
 
     - name: Run regression tests
