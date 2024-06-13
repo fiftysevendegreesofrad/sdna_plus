@@ -31,7 +31,7 @@ if [%~3]==[] (
 set BUILD_DIR=%THIS_FILE_DIR%\build_output_cmake_%PLATFORM%
 
 cmake -G "%GENERATOR%" ^
-      -A %PLATFORM% ^  
+      -A %PLATFORM% ^
       -B %BUILD_DIR% ^
       -S %SRC_DIR% ^
       -D USE_ZIG=%USE_ZIG%
