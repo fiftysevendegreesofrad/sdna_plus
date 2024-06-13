@@ -138,7 +138,6 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: installer_file
-        path: output
 
     - shell: cmd
       run: dir .

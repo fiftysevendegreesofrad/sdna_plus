@@ -93,6 +93,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: output_installed_dir_tree
+        path: output
 
     - shell: cmd
       run: dir .
