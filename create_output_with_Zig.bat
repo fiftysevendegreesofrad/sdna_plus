@@ -8,4 +8,4 @@ cmake -G "Ninja" ^
       -B %THIS_FILE_DIR%\build_output_cmake_Zig ^
       -S %SRC_DIR% ^
       -D USE_ZIG=ON && ^
-cmake --build %BUILD_DIR% --config Release
+cmake --build %THIS_FILE_DIR%\build_output_cmake_Zig --config Release
