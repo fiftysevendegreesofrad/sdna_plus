@@ -278,7 +278,11 @@ public:
 	
 	sDNAGeometryCollection(string name,sDNAGeom_t type) : name(name), type(type) {}
 	
-	void set_metadata(string name,sDNAGeom_t type,vector<FieldMetaData> fieldmetadata) {
+	void set_metadata(string name_,sDNAGeom_t type_,vector<FieldMetaData> fieldmetadata) {
+		// Explicitly set the strings here.  Deferring to the other constructor above
+		// is more idiomatic, but this enables avoiding overloading operator=
+		name = name_;
+		type = type_;
 		BOOST_FOREACH (FieldMetaData &fmd , fieldmetadata)
 		{
 			m_datanames.add_string(fmd.name);
@@ -288,7 +292,6 @@ public:
 	}
 
 	sDNAGeometryCollection(string name,sDNAGeom_t type,vector<FieldMetaData> fieldmetadata)
-		: sDNAGeometryCollection(name, type)
 	{ 
         set_metadata(name, type, fieldmetadata);
 	}
