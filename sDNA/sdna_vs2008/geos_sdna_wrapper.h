@@ -95,7 +95,7 @@ public:
 		hDLL = LoadLibrary(geos_dll_path_w);
 		if (hDLL == NULL)
 		{
-			cout << "GEOS DLL not found" << endl;
+			cout << "GEOS DLL not found at " + *geos_dll_path_w << endl;
 		}
 		else
 		{
