@@ -275,7 +275,7 @@ bool HybridMetricEvaluator::test_linearity_inner(float val,float fwd)
 
 float HybridMetricEvaluator::evaluate_edge_internal(TraversalEventAccumulator const& acc,const Edge * const e,bool warn_if_bad,bool provide_geometry_variables)
 {
-	if (!creating_thread_number==OMP_THREAD)
+	if (creating_thread_number!=OMP_THREAD)
 	{
 		//not an assert as parallel version doesn't have them
 		throw SDNARuntimeException("MetricEvaluator threading issue");
@@ -342,7 +342,7 @@ float HybridMetricEvaluator::evaluate_edge_internal(TraversalEventAccumulator co
 
 float HybridMetricEvaluator::evaluate_junction(float turn_angle,const Edge * const prev,const Edge * const next)
 {
-	if (!creating_thread_number==OMP_THREAD)
+	if (creating_thread_number!=OMP_THREAD)
 	{
 		//not an assert as parallel version doesn't have them
 		throw SDNARuntimeException("MetricEvaluator threading issue");	
