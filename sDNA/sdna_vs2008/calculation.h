@@ -27,7 +27,7 @@ struct DestinationEdgeProcessingTask
 		//cout << "constructed DEPT redge=" << re->get_id().id << " cc=" << cc << " length_inside=" << len << endl; 
 	}
 	DestinationEdgeProcessingTask getRadialEquivalent(IdIndexedArray<double,EdgeId> &radialcosts,
-																			MetricEvaluator* metric_eval);
+																			MetricEvaluator* metric_eval) const;
 };
 
 //This represents a segment of a link to process as a destination
@@ -427,18 +427,18 @@ private:
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
 											  boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
 											  double& total_weight_this_origin_sample_radius);
-	void process_geodesic(DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
+	void process_geodesic(const DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
 											  vector<Edge*> &intermediate_edges,
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
 											  MetricEvaluator *analysis_evaluator,
 											  double& total_weight_this_origin_sample_radius);
-	double backtrace(DestinationEdgeProcessingTask &t,SDNAPolyline * origin_link,
+	double backtrace(const DestinationEdgeProcessingTask &t,SDNAPolyline * origin_link,
 										  IdIndexedArray<Edge *  ,EdgeId> &anal_backlinks_edge,
 										  vector<Edge*> &intermediate_edges,Edge **origin_exit_edge,bool &passed_intermediate_filter);
 	void process_origin(SDNAPolyline *origin,int r,boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
 										MetricEvaluator *analysis_evaluator,double& total_weight_this_origin_sample_radius);
 	void finalize_radius_geometry(SDNAPolyline *origin,int r,boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius);
-	static double get_geodesic_analytical_cost(DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge);
+	static double get_geodesic_analytical_cost(const DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge);
 
 	MetricEvaluator* create_metric_from_config(ConfigStringParser &config,string metric_field,string hybrid_line_expr_field,string hybrid_junc_expr_field,string custom_cost_field);
 
@@ -480,7 +480,7 @@ private:
 	vector<LengthWeightingStrategy> datatokeep;
 	vector<NetExpectedDataSource<string>> textdatatokeep;
 
-	void unpack_config(char *configstring)
+	void unpack_config(const char *configstring)
 	{
 		ConfigStringParser config(//allowable keywords
 								  "preserve_net_config;start_gs;end_gs;radii;cont;metric;pre;post;nobetweenness;nojunctions;nohull;linkonly;forcecontorigin;nqpdn;nqpdd;"
@@ -712,12 +712,12 @@ private:
 
 		sort(radii.begin(),radii.end());
 		if (!config.get_bool("bandedradii"))
-			lower_bound_radii.swap(vector<double>(radii.size(),0.));
+			lower_bound_radii.assign(radii.size(),0.);
 		else
 		{
 			if (cont_space)
 				throw BadConfigException("Cannot use banded radius and continuous space together.\nIf you need this feature, please contact the sDNA team.");
-			lower_bound_radii.swap(vector<double>(1,0.));
+			lower_bound_radii.assign(1,0.);
 			lower_bound_radii.insert(lower_bound_radii.end(),radii.begin(),radii.end()-1);
 		}
 
@@ -1031,7 +1031,7 @@ public:
 	char ** get_short_output_names_c() { return output_map.get_short_output_names_c(); }
 	void get_all_outputs_c(float* buffer, long arcid)	{ output_map.get_outputs_c(buffer,net->link_container[arcid],oversample); }
 	
-	SDNAIntegralCalculation(Net *net, char *configstring,
+	SDNAIntegralCalculation(Net *net,const char *configstring,
 		int (__cdecl *set_progressor_callback)(float), int(__cdecl *print_warning_callback)(const char*), vector<boost::shared_ptr<Table<float>>>* tables1d_in=NULL)
 		: Calculation(net,print_warning_callback), 
 	      set_progressor_callback(set_progressor_callback),

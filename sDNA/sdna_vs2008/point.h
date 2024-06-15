@@ -82,7 +82,7 @@ struct Point
 		retval << "(" << x << "," << y << "," << z << ")";
 		return retval.str();
 	}
-	static float distance(Point &a, Point &b)
+	static float distance(const Point &a, const Point &b)
 	{
 		return (b-a).length();
 	}
