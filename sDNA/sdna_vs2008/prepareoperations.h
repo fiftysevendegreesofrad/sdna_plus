@@ -25,7 +25,7 @@ private:
 	void move_junction(JunctionMapKey &key, double new_x, double new_y, float new_z);
 	void move_link_endpoint(SDNAPolyline* link, junction_option_type end, double new_x, double new_y, float new_z);
 	void get_duplicate_links(vector<SDNAPolyline*> &duplicates, vector<SDNAPolyline*> &originals,
-		bool partial_search = false, const vector<SDNAPolyline*> &subset = vector<SDNAPolyline*>());
+		bool partial_search = false, vector<SDNAPolyline*> &subset = vector<SDNAPolyline*>());
 	hash_t get_link_hash(SDNAPolyline *s);
 	bool all_enforced_data_identical(SDNAPolyline *s1,SDNAPolyline *s2);
 	
@@ -66,7 +66,7 @@ public:
 	bool handle_near_misses, handle_traffic_islands, handle_duplicates, handle_isolated, handle_split_links;
 	bool prepare_no_operation; // overrides above and does nothing except initialize data - useful for debug. differs from internal interface which expects run() not to be called and doesn't init data
 
-	PrepareOperation(Net *net, const char *configstring,int (__cdecl *print_warning_callback)(const char*)) 
+	PrepareOperation(Net *net, char *configstring,int (__cdecl *print_warning_callback)(const char*)) 
 		: next_new_arcid(-1), 
 		Calculation(net,print_warning_callback)
 	{

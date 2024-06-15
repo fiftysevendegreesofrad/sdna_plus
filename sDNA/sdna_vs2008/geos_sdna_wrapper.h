@@ -69,7 +69,7 @@ public:
 	GEOSGeometry *UnaryUnion(GEOSGeometry *g1) {return (*GEOSUnaryUnion)(g1);}
 	int GeomTypeId(const GEOSGeometry *g1) {return (*GEOSGeomTypeId)(g1);}
 
-	char address_in_this_module = 0;
+	static const char address_in_this_module = 0;
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
 		//find path of this dll and look for geos_c.dll in the same place
@@ -95,7 +95,7 @@ public:
 		hDLL = LoadLibrary(geos_dll_path_w);
 		if (hDLL == NULL)
 		{
-			cout << "GEOS DLL not found at " + *geos_dll_path_w << endl;
+			cout << "GEOS DLL not found" << endl;
 		}
 		else
 		{

@@ -48,7 +48,7 @@ const char* outfieldtype_to_pythontype(OutputFieldType t)
 sDNAGeometryCollectionIterator::sDNAGeometryCollectionIterator (sDNAGeometryCollection *gc) 
 	: it(gc->items.begin()), gc(gc) 
 {
-	databuffer.assign(gc->m_datanames.size(),SDNAOutputUnion(0.f));
+	databuffer.swap(vector<SDNAOutputUnion>(gc->m_datanames.size(),SDNAOutputUnion(0.f)));
 }
 
 int sDNAGeometryCollectionIterator::next(long *num_parts,SDNAOutputUnion **data)
@@ -82,8 +82,8 @@ SDNAPolylineDataSourceGeometryCollectionIteratorWrapper::SDNAPolylineDataSourceG
 		assert((*it)->getNet()==net_it.getNet()); // all data sources must derive from the same net
 		numoutputs += (*it)->get_output_length();
 	}
-	databuffer.assign(numoutputs,0.f);
-	variantbuffer.assign(numoutputs,0.f);
+	databuffer.swap(vector<SDNAOutputUnion>(numoutputs,0.f));
+	variantbuffer.swap(vector<SDNAVariant>(numoutputs,0.f));
 }
 
 size_t SDNAPolylineDataSourceGeometryCollectionWrapper::get_field_metadata(char*** names_c,char*** shortnames_c,char ***pythontypes_c)

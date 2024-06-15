@@ -289,9 +289,9 @@ bool SDNAIntegralCalculation::run_internal_throwing_exceptions()
 	if (output_skim)
 	{
 		initialize_skim_zones();
-		skim_matrix_sum_distance.assign(skim_origins.size(),vector<long double>(skim_destinations.size(),0.));
-		skim_matrix_weight.assign(skim_origins.size(),vector<long double>(skim_destinations.size(),0.));
-		skim_matrix_n.assign(skim_origins.size(),vector<unsigned long>(skim_destinations.size(),0l));
+		skim_matrix_sum_distance.swap(vector<vector<long double>>(skim_origins.size(),vector<long double>(skim_destinations.size(),0.)));
+		skim_matrix_weight.swap(vector<vector<long double>>(skim_origins.size(),vector<long double>(skim_destinations.size(),0.)));
+		skim_matrix_n.swap(vector<vector<unsigned long>>(skim_origins.size(),vector<unsigned long>(skim_destinations.size(),0l)));
 	}
 
 	//initialize sdna integral arrays (computed once, by this calculation)
@@ -627,7 +627,7 @@ void SDNAIntegralCalculation::process_origin(SDNAPolyline *origin,int r,boost::s
 	}
 }
 
-double SDNAIntegralCalculation::get_geodesic_analytical_cost(const DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge)
+double SDNAIntegralCalculation::get_geodesic_analytical_cost(DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge)
 {
 	return anal_best_costs_reaching_edge[*dest.routing_edge] + dest.cost_to_centre;
 }
@@ -695,7 +695,7 @@ void SDNAIntegralCalculation::process_destination(DestinationEdgeProcessingTask 
 	}
 }
 
-void SDNAIntegralCalculation::process_geodesic(const DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
+void SDNAIntegralCalculation::process_geodesic(DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
 											  vector<Edge*> &intermediate_edges,
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
 											  MetricEvaluator *analysis_evaluator,
@@ -856,12 +856,12 @@ void SDNAIntegralCalculation::process_geodesic(const DestinationEdgeProcessingTa
 }
 
 DestinationEdgeProcessingTask DestinationEdgeProcessingTask::getRadialEquivalent(IdIndexedArray<double,EdgeId> &radialcosts,
-																			MetricEvaluator* metric_eval) const
+																			MetricEvaluator* metric_eval)
 {
 	return DestinationSDNAPolylineSegment(geom_edge,length_of_edge_inside_radius).getDestinationEdgeProcessingTaskRadial(radialcosts,metric_eval);
 }
 
-double SDNAIntegralCalculation::backtrace(const DestinationEdgeProcessingTask &t,SDNAPolyline * const origin_link,
+double SDNAIntegralCalculation::backtrace(DestinationEdgeProcessingTask &t,SDNAPolyline * const origin_link,
 										  IdIndexedArray<Edge *  ,EdgeId> &backlinks_edge,
 										  vector<Edge*> &intermediate_edges,Edge **origin_exit_edge,bool& passed_intermediate_filter)
 {

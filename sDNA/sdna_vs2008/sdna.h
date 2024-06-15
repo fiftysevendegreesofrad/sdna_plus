@@ -44,7 +44,7 @@ SDNA_API int __stdcall net_iterator_next(NetIterator* it, long *arcid,long *geom
 SDNA_API int __stdcall net_iterator_next_3d(NetIterator* it, long *arcid,long *geom_length,double **point_array_x,double **point_array_y,float **point_array_z,float **data);
 SDNA_API void __stdcall net_iterator_destroy(NetIterator *it);
 
-SDNA_API Calculation* __stdcall calc_create(char *name, const char *config, Net *net,
+SDNA_API Calculation* __stdcall calc_create(char *name, char *config, Net *net,
 									  int (__cdecl *set_progressor_callback)(float),
 									  int (__cdecl *print_warning_callback)(const char*),
 									  vector<boost::shared_ptr<Table<float>>>* tables1d=NULL);
