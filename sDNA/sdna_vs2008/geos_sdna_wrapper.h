@@ -69,19 +69,19 @@ public:
 	GEOSGeometry *UnaryUnion(GEOSGeometry *g1) {return (*GEOSUnaryUnion)(g1);}
 	int GeomTypeId(const GEOSGeometry *g1) {return (*GEOSGeomTypeId)(g1);}
 
-	// static const char address_in_this_module = 0;
+	static const char address_in_this_module = 0;
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
 		//find path of this dll and look for geos_c.dll in the same place
 		HMODULE this_dll_handle;
-		// HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-		// 	(LPCTSTR)&address_in_this_module,
-		// 	&this_dll_handle
-		// 	);
-		HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-			(LPCTSTR)"sdna_vs2008.dll"
+		HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+			(LPCTSTR)&address_in_this_module,
 			&this_dll_handle
 			);
+		// HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+		// 	(LPCTSTR)"sdna_vs2008.dll"
+		// 	&this_dll_handle
+		// 	);
 		assert(retval);
 		string this_dll_path = dllPathFromHMODULE(this_dll_handle);
 		char drive[_MAX_DRIVE];
@@ -91,7 +91,7 @@ public:
 		_splitpath(this_dll_path.c_str(),drive,dir,fname,ext);
 		//fname holds filename of this dll, but is now discarded
 		assert(0==strcmp(ext,".dll"));
-		char geos_dll_path = [_MAX_PATH];
+		char geos_dll_path[_MAX_PATH];
 		_makepath(geos_dll_path,drive,dir,"geos_c",ext);
 		wchar_t geos_dll_path_w[_MAX_PATH];
 		mbstowcs(geos_dll_path_w, geos_dll_path, strlen(geos_dll_path)+1);//Plus null
