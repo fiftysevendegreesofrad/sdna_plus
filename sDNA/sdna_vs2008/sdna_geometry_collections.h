@@ -254,9 +254,9 @@ public:
 class sDNAGeometryCollection : public sDNAGeometryCollectionBase
 {
 public:
+	//for external use
 	string name;
 	sDNAGeom_t type;
-	//for external use
 	virtual const char* get_name() {return name.c_str();}
 	virtual const char* get_type() {return type_as_string();}
 	const sDNAGeom_t getType() {return type;}
@@ -295,6 +295,7 @@ public:
 	{ 
         set_metadata(name, type, fieldmetadata);
 	}
+
 	void reserve(size_t n)
 	{
 		items.reserve(n); 
@@ -308,10 +309,14 @@ public:
 	}
 	void emergencyMemoryFree() {emergencyMemory.free();}
 	
+	sDNAGeometryCollection& operator=(const sDNAGeometryCollection& other)
+	{
+		name = other.name;
+		type = other.type;
+		return *this;
+	}
 private:		
 	EmergencyMemory emergencyMemory;
-	// string name;
-	// sDNAGeom_t type;
 	string type_s;
 	ThreadSafeVector<boost::shared_ptr<sDNADataMultiGeometry> > items;
 	OutputStringArray m_datanames, m_shortdatanames, m_pythontypes;

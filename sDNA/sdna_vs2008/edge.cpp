@@ -425,7 +425,7 @@ TraversalEventIterator TraversalEventContainer::centre(polarity direction)
 	}
 }
 
-float Edge::evaluate_me(MetricEvaluator* e,TraversalEventAccumulator& acc) const
+float Edge::evaluate_me(MetricEvaluator* e,const TraversalEventAccumulator& acc) const
 {
 	return e->evaluate_edge(acc,this);
 }
