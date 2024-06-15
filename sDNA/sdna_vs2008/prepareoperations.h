@@ -176,7 +176,7 @@ public:
 				vector<FieldMetaData> error_metadata;
 				error_metadata.push_back(FieldMetaData(fLONG,"Original id","id"));
 				error_metadata.push_back(FieldMetaData(fSTRING,"Error","Error"));
-				errors = sDNAGeometryCollection("errors",POLYLINEZ,error_metadata);
+				errors.set_metadata("errors",POLYLINEZ,error_metadata);
 				geometry_outputs.push_back(&errors);
 			}
 		}
