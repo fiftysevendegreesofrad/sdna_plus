@@ -109,7 +109,7 @@ public:
 	void add_expected_data(NetExpectedDataSource<string> *n) { expectedtextdata.push_back(n); }
 	template <class T> void add_expected_data(vector<T> &v)
 	{
-		for (vector<T>::iterator it=v.begin();it!=v.end();it++)
+		for (typename vector<T>::iterator it=v.begin();it!=v.end();it++)
 			add_expected_data(&*it);
 	}
 	Net* getNet() {return net;}
@@ -127,7 +127,7 @@ private:
 		//remove duplicates but keep in order they appear in source
 		set<string> already_seen;
 		vector<NetExpectedDataSource<T>* > strategies;
-		for (vector<NetExpectedDataSource<T>*>::iterator it=source.begin();it!=source.end();it++)
+		for (typename vector<NetExpectedDataSource<T>*>::iterator it=source.begin();it!=source.end();it++)
 			if ((*it)->is_compulsory() && already_seen.find((*it)->get_name())==already_seen.end())
 			{
 				already_seen.insert((*it)->get_name());
@@ -139,7 +139,7 @@ private:
 	{
 		internal_buffer.clear();
 		vector<NetExpectedDataSource<T>* > simplified_data = simplify_expected_data(source);
-		for (vector<NetExpectedDataSource<T>*>::const_iterator it=simplified_data.begin();it!=simplified_data.end();it++)
+		for (typename vector<NetExpectedDataSource<T>*>::const_iterator it=simplified_data.begin();it!=simplified_data.end();it++)
 			internal_buffer.add_string((*it)->get_name());
 		*names = internal_buffer.get_string_array();
 		return internal_buffer.size();
