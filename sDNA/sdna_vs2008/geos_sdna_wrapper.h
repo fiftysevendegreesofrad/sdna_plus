@@ -74,14 +74,12 @@ public:
 	{
 		//find path of this dll and look for geos_c.dll in the same place
 		HMODULE this_dll_handle;
+
 		HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
 			(LPCTSTR)&address_in_this_module,
 			&this_dll_handle
 			);
-		// HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-		// 	(LPCTSTR)"sdna_vs2008.dll"
-		// 	&this_dll_handle
-		// 	);
+
 		assert(retval);
 		string this_dll_path = dllPathFromHMODULE(this_dll_handle);
 		char drive[_MAX_DRIVE];
@@ -102,7 +100,7 @@ public:
 
 		if (hDLL == NULL)
 		{
-			cout << "GEOS DLL not found at " << endl; //+ *geos_dll_path_w << endl;
+			cout << "GEOS DLL not found at " + *geos_dll_path_w << endl;
 		}
 		else
 		{
