@@ -132,7 +132,7 @@ class Net
 	vector<Junction*> junction_from_id;
 	
 public:
-	Net();
+	Net::Net();
 
 	Junction* get_junction_from_id(JunctionId id) { return junction_from_id[id.id]; }
 	NetExpectedDataSource<float> start_gsdata,end_gsdata;

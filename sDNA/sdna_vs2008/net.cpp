@@ -111,7 +111,7 @@ void Net::ensure_junctions_created()
 		junction_storage.add_edge(backward_edge,backward_edge->get_point(-1),EDGE_END  );
 	}
 	//clear and reduce capacity to 0 to save memory
-	links_not_in_junction_map_yet.clear();
+	links_not_in_junction_map_yet.swap(vector<SDNAPolyline*>());
 }
 
 void Net::link_edges()

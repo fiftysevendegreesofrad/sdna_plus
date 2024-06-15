@@ -198,7 +198,7 @@ size_t PrepareOperation::fix_duplicate_links()
 }
 
 void PrepareOperation::get_duplicate_links(vector<SDNAPolyline*> &duplicates, vector<SDNAPolyline*> &originals,
-							  bool partial_search, const vector<SDNAPolyline*> &subset)
+							  bool partial_search, vector<SDNAPolyline*> &subset)
 {
 	assert (duplicates.size()==0);
 	assert (originals.size()==0);

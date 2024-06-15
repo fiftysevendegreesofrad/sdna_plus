@@ -7,8 +7,6 @@
 #include "tables.h"
 #pragma once
 
-class PartialNet;
-
 void run_dijkstra(PartialNet &partialnet, 
 	IdIndexedArray<double,EdgeId> &costs_to_edge_start, MetricEvaluator*, double max_depth,
 	IdIndexedArray <Edge *,EdgeId> *backlinks = NULL, JunctionCosts *jcosts = NULL);
@@ -27,7 +25,7 @@ struct DestinationEdgeProcessingTask
 		//cout << "constructed DEPT redge=" << re->get_id().id << " cc=" << cc << " length_inside=" << len << endl; 
 	}
 	DestinationEdgeProcessingTask getRadialEquivalent(IdIndexedArray<double,EdgeId> &radialcosts,
-																			MetricEvaluator* metric_eval) const;
+																			MetricEvaluator* metric_eval);
 };
 
 //This represents a segment of a link to process as a destination
@@ -112,253 +110,6 @@ public:
 	}
 };
 
-
-//this class defines a partial net (or a full one, which is a special case of a partial one)
-class PartialNet
-{
-	friend class PartialNetCollection;
-
-private:
-	Net *net;
-	double radius, lower_bound_radius;
-	bool cont_space;
-	MetricEvaluator * radial_eval;
-
-	//the following are null in the special case of this being a full net
-	//and are owned by the factory PartialNetCollection
-	IdIndexedArray<double,EdgeId> *radial_costs_to_edge_start; 
-	JunctionCosts *junction_radial_costs;
-
-	//this is null unless prob_route_method==REROUTE
-	//and also owned by factory PartialNetCollection
-	IdIndexedArray<Edge *,EdgeId> *radial_backlinks_edge;
-
-	//the following are null if uncomputed
-	boost::shared_ptr<IdIndexedArray<double,EdgeId>> anal_best_costs_reaching_edge; 
-	boost::shared_ptr<IdIndexedArray<Edge *,EdgeId> > anal_backlinks_edge; 
-	
-	//generates partial net radius r, requires radial costs to be precomputed
-	//anal_best_costs and anal_backlinks are default constructed to NULL shared ptr
-	PartialNet(Net *net,double r,double lbr,bool cont,MetricEvaluator* radial_eval,
-			IdIndexedArray<double,EdgeId> *radial_costs,IdIndexedArray<Edge *,EdgeId> *rbl,SDNAPolyline *origin,JunctionCosts *jc) 
-		: cont_space(cont), radial_eval(radial_eval),
-		  net(net), radius(r), lower_bound_radius(lbr),
-		  radial_costs_to_edge_start(radial_costs), radial_backlinks_edge(rbl), origin(origin), junction_radial_costs(jc) {};
-
-	//generates full net
-	PartialNet(Net *net,SDNAPolyline *origin) 
-		: net(net), origin(origin), radial_eval(NULL), radius(GLOBAL_RADIUS), lower_bound_radius(0), 
-		radial_costs_to_edge_start(NULL), junction_radial_costs(NULL) {}
-	
-	void compute_analytical_costs(MetricEvaluator* metric_eval)
-	{
-		anal_best_costs_reaching_edge.reset(new IdIndexedArray<double,EdgeId>(net->num_edges()));
-		anal_backlinks_edge.reset(new IdIndexedArray<Edge *,EdgeId>(net->num_edges()));	
-		//max_depth for dijkstra is GLOBAL_RADIUS - edges beyond the radius of this partial net are filtered by 
-		//the inclusion predicate rather than max_depth
-		run_dijkstra(*this,*anal_best_costs_reaching_edge,metric_eval,GLOBAL_RADIUS,
-				&*anal_backlinks_edge);
-	}
-
-	void assign_analytical_costs(boost::shared_ptr<IdIndexedArray<double,EdgeId>> shared_anal_best_costs_reaching_edge,
-		boost::shared_ptr<IdIndexedArray<Edge *,EdgeId>> shared_anal_backlinks_edge)
-	{
-		anal_best_costs_reaching_edge = shared_anal_best_costs_reaching_edge;
-		anal_backlinks_edge = shared_anal_backlinks_edge;
-	}
-
-
-public:
-	SDNAPolyline *origin;
-
-	void count_junctions_accumulate(long &num_junctions, float &connectivity);
-
-	IdIndexedArray<double,EdgeId> &get_anal_best_costs_reaching_edge_array()
-		{ assert(anal_best_costs_reaching_edge); return *anal_best_costs_reaching_edge; }
-	IdIndexedArray<double,EdgeId> &get_radial_best_costs_reaching_edge_array()
-		{ assert(radial_costs_to_edge_start); return *radial_costs_to_edge_start; }
-	IdIndexedArray<Edge *,EdgeId> &get_anal_backlinks_edge_array() 
-		{ assert(anal_backlinks_edge); return *anal_backlinks_edge; }
-	IdIndexedArray<Edge *,EdgeId> &get_radial_backlinks_edge_array() 
-		{ assert(radial_backlinks_edge->isInitialized()); return *radial_backlinks_edge; }
-	
-	void get_outgoing_connections(CandidateEdgeVector &options,Edge *e,double cost_to_date,MetricEvaluator *evaluator,edge_position from,
-		JunctionCosts *jcosts)
-	{
-		double remaining_radius;
-		if (radial_costs_to_edge_start) // are radial costs defined?
-			remaining_radius = radius - (*radial_costs_to_edge_start)[*e];
-		else
-			remaining_radius = GLOBAL_RADIUS;
-		
-		e->get_outgoing_connections(options,cost_to_date,remaining_radius,evaluator,radial_eval,from,jcosts);
-	}
-
-	//inclusion predicate for edges for routing algorithm defined as operator() for filter_iterator
-	//note that the partial net inclusion predicate is permissive: it includes edges that get_outgoing_connections may later prohibit
-	//due to oneway systems or strict routing
-	struct PartialNetInclusionPredicate
-	{
-		IdIndexedArray<double,EdgeId> *radial_costs_to_edge_start; 
-		double radius;
-		PartialNetInclusionPredicate(IdIndexedArray<double,EdgeId> *radial_costs_to_edge_start,double radius)
-			: radial_costs_to_edge_start(radial_costs_to_edge_start),
-			radius(radius) {}
-		bool operator()(Edge *e)
-		{
-			//if radial costs don't exist, return true as all edges are in partial net
-			//if they do exist, check them
-			//note we don't use lower bound radius here as all edges inside are needed for routing
-			return (!radial_costs_to_edge_start || (*radial_costs_to_edge_start)[*e]<radius);
-		}
-	};
-	
-	typedef boost::filter_iterator<PartialNetInclusionPredicate, EdgePointerContainer::iterator > RoutingEdgeIter;
-	
-	RoutingEdgeIter get_routing_edges_begin()
-	{
-		PartialNetInclusionPredicate p(radial_costs_to_edge_start,radius);
-		return RoutingEdgeIter(p,net->edge_ptr_container.begin(), net->edge_ptr_container.end());
-	}
-	RoutingEdgeIter get_routing_edges_end()
-	{
-		PartialNetInclusionPredicate p(radial_costs_to_edge_start,radius);
-		return RoutingEdgeIter(p,net->edge_ptr_container.end(), net->edge_ptr_container.end());
-	}
-	
-	void get_destination_processing_tasks(vector<DestinationSDNAPolylineSegment> &destinations)
-	{
-		assert(destinations.size()==0);
-		destinations.reserve(net->edge_ptr_container.size());
-
-		for (SDNAPolylineContainer::iterator destination_it = net->link_container.begin(); 
-			destination_it != net->link_container.end(); destination_it++)
-		{
-			SDNAPolyline * const destination_link = &*destination_it->second;
-			if (destination_link==origin) continue; 
-		
-			//get 0, 1 or 2 edges to use as analytical destinations
-			get_dest_link_segments_to_process(destinations,destination_link);
-		}
-	}
-	
-private:
-	void get_dest_link_segments_to_process(vector<DestinationSDNAPolylineSegment> &destinations,SDNAPolyline *destination_link)
-	{
-		//this method pulls out the segments of a link that are within the PartialNet to process
-		assert(radial_costs_to_edge_start);
-		assert(destination_link != origin);
-
-		//if we want to allow non-euclidean radius with cont_space, see comments in unpack_config for list of required changes including the rest of this routine
-		//(in which length_of_forward_edge_within_radius etc are changed to radcost and inclusion of segments is determined by cost not length)
-		assert(!cont_space || radial_eval->abbreviation()=="Euc");
-
-		Edge * const forward_edge = &destination_link->forward_edge;
-		Edge * const backward_edge = &destination_link->backward_edge;
-		const float edge_length = destination_link->full_link_cost_ignoring_oneway(PLUS).euclidean;
-		const float full_radial_cost_fwd = radial_eval->evaluate_edge(forward_edge->full_cost_ignoring_oneway(),forward_edge);
-		const float full_radial_cost_bwd = radial_eval->evaluate_edge(backward_edge->full_cost_ignoring_oneway(),backward_edge);
-
-		//get radial costs
-		const double fwd_radial_cost_to_start  = (*radial_costs_to_edge_start)[*forward_edge];
-		const double bwd_radial_cost_to_start = (*radial_costs_to_edge_start)[*backward_edge];
-		
-		//zero length links that fall inside the radius will have a length of zero inside the radius
-		//zero length links that fall outside the radius will have a length equal to their full length inside the radius
-		//really we should disallow all zero length links, but for now...
-		//these annoyances break the rest of the routine, so handle explicitly:
-		if (full_radial_cost_fwd==0)
-		{
-			if (fwd_radial_cost_to_start < radius)
-				destinations.push_back(DestinationSDNAPolylineSegment(forward_edge,0)); 
-			return; //we have included the whole edge so no more segments allowed
-		}
-		if (full_radial_cost_bwd==0) //implicitly the forward cost wasn't zero or we wouldn't get here - this prevents double counting
-		{
-			if (bwd_radial_cost_to_start < radius) 
-				destinations.push_back(DestinationSDNAPolylineSegment(backward_edge,0));
-			return; //we have included the whole edge so no more segments allowed
-		}
-
-		//calculate length of each edge within radius
-		float length_of_forward_edge_within_radius, length_of_backward_edge_within_radius;
-		bool no_edges_below_discrete_lower_bound_radius = true;
-		if (forward_edge->traversal_allowed())
-		{
-			if (cont_space)
-				length_of_forward_edge_within_radius = forward_edge->partial_cost_from_start((float)(radius-fwd_radial_cost_to_start)).euclidean;
-			else
-			{
-				//discretize: edge is either within radius or not
-				const double radial_cost_to_centre = fwd_radial_cost_to_start + radial_eval->evaluate_edge(forward_edge->get_start_traversal_cost_ignoring_oneway(),forward_edge);
-				length_of_forward_edge_within_radius = (radial_cost_to_centre < radius && radial_cost_to_centre >= lower_bound_radius)
-					? edge_length : 0;
-				if (radial_cost_to_centre < lower_bound_radius)
-					no_edges_below_discrete_lower_bound_radius = false;
-			}
-		}
-		else
-			length_of_forward_edge_within_radius = 0; //one way
-		if (backward_edge->traversal_allowed())
-		{
-			if (cont_space)
-				length_of_backward_edge_within_radius = backward_edge->partial_cost_from_start((float)(radius-bwd_radial_cost_to_start)).euclidean;
-			else
-			{
-				//discretize: edge is either within radius or not
-				const double radial_cost_to_centre = bwd_radial_cost_to_start + radial_eval->evaluate_edge(backward_edge->get_start_traversal_cost_ignoring_oneway(),backward_edge);
-				length_of_backward_edge_within_radius = (radial_cost_to_centre < radius && radial_cost_to_centre >= lower_bound_radius)
-					? edge_length : 0;
-				if (radial_cost_to_centre < lower_bound_radius)
-					no_edges_below_discrete_lower_bound_radius = false;
-			}
-		}
-		else
-			length_of_backward_edge_within_radius = 0; //one way
-
-		if (!no_edges_below_discrete_lower_bound_radius)
-		{
-			//discard BOTH edges from higher banded radius if ONE of them is in lower banded radius
-			length_of_forward_edge_within_radius = 0;
-			length_of_backward_edge_within_radius = 0;
-		}
-
-		//decide which edge(s) to return
-		if (length_of_forward_edge_within_radius + length_of_backward_edge_within_radius < edge_length)
-		{
-			//none, one or both of the edges have parts needing to be analysed
-			//but the parts don't overlap
-			//(in discrete space, impossible to return both edges as they would overlap)
-			if (length_of_forward_edge_within_radius > 0)
-				destinations.push_back(DestinationSDNAPolylineSegment(forward_edge,length_of_forward_edge_within_radius));
-			if (length_of_backward_edge_within_radius > 0)
-				destinations.push_back(DestinationSDNAPolylineSegment(backward_edge,length_of_backward_edge_within_radius));
-		}
-		else
-		{
-			//either the parts overlap, or one of the parts (hence the entire link) is fully within the radius
-			//push back either (so long as traversal is allowed) - the better cost will be selected later
-			if (length_of_forward_edge_within_radius > 0)
-				destinations.push_back(DestinationSDNAPolylineSegment(forward_edge,edge_length));
-			else
-			{
-				assert(length_of_backward_edge_within_radius > 0);
-				destinations.push_back(DestinationSDNAPolylineSegment(backward_edge,edge_length));
-			}
-		}
-	}
-
-	private:
-		static double sum(vector<float> &v)
-		{
-			double sum = 0;
-			for (vector<float>::iterator it=v.begin(); it!=v.end(); ++it)
-				sum += *it;
-			return sum;
-		}
-};
-
-
 class SDNAIntegralCalculation : public Calculation, public SDNAPolylineDataSource
 {
 	friend class DataExpectedByExpression;
@@ -427,18 +178,18 @@ private:
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
 											  boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
 											  double& total_weight_this_origin_sample_radius);
-	void process_geodesic(const DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
+	void process_geodesic(DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
 											  vector<Edge*> &intermediate_edges,
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
 											  MetricEvaluator *analysis_evaluator,
 											  double& total_weight_this_origin_sample_radius);
-	double backtrace(const DestinationEdgeProcessingTask &t,SDNAPolyline * origin_link,
+	double backtrace(DestinationEdgeProcessingTask &t,SDNAPolyline * origin_link,
 										  IdIndexedArray<Edge *  ,EdgeId> &anal_backlinks_edge,
 										  vector<Edge*> &intermediate_edges,Edge **origin_exit_edge,bool &passed_intermediate_filter);
 	void process_origin(SDNAPolyline *origin,int r,boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius,
 										MetricEvaluator *analysis_evaluator,double& total_weight_this_origin_sample_radius);
 	void finalize_radius_geometry(SDNAPolyline *origin,int r,boost::shared_ptr<sDNADataMultiGeometry> &all_edge_segments_in_radius);
-	static double get_geodesic_analytical_cost(const DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge);
+	static double get_geodesic_analytical_cost(DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge);
 
 	MetricEvaluator* create_metric_from_config(ConfigStringParser &config,string metric_field,string hybrid_line_expr_field,string hybrid_junc_expr_field,string custom_cost_field);
 
@@ -480,7 +231,7 @@ private:
 	vector<LengthWeightingStrategy> datatokeep;
 	vector<NetExpectedDataSource<string>> textdatatokeep;
 
-	void unpack_config(const char *configstring)
+	void unpack_config(char *configstring)
 	{
 		ConfigStringParser config(//allowable keywords
 								  "preserve_net_config;start_gs;end_gs;radii;cont;metric;pre;post;nobetweenness;nojunctions;nohull;linkonly;forcecontorigin;nqpdn;nqpdd;"
@@ -572,7 +323,7 @@ private:
 
 		if (output_skim)
 		{
-			skim_geom.set_metadata(output_name_prefix+"skim"+output_name_postfix,NO_GEOM,get_skim_field_metadata());
+			skim_geom = sDNAGeometryCollection(output_name_prefix+"skim"+output_name_postfix,NO_GEOM,get_skim_field_metadata());
 		  	geometry_outputs.push_back(&skim_geom);
 
 			string origzone = config.get_string("skimorigzone");
@@ -605,25 +356,25 @@ private:
 			geometry_outputs.push_back(&netdata);
 		if (output_geodesics)
 		{
-			geodesics.set_metadata(output_name_prefix+"geodesics"+output_name_postfix,POLYLINEZ,get_geodesic_field_metadata());
+			geodesics = sDNAGeometryCollection(output_name_prefix+"geodesics"+output_name_postfix,POLYLINEZ,get_geodesic_field_metadata());
 		  	geometry_outputs.push_back(&geodesics);
 			
 		}
 		if (output_hulls)
 		{
-			hulls.set_metadata(output_name_prefix+"hulls"+output_name_postfix,POLYGON,get_hull_or_netradius_field_metadata());
+			hulls = sDNAGeometryCollection(output_name_prefix+"hulls"+output_name_postfix,POLYGON,get_hull_or_netradius_field_metadata());
 		  	geometry_outputs.push_back(&hulls);
 			
 		}
 		if (output_netradii)
 		{
-			netradii.set_metadata(output_name_prefix+"netradii"+output_name_postfix,MULTIPOLYLINEZ,get_hull_or_netradius_field_metadata());
+			netradii = sDNAGeometryCollection(output_name_prefix+"netradii"+output_name_postfix,MULTIPOLYLINEZ,get_hull_or_netradius_field_metadata());
 			geometry_outputs.push_back(&netradii);
 			
 		}
 		if (output_destinations)
 		{
-			destinationgeoms.set_metadata(output_name_prefix+"destinations"+output_name_postfix,POLYLINEZ,get_destination_field_metadata());
+			destinationgeoms = sDNAGeometryCollection(output_name_prefix+"destinations"+output_name_postfix,POLYLINEZ,get_destination_field_metadata());
 			geometry_outputs.push_back(&destinationgeoms);
 			
 		}
@@ -712,12 +463,12 @@ private:
 
 		sort(radii.begin(),radii.end());
 		if (!config.get_bool("bandedradii"))
-			lower_bound_radii.assign(radii.size(),0.);
+			lower_bound_radii.swap(vector<double>(radii.size(),0.));
 		else
 		{
 			if (cont_space)
 				throw BadConfigException("Cannot use banded radius and continuous space together.\nIf you need this feature, please contact the sDNA team.");
-			lower_bound_radii.assign(1,0.);
+			lower_bound_radii.swap(vector<double>(1,0.));
 			lower_bound_radii.insert(lower_bound_radii.end(),radii.begin(),radii.end()-1);
 		}
 
@@ -1031,7 +782,7 @@ public:
 	char ** get_short_output_names_c() { return output_map.get_short_output_names_c(); }
 	void get_all_outputs_c(float* buffer, long arcid)	{ output_map.get_outputs_c(buffer,net->link_container[arcid],oversample); }
 	
-	SDNAIntegralCalculation(Net *net,const char *configstring,
+	SDNAIntegralCalculation(Net *net,char *configstring,
 		int (__cdecl *set_progressor_callback)(float), int(__cdecl *print_warning_callback)(const char*), vector<boost::shared_ptr<Table<float>>>* tables1d_in=NULL)
 		: Calculation(net,print_warning_callback), 
 	      set_progressor_callback(set_progressor_callback),
@@ -1063,7 +814,250 @@ public:
 	
 };
 
+//this class defines a partial net (or a full one, which is a special case of a partial one)
+class PartialNet
+{
+	friend class PartialNetCollection;
 
+private:
+	Net *net;
+	double radius, lower_bound_radius;
+	bool cont_space;
+	MetricEvaluator * radial_eval;
+
+	//the following are null in the special case of this being a full net
+	//and are owned by the factory PartialNetCollection
+	IdIndexedArray<double,EdgeId> *radial_costs_to_edge_start; 
+	JunctionCosts *junction_radial_costs;
+
+	//this is null unless prob_route_method==REROUTE
+	//and also owned by factory PartialNetCollection
+	IdIndexedArray<Edge *,EdgeId> *radial_backlinks_edge;
+
+	//the following are null if uncomputed
+	boost::shared_ptr<IdIndexedArray<double,EdgeId>> anal_best_costs_reaching_edge; 
+	boost::shared_ptr<IdIndexedArray<Edge *,EdgeId> > anal_backlinks_edge; 
+	
+	//generates partial net radius r, requires radial costs to be precomputed
+	//anal_best_costs and anal_backlinks are default constructed to NULL shared ptr
+	PartialNet(Net *net,double r,double lbr,bool cont,MetricEvaluator* radial_eval,
+			IdIndexedArray<double,EdgeId> *radial_costs,IdIndexedArray<Edge *,EdgeId> *rbl,SDNAPolyline *origin,JunctionCosts *jc) 
+		: cont_space(cont), radial_eval(radial_eval),
+		  net(net), radius(r), lower_bound_radius(lbr),
+		  radial_costs_to_edge_start(radial_costs), radial_backlinks_edge(rbl), origin(origin), junction_radial_costs(jc) {};
+
+	//generates full net
+	PartialNet(Net *net,SDNAPolyline *origin) 
+		: net(net), origin(origin), radial_eval(NULL), radius(GLOBAL_RADIUS), lower_bound_radius(0), 
+		radial_costs_to_edge_start(NULL), junction_radial_costs(NULL) {}
+	
+	void compute_analytical_costs(MetricEvaluator* metric_eval)
+	{
+		anal_best_costs_reaching_edge.reset(new IdIndexedArray<double,EdgeId>(net->num_edges()));
+		anal_backlinks_edge.reset(new IdIndexedArray<Edge *,EdgeId>(net->num_edges()));	
+		//max_depth for dijkstra is GLOBAL_RADIUS - edges beyond the radius of this partial net are filtered by 
+		//the inclusion predicate rather than max_depth
+		run_dijkstra(*this,*anal_best_costs_reaching_edge,metric_eval,GLOBAL_RADIUS,
+				&*anal_backlinks_edge);
+	}
+
+	void assign_analytical_costs(boost::shared_ptr<IdIndexedArray<double,EdgeId>> shared_anal_best_costs_reaching_edge,
+		boost::shared_ptr<IdIndexedArray<Edge *,EdgeId>> shared_anal_backlinks_edge)
+	{
+		anal_best_costs_reaching_edge = shared_anal_best_costs_reaching_edge;
+		anal_backlinks_edge = shared_anal_backlinks_edge;
+	}
+
+
+public:
+	SDNAPolyline *origin;
+
+	void count_junctions_accumulate(long &num_junctions, float &connectivity);
+
+	IdIndexedArray<double,EdgeId> &get_anal_best_costs_reaching_edge_array()
+		{ assert(anal_best_costs_reaching_edge); return *anal_best_costs_reaching_edge; }
+	IdIndexedArray<double,EdgeId> &get_radial_best_costs_reaching_edge_array()
+		{ assert(radial_costs_to_edge_start); return *radial_costs_to_edge_start; }
+	IdIndexedArray<Edge *,EdgeId> &get_anal_backlinks_edge_array() 
+		{ assert(anal_backlinks_edge); return *anal_backlinks_edge; }
+	IdIndexedArray<Edge *,EdgeId> &get_radial_backlinks_edge_array() 
+		{ assert(radial_backlinks_edge->isInitialized()); return *radial_backlinks_edge; }
+	
+	void get_outgoing_connections(CandidateEdgeVector &options,Edge *e,double cost_to_date,MetricEvaluator *evaluator,edge_position from,
+		JunctionCosts *jcosts)
+	{
+		double remaining_radius;
+		if (radial_costs_to_edge_start) // are radial costs defined?
+			remaining_radius = radius - (*radial_costs_to_edge_start)[*e];
+		else
+			remaining_radius = GLOBAL_RADIUS;
+		
+		e->get_outgoing_connections(options,cost_to_date,remaining_radius,evaluator,radial_eval,from,jcosts);
+	}
+
+	//inclusion predicate for edges for routing algorithm defined as operator() for filter_iterator
+	//note that the partial net inclusion predicate is permissive: it includes edges that get_outgoing_connections may later prohibit
+	//due to oneway systems or strict routing
+	struct PartialNetInclusionPredicate
+	{
+		IdIndexedArray<double,EdgeId> *radial_costs_to_edge_start; 
+		double radius;
+		PartialNetInclusionPredicate(IdIndexedArray<double,EdgeId> *radial_costs_to_edge_start,double radius)
+			: radial_costs_to_edge_start(radial_costs_to_edge_start),
+			radius(radius) {}
+		bool operator()(Edge *e)
+		{
+			//if radial costs don't exist, return true as all edges are in partial net
+			//if they do exist, check them
+			//note we don't use lower bound radius here as all edges inside are needed for routing
+			return (!radial_costs_to_edge_start || (*radial_costs_to_edge_start)[*e]<radius);
+		}
+	};
+	
+	typedef boost::filter_iterator<PartialNetInclusionPredicate, EdgePointerContainer::iterator > RoutingEdgeIter;
+	
+	RoutingEdgeIter get_routing_edges_begin()
+	{
+		PartialNetInclusionPredicate p(radial_costs_to_edge_start,radius);
+		return RoutingEdgeIter(p,net->edge_ptr_container.begin(), net->edge_ptr_container.end());
+	}
+	RoutingEdgeIter get_routing_edges_end()
+	{
+		PartialNetInclusionPredicate p(radial_costs_to_edge_start,radius);
+		return RoutingEdgeIter(p,net->edge_ptr_container.end(), net->edge_ptr_container.end());
+	}
+	
+	void get_destination_processing_tasks(vector<DestinationSDNAPolylineSegment> &destinations)
+	{
+		assert(destinations.size()==0);
+		destinations.reserve(net->edge_ptr_container.size());
+
+		for (SDNAPolylineContainer::iterator destination_it = net->link_container.begin(); 
+			destination_it != net->link_container.end(); destination_it++)
+		{
+			SDNAPolyline * const destination_link = &*destination_it->second;
+			if (destination_link==origin) continue; 
+		
+			//get 0, 1 or 2 edges to use as analytical destinations
+			get_dest_link_segments_to_process(destinations,destination_link);
+		}
+	}
+	
+private:
+	void get_dest_link_segments_to_process(vector<DestinationSDNAPolylineSegment> &destinations,SDNAPolyline *destination_link)
+	{
+		//this method pulls out the segments of a link that are within the PartialNet to process
+		assert(radial_costs_to_edge_start);
+		assert(destination_link != origin);
+
+		//if we want to allow non-euclidean radius with cont_space, see comments in unpack_config for list of required changes including the rest of this routine
+		//(in which length_of_forward_edge_within_radius etc are changed to radcost and inclusion of segments is determined by cost not length)
+		assert(!cont_space || radial_eval->abbreviation()=="Euc");
+
+		Edge * const forward_edge = &destination_link->forward_edge;
+		Edge * const backward_edge = &destination_link->backward_edge;
+		const float edge_length = destination_link->full_link_cost_ignoring_oneway(PLUS).euclidean;
+		const float full_radial_cost_fwd = radial_eval->evaluate_edge(forward_edge->full_cost_ignoring_oneway(),forward_edge);
+		const float full_radial_cost_bwd = radial_eval->evaluate_edge(backward_edge->full_cost_ignoring_oneway(),backward_edge);
+
+		//get radial costs
+		const double fwd_radial_cost_to_start  = (*radial_costs_to_edge_start)[*forward_edge];
+		const double bwd_radial_cost_to_start = (*radial_costs_to_edge_start)[*backward_edge];
+		
+		//zero length links that fall inside the radius will have a length of zero inside the radius
+		//zero length links that fall outside the radius will have a length equal to their full length inside the radius
+		//really we should disallow all zero length links, but for now...
+		//these annoyances break the rest of the routine, so handle explicitly:
+		if (full_radial_cost_fwd==0)
+		{
+			if (fwd_radial_cost_to_start < radius)
+				destinations.push_back(DestinationSDNAPolylineSegment(forward_edge,0)); 
+			return; //we have included the whole edge so no more segments allowed
+		}
+		if (full_radial_cost_bwd==0) //implicitly the forward cost wasn't zero or we wouldn't get here - this prevents double counting
+		{
+			if (bwd_radial_cost_to_start < radius) 
+				destinations.push_back(DestinationSDNAPolylineSegment(backward_edge,0));
+			return; //we have included the whole edge so no more segments allowed
+		}
+
+		//calculate length of each edge within radius
+		float length_of_forward_edge_within_radius, length_of_backward_edge_within_radius;
+		bool no_edges_below_discrete_lower_bound_radius = true;
+		if (forward_edge->traversal_allowed())
+		{
+			if (cont_space)
+				length_of_forward_edge_within_radius = forward_edge->partial_cost_from_start((float)(radius-fwd_radial_cost_to_start)).euclidean;
+			else
+			{
+				//discretize: edge is either within radius or not
+				const double radial_cost_to_centre = fwd_radial_cost_to_start + radial_eval->evaluate_edge(forward_edge->get_start_traversal_cost_ignoring_oneway(),forward_edge);
+				length_of_forward_edge_within_radius = (radial_cost_to_centre < radius && radial_cost_to_centre >= lower_bound_radius)
+					? edge_length : 0;
+				if (radial_cost_to_centre < lower_bound_radius)
+					no_edges_below_discrete_lower_bound_radius = false;
+			}
+		}
+		else
+			length_of_forward_edge_within_radius = 0; //one way
+		if (backward_edge->traversal_allowed())
+		{
+			if (cont_space)
+				length_of_backward_edge_within_radius = backward_edge->partial_cost_from_start((float)(radius-bwd_radial_cost_to_start)).euclidean;
+			else
+			{
+				//discretize: edge is either within radius or not
+				const double radial_cost_to_centre = bwd_radial_cost_to_start + radial_eval->evaluate_edge(backward_edge->get_start_traversal_cost_ignoring_oneway(),backward_edge);
+				length_of_backward_edge_within_radius = (radial_cost_to_centre < radius && radial_cost_to_centre >= lower_bound_radius)
+					? edge_length : 0;
+				if (radial_cost_to_centre < lower_bound_radius)
+					no_edges_below_discrete_lower_bound_radius = false;
+			}
+		}
+		else
+			length_of_backward_edge_within_radius = 0; //one way
+
+		if (!no_edges_below_discrete_lower_bound_radius)
+		{
+			//discard BOTH edges from higher banded radius if ONE of them is in lower banded radius
+			length_of_forward_edge_within_radius = 0;
+			length_of_backward_edge_within_radius = 0;
+		}
+
+		//decide which edge(s) to return
+		if (length_of_forward_edge_within_radius + length_of_backward_edge_within_radius < edge_length)
+		{
+			//none, one or both of the edges have parts needing to be analysed
+			//but the parts don't overlap
+			//(in discrete space, impossible to return both edges as they would overlap)
+			if (length_of_forward_edge_within_radius > 0)
+				destinations.push_back(DestinationSDNAPolylineSegment(forward_edge,length_of_forward_edge_within_radius));
+			if (length_of_backward_edge_within_radius > 0)
+				destinations.push_back(DestinationSDNAPolylineSegment(backward_edge,length_of_backward_edge_within_radius));
+		}
+		else
+		{
+			//either the parts overlap, or one of the parts (hence the entire link) is fully within the radius
+			//push back either (so long as traversal is allowed) - the better cost will be selected later
+			if (length_of_forward_edge_within_radius > 0)
+				destinations.push_back(DestinationSDNAPolylineSegment(forward_edge,edge_length));
+			else
+			{
+				assert(length_of_backward_edge_within_radius > 0);
+				destinations.push_back(DestinationSDNAPolylineSegment(backward_edge,edge_length));
+			}
+		}
+	}
+
+	private:
+		static double sum(vector<float> &v)
+		{
+			double sum = 0;
+			for (vector<float>::iterator it=v.begin(); it!=v.end(); ++it)
+				sum += *it;
+			return sum;
+		}
+};
 
 //used to generate a partial net for each radius from origin
 class PartialNetCollection

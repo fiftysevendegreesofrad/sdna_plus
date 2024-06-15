@@ -255,8 +255,6 @@ class sDNAGeometryCollection : public sDNAGeometryCollectionBase
 {
 public:
 	//for external use
-	string name;
-	sDNAGeom_t type;
 	virtual const char* get_name() {return name.c_str();}
 	virtual const char* get_type() {return type_as_string();}
 	const sDNAGeom_t getType() {return type;}
@@ -275,14 +273,9 @@ public:
 	
 	//for internal use
 	sDNAGeometryCollection() {} //constructs an object will throw assertion fail if you try to use it
-	
-	sDNAGeometryCollection(string name,sDNAGeom_t type) : name(name), type(type) {}
-	
-	void set_metadata(string name_,sDNAGeom_t type_,vector<FieldMetaData> fieldmetadata) {
-		// Explicitly set the strings here.  Deferring to the other constructor above
-		// is more idiomatic, but this enables avoiding overloading operator=
-		name = name_;
-		type = type_;
+	sDNAGeometryCollection(string name,sDNAGeom_t type,vector<FieldMetaData> fieldmetadata)
+		: name(name), type(type)
+	{ 
 		BOOST_FOREACH (FieldMetaData &fmd , fieldmetadata)
 		{
 			m_datanames.add_string(fmd.name);
@@ -290,12 +283,6 @@ public:
 			m_pythontypes.add_string(outfieldtype_to_pythontype(fmd.type));
 		}
 	}
-
-	sDNAGeometryCollection(string name,sDNAGeom_t type,vector<FieldMetaData> fieldmetadata)
-	{ 
-        set_metadata(name, type, fieldmetadata);
-	}
-
 	void reserve(size_t n)
 	{
 		items.reserve(n); 
@@ -309,14 +296,10 @@ public:
 	}
 	void emergencyMemoryFree() {emergencyMemory.free();}
 	
-	sDNAGeometryCollection& operator=(const sDNAGeometryCollection& other)
-	{
-		name = other.name;
-		type = other.type;
-		return *this;
-	}
 private:		
 	EmergencyMemory emergencyMemory;
+	string name;
+	sDNAGeom_t type;
 	string type_s;
 	ThreadSafeVector<boost::shared_ptr<sDNADataMultiGeometry> > items;
 	OutputStringArray m_datanames, m_shortdatanames, m_pythontypes;
