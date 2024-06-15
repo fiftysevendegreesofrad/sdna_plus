@@ -87,14 +87,12 @@ public:
 		// _splitpath(this_dll_path.c_str(),drive,dir,fname,ext);
 		// //fname holds filename of this dll, but is now discarded
 		// assert(0==strcmp(ext,".dll"));
-		// char geos_dll_path[_MAX_PATH];
+		char *geos_dll_path = "geos_c.dll"; //[_MAX_PATH];
 		// _makepath(geos_dll_path,drive,dir,"geos_c",ext);
-		// wchar_t geos_dll_path_w[_MAX_PATH];
-		// mbstowcs(geos_dll_path_w, geos_dll_path, strlen(geos_dll_path)+1);//Plus null
+		wchar_t geos_dll_path_w[_MAX_PATH];
+		mbstowcs(geos_dll_path_w, geos_dll_path, strlen(geos_dll_path)+1);//Plus null
 				
-		// hDLL = LoadLibrary(geos_dll_path_w);
-
-		hDLL = LoadLibrary("geos_c.dll");
+		hDLL = LoadLibrary(geos_dll_path_w);
 
 
 
