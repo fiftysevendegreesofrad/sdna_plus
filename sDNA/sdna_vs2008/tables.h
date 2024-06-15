@@ -88,7 +88,7 @@ public:
 		assert (index==zoneset.size());
 		const size_t size = zoneset.size();
 		//construct data table
-		index2_to_data.swap(vector<vector<float>>(size,vector<float>(size,default_table_value)));
+		index2_to_data.assign(size,vector<float>(size,default_table_value));
 		BOOST_FOREACH(const MAPTYPE::value_type& myPair, zonepair_to_data)
 		{
 			const string zone1 = myPair.first.first;
@@ -100,8 +100,8 @@ public:
 		set<string>().swap(zoneset); //clear memory of zoneset
 
 		//initialize zonesums
-		origzonesum.swap(vector<double>(size,0.)); 
-		destzonesum.swap(vector<double>(size,0.)); 
+		origzonesum.assign(size,0.); 
+		destzonesum.assign(size,0.); 
 	}
 	void register_polyline(SDNAPolyline *p,const double cost)
 	//this is called for every polyline in the network after zone data is loaded
@@ -231,8 +231,8 @@ public:
 		assert (index==zoneset.size());
 		const size_t size = zoneset.size();
 		//construct data table
-		index_to_data.swap(vector<T>(size,default_table_value));
-		BOOST_FOREACH(const MAPTYPE::value_type& myPair, zone_to_data)
+		index_to_data.assign(size,default_table_value);
+		BOOST_FOREACH(const typename MAPTYPE::value_type& myPair, zone_to_data)
 		{
 			const string zone = myPair.first;
 			const T data = myPair.second;
