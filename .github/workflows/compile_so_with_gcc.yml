@@ -29,7 +29,7 @@ jobs:
     - name: Install Git
       run: |
         sudo apt-get update
-        sudo apt-get install -y git
+        sudo apt-get install -y git ninja-build
 
     # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
     - name: Create Ninja build system from CMake
