@@ -33,10 +33,7 @@ jobs:
 
     # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
     - name: Create Ninja build system from CMake
-      shell: bash
-      run: |
-        cmake -E env VCPKG_ROOT=${{ env.VCPKG_INSTALLATION_ROOT }}
-        cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -B build_output_cmake_gcc -S .
+      run: cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -B build_output_cmake_gcc -S .
         
     - name: Build sDNA
       run: |

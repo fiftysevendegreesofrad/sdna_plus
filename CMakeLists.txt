@@ -22,12 +22,18 @@ elseif (NOT MSVC)
     set(CMAKE_CXX_COMPILER "g++")
 endif()
 
-if (NOT DEFINED ENV{VCPKG_ROOT})
-    SET($ENV{VCPKG_ROOT} "$ENV{VCPKG_INSTALLATION_ROOT}")
+if (IS_READABLE ENV{VCPKG_ROOT})
+    SET(VCPKG_ROOT 
+    "$ENV{VCPKG_ROOT}"
+    )
+else()
+    SET(VCPKG_ROOT 
+    "$ENV{VCPKG_INSTALLATION_ROOT}"
+    )
 endif()
 message("!
 !
-VCPKG_ROOT: $ENV{VCPKG_ROOT}
+VCPKG_ROOT: ${VCPKG_ROOT}
 VCPKG_INSTALLATION_ROOT: $ENV{VCPKG_INSTALLATION_ROOT}
 !
 !
@@ -36,7 +42,7 @@ VCPKG_INSTALLATION_ROOT: $ENV{VCPKG_INSTALLATION_ROOT}
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
 set(CMAKE_TOOLCHAIN_FILE
- "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+ "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
  )
 
 set(VCPKG_MANIFEST_DIR ${CMAKE_SOURCE_DIR})
