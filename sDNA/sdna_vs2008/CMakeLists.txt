@@ -10,7 +10,8 @@ set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
 
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
-if (NOT "$ENV{VCPKG_ROOT}")
+
+if (NOT DEFINED ENV{VCPKG_ROOT})
     SET($ENV{VCPKG_ROOT} "$ENV{VCPKG_INSTALLATION_ROOT}")
 endif()
 
