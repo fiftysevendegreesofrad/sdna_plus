@@ -22,6 +22,10 @@ elseif (NOT MSVC)
     set(CMAKE_CXX_COMPILER "g++")
 endif()
 
+if (NOT "$ENV{VCPKG_ROOT}")
+    SET($ENV{VCPKG_ROOT} "$ENV{VCPKG_INSTALLATION_ROOT}")
+endif()
+
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
 set(CMAKE_TOOLCHAIN_FILE
@@ -162,17 +166,3 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${CMAKE_CURRENT_SOURCE_DIR}/arcscripts/rportable" "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/rportable"
 )
 
-
-# if (WIN32)
-
-    # find_program(
-    #     AdvancedInstaller
-    #     "AdvancedInstaller.com"
-    #     PATHS "C:/Program Files (x86)/Caphyon/Advanced Installer 21.7.1/bin/x86"
-    #     REQUIRED
-    #     )
-
-    # message("Found: ${AdvancedInstaller}")
-
-
-# endif()
