@@ -24,6 +24,13 @@ endif()
 
 if (NOT "$ENV{VCPKG_ROOT}")
     SET($ENV{VCPKG_ROOT} "$ENV{VCPKG_INSTALLATION_ROOT}")
+else()
+    message("!
+!
+VCPKG_ROOT: $ENV{VCPKG_ROOT}
+!
+!
+")
 endif()
 
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
