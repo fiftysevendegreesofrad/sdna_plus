@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "GCC_Ubuntu", "GCC_Linux"]
+    branches: [ "GCC_Ubuntu", "GCC_Linux", "Cross_platform"]
 
   pull_request:
-    branches: [ "GCC_Ubuntu", "GCC_Linux" ]
+    branches: [ "GCC_Ubuntu", "GCC_Linux", "Cross_platform"]
 
 env:
   CONFIGURATION: Release

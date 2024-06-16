@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "CMake", "Zig_MuParser_Include_stdafx.h", "Zig_fix_prep_op_access_violation"]
+    branches: [ "CMake", "Cross_platform", "Zig_fix_prep_op_access_violation"]
 
   pull_request:
-    branches: [ "CMake", "Zig_MuParser_Include_stdafx.h", "Zig_fix_prep_op_access_violation"]
+    branches: [ "CMake", "Cross_platform", "Zig_fix_prep_op_access_violation"]
 
 env:
   CONFIGURATION: Release
