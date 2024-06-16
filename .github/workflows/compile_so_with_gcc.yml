@@ -24,8 +24,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - run: cmake --version
-
     - name: Install Git
       run: |
         sudo apt-get update

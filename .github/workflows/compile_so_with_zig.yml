@@ -32,8 +32,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y git
 
-    - uses: lukka/get-cmake@latest
-
     - name: Install Zig
       uses: goto-bus-stop/setup-zig@v2
       with:
@@ -43,16 +41,14 @@ jobs:
 
     # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
     - name: Create Ninja build system from CMake
-      run: |
-        VCPKG_ROOT=$VCPKG_INSTALLATION_ROOT
-        cmake -G Ninja -B build_output_cmake_zig -S .
+      run: cmake -G "Ninja Multi-Config" -D USE_ZIG=ON -B build_output_cmake_zig -S .
 
 
 
 
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_zig
+        cmake --build  --config Release
 
 
     # - name: Output the name of the .msi installer file
@@ -67,7 +63,7 @@ jobs:
       id: installer-upload-step
       uses: actions/upload-artifact@v4
       with:
-        name: output
+        name: output_zig_cc_linux
         # this file name pattern is defined in installerbits\rename_version.py
         # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
         path: output

@@ -115,8 +115,8 @@ public:
 		#else
 
 		#define GetProcAddress dlsym
-
-    	hDLL = dlopen("~/sDNA/output/Release/x64/geos_c.so", RTLD_NOW);
+		wchar_t geos_dll_path_w="~/sDNA/output/Release/x64/geos_c.so";
+    	hDLL = dlopen(geos_dll_path_w, RTLD_NOW);
 
 		#endif
 
