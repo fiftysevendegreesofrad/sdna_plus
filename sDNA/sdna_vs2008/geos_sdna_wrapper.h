@@ -69,12 +69,21 @@ public:
 	GEOSGeometry *UnaryUnion(GEOSGeometry *g1) {return (*GEOSUnaryUnion)(g1);}
 	int GeomTypeId(const GEOSGeometry *g1) {return (*GEOSGeomTypeId)(g1);}
 
+	#ifdef _WINDOWS
 	static const char address_in_this_module = 0;
+	#else
+	char address_in_this_module = 0;
+	#endif
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
+		
+		#ifdef _WINDOWS
 		//find path of this dll and look for geos_c.dll in the same place
 		HMODULE this_dll_handle;
 
+
+		// long? https://stackoverflow.com/a/17736648
+		// dlopen(NULL)? https://stackoverflow.com/a/6972229/20785734
 		HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
 			(LPCTSTR)&address_in_this_module,
 			&this_dll_handle
@@ -86,24 +95,38 @@ public:
 	    char dir[_MAX_DIR];
 	    char fname[_MAX_FNAME];
 	    char ext[_MAX_EXT];
+
+		//  https://stackoverflow.com/a/675193/20785734 ?
 		_splitpath(this_dll_path.c_str(),drive,dir,fname,ext);
 		//fname holds filename of this dll, but is now discarded
 		assert(0==strcmp(ext,".dll"));
 		char geos_dll_path[_MAX_PATH];
+
+		// https://stackoverflow.com/a/675193/20785734
 		_makepath(geos_dll_path,drive,dir,"geos_c",ext);
 		wchar_t geos_dll_path_w[_MAX_PATH];
+
+		// https://man7.org/linux/man-pages/man3/mbstowcs.3.html
 		mbstowcs(geos_dll_path_w, geos_dll_path, strlen(geos_dll_path)+1);//Plus null
 				
 		hDLL = LoadLibrary(geos_dll_path_w);
 
 
+		#else
+
+		#define GetProcAddress dlsym
+
+    	hDLL = dlopen("~/sDNA/output/Release/x64/geos_c.so", RTLD_NOW);
+
+		#endif
 
 		if (hDLL == NULL)
 		{
-			cout << "GEOS DLL not found at " + *geos_dll_path_w << endl;
+			cout << "geos_c.dll / geos_c.so not found at " + *geos_dll_path_w << endl;
 		}
 		else
 		{
+			// dlsym https://stackoverflow.com/a/4651841/20785734
 			initGEOS = (initGEOS_t)GetProcAddress(hDLL,"initGEOS");
 			assert(initGEOS != NULL);
 			finishGEOS = (finishGEOS_t)GetProcAddress(hDLL,"finishGEOS");
@@ -168,12 +191,22 @@ public:
 	}
 	~ExplicitSDNAPolylineToGeosWrapper()
 	{
-		FreeLibrary(hDLL);
+		#ifdef _WINDOWS
+		  FreeLibrary(hDLL);
+		#else
+		  // dlclose https://stackoverflow.com/a/4651841/20785734
+		  dlclose(hDLL);
+		#endif
 	}
 
 
 private:
+
+#ifdef _WINDOWS
 	HINSTANCE hDLL;
+#else
+    void* hDLL;
+#endif
 
 	typedef GEOSCoordSequence* (*GEOSCoordSeq_create_t)(unsigned int size,unsigned int dims);
 	GEOSCoordSeq_create_t GEOSCoordSeq_create;
@@ -233,6 +266,7 @@ private:
 	typedef int (*GEOSGeomTypeId_t)(const GEOSGeometry*);
 	GEOSGeomTypeId_t GEOSGeomTypeId;
 
+	#ifdef _WINDOWS
 	std::string dllPathFromHMODULE(HMODULE hm) {
 		std::vector<char> executablePath(256);
 
@@ -258,6 +292,7 @@ private:
 	  // We've got the path, construct a standard string from it
 	  return std::string(executablePath.begin(), executablePath.begin() + result);
 	}
+	#endif
 
 };
 

@@ -17,6 +17,9 @@ IF (USE_ZIG)
     set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE
     "${CMAKE_CURRENT_SOURCE_DIR}/zigcross-cmake/zig-toolchain-aarch64.cmake"
     )
+elseif (NOT MSVC)
+    set(CMAKE_C_COMPILER "gcc")
+    set(CMAKE_CXX_COMPILER "g++")
 endif()
 
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
@@ -61,10 +64,16 @@ add_custom_target(${PROJECT_NAME} ALL)
 
 add_dependencies(${PROJECT_NAME} "sdna_vs2008")
 
-set(DLLs
-    "sdna_vs2008.dll"
-    "geos_c.dll"
-)
+if(CMAKE_SYSTEM MATCHES Windows)
+    set(DLLs
+        "sdna_vs2008.dll"
+        "geos_c.dll"
+    )
+else ()
+    set(DLLs
+        "sdna_vs2008.so"
+    )
+endif()
 
 set(Scripts
     "arcscripts/sDNA_ArcGIS_extra_tools.tbx"

@@ -1,4 +1,4 @@
-name: "Compile with CMake, MSBuild and VS 2022 for Windows, and test"
+name: "Build installer with CMake and VS 2022 for Windows, and test"
 
 on:
   workflow_dispatch:

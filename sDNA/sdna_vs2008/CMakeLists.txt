@@ -236,6 +236,7 @@ set(Headers
     "unique_id.h"
     "version_template.h"
     "version_generated.h.creator.py"
+    "IteratorTypeErasure/any_iterator/any_iterator.hpp"
 )
 source_group("Headers" FILES ${Headers})
 
@@ -473,47 +474,48 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     "../muparser/drop/include"
 )
 
+
+
+if(MSVC)
 ################################################################################
 # Compile definitions
 ################################################################################
 target_compile_definitions(${PROJECT_NAME} PRIVATE
-"$<$<CONFIG:benchmark_probroutes>:"
-    "NDEBUG;"
-    "BENCHMARK;"
-    "PROB_ROUTE_CODE"
-">"
-"$<$<CONFIG:Debug_speedup>:"
-    "_DEBUG"
-">"
-"$<$<CONFIG:Debug>:"
-    "_DEBUG;"
-    "_SDNADEBUG"
-">"
-"$<$<CONFIG:fast_debug>:"
-    "NDEBUG"
-">"
-"$<$<CONFIG:parallel_debug>:"
-    "_DEBUG;"
-    "_SDNADEBUG"
-">"
-"$<$<CONFIG:Release>:"
-    "NDEBUG"
-">"
-"$<$<CONFIG:vtune>:"
-    "_DEBUG"
-">"
-"WIN32;"
-"_WINDOWS;"
-"_USRDLL;"
-"SDNA_VS2008_EXPORTS;"
-"UNICODE;"
-"_UNICODE"
+    "$<$<CONFIG:benchmark_probroutes>:"
+        "NDEBUG;"
+        "BENCHMARK;"
+        "PROB_ROUTE_CODE"
+    ">"
+    "$<$<CONFIG:Debug_speedup>:"
+        "_DEBUG"
+    ">"
+    "$<$<CONFIG:Debug>:"
+        "_DEBUG;"
+        "_SDNADEBUG"
+    ">"
+    "$<$<CONFIG:fast_debug>:"
+        "NDEBUG"
+    ">"
+    "$<$<CONFIG:parallel_debug>:"
+        "_DEBUG;"
+        "_SDNADEBUG"
+    ">"
+    "$<$<CONFIG:Release>:"
+        "NDEBUG"
+    ">"
+    "$<$<CONFIG:vtune>:"
+        "_DEBUG"
+    ">"
+    "WIN32;"
+    "_WINDOWS;"
+    "_USRDLL;"
+    "SDNA_VS2008_EXPORTS;"
+    "UNICODE;"
+    "_UNICODE"
 )
-
 ################################################################################
 # Compile and link options
 ################################################################################
-if(MSVC)
     if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Any CPU")
         target_compile_options(${PROJECT_NAME} PRIVATE
             $<$<CONFIG:benchmark_probroutes>:
@@ -920,6 +922,11 @@ if(MSVC)
             /SUBSYSTEM:WINDOWS
         )
     endif()
+else() # Not MSVC
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        "UNICODE;"
+        "_UNICODE"
+    )
 endif()
 
 ################################################################################
@@ -959,9 +966,11 @@ add_custom_command(
 ################################################################################
 # Extra files packaged at build time (pre built geos dlls)
 ################################################################################
-add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} "${LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>"
-)
+if (Geos_binary)
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} "${LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>"
+    )
+endif()
 
 

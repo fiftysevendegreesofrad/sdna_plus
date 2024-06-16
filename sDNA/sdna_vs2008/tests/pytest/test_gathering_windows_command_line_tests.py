@@ -6,7 +6,6 @@ import sys
 import glob
 import re
 import math
-import itertools
 import subprocess
 import collections
 import tempfile

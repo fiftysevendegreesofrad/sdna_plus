@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
@@ -16,14 +15,35 @@
 #define _SECURE_SCL 0 //disable iterator bounds checking for release builds
 #endif
 
+
+#ifdef _WINDOWS
+
+#include "targetver.h"
 // Windows Header Files:
 #define NOMINMAX
 #include <windows.h>
 #include <wininet.h>
 #include <stdlib.h>
 
+#else
+
+#include <dlfcn.h>
+#define __stdcall
+// typedef unsigned long long LARGE_INTEGER;
+// typedef unsigned long DWORD;
+// typedef long HRESULT;
+
+#ifndef __clang__
+#ifdef __GNUC__
+#define __cdecl
+#endif
+#endif
+
+#endif
+
+
 #include <vector>
-#include "IteratorTypeErasure\any_iterator\any_iterator.hpp"
+#include "IteratorTypeErasure/any_iterator/any_iterator.hpp"
 #include <iostream>
 #include <limits>
 #include <set>

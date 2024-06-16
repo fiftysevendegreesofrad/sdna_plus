@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "GCC_Linux"]
+    branches: [ "GCC_Ubuntu", "GCC_Linux"]
 
   pull_request:
-    branches: [ "GCC_Linux" ]
+    branches: [ "GCC_Ubuntu", "GCC_Linux" ]
 
 env:
   CONFIGURATION: Release
@@ -41,7 +41,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y git
-
     - uses: lukka/get-cmake@latest
 
 
@@ -52,15 +51,9 @@ jobs:
       run: |
         VCPKG_ROOT=$VCPKG_INSTALLATION_ROOT
         cmake -G Ninja -B build_output_cmake_gcc -S .
-
-
-
-
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_gcc
-
-
+        cmake --build build_output_cmake_gcc 
     # - name: Output the name of the .msi installer file
     #   id: output_installer_file_name
     #   shell: bash
@@ -73,7 +66,7 @@ jobs:
       id: installer-upload-step
       uses: actions/upload-artifact@v4
       with:
-        name: output
+        name: output_gcc_linux
         # this file name pattern is defined in installerbits\rename_version.py
         # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
         path: output
@@ -89,7 +82,7 @@ jobs:
   #       python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
 
   #   name: "Download and run sDNA installer, and run diff tests on it. "
-    
+
   #   runs-on: windows-2022
   #   # Note:  The Windows server 2022 Github runner image already includes  
   #   # Python (currently 6 versions from 3.7 to 3.12) and a couple of 
