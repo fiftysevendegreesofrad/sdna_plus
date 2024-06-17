@@ -17,7 +17,7 @@ env:
 
 jobs:
   build_and_upload_installer:
-    name: Try to compile on windows with Visual Studio and CMake
+    name: "CMake, VS 2022, & Windows.  Build installer"
     runs-on: windows-2022
     outputs:
       installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
