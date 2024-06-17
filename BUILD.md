@@ -1,11 +1,28 @@
+## Overview
+
+### Cross platform
+
+* The MuParser .cpp files are as they are in the original repo.  
+* They are dynamically prefixed with `#include stdafx.h\n` within a custom prebuild step
+within the .vcxproj.
+* The installer from (`installerbits\advanced\sdna.aip` using Cahyon's AdvancedInstaller) contains both Win32 and x64 .dlls
+* `zig c++` on Windows (repackaged Clang) does not support Win32, so can only be used to
+produce an x64 output installation.
+* All an installer needs to be for Zig/Windows and Linux is a zip file of the output directory.
+* Compilation is achieved 5 different ways, but run time errors will be enountered on 3 of these builds.
+* The tests can run on all of them (uncomment the job in the workflow) but currently are only passed by the 2 Visual Studio builds (CMake and MSBuild).
+* Work needs to be done to dynamically link to the Geos DLLs and .so (and to provide the latter) on both
+the Zig for Windows build (entirely optional) and the Linux builds.
+
+
 ## Compilation notes.
-tl;dr  A Breaking change to sDNA, or maintaining two similar branches 
+~~tl;dr  A Breaking change to sDNA, or maintaining two similar branches 
 should be considered.  
 
 Minor changes to the source of an idiosyncratic
  static dependency (MuParser) in the sdna_plus repo, to allow 
 builds via CMake and Visual Studio (and possibly gcc in future), break 
-builds via the existing .sln and .vcxproj, and vice versa.  
+builds via the existing .sln and .vcxproj, and vice versa.~~  
 
 ### Background
  0) The sDNA dll is compiled using Visual Studio, and a pre-compiled header (stdafx.h in sDNA).  
