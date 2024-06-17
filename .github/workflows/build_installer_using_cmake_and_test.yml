@@ -46,7 +46,7 @@ jobs:
       working-directory: ../vcpkg
       run: |
         git clone --depth=1 https://github.com/microsoft/vcpkg/ .
-        .\vcpkg\bootstrap-vckg.bat
+        .\bootstrap-vckg.bat
 
 
     - name: Create_sDNA_Installer_with_CMake
