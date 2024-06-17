@@ -19,17 +19,9 @@ jobs:
   build_and_upload_installer:
     name: Build output on Windows with Zig C++ (Ninja and CMake)
     runs-on: windows-2022
-    outputs:
-      installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
     steps:
     - uses: actions/checkout@v4
 
-
-
-
-    - name: 'Add "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" to path'
-      shell: bash
-      run: echo "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" >> $GITHUB_PATH
 
 
 
