@@ -47,28 +47,26 @@ jobs:
     #     .\vcpkg\bootstrap-vcpkg.bat
 
 
-    # - name: Create_sDNA_Installer_with_CMake
-    #   shell: cmd
-    #   # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
-    #   # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
-    #   run: |
-    #     set VCPKG_ROOT=c:\mvcpkg
-    #     set VCPKG_INSTALLATION_ROOT=c:\my_vcpkg
-    #     .\create_installer_with_Visual_Studio_17_2022.bat
-
     - name: Create_sDNA_Installer_with_CMake
-      shell: bash
+      shell: cmd
+      # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
+      # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
       run: |
-        cmake -G "Visual Studio 17 2022" -A Win32 -B build_output_cmake_Win32 -S . -D USE_ZIG=OFF
-        cmake --build build_output_cmake_Win32 --config Release
-        cmake -G "Visual Studio 17 2022" -A x64 -B build_output_cmake_x64 -S . -D USE_ZIG=OFF
-        cmake --build build_output_cmake_x64 --config Release
+        .\create_installer_with_Visual_Studio_17_2022.bat
 
-    - name: Make installer
-      run: AdvancedInstaller.com /build installerbits\advanced\sdna.aip && ^
+    # - name: Create_sDNA_Installer_with_CMake
+    #   shell: bash
+    #   run: |
+    #     cmake -G "Visual Studio 17 2022" -A Win32 -B build_output_cmake_Win32 -S . -D USE_ZIG=OFF
+    #     cmake --build build_output_cmake_Win32 --config Release
+    #     cmake -G "Visual Studio 17 2022" -A x64 -B build_output_cmake_x64 -S . -D USE_ZIG=OFF
+    #     cmake --build build_output_cmake_x64 --config Release
 
-    - name: Rename installer
-      run: python -u installerbits\rename_version.py installerbits/advanced/output/sdna_setup.msi .
+    # - name: Make installer
+    #   run: AdvancedInstaller.com /build installerbits\advanced\sdna.aip && ^
+
+    # - name: Rename installer
+    #   run: python -u installerbits\rename_version.py installerbits/advanced/output/sdna_setup.msi .
 
     - name: Output the name of the .msi installer file
       id: output_installer_file_name
