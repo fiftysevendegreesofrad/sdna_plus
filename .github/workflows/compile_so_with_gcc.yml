@@ -84,6 +84,6 @@ jobs:
         python_version: ${{ matrix.python_version }}
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
-        sdnadll: 'output/Release/x64/sdna_vs2008.so'
+        sdnadll: '${{ github.workspace }}/output/Release/x64/sdna_vs2008.so'
         sdna_debug: ""
         shell: bash
