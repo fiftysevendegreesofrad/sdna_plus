@@ -1,4 +1,4 @@
-name: "Build installer with CMake and Zig for Ubuntu, and test"
+name: "CMake, Zig (c++), & Ubuntu.  Compile .so."
 
 on:
   workflow_dispatch:

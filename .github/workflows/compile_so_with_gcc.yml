@@ -1,4 +1,4 @@
-name: "Compile with CMake and GCC for Ubuntu"
+name: "CMake, GCC, & Ubuntu.  Compile .so."
 
 on:
   workflow_dispatch:
