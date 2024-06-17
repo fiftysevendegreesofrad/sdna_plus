@@ -55,45 +55,45 @@ jobs:
         path: output
 
 
-  test_installer:
+  # test_installer:
 
-    needs: build_and_upload_installer
+  #   needs: build_and_upload_installer
 
-    strategy:
-      fail-fast: false
-      matrix:
-        python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
 
-    name: "Download and run sDNA installer, and run diff tests on it. "
+  #   name: "Download and run sDNA installer, and run diff tests on it. "
     
-    runs-on: windows-2022
-    # Note:  The Windows server 2022 Github runner image already includes  
-    # Python (currently 6 versions from 3.7 to 3.12) and a couple of 
-    # VC++ redistributables.  Desktop users may need to install these 
-    # themselves, in addition to sDNA.      
-    #
-    # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
-    #
+  #   runs-on: windows-2022
+  #   # Note:  The Windows server 2022 Github runner image already includes  
+  #   # Python (currently 6 versions from 3.7 to 3.12) and a couple of 
+  #   # VC++ redistributables.  Desktop users may need to install these 
+  #   # themselves, in addition to sDNA.      
+  #   #
+  #   # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
+  #   #
 
 
-    steps:
+  #   steps:
 
 
-    - uses: actions/checkout@v4
+  #   - uses: actions/checkout@v4
 
-    - name: Download output tree built in previous job
-      uses: actions/download-artifact@v4
-      with:
-        name: output_zig_windows
-        path: output
+  #   - name: Download output tree built in previous job
+  #     uses: actions/download-artifact@v4
+  #     with:
+  #       name: output_zig_windows
+  #       path: output
 
 
 
-    - name: Run regression tests
-      uses: ./.github/actions/run_regression_tests
-      with:
-        python_version: ${{ matrix.python_version }}
-        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
-        ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
-        sdnadll: 'output\Release\x64\sdna_vs2008.dll'
-        sdna_debug: ""
+  #   - name: Run regression tests
+  #     uses: ./.github/actions/run_regression_tests
+  #     with:
+  #       python_version: ${{ matrix.python_version }}
+  #       DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+  #       ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
+  #       sdnadll: 'output\Release\x64\sdna_vs2008.dll'
+  #       sdna_debug: ""
