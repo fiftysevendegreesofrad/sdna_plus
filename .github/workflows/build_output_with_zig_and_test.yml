@@ -51,7 +51,7 @@ jobs:
       id: installer-upload-step
       uses: actions/upload-artifact@v4
       with:
-        name: output_installed_dir_tree
+        name: output_zig_windows
         path: output
 
 
@@ -84,23 +84,8 @@ jobs:
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v4
       with:
-        name: output_installed_dir_tree
+        name: output_zig_windows
         path: output
-
-    - shell: cmd
-      run: dir .
-
-    - shell: cmd
-      run: dir output
-
-    - shell: cmd
-      run: dir output\Release
-      
-    - shell: cmd
-      run: dir output\Release\bin
-
-    - shell: cmd
-      run: dir output\Release\x64
 
 
 
