@@ -491,39 +491,39 @@ if(MSVC)
 ################################################################################
 # Compile definitions
 ################################################################################
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-    "$<$<CONFIG:benchmark_probroutes>:"
-        "NDEBUG;"
-        "BENCHMARK;"
-        "PROB_ROUTE_CODE"
-    ">"
-    "$<$<CONFIG:Debug_speedup>:"
-        "_DEBUG"
-    ">"
-    "$<$<CONFIG:Debug>:"
-        "_DEBUG;"
-        "_SDNADEBUG"
-    ">"
-    "$<$<CONFIG:fast_debug>:"
-        "NDEBUG"
-    ">"
-    "$<$<CONFIG:parallel_debug>:"
-        "_DEBUG;"
-        "_SDNADEBUG"
-    ">"
-    "$<$<CONFIG:Release>:"
-        "NDEBUG"
-    ">"
-    "$<$<CONFIG:vtune>:"
-        "_DEBUG"
-    ">"
-    "WIN32;"
-    "_WINDOWS;"
-    "_USRDLL;"
-    "SDNA_VS2008_EXPORTS;"
-    "UNICODE;"
-    "_UNICODE"
-)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        "$<$<CONFIG:benchmark_probroutes>:"
+            "NDEBUG;"
+            "BENCHMARK;"
+            "PROB_ROUTE_CODE"
+        ">"
+        "$<$<CONFIG:Debug_speedup>:"
+            "_DEBUG"
+        ">"
+        "$<$<CONFIG:Debug>:"
+            "_DEBUG;"
+            "_SDNADEBUG"
+        ">"
+        "$<$<CONFIG:fast_debug>:"
+            "NDEBUG"
+        ">"
+        "$<$<CONFIG:parallel_debug>:"
+            "_DEBUG;"
+            "_SDNADEBUG"
+        ">"
+        "$<$<CONFIG:Release>:"
+            "NDEBUG"
+        ">"
+        "$<$<CONFIG:vtune>:"
+            "_DEBUG"
+        ">"
+        "WIN32;"
+        "_WINDOWS;"
+        "_USRDLL;"
+        "SDNA_VS2008_EXPORTS;"
+        "UNICODE;"
+        "_UNICODE"
+    )
 ################################################################################
 # Compile and link options
 ################################################################################
@@ -933,6 +933,22 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
             /SUBSYSTEM:WINDOWS
         )
     endif()
+elseif(WIN32) # E.g. zig c++ for Windows
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        "$<$<CONFIG:Debug>:"
+            "_DEBUG;"
+            "_SDNADEBUG"
+        ">"
+        "$<$<CONFIG:Release>:"
+            "NDEBUG"
+        ">"
+        "WIN32;"
+        "_WINDOWS;"
+        "_USRDLL;"
+        "SDNA_VS2008_EXPORTS;"
+        "UNICODE;"
+        "_UNICODE"
+    )
 else() # Not MSVC
     target_compile_definitions(${PROJECT_NAME} PRIVATE
         "UNICODE;"
