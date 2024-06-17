@@ -51,12 +51,11 @@ jobs:
 
     - name: Create_sDNA_Installer_with_CMake
       shell: cmd
-      working-directory: ../vcpkg
       # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
       # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
       run: |
-        set VCPKG_ROOT=.
-        set VCPKG_INSTALLATION_ROOT=.
+        set VCPKG_ROOT=../vcpkg
+        set VCPKG_INSTALLATION_ROOT=../vcpkg
         ${{ github.workspace }}\create_installer_with_Visual_Studio_17_2022.bat
 
 
