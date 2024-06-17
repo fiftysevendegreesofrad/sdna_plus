@@ -37,15 +37,22 @@ jobs:
         # advinst-version: '21.3'
         advinst-version: '21.7.1'
 
+    - name: Install vcpkg on the same drive as the working dir
+    shell: cmd
+      run: |
+        git clone --depth=1 https://github.com/microsoft/vcpkg/ ..
+        ..\vcpkg\bootstrap-vckg.bat
 
 
     - name: Create_sDNA_Installer_with_CMake
       shell: cmd
+      working-directory: ../vcpkg
       # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
       # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
       run: |
-        set VCPKG_ROOT=C:/vcpkg
-        .\create_installer_with_Visual_Studio_17_2022.bat
+        set VCPKG_ROOT=.
+        set VCPKG_INSTALLATION_ROOT=.
+        ${{ github.workspace }}\create_installer_with_Visual_Studio_17_2022.bat
 
 
     - name: Output the name of the .msi installer file
