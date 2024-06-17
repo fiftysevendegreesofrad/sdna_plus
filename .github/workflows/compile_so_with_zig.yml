@@ -74,13 +74,6 @@ jobs:
     name: "Download and run sDNA installer, and run diff tests on it. "
     
     runs-on: "ubuntu-24.04"
-    # Note:  The Windows server 2022 Github runner image already includes  
-    # Python (currently 6 versions from 3.7 to 3.12) and a couple of 
-    # VC++ redistributables.  Desktop users may need to install these 
-    # themselves, in addition to sDNA.      
-    #
-    # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
-    #
 
 
     steps:
@@ -104,3 +97,4 @@ jobs:
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
         sdnadll: 'output\Release\x64\sdna_vs2008.dll'
         sdna_debug: ""
+        shell: bash
