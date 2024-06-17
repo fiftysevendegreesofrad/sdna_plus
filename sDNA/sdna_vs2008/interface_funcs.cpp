@@ -246,7 +246,7 @@ SDNA_API void __stdcall geom_iterator_destroy(sDNAGeometryCollectionIteratorBase
 	delete it;
 }
 
-SDNA_API Calculation* __stdcall calc_create(char *name, char *config, Net *net,
+SDNA_API Calculation* __stdcall calc_create(char *name, const char *config, Net *net,
 									  int (__cdecl *set_progressor_callback)(float),
 									  int (__cdecl *print_warning_callback)(const char*),
 									  vector<boost::shared_ptr<Table<float>>>* tables1d)

@@ -24,7 +24,7 @@ private:
 
 	set<string> allowable_keywords;
 
-	void parse_string(char *config)
+	void parse_string(const char *config)
 	{
 		string s(config);
 		vector<string> config_items;
@@ -82,7 +82,7 @@ private:
 		}
 	}
 
-	void setup_allowable(char *allowable)
+	void setup_allowable(const char *allowable)
 	{
 		vector<string> a;
 		split(a, allowable, is_any_of(";"));
@@ -94,7 +94,7 @@ private:
 	}
 
 public:
-	ConfigStringParser(char *allowable_keywords,char *defaults,char *config)
+	ConfigStringParser(const char *allowable_keywords,const char *defaults,const char *config)
 	{
 		setup_allowable(allowable_keywords);
 		parse_string(defaults);

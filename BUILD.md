@@ -1,11 +1,28 @@
+## Overview
+
+### Cross platform
+
+* The MuParser .cpp files are as they are in the original repo.  
+* They are dynamically prefixed with `#include stdafx.h\n` within a custom prebuild step
+within the .vcxproj.
+* The installer from (`installerbits\advanced\sdna.aip` using Cahyon's AdvancedInstaller) contains both Win32 and x64 .dlls
+* `zig c++` on Windows (repackaged Clang) does not support Win32, so can only be used to
+produce an x64 output installation.
+* All an installer needs to be for Zig/Windows and Linux is a zip file of the output directory.
+* Compilation is achieved 5 different ways, but run time errors will be enountered on 3 of these builds.
+* The tests can run on all of them (uncomment the job in the workflow) but currently are only passed by the 2 Visual Studio builds (CMake and MSBuild).
+* Work needs to be done to dynamically link to the Geos DLLs and .so (and to provide the latter) on both
+the Zig for Windows build (entirely optional) and the Linux builds.
+
+
 ## Compilation notes.
-tl;dr  A Breaking change to sDNA, or maintaining two similar branches 
+~~tl;dr  A Breaking change to sDNA, or maintaining two similar branches 
 should be considered.  
 
 Minor changes to the source of an idiosyncratic
  static dependency (MuParser) in the sdna_plus repo, to allow 
 builds via CMake and Visual Studio (and possibly gcc in future), break 
-builds via the existing .sln and .vcxproj, and vice versa.  
+builds via the existing .sln and .vcxproj, and vice versa.~~  
 
 ### Background
  0) The sDNA dll is compiled using Visual Studio, and a pre-compiled header (stdafx.h in sDNA).  
@@ -64,7 +81,26 @@ D:\a\sdna_plus\sdna_plus\sDNA\muparser\drop\src\muParserTokenReader.cpp(25,10): 
  10) However a form of the source code in MuParser that can be compiled by both CMake, and
  the sdna_vs2008.vcxproj has not yet been find
 
- ### Attempted Solutions 
+### Compiling sDNA with `zig c++`
+`zig c++` is claimed to be a drop in compiler replacement for MSVC.
+ It is based on LLVM (and is reportedly like Clang with better defaults).
+
+ * Numerous (hopefully minor) changes to the sDNA C++ code have been made on this branch to facilitate compilation using `zig c++`, but unfortunately these caused a regression in one of the tests, using the existing MSVC build chain (after including the `#include stdafx.h`s in MuParser).  The dll produced using `zig C++` has not yet been tested at all
+ * The sDNA CMakelists.txt is used to set up Zig and Ninja, by pulling in a modified version of Duncan Ogilvie's example CMake Toolchain for Zig:  https://github.com/mrexodia/zig-cross (in `zigcross-cmake`)
+ * Previous mainstream releases of sDNA have been using MSVC header files to access the Windows API, to dynamically link to geos_c.dll.  By default `zig c++` targets Windows using the header files from [MinGW-w64](https://www.mingw-w64.org/) instead of Microsoft's.
+ * A Win32 dll has not been produced yet (and therefore neither has a .msi instealler, just an output directory).  Ninja takes the arch from the env, not during config (i.e. not from CMake).  When running MSVC builds via Ninja, this is possibly as simple to fix as running vcvarsall.bat Win32 before hand.  Equivalent steps that will work with `zig c++` need to be found.
+
+### Compiling sDNA with `zig c++`
+`zig c++` is claimed to be a drop in compiler replacement for MSVC.
+ It is based on LLVM (and is reportedly like Clang with better defaults).
+
+ * Numerous (hopefully minor) changes to the sDNA C++ code have been made on this branch to facilitate compilation using `zig c++`, but unfortunately these caused a regression in one of the tests, using the existing MSVC build chain (after including the `#include stdafx.h`s in MuParser).  The dll produced using `zig C++` has not yet been tested at all
+ * The sDNA CMakelists.txt is used to set up Zig and Ninja, by pulling in a modified version of Duncan Ogilvie's example CMake Toolchain for Zig:  https://github.com/mrexodia/zig-cross (in `zigcross-cmake`)
+ * Previous mainstream releases of sDNA have been using MSVC header files to access the Windows API, to dynamically link to geos_c.dll.  By default `zig c++` targets Windows using the header files from [MinGW-w64](https://www.mingw-w64.org/) instead of Microsoft's.
+ * A Win32 dll has not been produced yet (and therefore neither has a .msi instealler, just an output directory).  Ninja takes the arch from the env, not during config (i.e. not from CMake).  When running MSVC builds via Ninja, this is possibly as simple to fix as running vcvarsall.bat Win32 before hand.  Equivalent steps that will work with `zig c++` need to be found.
+
+
+### Attempted Solutions 
  (to allow both compilation methods via the same branch/code base).
  i) Preprocessor macros (`#ifndef`) to conditionally `#include stdafx.h` based on 
  a directive in CMakeLists.txt will not work as Visual Studio ignores them due to 2).

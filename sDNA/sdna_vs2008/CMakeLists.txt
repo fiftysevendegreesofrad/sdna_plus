@@ -10,10 +10,21 @@ set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
 
 # I'm not sure how to set CMAKE_TOOLCHAIN_FILE in CMakePresets.json as recommended here:
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
-set(CMAKE_TOOLCHAIN_FILE
- "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
- )
 
+
+if (IS_READABLE ENV{VCPKG_ROOT})
+    SET(VCPKG_ROOT 
+    "$ENV{VCPKG_ROOT}"
+    )
+else()
+    SET(VCPKG_ROOT 
+    "$ENV{VCPKG_INSTALLATION_ROOT}"
+    )
+endif()
+
+set(CMAKE_TOOLCHAIN_FILE
+    "{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+)
  
 set(VCPKG_MANIFEST_DIR "${CMAKE_SOURCE_DIR}/../..")
 
@@ -22,6 +33,8 @@ set(PROJECT_NAME sdna_vs2008)
 # "This will become the name of the resulting Visual Studio solution. "
 # https://cmake.org/cmake/help/book/mastering-cmake/chapter/Converting%20Existing%20Systems%20To%20CMake.html#converting-windows-based-workspaces
 project(${PROJECT_NAME} CXX)
+
+set(CMAKE_CXX_STANDARD 14)
 
 # In CMake, the target Platform can be set for all Visual Studio Generators 
 # as far back as VS 2008 by setting
@@ -34,7 +47,8 @@ project(${PROJECT_NAME} CXX)
 ################################################################################
 # Set target arch type if empty. Visual studio solution generator provides it.
 ################################################################################
-if(NOT CMAKE_VS_PLATFORM_NAME)
+if (MSVC AND (NOT CMAKE_VS_PLATFORM_NAME))
+    message("Using default platform (x64)")
     set(CMAKE_VS_PLATFORM_NAME "x64")
 endif()
 
@@ -45,10 +59,12 @@ set(Supported_platforms
   "x64"
   )
 
-if ("${CMAKE_VS_PLATFORM_NAME}" IN_LIST Supported_platforms)  
+if ("${CMAKE_VS_PLATFORM_NAME}" IN_LIST Supported_platforms)
     message("${CMAKE_VS_PLATFORM_NAME} architecture in use")
-else()
+elseif (MSVC)
     message(FATAL_ERROR "${CMAKE_VS_PLATFORM_NAME} arch is not supported!")
+else()
+    message("Attempting to configure for arch: ${CMAKE_VS_PLATFORM_NAME} unsupported by Visual Studio config. ")
 endif()
 
 # "For multi-configuration generators like Visual Studio, Xcode, 
@@ -231,6 +247,7 @@ set(Headers
     "unique_id.h"
     "version_template.h"
     "version_generated.h.creator.py"
+    "IteratorTypeErasure/any_iterator/any_iterator.hpp"
 )
 source_group("Headers" FILES ${Headers})
 
@@ -329,6 +346,8 @@ set(LIBRARY_OUTPUT_DIRECTORY
 
 add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 
+# If building with Ninja, by default libraries are prefixed with "lib"
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 
@@ -355,109 +374,109 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 ################################################################################
 # MSVC runtime library
 ################################################################################
-get_property(MSVC_RUNTIME_LIBRARY_DEFAULT TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY)
-if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Any CPU")
-    string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
-        $<$<CONFIG:benchmark_probroutes>:
-            MultiThreaded
-        >
-        $<$<CONFIG:Debug_speedup>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:Debug>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:fast_debug>:
-            MultiThreaded
-        >
-        $<$<CONFIG:parallel_debug>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:Release>:
-            MultiThreaded
-        >
-        $<$<CONFIG:vtune>:
-            MultiThreadedDebug
-        >
-        $<$<NOT:$<OR:$<CONFIG:benchmark_probroutes>,$<CONFIG:Debug_speedup>,$<CONFIG:Debug>,$<CONFIG:fast_debug>,$<CONFIG:parallel_debug>,$<CONFIG:Release>,$<CONFIG:vtune>>>:${MSVC_RUNTIME_LIBRARY_DEFAULT}>
-    )
-elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Mixed Platforms")
-    string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
-        $<$<CONFIG:benchmark_probroutes>:
-            MultiThreaded
-        >
-        $<$<CONFIG:Debug_speedup>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:Debug>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:fast_debug>:
-            MultiThreaded
-        >
-        $<$<CONFIG:parallel_debug>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:Release>:
-            MultiThreaded
-        >
-        $<$<CONFIG:vtune>:
-            MultiThreadedDebug
-        >
-        $<$<NOT:$<OR:$<CONFIG:benchmark_probroutes>,$<CONFIG:Debug_speedup>,$<CONFIG:Debug>,$<CONFIG:fast_debug>,$<CONFIG:parallel_debug>,$<CONFIG:Release>,$<CONFIG:vtune>>>:${MSVC_RUNTIME_LIBRARY_DEFAULT}>
-    )
-elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Win32")
-    string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
-        $<$<CONFIG:benchmark_probroutes>:
-            MultiThreaded
-        >
-        $<$<CONFIG:Debug_speedup>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:Debug>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:fast_debug>:
-            MultiThreaded
-        >
-        $<$<CONFIG:parallel_debug>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:Release>:
-            MultiThreaded
-        >
-        $<$<CONFIG:vtune>:
-            MultiThreadedDebug
-        >
-        $<$<NOT:$<OR:$<CONFIG:benchmark_probroutes>,$<CONFIG:Debug_speedup>,$<CONFIG:Debug>,$<CONFIG:fast_debug>,$<CONFIG:parallel_debug>,$<CONFIG:Release>,$<CONFIG:vtune>>>:${MSVC_RUNTIME_LIBRARY_DEFAULT}>
-    )
-elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
-    string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
-        $<$<CONFIG:benchmark_probroutes>:
-            MultiThreaded
-        >
-        $<$<CONFIG:Debug_speedup>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:Debug>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:fast_debug>:
-            MultiThreaded
-        >
-        $<$<CONFIG:parallel_debug>:
-            MultiThreadedDebug
-        >
-        $<$<CONFIG:Release>:
-            MultiThreaded
-        >
-        $<$<CONFIG:vtune>:
-            MultiThreadedDebug
-        >
-        $<$<NOT:$<OR:$<CONFIG:benchmark_probroutes>,$<CONFIG:Debug_speedup>,$<CONFIG:Debug>,$<CONFIG:fast_debug>,$<CONFIG:parallel_debug>,$<CONFIG:Release>,$<CONFIG:vtune>>>:${MSVC_RUNTIME_LIBRARY_DEFAULT}>
-    )
-endif()
-set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY ${MSVC_RUNTIME_LIBRARY_STR})
+# get_property(MSVC_RUNTIME_LIBRARY_DEFAULT TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY)
+# if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Any CPU")
+#     string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
+#         $<$<CONFIG:benchmark_probroutes>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:Debug_speedup>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:Debug>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:fast_debug>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:parallel_debug>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:Release>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:vtune>:
+#             MultiThreadedDebug
+#         >
+#         $<$<NOT:$<OR:$<CONFIG:benchmark_probroutes>,$<CONFIG:Debug_speedup>,$<CONFIG:Debug>,$<CONFIG:fast_debug>,$<CONFIG:parallel_debug>,$<CONFIG:Release>,$<CONFIG:vtune>>>:${MSVC_RUNTIME_LIBRARY_DEFAULT}>
+#     )
+# elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Mixed Platforms")
+#     string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
+#         $<$<CONFIG:benchmark_probroutes>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:Debug_speedup>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:Debug>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:fast_debug>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:parallel_debug>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:Release>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:vtune>:
+#             MultiThreadedDebug
+#         >
+#         $<$<NOT:$<OR:$<CONFIG:benchmark_probroutes>,$<CONFIG:Debug_speedup>,$<CONFIG:Debug>,$<CONFIG:fast_debug>,$<CONFIG:parallel_debug>,$<CONFIG:Release>,$<CONFIG:vtune>>>:${MSVC_RUNTIME_LIBRARY_DEFAULT}>
+#     )
+# elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Win32")
+#     string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
+#         $<$<CONFIG:benchmark_probroutes>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:Debug_speedup>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:Debug>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:fast_debug>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:parallel_debug>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:Release>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:vtune>:
+#             MultiThreadedDebug
+#         >
+#         $<$<NOT:$<OR:$<CONFIG:benchmark_probroutes>,$<CONFIG:Debug_speedup>,$<CONFIG:Debug>,$<CONFIG:fast_debug>,$<CONFIG:parallel_debug>,$<CONFIG:Release>,$<CONFIG:vtune>>>:${MSVC_RUNTIME_LIBRARY_DEFAULT}>
+#     )
+# elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
+#     string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
+#         $<$<CONFIG:benchmark_probroutes>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:Debug_speedup>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:Debug>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:fast_debug>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:parallel_debug>:
+#             MultiThreadedDebug
+#         >
+#         $<$<CONFIG:Release>:
+#             MultiThreaded
+#         >
+#         $<$<CONFIG:vtune>:
+#             MultiThreadedDebug
+#         >
+#         $<$<NOT:$<OR:$<CONFIG:benchmark_probroutes>,$<CONFIG:Debug_speedup>,$<CONFIG:Debug>,$<CONFIG:fast_debug>,$<CONFIG:parallel_debug>,$<CONFIG:Release>,$<CONFIG:vtune>>>:${MSVC_RUNTIME_LIBRARY_DEFAULT}>
+#     )
+# endif()
+# set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY ${MSVC_RUNTIME_LIBRARY_STR})
 
 ################################################################################
 # Include directories
@@ -466,47 +485,48 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     "../muparser/drop/include"
 )
 
+
+
+if(MSVC)
 ################################################################################
 # Compile definitions
 ################################################################################
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-"$<$<CONFIG:benchmark_probroutes>:"
-    "NDEBUG;"
-    "BENCHMARK;"
-    "PROB_ROUTE_CODE"
-">"
-"$<$<CONFIG:Debug_speedup>:"
-    "_DEBUG"
-">"
-"$<$<CONFIG:Debug>:"
-    "_DEBUG;"
-    "_SDNADEBUG"
-">"
-"$<$<CONFIG:fast_debug>:"
-    "NDEBUG"
-">"
-"$<$<CONFIG:parallel_debug>:"
-    "_DEBUG;"
-    "_SDNADEBUG"
-">"
-"$<$<CONFIG:Release>:"
-    "NDEBUG"
-">"
-"$<$<CONFIG:vtune>:"
-    "_DEBUG"
-">"
-"WIN32;"
-"_WINDOWS;"
-"_USRDLL;"
-"SDNA_VS2008_EXPORTS;"
-"UNICODE;"
-"_UNICODE"
-)
-
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        "$<$<CONFIG:benchmark_probroutes>:"
+            "NDEBUG;"
+            "BENCHMARK;"
+            "PROB_ROUTE_CODE"
+        ">"
+        "$<$<CONFIG:Debug_speedup>:"
+            "_DEBUG"
+        ">"
+        "$<$<CONFIG:Debug>:"
+            "_DEBUG;"
+            "_SDNADEBUG"
+        ">"
+        "$<$<CONFIG:fast_debug>:"
+            "NDEBUG"
+        ">"
+        "$<$<CONFIG:parallel_debug>:"
+            "_DEBUG;"
+            "_SDNADEBUG"
+        ">"
+        "$<$<CONFIG:Release>:"
+            "NDEBUG"
+        ">"
+        "$<$<CONFIG:vtune>:"
+            "_DEBUG"
+        ">"
+        "WIN32;"
+        "_WINDOWS;"
+        "_USRDLL;"
+        "SDNA_VS2008_EXPORTS;"
+        "UNICODE;"
+        "_UNICODE"
+    )
 ################################################################################
 # Compile and link options
 ################################################################################
-if(MSVC)
     if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Any CPU")
         target_compile_options(${PROJECT_NAME} PRIVATE
             $<$<CONFIG:benchmark_probroutes>:
@@ -913,6 +933,27 @@ if(MSVC)
             /SUBSYSTEM:WINDOWS
         )
     endif()
+elseif(WIN32) # E.g. zig c++ for Windows
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        "$<$<CONFIG:Debug>:"
+            "_DEBUG;"
+            "_SDNADEBUG"
+        ">"
+        "$<$<CONFIG:Release>:"
+            "NDEBUG"
+        ">"
+        "WIN32;"
+        "_WINDOWS;"
+        "_USRDLL;"
+        "SDNA_VS2008_EXPORTS;"
+        "UNICODE;"
+        "_UNICODE"
+    )
+else() # Not MSVC
+    target_compile_definitions(${PROJECT_NAME} PRIVATE
+        "UNICODE;"
+        "_UNICODE"
+    )
 endif()
 
 ################################################################################
@@ -952,9 +993,11 @@ add_custom_command(
 ################################################################################
 # Extra files packaged at build time (pre built geos dlls)
 ################################################################################
-add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} "${LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>"
-)
+if (Geos_binary)
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Geos_binary} "${LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>"
+    )
+endif()
 
 

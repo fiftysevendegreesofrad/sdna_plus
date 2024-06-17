@@ -148,13 +148,10 @@ float truncate(float value,float lower,float upper)
 {
 	if (value<lower)
 		return lower;
-	else 
-	{
-		if (value>upper)
-			return upper;
-		else
-			return value;
-	}
+	else if (value>upper)
+		return upper;
+
+	return value;
 }
 
 float safedivide(float numerator,float denominator)
@@ -188,7 +185,10 @@ void HybridMetricEvaluator::set_buffer_pointers()
 	parser.DefineFun("randnorm",&randnorm,true);
 	parser.DefineFun("randuni",&randuni,true);
 	parser.DefineFun("proportion",&safedivide,true);
+	#ifdef _WINDOWS
+	// TODO:  Figure out why Posix doesn't like &truncate 
 	parser.DefineFun("trunc",&truncate,true);
+	#endif
 	parser.SetVarFactory(&staticvariablefactory,this);
 	
 	junction_parser.DefineVar("ang",&junction_turn_angle_variable);
@@ -197,7 +197,9 @@ void HybridMetricEvaluator::set_buffer_pointers()
 	junction_parser.DefineFun("randnorm",&randnorm,true);
 	junction_parser.DefineFun("randuni",&randuni,true);
 	junction_parser.DefineFun("proportion",&safedivide,true);
+	#ifdef _WINDOWS
 	junction_parser.DefineFun("trunc",&truncate,true);
+	#endif
 	junction_parser.SetVarFactory(&staticjuncvariablefactory,this);
 	
 	buffers_set = true;
@@ -275,7 +277,7 @@ bool HybridMetricEvaluator::test_linearity_inner(float val,float fwd)
 
 float HybridMetricEvaluator::evaluate_edge_internal(TraversalEventAccumulator const& acc,const Edge * const e,bool warn_if_bad,bool provide_geometry_variables)
 {
-	if (!creating_thread_number==OMP_THREAD)
+	if (creating_thread_number!=OMP_THREAD)
 	{
 		//not an assert as parallel version doesn't have them
 		throw SDNARuntimeException("MetricEvaluator threading issue");
@@ -342,7 +344,7 @@ float HybridMetricEvaluator::evaluate_edge_internal(TraversalEventAccumulator co
 
 float HybridMetricEvaluator::evaluate_junction(float turn_angle,const Edge * const prev,const Edge * const next)
 {
-	if (!creating_thread_number==OMP_THREAD)
+	if (creating_thread_number!=OMP_THREAD)
 	{
 		//not an assert as parallel version doesn't have them
 		throw SDNARuntimeException("MetricEvaluator threading issue");	

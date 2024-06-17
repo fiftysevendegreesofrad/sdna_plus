@@ -187,7 +187,7 @@ class HybridMetricEvaluator : public MetricEvaluator
 	bool buffers_set, no_infinity_warning;
 	
 	void set_buffer_pointers();
-	HybridMetricEvaluator& operator=(const HybridMetricEvaluator&) {assert(false);}
+	HybridMetricEvaluator& operator=(const HybridMetricEvaluator& other) {assert(false); return *this;}
 	bool test_linearity_inner(float val,float fwd);
 
 public:
@@ -364,7 +364,7 @@ private:
 		template <typename T> pair<TraversalEvent,TraversalEvent> operator()(T const& traversalevent) const
 			{ return traversalevent.split(second_half_cost); }
 	};
-	class GetTypeVisitor : public boost::static_visitor<typename traversal_event_type>
+	class GetTypeVisitor : public boost::static_visitor<traversal_event_type>
 	{
 	public:
 		template <typename T> traversal_event_type operator()(T const& traversalevent) const
@@ -376,13 +376,13 @@ private:
 		template <typename T> bool operator()(T const& traversalevent) const
 			{ return traversalevent.empty_costs(); }
 	};
-	class GetLocationVisitor : public boost::static_visitor<typename Point*>
+	class GetLocationVisitor : public boost::static_visitor<Point*>
 	{
 	public:
 		template <typename T> Point* operator()(T const& traversalevent) const
 			{ return traversalevent.physical_location(); }
 	};
-	class ToStringVisitor : public boost::static_visitor<typename string>
+	class ToStringVisitor : public boost::static_visitor<string>
 	{
 	public:
 		template <typename T> string operator()(T const& traversalevent) const

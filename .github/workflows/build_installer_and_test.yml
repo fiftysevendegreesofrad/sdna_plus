@@ -1,13 +1,13 @@
-name: "Compile with MSBuild and VS 2022 for Windows, and test"
+name: "MSBuild, VS 2022, & Windows.  Build installer and test it."
 
 on:
   workflow_dispatch:
 
   push:
-    branches: [ "main" ]
+    branches: [ "main", "Cross_platform", "Zig_fix_prep_op_access_violation" ]
 
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "Cross_platform", "Zig_fix_prep_op_access_violation" ]
 
 env:
   CONFIGURATION: Release
@@ -17,7 +17,7 @@ env:
 
 jobs:
   build_and_upload_installer:
-    name: Try to compile on windows
+    name: "MSBuild, VS 2022, & Windows.  Build installer"
     runs-on: windows-2022
     outputs:
       installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}

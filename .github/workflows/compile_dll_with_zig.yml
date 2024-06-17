@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Zig"]
+    branches: [ "Compile_with_Zig_('Clang')", "Zig"]
 
   pull_request:
-    branches: [ "Zig" ]
+    branches: [ "Compile_with_Zig_('Clang')", "Zig" ]
 
 env:
   CONFIGURATION: Release
@@ -80,7 +80,8 @@ jobs:
         name: output
         # this file name pattern is defined in installerbits\rename_version.py
         # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
-        path: output
+        path: output/${{ env.CONFIGURATION }}
+
 
 
   # test_installer:

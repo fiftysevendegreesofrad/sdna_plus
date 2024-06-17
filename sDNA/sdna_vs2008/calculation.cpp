@@ -2,6 +2,13 @@
 #include "calculation.h"
 #include "prepareoperations.h"
 
+#ifndef _WINDOWS
+#include <pthread.h>
+#define GetCurrentThread pthread_self
+#define SetThreadPriority pthread_setschedprio
+#endif
+
+
 double SDNAIntegralCalculation::getDistanceToJunction(Edge *e)
 {
 	double dist = e->get_end_traversal_cost_ignoring_oneway().euclidean;
@@ -289,9 +296,9 @@ bool SDNAIntegralCalculation::run_internal_throwing_exceptions()
 	if (output_skim)
 	{
 		initialize_skim_zones();
-		skim_matrix_sum_distance.swap(vector<vector<long double>>(skim_origins.size(),vector<long double>(skim_destinations.size(),0.)));
-		skim_matrix_weight.swap(vector<vector<long double>>(skim_origins.size(),vector<long double>(skim_destinations.size(),0.)));
-		skim_matrix_n.swap(vector<vector<unsigned long>>(skim_origins.size(),vector<unsigned long>(skim_destinations.size(),0l)));
+		skim_matrix_sum_distance.assign(skim_origins.size(),vector<long double>(skim_destinations.size(),0.));
+		skim_matrix_weight.assign(skim_origins.size(),vector<long double>(skim_destinations.size(),0.));
+		skim_matrix_n.assign(skim_origins.size(),vector<unsigned long>(skim_destinations.size(),0l));
 	}
 
 	//initialize sdna integral arrays (computed once, by this calculation)
@@ -364,9 +371,11 @@ bool SDNAIntegralCalculation::run_internal_throwing_exceptions()
 	//  progress bar (num_links_computed)
 	#pragma omp parallel 
 	{
+		#ifdef _WINDOWS
 		int priority = GetThreadPriority(GetCurrentThread());
 		SetThreadPriority(GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN);
 		SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
+		#endif
 
 		#pragma omp for schedule (guided) firstprivate (analysis_evaluator_copyable, radial_evaluator_copyable)
 		for (long origin_link_index = skip_mod; origin_link_index < numeric_cast<long>(links.size()); origin_link_index+=skip_fraction)
@@ -393,8 +402,10 @@ bool SDNAIntegralCalculation::run_internal_throwing_exceptions()
 				}
 			}
 		}
+		#ifdef _WINDOWS
 		SetThreadPriority(GetCurrentThread(), THREAD_MODE_BACKGROUND_END);
 		SetThreadPriority(GetCurrentThread(), priority);
+		#endif
 	}
 	if (terminate_early)
 		throw SDNARuntimeException(*inner_loop_exception);
@@ -627,7 +638,7 @@ void SDNAIntegralCalculation::process_origin(SDNAPolyline *origin,int r,boost::s
 	}
 }
 
-double SDNAIntegralCalculation::get_geodesic_analytical_cost(DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge)
+double SDNAIntegralCalculation::get_geodesic_analytical_cost(const DestinationEdgeProcessingTask &dest,IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge)
 {
 	return anal_best_costs_reaching_edge[*dest.routing_edge] + dest.cost_to_centre;
 }
@@ -695,7 +706,7 @@ void SDNAIntegralCalculation::process_destination(DestinationEdgeProcessingTask 
 	}
 }
 
-void SDNAIntegralCalculation::process_geodesic(DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
+void SDNAIntegralCalculation::process_geodesic(const DestinationEdgeProcessingTask &dest,PartialNet &cut_net, int r,
 											  vector<Edge*> &intermediate_edges,
 											  IdIndexedArray<double  ,EdgeId> &anal_best_costs_reaching_edge,
 											  MetricEvaluator *analysis_evaluator,
@@ -856,12 +867,12 @@ void SDNAIntegralCalculation::process_geodesic(DestinationEdgeProcessingTask &de
 }
 
 DestinationEdgeProcessingTask DestinationEdgeProcessingTask::getRadialEquivalent(IdIndexedArray<double,EdgeId> &radialcosts,
-																			MetricEvaluator* metric_eval)
+																			MetricEvaluator* metric_eval) const
 {
 	return DestinationSDNAPolylineSegment(geom_edge,length_of_edge_inside_radius).getDestinationEdgeProcessingTaskRadial(radialcosts,metric_eval);
 }
 
-double SDNAIntegralCalculation::backtrace(DestinationEdgeProcessingTask &t,SDNAPolyline * const origin_link,
+double SDNAIntegralCalculation::backtrace(const DestinationEdgeProcessingTask &t,SDNAPolyline * const origin_link,
 										  IdIndexedArray<Edge *  ,EdgeId> &backlinks_edge,
 										  vector<Edge*> &intermediate_edges,Edge **origin_exit_edge,bool& passed_intermediate_filter)
 {

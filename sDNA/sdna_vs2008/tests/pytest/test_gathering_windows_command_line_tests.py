@@ -6,12 +6,9 @@ import sys
 import glob
 import re
 import math
-import itertools
 import subprocess
 import collections
 import tempfile
-
-import pytest
 
 import filter_out_debug_only_output
 
@@ -25,7 +22,7 @@ except ImportError:
 
 OUTPUT_SUFFIX = 'py%s' % sys.version_info[0]
 
-REPO_ROOT_DIR = os.path.join(os.path.dirname(__file__), r'..\..\..\..')
+REPO_ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), r'..\..\..\..'))
 
 ON_WINDOWS = (sys.platform == 'win32')
 
@@ -35,7 +32,7 @@ SDNA_DLL_LOCATIONS = (
              r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll',
             )
 
-SDNA_DLL = os.getenv('sdnadll', '')
+SDNA_DLL = os.path.abspath(os.getenv('sdnadll', ''))
 
 SDNA_BIN_SUFFIXES = ('integral', 'prepare', 'learn', 'predict')
 
@@ -64,37 +61,34 @@ def is_sdna_bin_dir(dir_):
                for suffix in SDNA_BIN_SUFFIXES
               )
 
-if not SDNA_BIN_DIR:
-    # .casefold is more aggressive and is best practise for 
-    # caseless matching of strings -- but only as a native 
-    # language speaking human would match those strings.  
-    # .casefold would not distinguish between the two dirs: c:\ss 
-    # and c:\ß (dir paths are case-insensitive on Windows, unlike Linux).
-    if SDNA_DLL.lower().startswith(REPO_ROOT_DIR.lower()):
-        dir_ = os.path.join(REPO_ROOT_DIR, 'arcscripts', 'bin')
-        
-        if not is_sdna_bin_dir(dir_):    
-            raise Exception('Cannot find an sDNA binary directory '
-                            '(containing sdnaintegral.py etc.) to test with the dll. '
-                            r'Set %sdnadll% to the dll of a complete sDNA '
-                            'installation, test in the source code repo, or'
-                            r' set %SDNA_BIN_DIR%.'
-                            )    
-    else:
-        # e.g. for SDNA_DLL == r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
-        dir_ = os.path.join(os.path.dirname(SDNA_DLL),'..','bin') 
-        if not is_sdna_bin_dir(dir_):
-            raise Exception(
-                "Could not find sDNA 'bin'/ python files"
-                "associated with SDNA_DLL: %s. "
-                "Set SDNA_BIN_DIR to the dir containing the "
-                "sDNA 'bin'/python files to be tested "
-                "(sdna+ %s +.py), or ensure  is part of a"
-                "complete sDNA installation. "
-                % (SDNA_DLL, SDNA_BIN_SUFFIXES, SDNA_DLL)
-                )
 
+def sdna_bin_dirs():
+    # e.g. for SDNA_DLL == r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
+    yield os.path.join(os.path.dirname(SDNA_DLL),'..','bin') 
+
+    # e.g. for SDNA_DLL == r'C:\Program Files (x86)\sDNA\sdna_vs2008.dll'
+    yield os.path.join(os.path.dirname(SDNA_DLL),'bin') 
+
+    # e.g. for SDNA_DLL == \sDNA\output\Release\x64\sdna_vs2008.dll'
+    yield os.path.join(REPO_ROOT_DIR, 'arcscripts', 'bin')
+
+for dir_ in sdna_bin_dirs():
+    if not is_sdna_bin_dir(dir_):
+        continue
     SDNA_BIN_DIR = dir_
+    break
+else:
+    raise Exception(
+        ("Could not find sDNA 'bin'/ python files "
+        "associated with SDNA_DLL: %s. "
+        "Set SDNA_BIN_DIR to the dir containing the "
+        "sDNA 'bin'/python files to be tested "
+        "(sdna+ %s +.py), or ensure the dll is part of a"
+        "complete sDNA installation. "
+        )
+        % (SDNA_DLL, SDNA_BIN_SUFFIXES)
+        )
+
 
 
 print(r'Testing the sdnaintegral.py etc. in: %sdna_bin_dir%== ' + SDNA_BIN_DIR)
@@ -165,6 +159,7 @@ def batch_file_tests():
 
         yield file_
 
+print('Batch files being parsed: %s' % '\n'.join(batch_file_tests()))
 
 def windows_test_commands():
     for file_ in batch_file_tests():
@@ -804,11 +799,15 @@ diff_test_expected_files = [diff_test.diff_command.expected_output_file
                             for diff_test in diff_tests
                            ]
 
+try:
+    import pytest
 
-@pytest.mark.parametrize('diff_test', diff_tests, ids = diff_test_expected_files)
-def test_diff_(diff_test):
-    diff_test.run()
+    @pytest.mark.parametrize('diff_test', diff_tests, ids = diff_test_expected_files)
+    def test_diff_(diff_test):
+        diff_test.run()
 
+except ImportError:
+    pass
 
 if __name__=='__main__':
 

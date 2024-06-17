@@ -204,7 +204,7 @@ public:
 #elif defined(_AMD64_)
 	typedef long long point_index_t;
 #else
-#error "Unrecognised architecture"
+	typedef long long point_index_t;
 #endif
 
 struct Edge : public IndexedObject<EdgeId> // the algorithm edge structure
@@ -222,7 +222,7 @@ struct Edge : public IndexedObject<EdgeId> // the algorithm edge structure
 	Junction* end_junction;
 
 	//evaluates TraversalEventAccumulator in the context of this edge
-	float evaluate_me(MetricEvaluator* e,TraversalEventAccumulator& acc) const;
+	float evaluate_me(MetricEvaluator* e,const TraversalEventAccumulator& acc) const;
 
 	//inner methods
 	TraversalEventAccumulator get_start_traversal_cost_ignoring_oneway() const;
@@ -263,9 +263,9 @@ struct Edge : public IndexedObject<EdgeId> // the algorithm edge structure
 	}
 
 private:
-	TraversalEventIterator Edge::traversal_events_begin() const;
-	TraversalEventIterator Edge::traversal_events_end() const;
-	TraversalEventIterator Edge::traversal_events_centre() const;
+	TraversalEventIterator traversal_events_begin() const;
+	TraversalEventIterator traversal_events_end() const;
+	TraversalEventIterator traversal_events_centre() const;
 
 	void get_outgoing_connections(CandidateEdgeVector &options,double cost_to_date,double remaining_radius,
 		MetricEvaluator* anal_evaluator,MetricEvaluator* radial_evaluator,edge_position from,
@@ -342,7 +342,7 @@ public:
 	}
 
 	//does not return costs - intended for finding subsystems not navigation
-	vector<SDNAPolyline*> SDNAPolyline::get_linked_links();
+	vector<SDNAPolyline*> get_linked_links();
 
 	void assign_id(size_t id_in)
 	{

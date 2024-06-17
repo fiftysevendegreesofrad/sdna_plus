@@ -82,7 +82,7 @@ struct Point
 		retval << "(" << x << "," << y << "," << z << ")";
 		return retval.str();
 	}
-	static float distance(Point &a, Point &b)
+	static float distance(const Point &a, const Point &b)
 	{
 		return (b-a).length();
 	}
@@ -145,7 +145,7 @@ struct Point
 	}
 	static Point proportional_midpoint(Point *a,Point *b,float proportion)
 	{
-		if (!_isnan(proportion))
+		if (!isnan(proportion))
 		{
 			assert (a != NULL);
 			assert (b != NULL);
