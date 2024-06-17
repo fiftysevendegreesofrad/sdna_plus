@@ -31,10 +31,10 @@ jobs:
 
     - name: Create Ninja build system from CMake
       run: >
-        cmake 
+        cmake
           -G "Ninja Multi-Config"
           -D USE_ZIG=OFF
-          -B build_output_cmake_gcc 
+          -B build_output_cmake_gcc
           -S .
         
     - name: Build sDNA
