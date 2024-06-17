@@ -18,7 +18,7 @@ env:
 
 jobs:
   build_and_upload_installer:
-    name: Compile on Ubuntu with CMake & Zig c++""
+    name: "Compile on Ubuntu with CMake & Zig c++"
     runs-on: "ubuntu-24.04"
     # outputs:
     #   installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}

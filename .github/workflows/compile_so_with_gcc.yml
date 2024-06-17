@@ -17,7 +17,7 @@ env:
 
 jobs:
   build_and_upload_installer:
-    name: Compile on Ubuntu with CMake & GCC
+    name: "Compile on Ubuntu with CMake & GCC"
     runs-on: "ubuntu-24.04"
     # outputs:
     #   installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
