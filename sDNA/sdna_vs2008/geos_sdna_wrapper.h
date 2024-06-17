@@ -23,6 +23,7 @@ enum GEOSGeomTypes {
 
 #define geos_ensure_succeeded(x) {int result = ( x ); assert(result!=0);}
 
+
 //this could be better expressed with preprocessor macros but I think we're slowly factoring out geos anyway
 class ExplicitSDNAPolylineToGeosWrapper
 {
@@ -69,9 +70,12 @@ public:
 	GEOSGeometry *UnaryUnion(GEOSGeometry *g1) {return (*GEOSUnaryUnion)(g1);}
 	int GeomTypeId(const GEOSGeometry *g1) {return (*GEOSGeomTypeId)(g1);}
 
-	#ifdef _WINDOWS
+	#ifdef _MSC_VER
 	static const char address_in_this_module = 0;
 	#else
+	// This option is rendered on Windows without Visual Studio, as well as on Linux,
+	// but it probably won't produce the desired result of finding a handle to this
+	// dll via a memory reference within it.
 	char address_in_this_module = 0;
 	#endif
 	ExplicitSDNAPolylineToGeosWrapper()
