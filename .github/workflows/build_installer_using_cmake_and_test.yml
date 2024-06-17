@@ -37,16 +37,15 @@ jobs:
         # advinst-version: '21.3'
         advinst-version: '21.7.1'
 
-    - name: Make vcpkg dir on this drive
-      shell: bash
-      run: mkdir ../vcpkg
+        # advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
+        # " advinst-license
+        # Advanced Installer license ID. This parameter is optional if you are using a simple project type.
+        # "
 
-    - name: Install vcpkg on the same drive as the working dir
-      shell: cmd
-      working-directory: ../vcpkg
-      run: |
-        git clone --depth=1 https://github.com/microsoft/vcpkg/ .
-        .\bootstrap-vcpkg.bat
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v2
+
+
 
 
     - name: Create_sDNA_Installer_with_CMake
@@ -54,11 +53,8 @@ jobs:
       # CMake errors if given c:\vcpkg and /scripts/buildsystems/vcpkg.cmake
       # so can't use set VCPKG_ROOT=%VCPKG_INSTALLATION_ROOT%
       run: |
-        set VCPKG_ROOT=../vcpkg
-        set VCPKG_INSTALLATION_ROOT=../vcpkg
-        ${{ github.workspace }}\create_installer_with_Visual_Studio_17_2022.bat
-
-
+        set VCPKG_ROOT=C:/vcpkg
+        .\create_installer_with_Visual_Studio_17_2022.bat
     - name: Output the name of the .msi installer file
       id: output_installer_file_name
       shell: bash
@@ -127,8 +123,6 @@ jobs:
         $procMain.WaitForExit() 
         $procLog.Kill()
         Remove-Item $file
-
-
     - name: Run regression tests
       uses: ./.github/actions/run_regression_tests
       with:
