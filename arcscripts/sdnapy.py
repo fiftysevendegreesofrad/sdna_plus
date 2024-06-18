@@ -14,10 +14,10 @@ else:
 
 if sys.platform=='win32':
     sdna_lib_name = 'sdna_vs2008.dll'
-    LoadLibrary = windll.LoadLibrary
+    load_library = windll.LoadLibrary
 else:
     sdna_lib_name = 'sdna_vs2008.so'
-    LoadLibrary = cdll.LoadLibrary
+    load_library = cdll.LoadLibrary
 
 # http://stackoverflow.com/questions/17840144/why-does-setting-ctypes-dll-function-restype-c-void-p-return-long
 class my_void_p(c_void_p):
