@@ -686,6 +686,9 @@ class DiffCommand(ReadsTextInputFile):
                 if 'mydiff' in self.command_str:
                     actual = actual.replace('_%s' % OUTPUT_SUFFIX, '')
 
+                if not ON_WINDOWS:
+                    actual = actual.replace('/',r'\\')
+
                 actual_buffer.append(repr(actual))
                 expected_buffer.append(repr(expected))
 
