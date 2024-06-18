@@ -119,8 +119,13 @@ public:
 		#else
 
 		#define GetProcAddress dlsym
-		const char *geos_dll_path_w="~/output/Release/x64/geos_c.so";
-    	hDLL = dlopen(geos_dll_path_w, RTLD_NOW);
+
+		// " If filename contains a slash ("/"), then it is
+        // interpreted as a (relative or absolute) pathname.  ""
+		// https://www.man7.org/linux/man-pages/man3/dlopen.3.html
+		const char *geos_dll_path_w="./libgeos_c.so";
+    	
+		hDLL = dlopen(geos_dll_path_w, RTLD_NOW);
 
 		#endif
 
