@@ -687,8 +687,8 @@ class DiffCommand(ReadsTextInputFile):
                     actual = actual.replace('_%s' % OUTPUT_SUFFIX, '')
 
                 if not ON_WINDOWS:
-                    actual = actual.replace('/',r'\\')
-                    expected = expected.replace('/',r'\\')
+                    actual = actual.replace('\\','/')
+                    expected = expected.replace('\\','/')
 
                 actual_buffer.append(repr(actual))
                 expected_buffer.append(repr(expected))
