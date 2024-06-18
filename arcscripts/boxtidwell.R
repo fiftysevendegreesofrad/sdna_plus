@@ -1,5 +1,7 @@
 #!/usr/bin/Rscript
 
+install.packages("car")
+install.packages("stats")
 yfilename = commandArgs(trailingOnly=TRUE)[1]
 xfilename = commandArgs(trailingOnly=TRUE)[2]
 x2filename = commandArgs(trailingOnly=TRUE)[3]

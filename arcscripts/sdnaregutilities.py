@@ -75,8 +75,8 @@ def Rcall_estimate(script,arrays,env):
     process = subprocess.Popen(R_call(script,['"%s"'%t.name for t in tmpfiles]),shell=SHELL_MODE,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE) 
     result = []
     stdout,stderr = process.communicate()
-    stdout = bytes_to_str(stdout,"ascii")
-    stderr = bytes_to_str(stderr,"ascii")
+    stdout = bytes_to_str(stdout,"utf8")
+    stderr = bytes_to_str(stderr,"utf8")
     lines = stdout.split('\n')[0:arrays[0].shape[1]]
     if stderr:
         env.AddError("Estimation error ******")
@@ -157,8 +157,8 @@ def regularizedregression(data,names,targetdata,targetname,alpha,nfolds,reps,env
                                                 %(tmpfile.name,targetname,xs,alpha,nfolds,reps,weightfile.name,intercept_s,reglambda_s)])
     p = Popen(call,shell=SHELL_MODE,stdout=PIPE,stderr=PIPE,stdin=PIPE)
     stdout,stderr = p.communicate()
-    stdout = bytes_to_str(stdout,"ascii")
-    stderr = bytes_to_str(stderr,"ascii")
+    stdout = bytes_to_str(stdout,"utf8")
+    stderr = bytes_to_str(stderr,"utf8")
     os.unlink(tmpfile.name)
     os.unlink(weightfile.name)
     coefs,regcurve = unpack_regres_output(stdout,env)
