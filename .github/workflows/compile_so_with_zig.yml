@@ -1,13 +1,14 @@
-name: "Compile with CMake and Zig for Ubuntu"
+name: "CMake, Zig (c++), & Ubuntu.  Compile .so."
+
 
 on:
   workflow_dispatch:
 
   push:
-    branches: [ "Compile_with_Zig_('Clang')", "Zig_Linux"]
+    branches: [ "Cross_platform"]
 
   pull_request:
-    branches: [ "Compile_with_Zig_('Clang')", "Zig_Linux" ]
+    branches: [ "Cross_platform" ]
 
 env:
   CONFIGURATION: Release
@@ -17,64 +18,45 @@ env:
 
 jobs:
   build_and_upload_installer:
-    name: Try to compile on Ubuntu with CMake
-    runs-on: "ubuntu-24.04""
-    # outputs:
-    #   installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
+    name: "Compile on Ubuntu with CMake & Zig c++"
+    runs-on: "ubuntu-24.04"
+
     steps:
     - uses: actions/checkout@v4
 
 
-    # - name: Deploy Advinst
-    #   uses: caphyon/advinst-github-action@v2.0
-    #   with:
-    #     # advinst-version: '21.3'
-    #     advinst-version: '21.7.1'
 
-    #     # advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
-    #     # " advinst-license
-    #     # Advanced Installer license ID. This parameter is optional if you are using a simple project type.
-    #     # "
 
-    - name: Install Ninja
-      run: pip install ninja
+    - name: Install Git
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y git ninja-build
 
     - name: Install Zig
       uses: goto-bus-stop/setup-zig@v2
       with:
         version: 0.13.0
 
-    # Install vcpkg?
 
-    # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
     - name: Create Ninja build system from CMake
-      run: |
-        VCPKG_ROOT=$VCPKG_INSTALLATION_ROOT
-        cmake -G Ninja -B build_output_cmake_zig -S .
-
-
-
+      run: >
+        cmake
+        -G "Ninja Multi-Config"
+        -D USE_ZIG=ON
+        -B build_output_cmake_zig
+        -S .
 
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_zig
+        cmake --build build_output_cmake_zig --config Release
 
-
-    # - name: Output the name of the .msi installer file
-    #   id: output_installer_file_name
-    #   shell: bash
-    #   run: echo "name=$(ls sDNA_setup_win_v*.msi)" >> "$GITHUB_OUTPUT"  
-
-    # - name: assemble_output
 
 
     - name: upload_output
       id: installer-upload-step
       uses: actions/upload-artifact@v4
       with:
-        name: output
-        # this file name pattern is defined in installerbits\rename_version.py
-        # outfilename = os.path.join(outputdir, "sDNA_setup_win_v%s.msi" % filename_friendly_version)
+        name: output_zig_cpp_linux
         path: output
 
 
@@ -85,52 +67,24 @@ jobs:
   #   strategy:
   #     fail-fast: false
   #     matrix:
-  #       python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+  #       python_version: ['3.9', '3.10', '3.11', '3.12']
 
   #   name: "Download and run sDNA installer, and run diff tests on it. "
     
-  #   runs-on: windows-2022
-  #   # Note:  The Windows server 2022 Github runner image already includes  
-  #   # Python (currently 6 versions from 3.7 to 3.12) and a couple of 
-  #   # VC++ redistributables.  Desktop users may need to install these 
-  #   # themselves, in addition to sDNA.      
-  #   #
-  #   # https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md
-  #   #
+  #   runs-on: "ubuntu-24.04"
 
-  #   env:
-  #     installer_file_name: ${{ needs.build_and_upload_installer.outputs.installer_file_name }}
 
   #   steps:
 
 
   #   - uses: actions/checkout@v4
 
-  #   - name: Download installer built in previous job
+  #   - name: Download output tree built in previous job
   #     uses: actions/download-artifact@v4
   #     with:
-  #       name: installer_file
+  #       name: output_zig_cpp_linux
+  #       path: output
 
-  #   - shell: cmd
-  #     run: dir .
-
-
-  #   - name: Allow the .msi to be executed
-  #     run: Set-ItemProperty -Path ${{ env.installer_file_name }} -Name IsReadOnly -Value $false
-
-
-  #   - name: Run sDNA installer using powershell script. 
-  #     # This is based on @Simran-B's powershell script (from Github Community forum),
-  #     # according to GuiFalourd on Stack Overflow
-  #     # https://stackoverflow.com/a/72291019/20785734
-  #     run: |
-  #       $file = "${{ env.installer_file_name }}"
-  #       $log = "install.log" 
-  #       $procMain = Start-Process "msiexec" "/i `"$file`" /qn /l*! `"$log`"" -NoNewWindow -PassThru
-  #       $procLog = Start-Process "powershell" "Get-Content -Path `"$log`" -Wait" -NoNewWindow -PassThru 
-  #       $procMain.WaitForExit() 
-  #       $procLog.Kill()
-  #       Remove-Item $file
 
 
   #   - name: Run regression tests
@@ -139,5 +93,6 @@ jobs:
   #       python_version: ${{ matrix.python_version }}
   #       DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
   #       ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
-  #       sdnadll: 'c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
+  #       sdnadll: '${{ github.workspace }}/output/Release/x64/sdna_vs2008.so'
   #       sdna_debug: ""
+  #       shell: bash
