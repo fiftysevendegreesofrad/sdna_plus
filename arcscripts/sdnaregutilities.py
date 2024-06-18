@@ -46,7 +46,7 @@ if sys.platform=='win32':
     R_COMMAND = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","RScript.exe")
     SHELL_MODE = False
 else:
-    R_COMMAND = "R"
+    R_COMMAND = "Rscript"
     SHELL_MODE = True
 
 def R_call(script,args):
