@@ -6,10 +6,12 @@ import numpy
 import time
 import os
 
+from load_library import load_library
+
 sdnadll = os.environ["sdnadll"]
 print("dll name",sdnadll)
 
-dll = ctypes.windll.LoadLibrary(sdnadll)
+dll = load_library(sdnadll)
 
 current_net_arcids = None
 
