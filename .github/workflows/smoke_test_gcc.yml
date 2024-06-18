@@ -59,7 +59,7 @@ jobs:
       fail-fast: false
       matrix:
         python_version: ['3.11']
-        Smoke_tests: ["debug_test.py",
+        smoke_test: ["debug_test.py",
                       "hybrid_test.py",
                       "3d_test.py",
                       "partial_test.py",
@@ -90,4 +90,4 @@ jobs:
       working-directory: ./sDNA/sdna_vs2008/tests
       env:
         sdnadll: '${{ github.workspace }}/output/Release/x64/sdna_vs2008.so'
-      run: python -u {{ matrix.smoke_test }}
+      run: "python -u ${{ matrix.smoke_test }}"
