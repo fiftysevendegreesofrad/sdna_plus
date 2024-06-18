@@ -64,7 +64,17 @@ jobs:
                       "3d_test.py",
                       "partial_test.py",
                       # "test_parallel_results.py", # Needs numpy
-                      "prepare_barns_test.py" ]
+                      "prepare_barns_test.py",
+                      '../../../arcscripts/bin/sdnalearn.py --calibfile tiny.shp --target MADn --vars MGLAn,MCFn --boxcoxtarget --bcregex ".*" --mode single_best_variable --output regtestout_single_py3.txt --resids regtestresids_py3.shp',
+                      '../../../arcscripts/bin/sdnalearn.py --calibfile tiny.shp --target MADn --vars MGLAn,MCFn --mode multiple_variables --output regtestout_multiple_py3.txt',
+                      '../../../arcscripts/bin/sdnapredict.py --input tiny --output tinypred_py3.shp --modelfile regtestout_multiple_py3.txt --predvarname prediction',
+                      "make_od_test_shp.py",
+                      '../../../arcscripts/bin/sdnaintegral.py --dll $SDNADLL --im "net=skimtest" --om "skim=testout_od_skim_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean"',
+                      '../../../arcscripts/bin/sdnaintegral.py --dll $SDNADLL --im "net=skimtestzeroweight" --om "skim=testout_od_skimzeroweight_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean;weight=weight"',
+                      '../../../arcscripts/bin/sdnaintegral.py --dll $SDNADLL --im "net=odtest;tables=testodmatrix.csv" --om "net=odtestoutsparse_py3" "radii=n;odmatrix"', 
+                      '../../../arcscripts/bin/sdnaintegral.py --dll $SDNADLL --im "net=odtest;tables=testodmatrix-nonsparse.csv" --om "net=odtestoutnonsparse_py3" "radii=n;odmatrix" ',
+                      '../../../arcscripts/bin/sdnaprepare.py -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3 --dll $SDNADLL  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
+                      "prepare_test_new.py",]
 
     name: "Download and run sDNA installer, and run diff tests on it. "
     
