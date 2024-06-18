@@ -128,10 +128,10 @@ public:
 		// 
 		dlinfo(main_program_handle, RTLD_DI_LINKMAP, &lmap); 
 
-		char dir[PATH_MAX];
+		char *dir;
 		dir = dirname(lmap->l_name);
 
-		char geos_dll_path_w[PATH_MAX];
+		char *geos_dll_path_w;
 
 		geos_dll_path_w = strcat(dir, "/libgeos_c.so");
 
