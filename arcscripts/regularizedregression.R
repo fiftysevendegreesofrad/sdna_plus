@@ -2,7 +2,6 @@
 # This file is released under MIT license
 
 # options(echo=TRUE) # if you want see commands in output file
-install.packages("optparse")
 
 suppressPackageStartupMessages(require(optparse,quietly=TRUE))
 suppressPackageStartupMessages(require(glmnet,quietly=TRUE))

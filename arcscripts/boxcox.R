@@ -1,7 +1,5 @@
 #!/usr/bin/Rscript
 
-install.packages("car")
-install.packages("stats")
 filename = commandArgs(trailingOnly=TRUE)[1]
 data = read.table(filename)
 
