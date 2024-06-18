@@ -63,7 +63,7 @@ jobs:
                       "hybrid_test.py",
                       "3d_test.py",
                       "partial_test.py",
-                      "test_parallel_results.py",
+                      # "test_parallel_results.py", # Needs numpy
                       "prepare_barns_test.py" ]
 
     name: "Download and run sDNA installer, and run diff tests on it. "
