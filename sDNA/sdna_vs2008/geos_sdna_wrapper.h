@@ -120,15 +120,32 @@ public:
 
 		#define GetProcAddress dlsym
 
+		// "If filename is NULL, then the returned handle is for the main
+        //   program.  "
+		main_program_handle = dlopen(NULL, RTLD_NOW);
+		struct link_map *lmap; 
+
+		// 
+		dlinfo(my_dl_handle, RTLD_DI_LINKMAP, &lmap); 
+
+		char *dir[PATH_MAX];
+		dir = dirname(lmap->l_name);
+
+		char *geos_dll_path_w[PATH_MAX];
+
+		geos_dll_path_w = strcat(dir, "/libgeos_c.so");
+
 		// " If filename contains a slash ("/"), then it is
         // interpreted as a (relative or absolute) pathname.  ""
 		// https://www.man7.org/linux/man-pages/man3/dlopen.3.html
 		// const char *geos_dll_path_w="./libgeos_c.so";
     	
+		// Try to find installed in environment
+		// const char *geos_dll_path_w="libgeos_c.so";
 
-		const char *geos_dll_path_w="libgeos_c.so";
+		hDLL = dlopen(geos_dll_path_w, RTLD_LAZY);
 
-		hDLL = dlopen(geos_dll_path_w, RTLD_NOW);
+
 
 		#endif
 
@@ -217,7 +234,7 @@ private:
 #ifdef _WINDOWS
 	HINSTANCE hDLL;
 #else
-    void* hDLL;
+    void* hDLL, main_program_handle;
 #endif
 
 	typedef GEOSCoordSequence* (*GEOSCoordSeq_create_t)(unsigned int size,unsigned int dims);

@@ -28,6 +28,9 @@
 #else
 
 #include <dlfcn.h>
+#include <link.h>     
+#include <libgen.h>
+#include <linux/limits.h>
 #define __stdcall
 // typedef unsigned long long LARGE_INTEGER;
 // typedef unsigned long DWORD;
