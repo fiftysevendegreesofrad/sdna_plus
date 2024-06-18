@@ -71,8 +71,8 @@ jobs:
                       "make_od_test_shp.py",
                       '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=skimtest" --om "skim=testout_od_skim_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean"',
                       '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=skimtestzeroweight" --om "skim=testout_od_skimzeroweight_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean;weight=weight"',
-                      '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=odtest;tables=testodmatrix.csv" --om "net=odtestoutsparse_py3" "radii=n;odmatrix"', 
-                      '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=odtest;tables=testodmatrix-nonsparse.csv" --om "net=odtestoutnonsparse_py3" "radii=n;odmatrix" ',
+                      '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=odtest.shp;tables=testodmatrix.csv" --om "net=odtestoutsparse_py3" "radii=n;odmatrix"', 
+                      '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=odtest.shp;tables=testodmatrix-nonsparse.csv" --om "net=odtestoutnonsparse_py3" "radii=n;odmatrix" ',
                       '../../../arcscripts/bin/sdnaprepare.py -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3 --dll="$sdnadll"  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
                       "prepare_test_new.py",]
 
@@ -88,8 +88,10 @@ jobs:
 
     - name: Install R
       run: |
+        sudo apt-get install software-properties-common
+        sudo add-apt-repository ppa:ubuntugis/ppa
         sudo apt-get update
-        sudo apt-get install -y git r-base
+        sudo apt-get install -y git r-base geos
 
     - uses: LizardByte/setup-python-action@master
       with:

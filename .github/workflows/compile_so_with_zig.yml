@@ -83,8 +83,10 @@ jobs:
 
     - name: Install R
       run: |
+        sudo apt-get install software-properties-common
+        sudo add-apt-repository ppa:ubuntugis/ppa
         sudo apt-get update
-        sudo apt-get install -y git r-base
+        sudo apt-get install -y git r-base geos
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v4
