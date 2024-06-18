@@ -126,12 +126,12 @@ public:
 		struct link_map *lmap; 
 
 		// 
-		dlinfo(my_dl_handle, RTLD_DI_LINKMAP, &lmap); 
+		dlinfo(main_program_handle, RTLD_DI_LINKMAP, &lmap); 
 
-		char *dir[PATH_MAX];
+		char dir[PATH_MAX];
 		dir = dirname(lmap->l_name);
 
-		char *geos_dll_path_w[PATH_MAX];
+		char geos_dll_path_w[PATH_MAX];
 
 		geos_dll_path_w = strcat(dir, "/libgeos_c.so");
 
@@ -234,7 +234,7 @@ private:
 #ifdef _WINDOWS
 	HINSTANCE hDLL;
 #else
-    void* hDLL, main_program_handle;
+    void *hDLL, *main_program_handle;
 #endif
 
 	typedef GEOSCoordSequence* (*GEOSCoordSeq_create_t)(unsigned int size,unsigned int dims);
