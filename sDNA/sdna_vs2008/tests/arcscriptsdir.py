@@ -3,15 +3,15 @@ import sys,os
 
 up = os.path.dirname
 
-sdna_dll = os.getenv('sdnadll','')
+sdna_dll_path = os.getenv('sdnadll','')
 
 arcscriptsdir = ''
 
 # Prioritise testing the Python code shipped with 
 # the sDNA installer along with the .dll and .so,
 # over the Python code in the dev repo.
-if sdna_dll:
-    arcscriptsdir = up(up(sdnadll)) 
+if sdna_dll_path:
+    arcscriptsdir = up(up(sdna_dll_path)) 
 
 if not arcscriptsdir or not os.path.isdir(arcscriptsdir):
     path = up(__file__)
