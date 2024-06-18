@@ -12,6 +12,13 @@ else:
     def bytes_to_str(b,enc):
         return b
 
+if sys.platform=='win32':
+    sdna_lib_name = 'sdna_vs2008.dll'
+    LoadLibrary = windll.LoadLibrary
+else:
+    sdna_lib_name = 'sdna_vs2008.so'
+    LoadLibrary = cdll.LoadLibrary
+
 # http://stackoverflow.com/questions/17840144/why-does-setting-ctypes-dll-function-restype-c-void-p-return-long
 class my_void_p(c_void_p):
     pass
@@ -21,40 +28,40 @@ class my_void_p(c_void_p):
 
 _WARNFUNCTYPE = CFUNCTYPE(c_int, c_char_p)
 _PROGFUNCTYPE = CFUNCTYPE(c_int, c_float)
-                
+        
 __sdna_dll_path = ""
 __dll_instance = None
 __send_message_callback = None # for global issues only - there are other callbacks in constructor for Calculation()
 
 def set_dll_path(path):
-        if path != "":
-                global __sdna_dll_path
-                __sdna_dll_path = path
+    if path != "":
+        global __sdna_dll_path
+        __sdna_dll_path = path
 
 def set_sdnapy_message_callback(callback):
-        global __send_message_callback
-        __send_message_callback = callback
+    global __send_message_callback
+    __send_message_callback = callback
 
 # singleton pattern
 # note while this is a private function it does get used externally
 # for license checking, so don't change it
 def _dll():
-        global __dll_instance
-        if __dll_instance == None:
-                __initialize_dll()
-        return __dll_instance
-        
+    global __dll_instance
+    if __dll_instance == None:
+        __initialize_dll()
+    return __dll_instance
+    
 def __initialize_dll():
     global __sdna_dll_path,__dll_instance
 
     if __sdna_dll_path=="":
-        dll_name = r"\\sdna_vs2008.dll"
+        dll_name = sdna_lib_name
         
         # what kind of platform are we on?
         if c_size_t==c_ulonglong:
-                dll_name = r"\\x64"+dll_name # 64-bit
+            dll_name = os.path.join("x64", dll_name) # 64-bit
         else:
-                assert(c_size_t==c_ulong) # 32-bit
+            assert(c_size_t==c_ulong) # 32-bit
                 
         #first look in same directory
         if PY3:
@@ -63,25 +70,27 @@ def __initialize_dll():
             encoding = sys.getfilesystemencoding()
             file = unicode(__file__,encoding)
         dirname = os.path.dirname(file)
-        __sdna_dll_path = dirname+dll_name
+        lib_path_in_installed_sDNA = os.path.join(dirname, dll_name)
         
-        #this is to allow use of fresh build
-        #if dll doesn't exist, look where it would be if we are running from source tree
-        if not os.path.exists(__sdna_dll_path):
-            if c_size_t==c_ulonglong:
-                    __sdna_dll_path = dirname+r"\..\output\release\x64\sdna_vs2008.dll"
-            else:
-                    __sdna_dll_path = dirname+r"\..\output\release\sdna_vs2008.dll"
+        if os.path.exists(lib_path_in_installed_sDNA):
+            __sdna_dll_path = lib_path_in_installed_sDNA
+        else:
+            #this is to allow use of fresh build
+            #if dll doesn't exist, look where it would be if we are running from source tree
+            __sdna_dll_path = os.path.join(os.path.dirname(dirname),
+                                          "output",
+                                          "release",
+                                          dll_name)
 
         global __send_message_callback
         if __send_message_callback:    
-                __send_message_callback("Loading DLL %s"%__sdna_dll_path)
+            __send_message_callback("Loading shared library: %s"%__sdna_dll_path)
 
     # if __sdna_dll_path is non empty,
     # custom dll has been set for debugging
     # (do not print path as that will mess up debug tests)
-    
-    __dll_instance = windll.LoadLibrary(str(__sdna_dll_path))
+        
+    __dll_instance = load_library(str(__sdna_dll_path))
 
 class Link:
         def __init__(self,fid,points,data):
