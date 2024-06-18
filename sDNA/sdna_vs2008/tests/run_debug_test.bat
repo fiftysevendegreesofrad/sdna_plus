@@ -39,8 +39,8 @@ del testout_od_skimzeroweight_%outputsuffix%.csv
 %pythonexe% -u ..\..\..\arcscripts\bin\sdnaintegral.py --dll %sdnadll% --im "net=skimtestzeroweight" --om "skim=testout_od_skimzeroweight_%outputsuffix%.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean;weight=weight" >>odtestout_stdout_%outputsuffix%.txt 2>>NUL
 cat testout_od_skimzeroweight_%outputsuffix%.csv >>testout_od_%outputsuffix%.txt
 del odtestoutsparse_%outputsuffix%* odtestoutnonsparse_%outputsuffix%*
-%pythonexe% -u ..\..\..\arcscripts\bin\sdnaintegral.py --dll %sdnadll% --im "net=odtest;tables=testodmatrix.csv" --om "net=odtestoutsparse_%outputsuffix%" "radii=n;odmatrix" >>odtestout_stdout_%outputsuffix%.txt 2>>&1
-%pythonexe% -u ..\..\..\arcscripts\bin\sdnaintegral.py --dll %sdnadll% --im "net=odtest;tables=testodmatrix-nonsparse.csv" --om "net=odtestoutnonsparse_%outputsuffix%" "radii=n;odmatrix" >>odtestout_stdout_%outputsuffix%.txt 2>>&1
+%pythonexe% -u ..\..\..\arcscripts\bin\sdnaintegral.py --dll %sdnadll% --im "net=odtest.shp;tables=testodmatrix.csv" --om "net=odtestoutsparse_%outputsuffix%" "radii=n;odmatrix" >>odtestout_stdout_%outputsuffix%.txt 2>>&1
+%pythonexe% -u ..\..\..\arcscripts\bin\sdnaintegral.py --dll %sdnadll% --im "net=odtest.shp;tables=testodmatrix-nonsparse.csv" --om "net=odtestoutnonsparse_%outputsuffix%" "radii=n;odmatrix" >>odtestout_stdout_%outputsuffix%.txt 2>>&1
 %pythonexe% ..\..\..\arcscripts\shp2txt.py odtestoutsparse_%outputsuffix% odtestoutnonsparse_%outputsuffix% >>testout_od_%outputsuffix%.txt 2>&1
 @echo on
 

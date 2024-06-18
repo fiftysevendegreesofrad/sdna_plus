@@ -28,7 +28,7 @@ jobs:
 
 
 
-    - name: Install Git
+    - name: Install Git and Ninja
       run: |
         sudo apt-get update
         sudo apt-get install -y git ninja-build
@@ -80,6 +80,11 @@ jobs:
 
 
     - uses: actions/checkout@v4
+
+    - name: Install R
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y git r-base
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v4

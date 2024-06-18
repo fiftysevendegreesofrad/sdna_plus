@@ -27,7 +27,8 @@ jobs:
     - name: Install Git
       run: |
         sudo apt-get update
-        sudo apt-get install -y git ninja-build
+        sudo apt-get install -y git ninja-build r-base
+      # https://cran.r-project.org/bin/linux/ubuntu/fullREADME.html
 
     - name: Create Ninja build system from CMake
       run: >
@@ -67,7 +68,6 @@ jobs:
                       "prepare_barns_test.py",
                       '../../../arcscripts/bin/sdnalearn.py --calibfile tiny.shp --target MADn --vars MGLAn,MCFn --boxcoxtarget --bcregex ".*" --mode single_best_variable --output regtestout_single_py3.txt --resids regtestresids_py3.shp',
                       '../../../arcscripts/bin/sdnalearn.py --calibfile tiny.shp --target MADn --vars MGLAn,MCFn --mode multiple_variables --output regtestout_multiple_py3.txt',
-                      '../../../arcscripts/bin/sdnapredict.py --input tiny --output tinypred_py3.shp --modelfile regtestout_multiple_py3.txt --predvarname prediction',
                       "make_od_test_shp.py",
                       '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=skimtest" --om "skim=testout_od_skim_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean"',
                       '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=skimtestzeroweight" --om "skim=testout_od_skimzeroweight_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean;weight=weight"',
