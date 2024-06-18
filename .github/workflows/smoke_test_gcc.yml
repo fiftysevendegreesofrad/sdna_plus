@@ -86,10 +86,11 @@ jobs:
 
     - uses: actions/checkout@v4
 
-    - name: Install R
+        # echo "new line of text" | sudo tee -a /etc/apt/sources.list
+    - name: Install R and deps
       run: |
         sudo apt-get update
-        sudo apt-get install -y r-base
+        sudo apt-get install -y r-recommended
 
     - uses: LizardByte/setup-python-action@master
       with:
