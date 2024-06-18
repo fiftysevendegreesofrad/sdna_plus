@@ -45,13 +45,19 @@ DIR = os.path.dirname(__file__)
 if sys.platform=='win32':
     R_COMMAND = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","RScript.exe")
     SHELL_MODE = False
+    NO_R_CONSOLE = "--no-Rconsole"
 else:
     R_COMMAND = "Rscript"
     SHELL_MODE = True
+    NO_R_CONSOLE = ""
 
 def R_call(script,args):
     scriptpath = os.path.join(DIR, script)
-    return '"%s" --no-site-file --no-save --no-environ --no-init-file --no-restore --no-Rconsole "%s" %s'%(R_COMMAND,scriptpath," ".join(args))
+    return '"%s" --no-site-file --no-save --no-environ --no-init-file --no-restore %s "%s" %s' % (R_COMMAND,
+                                                                                                  NO_R_CONSOLE,
+                                                                                                  scriptpath,
+                                                                                                  " ".join(args)
+                                                                                                 )
 
 
 def Rcall_estimate(script,arrays,env):
