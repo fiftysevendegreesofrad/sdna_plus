@@ -27,7 +27,7 @@ jobs:
     - name: Install Git
       run: |
         sudo apt-get update
-        sudo apt-get install -y git ninja-build r-base
+        sudo apt-get install -y git ninja-build
       # https://cran.r-project.org/bin/linux/ubuntu/fullREADME.html
 
     - name: Create Ninja build system from CMake
@@ -85,6 +85,11 @@ jobs:
 
 
     - uses: actions/checkout@v4
+
+    - name: Install R
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y git r-base
 
     - uses: LizardByte/setup-python-action@master
       with:
