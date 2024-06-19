@@ -70,13 +70,10 @@ public:
 	GEOSGeometry *UnaryUnion(GEOSGeometry *g1) {return (*GEOSUnaryUnion)(g1);}
 	int GeomTypeId(const GEOSGeometry *g1) {return (*GEOSGeomTypeId)(g1);}
 
-	#ifdef _MSC_VER
-	static const char address_in_this_module = 0;
-	#else
+
     static const void a_static_class_function() {
         std::cout << "Use for a function pointer to get an adress in this .so or .dll" << std::endl;
     }	
-	#endif
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
 		
@@ -88,7 +85,7 @@ public:
 		// long? https://stackoverflow.com/a/17736648
 		// dlopen(NULL)? https://stackoverflow.com/a/6972229/20785734
 		HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-			(LPCTSTR)&address_in_this_module,
+			(LPCTSTR)&a_static_class_function,
 			&this_dll_handle
 			);
 
