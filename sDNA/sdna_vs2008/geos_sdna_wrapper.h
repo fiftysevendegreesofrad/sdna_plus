@@ -121,9 +121,9 @@ public:
 
         // https://stackoverflow.com/a/51993539/20785734
         Dl_info dlInfo;
-        dladdr((void *)&myputs, &dlInfo);
+        dladdr((void *)&a_static_class_function, &dlInfo);
         char *path; 
-		
+
         strcpy(path, dlInfo.dli_fname);
 
 		char *dir = dirname(path);

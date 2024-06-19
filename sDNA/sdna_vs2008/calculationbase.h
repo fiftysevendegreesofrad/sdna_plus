@@ -192,7 +192,7 @@ public:
 			print_warning_callback("EROOR: invalid net");
 			return false;
 		}
-		#ifdef defined(_MSC_VER) && !defined (_AMD64_)
+		#if defined(_MSC_VER) && !defined (_AMD64_)
 				print_warning_callback("sDNA is running in 32-bit mode");
 		#else
 				print_warning_callback("sDNA is running in 64-bit mode");
