@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "main", "Cross_platform", "Test_using_so_on_Linux" ]
+    branches: [ "main", "Cross_platform", "Testing_cross_platform" ]
 
   pull_request:
-    branches: [ "main", "Cross_platform", "Test_using_so_on_Linux" ]
+    branches: [ "main", "Cross_platform", "Testing_cross_platform" ]
 
 env:
   CONFIGURATION: Release
