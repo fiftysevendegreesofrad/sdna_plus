@@ -70,14 +70,11 @@ public:
 	GEOSGeometry *UnaryUnion(GEOSGeometry *g1) {return (*GEOSUnaryUnion)(g1);}
 	int GeomTypeId(const GEOSGeometry *g1) {return (*GEOSGeomTypeId)(g1);}
 
-	#ifdef _MSC_VER
-	static const char address_in_this_module = 0;
-	#else
-	// This option is rendered on Windows without Visual Studio, as well as on Linux,
-	// but it probably won't produce the desired result of finding a handle to this
-	// dll via a memory reference within it.
-	char address_in_this_module = 0;
-	#endif
+
+  static const void a_static_class_function() {
+        std::cout << "Use for a function pointer to get an adress in this .so or .dll" << std::endl;
+    }	
+
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
 		
@@ -89,7 +86,7 @@ public:
 		// long? https://stackoverflow.com/a/17736648
 		// dlopen(NULL)? https://stackoverflow.com/a/6972229/20785734
 		HRESULT retval = GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-			(LPCTSTR)&address_in_this_module,
+			(LPCTSTR)&a_static_class_function,
 			&this_dll_handle
 			);
 
@@ -119,8 +116,30 @@ public:
 		#else
 
 		#define GetProcAddress dlsym
-		const char *geos_dll_path_w="~/output/Release/x64/geos_c.so";
-    	hDLL = dlopen(geos_dll_path_w, RTLD_NOW);
+
+    // https://stackoverflow.com/a/51993539/20785734
+    Dl_info dlInfo;
+    dladdr((void *)&a_static_class_function, &dlInfo);
+    char *path; 
+
+    strcpy(path, dlInfo.dli_fname);
+
+		char *dir = dirname(path);
+
+		char *geos_dll_path_w = strcat(dir, "/libgeos_c.so");
+
+		// " If filename contains a slash ("/"), then it is
+        // interpreted as a (relative or absolute) pathname.  ""
+		// https://www.man7.org/linux/man-pages/man3/dlopen.3.html
+		// const char *geos_dll_path_w="./libgeos_c.so";
+    	
+		// Try to find installed in environment
+		// const char *geos_dll_path_w="libgeos_c.so";
+
+		hDLL = dlopen(geos_dll_path_w, RTLD_LAZY);
+
+
+
 
 		#endif
 

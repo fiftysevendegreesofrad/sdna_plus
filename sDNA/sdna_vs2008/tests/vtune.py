@@ -5,7 +5,9 @@ import sys
 import numpy
 import time
 
-dll = ctypes.windll.LoadLibrary(r"..\vtune\sDNA_vs2008.dll")
+from load_library import load_library
+
+dll = load_library(r"..\vtune\sDNA_vs2008.dll")
 
 (ANGULAR, EUCLIDEAN) = map(ctypes.c_int,xrange(2))
 

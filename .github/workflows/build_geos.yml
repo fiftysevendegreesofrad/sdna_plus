@@ -1,0 +1,61 @@
+name: "Build Geos."
+# Build libgeos_c.so, a shared object for Linux (equivalent to geos_c.dll on Windows).
+  
+on:
+  workflow_dispatch:
+
+
+env:
+  version: "3.3.5"
+  dir: "../Geos_build"
+
+
+jobs:
+  build:
+    name: "Build_Geos"
+    runs-on: "ubuntu-24.04"
+
+    steps:
+    
+    - name: Install Ninja
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build
+
+
+    - name: Make Geos Build and installed dirs
+      shell: bash
+      run: mkdir -p ${{ env.dir }}/_installed
+
+    - name: Download Geos source code
+      run: curl -OL http://download.osgeo.org/geos/geos-${{ env.version}}.tar.bz2
+
+    - name: Unzip Geos source code
+      run: |
+        tar xfj geos-${{ env.version}}.tar.bz2
+
+    - name: Create Geos build system
+      run: >
+        cmake
+        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_INSTALL_PREFIX=${{ env.dir }}/_installed
+        -DBUILD_SHARED_LIBS=ON
+        -DBUILD_DOCUMENTATION=OFF
+        -DBUILD_TESTING=OFF
+        -G Ninja
+        -B ${{ env.dir }}
+        -S geos-${{ env.version}}
+
+    - name: Run Geos build system
+      run: cmake --build ${{ env.dir }}
+      
+
+
+
+
+    - name: upload_output
+      id: installer-upload-step
+      uses: actions/upload-artifact@v4
+      with:
+        name: geos_built_${{ env.version }}
+        path: ${{ env.dir }}

@@ -8,6 +8,8 @@ import sdnapy
 sdnapy.set_dll_path(os.environ["sdnadll"])
 from sdnapy import my_void_p
 
+from load_library import load_library
+
 def ensure_unicode(x):
   if sys.version_info < (3, 0):
     return unicode(x)
@@ -24,7 +26,7 @@ def warning(x):
 warning_callback = WARNINGCALLBACKFUNCTYPE(warning)
 
 dllpath = os.environ["sdnadll"]
-dll = windll.LoadLibrary(dllpath)
+dll = load_library(dllpath)
 
 def add_polyline_inner(net,arcid,points,_gs,weight,cost,isisland):
         point_array_x = (c_double*len(points))()

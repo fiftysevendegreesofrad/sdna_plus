@@ -2,6 +2,8 @@ import arcpy
 import os,time,sys
 import ctypes
 
+from load_library import load_library
+
 outlength = None
 names = None
 
@@ -174,7 +176,7 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
     dirname = os.path.dirname(sys.argv[0])
     dllpath = dirname+r"\\..\\Release\\sdna_vs2008.dll"
     print dllpath
-    dll = ctypes.windll.LoadLibrary(dllpath)
+    dll = load_library(dllpath)
 
     net = ctypes.c_void_p(dll.net_create(weight_activity_by_link_length))
 

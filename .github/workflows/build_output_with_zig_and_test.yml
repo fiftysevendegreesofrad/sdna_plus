@@ -4,10 +4,11 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Zig", "Cross_platform" ]
+    branches: [ "main", "Cross_platform", "Testing_cross_platform" ]
 
   pull_request:
-    branches: [ "Zig", "Cross_platform" ]
+    branches: [ "main", "Cross_platform", "Testing_cross_platform" ]
+
 
 env:
   CONFIGURATION: Release

@@ -5,6 +5,8 @@ import time
 import arcscriptsdir
 import sdnapy
 
+from load_library import load_library
+
 #hard to silence printing within dll so we do all the printing we want to stderr and redirect stdout from the command line
 def eprint(*args, **kwargs):
     kwargs["file"] = sys.stderr
@@ -28,8 +30,8 @@ if os.path.getmtime(serial_dll_path)-os.path.getmtime(parallel_dll_path) > 3600*
 #eprint ("serial dll",serial_dll_path)
 #eprint ("parallel dll",parallel_dll_path)
 
-parallel_dll = ctypes.windll.LoadLibrary(parallel_dll_path)
-serial_dll = ctypes.windll.LoadLibrary(serial_dll_path)
+parallel_dll = load_library(parallel_dll_path)
+serial_dll = load_library(serial_dll_path)
 
 current_net_arcids = None
 
