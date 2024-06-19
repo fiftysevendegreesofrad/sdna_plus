@@ -73,10 +73,9 @@ public:
 	#ifdef _MSC_VER
 	static const char address_in_this_module = 0;
 	#else
-	// This option is rendered on Windows without Visual Studio, as well as on Linux,
-	// but it probably won't produce the desired result of finding a handle to this
-	// dll via a memory reference within it.
-	char address_in_this_module = 0;
+    static const void a_static_class_function() {
+        std::cout << "Use for a function pointer to get an adress in this .so or .dll" << std::endl;
+    }	
 	#endif
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
@@ -120,20 +119,16 @@ public:
 
 		#define GetProcAddress dlsym
 
-		// "If filename is NULL, then the returned handle is for the main
-        //   program.  "
-		main_program_handle = dlopen(NULL, RTLD_NOW);
-		struct link_map *lmap; 
+        // https://stackoverflow.com/a/51993539/20785734
+        Dl_info dlInfo;
+        dladdr((void *)&myputs, &dlInfo);
+        char *path; 
+		
+        strcpy(path, dlInfo.dli_fname);
 
-		// 
-		dlinfo(main_program_handle, RTLD_DI_LINKMAP, &lmap); 
+		char *dir = dirname(path);
 
-		char *dir;
-		dir = dirname(lmap->l_name);
-
-		char *geos_dll_path_w;
-
-		geos_dll_path_w = strcat(dir, "/libgeos_c.so");
+		char *geos_dll_path_w = strcat(dir, "/libgeos_c.so");
 
 		// " If filename contains a slash ("/"), then it is
         // interpreted as a (relative or absolute) pathname.  ""
