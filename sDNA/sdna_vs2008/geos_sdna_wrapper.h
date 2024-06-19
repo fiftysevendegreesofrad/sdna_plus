@@ -228,9 +228,8 @@ private:
 #ifdef _WINDOWS
 	HINSTANCE hDLL;
 #else
-
-  void* hDLL;
-
+    void* hDLL;
+#endif
 
 	typedef GEOSCoordSequence* (*GEOSCoordSeq_create_t)(unsigned int size,unsigned int dims);
 	GEOSCoordSeq_create_t GEOSCoordSeq_create;
