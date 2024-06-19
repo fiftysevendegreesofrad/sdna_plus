@@ -16,3 +16,5 @@ for path in paths:
     geos_dll = ctypes.windll.LoadLibrary(str(path.resolve()))
     geos_dll.GEOSversion.restype = ctypes.c_char_p
     print('DLL: %s geos_dll.GEOSversion()=%s' % (path, geos_dll.GEOSversion()))
+
+

@@ -71,9 +71,10 @@ public:
 	int GeomTypeId(const GEOSGeometry *g1) {return (*GEOSGeomTypeId)(g1);}
 
 
-    static const void a_static_class_function() {
+  static const void a_static_class_function() {
         std::cout << "Use for a function pointer to get an adress in this .so or .dll" << std::endl;
     }	
+
 	ExplicitSDNAPolylineToGeosWrapper()
 	{
 		
@@ -116,12 +117,12 @@ public:
 
 		#define GetProcAddress dlsym
 
-        // https://stackoverflow.com/a/51993539/20785734
-        Dl_info dlInfo;
-        dladdr((void *)&a_static_class_function, &dlInfo);
-        char *path; 
+    // https://stackoverflow.com/a/51993539/20785734
+    Dl_info dlInfo;
+    dladdr((void *)&a_static_class_function, &dlInfo);
+    char *path; 
 
-        strcpy(path, dlInfo.dli_fname);
+    strcpy(path, dlInfo.dli_fname);
 
 		char *dir = dirname(path);
 
@@ -136,6 +137,7 @@ public:
 		// const char *geos_dll_path_w="libgeos_c.so";
 
 		hDLL = dlopen(geos_dll_path_w, RTLD_LAZY);
+
 
 
 
@@ -226,8 +228,9 @@ private:
 #ifdef _WINDOWS
 	HINSTANCE hDLL;
 #else
-    void *hDLL, *main_program_handle;
-#endif
+
+  void* hDLL;
+
 
 	typedef GEOSCoordSequence* (*GEOSCoordSeq_create_t)(unsigned int size,unsigned int dims);
 	GEOSCoordSeq_create_t GEOSCoordSeq_create;

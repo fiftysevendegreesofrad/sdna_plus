@@ -9,6 +9,7 @@ on:
   pull_request:
     branches: [ "main", "Cross_platform", "Testing_cross_platform" ]
 
+
 env:
   CONFIGURATION: Release
   PLATFORM: x64

@@ -10,6 +10,7 @@ on:
   pull_request:
     branches: [ "Testing_cross_platform", "Cross_platform" ]
 
+
 env:
   CONFIGURATION: Release
   PLATFORM: x64
