@@ -81,6 +81,7 @@ if(CMAKE_SYSTEM MATCHES Windows)
 else ()
     set(DLLs
         "sdna_vs2008.so"
+        "libgeos_c.so"
     )
 endif()
 

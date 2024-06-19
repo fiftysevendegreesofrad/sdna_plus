@@ -281,6 +281,10 @@ if (WIN32)
     set(Geos_binary
         "${CMAKE_CURRENT_SOURCE_DIR}/../geos/${Geos_sub_dir}/src/geos_c.dll"
     )
+else()
+    set(Geos_binary
+        "${CMAKE_CURRENT_SOURCE_DIR}/../geos/x64/src/libgeos_c.so"
+    )
 endif()
 
 set(Sources

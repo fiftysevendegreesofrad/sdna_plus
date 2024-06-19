@@ -12,9 +12,10 @@ from collections import defaultdict
 PY3 = sys.version_info > (3,)
 
 if PY3:
-    bytes_to_str = str
+    def bytes_to_str(b, enc='utf-8'):
+        return b.decode(enc)
 else:
-    def bytes_to_str(b,enc):
+    def bytes_to_str(b, enc):
         return b
 
 def format_for_csv_cell(x):

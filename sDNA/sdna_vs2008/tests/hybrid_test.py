@@ -3,6 +3,8 @@ from __future__ import print_function
 import ctypes
 import sys,os
 
+from load_library import load_library
+
 #sys.stdin.readline()
 
 # http://stackoverflow.com/questions/17840144/why-does-setting-ctypes-dll-function-restype-c-void-p-return-long
@@ -10,7 +12,7 @@ class my_void_p(ctypes.c_void_p):
     pass
 
 sdnadll = os.environ["sdnadll"]
-dll = ctypes.windll.LoadLibrary(sdnadll)
+dll =  load_library(sdnadll)
 
 # now using strings rather than enum so this looks a bit tautological, but:
 (ANGULAR, EUCLIDEAN, CUSTOM, HYBRID) = ("ANGULAR","EUCLIDEAN","CUSTOM","HYBRID")

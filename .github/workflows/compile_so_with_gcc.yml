@@ -9,6 +9,7 @@ on:
   pull_request:
     branches: [ "Testing_cross_platform", "Cross_platform"]
 
+
 env:
   CONFIGURATION: Release
   PLATFORM: x64
@@ -24,7 +25,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install Git
+    - name: Install Git and Ninja
+
       run: |
         sudo apt-get update
         sudo apt-get install -y git ninja-build
@@ -40,8 +42,6 @@ jobs:
     - name: Build sDNA
       run: |
         cmake --build build_output_cmake_gcc --config Release
-
-
 
     - name: upload_output
       id: installer-upload-step
@@ -70,11 +70,17 @@ jobs:
 
     - uses: actions/checkout@v4
 
+    - name: Install R
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y r-cran-optparse r-cran-sjstats
+
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v4
       with:
         name: output_gcc_linux
         path: output
+
 
 
 

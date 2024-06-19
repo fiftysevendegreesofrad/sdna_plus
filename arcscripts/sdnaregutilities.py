@@ -2,6 +2,7 @@
 # This file is released under MIT license
 
 from __future__ import unicode_literals
+import sys
 import subprocess
 from subprocess import Popen,PIPE
 import csv,sys,numpy,tempfile,os,copy
@@ -38,12 +39,26 @@ def make_positive(datalist):
     shifted_data = [d+shift for d in datalist]
     return shift,shifted_data
 
+
+DIR = os.path.dirname(__file__)
+
+if sys.platform=='win32':
+    R_COMMAND = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","RScript.exe")
+    SHELL_MODE = False
+    NO_R_CONSOLE = "--no-Rconsole"
+else:
+    R_COMMAND = "Rscript"
+    SHELL_MODE = True
+    NO_R_CONSOLE = ""
+
 def R_call(script,args):
-    dir = os.path.dirname(__file__)
-    rpath = dir+os.sep+"rportable"+os.sep+"R-Portable"+os.sep+"App"+os.sep+"R-Portable"+os.sep+"bin"+os.sep+"i386"+os.sep+"RScript.exe"
-    scriptpath = dir+os.sep+script
-    rcall = '"%s" --no-site-file --no-save --no-environ --no-init-file --no-restore --no-Rconsole "%s" %s'%(rpath,scriptpath," ".join(args))
-    return rcall
+    scriptpath = os.path.join(DIR, script)
+    return '"%s" --no-site-file --no-save --no-environ --no-init-file --no-restore %s "%s" %s' % (R_COMMAND,
+                                                                                                  NO_R_CONSOLE,
+                                                                                                  scriptpath,
+                                                                                                  " ".join(args)
+                                                                                                 )
+
 
 def Rcall_estimate(script,arrays,env):
     assert len(arrays)>0
@@ -57,11 +72,11 @@ def Rcall_estimate(script,arrays,env):
         tmpfile.write("\n")
         tmpfile.close()
     # call R
-    process = subprocess.Popen(R_call(script,['"%s"'%t.name for t in tmpfiles]),shell=False,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE) 
+    process = subprocess.Popen(R_call(script,['"%s"'%t.name for t in tmpfiles]),shell=SHELL_MODE,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE) 
     result = []
     stdout,stderr = process.communicate()
-    stdout = bytes_to_str(stdout,"ascii")
-    stderr = bytes_to_str(stderr,"ascii")
+    stdout = bytes_to_str(stdout,"utf8")
+    stderr = bytes_to_str(stderr,"utf8")
     lines = stdout.split('\n')[0:arrays[0].shape[1]]
     if stderr:
         env.AddError("Estimation error ******")
@@ -140,10 +155,10 @@ def regularizedregression(data,names,targetdata,targetname,alpha,nfolds,reps,env
         reglambda_s = ""
     call = R_call("regularizedregression.R",['--calibrationfile "%s" --target %s --xs %s --alpha %f --nfolds %d --reps %d --weightfile "%s" %s %s'
                                                 %(tmpfile.name,targetname,xs,alpha,nfolds,reps,weightfile.name,intercept_s,reglambda_s)])
-    p = Popen(call,shell=False,stdout=PIPE,stderr=PIPE,stdin=PIPE)
+    p = Popen(call,shell=SHELL_MODE,stdout=PIPE,stderr=PIPE,stdin=PIPE)
     stdout,stderr = p.communicate()
-    stdout = bytes_to_str(stdout,"ascii")
-    stderr = bytes_to_str(stderr,"ascii")
+    stdout = bytes_to_str(stdout,"utf8")
+    stderr = bytes_to_str(stderr,"utf8")
     os.unlink(tmpfile.name)
     os.unlink(weightfile.name)
     coefs,regcurve = unpack_regres_output(stdout,env)
