@@ -86,7 +86,7 @@ Possible other lines of code before the `#include stdafx.h` are ignored too.
  9) Using CMake allows the MuParser source to be restored closer to its original state,
  (except for 4) which I have not been able to avoid - the other `#define MUP_BASETYPE` in 
  stdafx.h does not seem to 
- have any effect).  
+ have any effect.  
  10) However a form of the source code in MuParser that can be compiled by both CMake, and
  the sdna_vs2008.vcxproj has not yet been find
 
