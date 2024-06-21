@@ -1,3 +1,4 @@
+# 3.29 for IF(IS_READABLE ... )
 cmake_minimum_required(VERSION 3.29)
 
 # set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
