@@ -24,12 +24,11 @@ class CustomHook(BuildHookInterface):
         configs = {'Linux_gcc_x64' : Config('build_output_hatch','"Ninja Multi-Config"','OFF', True),
                   }
 
-        config = configs['Linux_x64']
+        config = configs['Linux_gcc_x64']
 
         build_dir = pathlib.Path(config.build_dir)
 
-        if build_dir.is_relative():
-            build_dir = REPO_DIR / build_dir
+        build_dir = REPO_DIR / build_dir
 
         subprocess.run(f"""
             cmake
@@ -54,5 +53,6 @@ class CustomHook(BuildHookInterface):
             __init__dot_py = pathlib.Path(__init__dot_py_dir) / '__init__.py'
             __init__dot_py.touch()
 
+        build_data['force_include']["output/Release"]="sDNA"
     
         
