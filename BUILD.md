@@ -18,27 +18,37 @@ the Zig for Windows build (entirely optional) and the Linux builds.
 ##### Ubuntu 22.04 (Jammy)
 Kitware haven't got a repo for Noble (24.04) yet, so 22.04 is needed for now.
 [Upgrade CMake to 3.29](https://askubuntu.com/a/1157132)
-* ` sudo apt purge --auto-remove cmake`
+Working directory assumed to be `/root`
+* `sudo apt purge --auto-remove cmake`
 * `wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null`
 * `sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'`
 * `sudo apt update`
-* `sudo apt-get install curl zip unzip tar g++ python-is-python3 cmake ninja-build `
+* `sudo apt-get install curl zip unzip tar g++ python-is-python3 python3-pip cmake ninja-build `
 * `git clone --depth=1 http://www.github.com/Microsoft/vcpkg`
 * `cd vcpkg`
 * `./bootstrap-vcpkg.sh`
 * `cd ..`
-* `export VCPKG_ROOT = /path/to/vcpkg`
-* `git clone --depth=1 --branch=Cross_Platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
-* `cd sDNA_plus`
+* `git clone --depth=1 --branch=Cross_platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
+Download GEOS 3.3.5 and compile it locally (so that it can link to your available version of glibc, instead of whichever one was in the build environment I used).  `.github\workflows\build_geos.yml` can be used in a Github Action Ubuntu runner.
+* `curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2`
+* `tar xfj geos-3.3.5.tar.bz2`
+* `cd geos-3.3.5`
+* `cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B /root/build_geos -S .`
+* `cmake --build /root/build_geos`
+* `cp /root/build_geos/lib/libgeos_c.so /root/sdna_plus/sDNA/geos/x64/src`
+* `cd sdna_plus`
 * `which ninja`
-* `export CMAKE_MAKE_PROGRAM=/usr/bin/path/to/ninja`
-* `cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF  -B build_linux -S .`
-May also require `sudo` or `-D VCPKG_ROOT=/path/to/vcpkg`
+* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S .`
 * `cmake --build build_linux --config=Release`
-Run a test
+Run a smoke test
 * `export sdnadll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
 * `cd sDNA/sdna_vs2008/tests`
 * `python prepare_test_new.py`
+Run all regression tests:
+If this isn't a throw away env, make a venv and activate it.
+* `python -m pip install pytest`
+* `cd /root/sdna_plus/sDNA/sdna_vs2008/tests/pytest`
+* `pytest`
 ## Compilation notes.
 ~~tl;dr  A Breaking change to sDNA, or maintaining two similar branches 
 should be considered.  
