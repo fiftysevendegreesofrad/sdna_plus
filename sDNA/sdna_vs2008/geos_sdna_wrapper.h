@@ -117,16 +117,17 @@ public:
 
 		#define GetProcAddress dlsym
 
-    // https://stackoverflow.com/a/51993539/20785734
-    Dl_info dlInfo;
-    dladdr((void *)&a_static_class_function, &dlInfo);
-    char *path; 
+		// https://stackoverflow.com/a/51993539/20785734
+		Dl_info dlInfo;
+		dladdr((void *)&a_static_class_function, &dlInfo);
 
-    strcpy(path, dlInfo.dli_fname);
+		string path(dlInfo.dli_fname);
 
-		char *dir = dirname(path);
+		size_t i = path.find_last_of('/');
 
-		char *geos_dll_path_w = strcat(dir, "/libgeos_c.so");
+		string dir = path.substr(0,i);
+
+		string geos_dll_path_w = dir + "/libgeos_c.so";
 
 		// " If filename contains a slash ("/"), then it is
         // interpreted as a (relative or absolute) pathname.  ""
@@ -134,18 +135,23 @@ public:
 		// const char *geos_dll_path_w="./libgeos_c.so";
     	
 		// Try to find installed in environment
-		// const char *geos_dll_path_w="libgeos_c.so";
 
-		hDLL = dlopen(geos_dll_path_w, RTLD_LAZY);
+		dlerror();
+		hDLL = dlopen(geos_dll_path_w.c_str(), RTLD_LAZY);
 
-
-
+		const char *dlsym_error = dlerror();
+		if (dlsym_error) {
+			std::cerr << "Error loading " << geos_dll_path_w << ", " << dlsym_error << std::endl;
+			dlclose(hDLL);
+			hDLL = NULL;
+			return;
+    	}
 
 		#endif
 
 		if (hDLL == NULL)
 		{
-			cout << "geos_c.dll / geos_c.so not found at " + *geos_dll_path_w << endl;
+			cout << "geos_c.dll / geos_c.so not found at " << geos_dll_path_w << endl;
 		}
 		else
 		{
@@ -214,12 +220,15 @@ public:
 	}
 	~ExplicitSDNAPolylineToGeosWrapper()
 	{
+		if (hDLL != NULL)
+		{
 		#ifdef _WINDOWS
 		  FreeLibrary(hDLL);
-		#else
+		#else		
 		  // dlclose https://stackoverflow.com/a/4651841/20785734
 		  dlclose(hDLL);
 		#endif
+		}
 	}
 
 
@@ -228,7 +237,7 @@ private:
 #ifdef _WINDOWS
 	HINSTANCE hDLL;
 #else
-    void* hDLL;
+    void* hDLL = NULL;
 #endif
 
 	typedef GEOSCoordSequence* (*GEOSCoordSeq_create_t)(unsigned int size,unsigned int dims);
