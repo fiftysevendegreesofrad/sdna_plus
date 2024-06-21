@@ -343,6 +343,7 @@ set(ALL_FILES
 # "CMake expects a SHARED library to always have an associated import library on Windows."
 
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(LIBRARY_OUTPUT_DIRECTORY
     "${CMAKE_CURRENT_BINARY_DIR}"
