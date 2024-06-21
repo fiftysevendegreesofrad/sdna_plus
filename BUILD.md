@@ -23,7 +23,7 @@ Working directory assumed to be `/root`
 * `wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null`
 * `sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'`
 * `sudo apt update`
-* `sudo apt-get install curl zip unzip tar g++ python-is-python3 cmake ninja-build `
+* `sudo apt-get install curl zip unzip tar g++ python-is-python3 python3-pip cmake ninja-build `
 * `git clone --depth=1 http://www.github.com/Microsoft/vcpkg`
 * `cd vcpkg`
 * `./bootstrap-vcpkg.sh`
@@ -40,10 +40,15 @@ Download GEOS 3.3.5 and compile it locally (so that it can link to your availabl
 * `which ninja`
 * `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S .`
 * `cmake --build build_linux --config=Release`
-Run a test
+Run a smoke test
 * `export sdnadll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
 * `cd sDNA/sdna_vs2008/tests`
 * `python prepare_test_new.py`
+Run all regression tests:
+If this isn't a throw away env, make a venv and activate it.
+* `python -m pip install pytest`
+* `cd /root/sdna_plus/sDNA/sdna_vs2008/tests/pytest`
+* `pytest`
 ## Compilation notes.
 ~~tl;dr  A Breaking change to sDNA, or maintaining two similar branches 
 should be considered.  
