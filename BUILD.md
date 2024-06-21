@@ -14,6 +14,27 @@ produce an x64 output installation.
 * Work needs to be done to dynamically link to the Geos DLLs and .so (and to provide the latter) on both
 the Zig for Windows build (entirely optional) and the Linux builds.
 
+#### Building locally on Linux 
+##### Ubuntu 22.04 (Jammy)
+Kitware haven't got a repo for Noble (24.04) yet, so 22.04 is needed for now.
+[Upgrade CMake to 3.29](https://askubuntu.com/a/1157132)
+* ` sudo apt purge --auto-remove cmake`
+* `wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null`
+* `sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'`
+* `sudo apt update`
+* `sudo apt-get install curl zip unzip tar g++ python-is-python3 cmake ninja-build `
+* `git clone --depth=1 http://www.github.com/Microsoft/vcpkg`
+* `cd vcpkg`
+* `./bootstrap-vcpkg.sh`
+* `cd ..`
+* `VCPKG_ROOT = /path/to/vcpkg`
+* `git clone --depth=1 --branch=Cross_Platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
+* `cd sDNA_plus`
+* `which ninja`
+* `CMAKE_MAKE_PROGRAM=/usr/bin/path/to/ninja`
+* `cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF  -B build_linux -S .`
+May also require `sudo` or `-D VCPKG_ROOT=/path/to/vcpkg`
+* `cmake --build build_linux --config=Release`
 
 ## Compilation notes.
 ~~tl;dr  A Breaking change to sDNA, or maintaining two similar branches 
