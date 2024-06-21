@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.29)
 
 
 # "The version of the operating system for which CMake is to build."
