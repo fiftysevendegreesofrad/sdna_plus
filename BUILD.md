@@ -27,15 +27,18 @@ Kitware haven't got a repo for Noble (24.04) yet, so 22.04 is needed for now.
 * `cd vcpkg`
 * `./bootstrap-vcpkg.sh`
 * `cd ..`
-* `VCPKG_ROOT = /path/to/vcpkg`
+* `export VCPKG_ROOT = /path/to/vcpkg`
 * `git clone --depth=1 --branch=Cross_Platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
 * `cd sDNA_plus`
 * `which ninja`
-* `CMAKE_MAKE_PROGRAM=/usr/bin/path/to/ninja`
+* `export CMAKE_MAKE_PROGRAM=/usr/bin/path/to/ninja`
 * `cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF  -B build_linux -S .`
 May also require `sudo` or `-D VCPKG_ROOT=/path/to/vcpkg`
 * `cmake --build build_linux --config=Release`
-
+Run a test
+* `export sdnadll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
+* `cd sDNA/sdna_vs2008/tests`
+* `python prepare_test_new.py`
 ## Compilation notes.
 ~~tl;dr  A Breaking change to sDNA, or maintaining two similar branches 
 should be considered.  
