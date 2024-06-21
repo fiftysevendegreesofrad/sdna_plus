@@ -100,58 +100,58 @@ vector<vector<Point>> unlink_respecting_planarize(vector<vector<Point>> &links, 
 {
 	//wrapper for equivalent GEOS routine
 	ExplicitSDNAPolylineToGeosWrapper geos;
-	geos.initGEOS(&my_geos_message_handler,&my_geos_message_handler);
+	// geos.initGEOS(&my_geos_message_handler,&my_geos_message_handler);
 
-	//pack data
-	vector<GEOSGeometry*> geoslinks;
-	for (vector<vector<Point>>::iterator it=links.begin();it!=links.end();it++)
-	{
-		GEOSCoordSequence *coords = point_vector_to_coordseq2d(geos,*it);
-		GEOSGeometry * line = geos.Geom_createLineString(coords); //line assumes ownership of coords
-		geoslinks.push_back(line);
-	}
+	// //pack data
+	// vector<GEOSGeometry*> geoslinks;
+	// for (vector<vector<Point>>::iterator it=links.begin();it!=links.end();it++)
+	// {
+	// 	GEOSCoordSequence *coords = point_vector_to_coordseq2d(geos,*it);
+	// 	GEOSGeometry * line = geos.Geom_createLineString(coords); //line assumes ownership of coords
+	// 	geoslinks.push_back(line);
+	// }
 
-	vector<GEOSGeometry*> geosunlinks;
-	for (vector<vector<Point>>::iterator it=unlinks.begin();it!=unlinks.end();it++)
-	{
-		GEOSCoordSequence *coords = point_vector_to_coordseq2d(geos,*it);
-		GEOSGeometry * ring = geos.Geom_createLinearRing(coords); //ring assumes ownership of coords
-		GEOSGeometry * poly = geos.Geom_createPolygon(ring,NULL,0); //poly assumes ownership of ring
-		geosunlinks.push_back(poly);
-	}
+	// vector<GEOSGeometry*> geosunlinks;
+	// for (vector<vector<Point>>::iterator it=unlinks.begin();it!=unlinks.end();it++)
+	// {
+	// 	GEOSCoordSequence *coords = point_vector_to_coordseq2d(geos,*it);
+	// 	GEOSGeometry * ring = geos.Geom_createLinearRing(coords); //ring assumes ownership of coords
+	// 	GEOSGeometry * poly = geos.Geom_createPolygon(ring,NULL,0); //poly assumes ownership of ring
+	// 	geosunlinks.push_back(poly);
+	// }
 
-	//call geos routine
-	vector<GEOSGeometry*> geosresult = unlink_respecting_planarize(geos,geoslinks,geosunlinks);
+	// //call geos routine
+	// vector<GEOSGeometry*> geosresult = unlink_respecting_planarize(geos,geoslinks,geosunlinks);
 
-	//unpack result, freeing geosresults
+	// //unpack result, freeing geosresults
 	vector<vector<Point>> result;
-	for (vector<GEOSGeometry*>::iterator it=geosresult.begin();it!=geosresult.end();it++)
-	{
-		const int type = geos.GeomTypeId(*it);
-		if (!(type==GEOS_LINESTRING || type==GEOS_MULTILINESTRING))
-		{
-			assert (type==GEOS_POINT || type==GEOS_MULTIPOINT); 
-			//we may get these when links end exactly on unlinks, but we don't care
-			continue; 
-		}
-		if (type==GEOS_LINESTRING)
-			result.push_back(linestring_to_pointvector(geos,*it));
-		else
-		{
-			//multilinestring occurs when one link intersects the unlink set multiple times
-			const long num_geoms = geos.GetNumGeometries(*it);
-			for (long i=0;i<num_geoms;i++)
-			{
-				GEOSGeometry *g = geos.GetGeometryN(*it,i); //doesn't need freeing
-				result.push_back(linestring_to_pointvector(geos,g));
-			}
-		}
-		geos.Geom_destroy(*it);
-	}
+	// for (vector<GEOSGeometry*>::iterator it=geosresult.begin();it!=geosresult.end();it++)
+	// {
+	// 	const int type = geos.GeomTypeId(*it);
+	// 	if (!(type==GEOS_LINESTRING || type==GEOS_MULTILINESTRING))
+	// 	{
+	// 		assert (type==GEOS_POINT || type==GEOS_MULTIPOINT); 
+	// 		//we may get these when links end exactly on unlinks, but we don't care
+	// 		continue; 
+	// 	}
+	// 	if (type==GEOS_LINESTRING)
+	// 		result.push_back(linestring_to_pointvector(geos,*it));
+	// 	else
+	// 	{
+	// 		//multilinestring occurs when one link intersects the unlink set multiple times
+	// 		const long num_geoms = geos.GetNumGeometries(*it);
+	// 		for (long i=0;i<num_geoms;i++)
+	// 		{
+	// 			GEOSGeometry *g = geos.GetGeometryN(*it,i); //doesn't need freeing
+	// 			result.push_back(linestring_to_pointvector(geos,g));
+	// 		}
+	// 	}
+	// 	geos.Geom_destroy(*it);
+	// }
 
 	//links and unlinks had ownership assumed by inner call to unlink_respecting_planarize
 
-	geos.finishGEOS();
+	// geos.finishGEOS();
 	return result;
 }
 /*

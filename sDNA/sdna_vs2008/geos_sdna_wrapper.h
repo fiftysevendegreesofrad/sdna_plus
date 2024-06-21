@@ -79,6 +79,7 @@ public:
 	{
 		
 		#ifdef _WINDOWS
+		assert(false);
 		//find path of this dll and look for geos_c.dll in the same place
 		HMODULE this_dll_handle;
 
@@ -117,16 +118,17 @@ public:
 
 		#define GetProcAddress dlsym
 
-    // https://stackoverflow.com/a/51993539/20785734
-    Dl_info dlInfo;
-    dladdr((void *)&a_static_class_function, &dlInfo);
-    char *path; 
+		// https://stackoverflow.com/a/51993539/20785734
+		Dl_info dlInfo;
+		dladdr((void *)&a_static_class_function, &dlInfo);
 
-    strcpy(path, dlInfo.dli_fname);
+		string path(dlInfo.dli_fname);
 
-		char *dir = dirname(path);
+		size_t i = path.find_last_of('/');
 
-		char *geos_dll_path_w = strcat(dir, "/libgeos_c.so");
+		string dir = path.substr(0,i);
+
+		string geos_dll_path_w = dir + "/libgeos_c.so";
 
 		// " If filename contains a slash ("/"), then it is
         // interpreted as a (relative or absolute) pathname.  ""
@@ -134,92 +136,100 @@ public:
 		// const char *geos_dll_path_w="./libgeos_c.so";
     	
 		// Try to find installed in environment
-		// const char *geos_dll_path_w="libgeos_c.so";
 
-		hDLL = dlopen(geos_dll_path_w, RTLD_LAZY);
+		dlerror();
+		hDLL = dlopen(geos_dll_path_w.c_str(), RTLD_LAZY);
 
-
-
+		const char *dlsym_error = dlerror();
+		if (dlsym_error) {
+			std::cerr << "Error loading symbol inner_function: " << dlsym_error << " from " << geos_dll_path_w << std::endl;
+			dlclose(hDLL);
+			hDLL = NULL;
+			return;
+    	}
 
 		#endif
 
 		if (hDLL == NULL)
 		{
-			cout << "geos_c.dll / geos_c.so not found at " + *geos_dll_path_w << endl;
+			cout << "geos_c.dll / geos_c.so not found at " << geos_dll_path_w << endl;
 		}
 		else
 		{
-			// dlsym https://stackoverflow.com/a/4651841/20785734
-			initGEOS = (initGEOS_t)GetProcAddress(hDLL,"initGEOS");
-			assert(initGEOS != NULL);
-			finishGEOS = (finishGEOS_t)GetProcAddress(hDLL,"finishGEOS");
-			assert(finishGEOS != NULL);
-			GEOSCoordSeq_create = (GEOSCoordSeq_create_t)GetProcAddress(hDLL,"GEOSCoordSeq_create");
-			assert(GEOSCoordSeq_create != NULL);
-			GEOSCoordSeq_setX = (GEOSCoordSeq_set_t)GetProcAddress(hDLL,"GEOSCoordSeq_setX");
-			assert(GEOSCoordSeq_setX != NULL);
-			GEOSCoordSeq_setY = (GEOSCoordSeq_set_t)GetProcAddress(hDLL,"GEOSCoordSeq_setY");
-			assert(GEOSCoordSeq_setY != NULL);
-			GEOSGeom_createLineString = (GEOSGeom_createLineString_t)GetProcAddress(hDLL,"GEOSGeom_createLineString");
-			assert(GEOSGeom_createLineString != NULL);
-			GEOSGeom_createPoint = (GEOSGeom_createPoint_t)GetProcAddress(hDLL,"GEOSGeom_createPoint");
-			assert(GEOSGeom_createPoint != NULL);
-			GEOSGeom_destroy = (GEOSGeom_destroy_t)GetProcAddress(hDLL,"GEOSGeom_destroy");
-			assert(GEOSGeom_destroy != NULL);
-			GEOSSTRtree_create = (GEOSSTRtree_create_t)GetProcAddress(hDLL,"GEOSSTRtree_create");
-			assert(GEOSSTRtree_create != NULL);
-			GEOSSTRtree_insert = (GEOSSTRtree_insert_t)GetProcAddress(hDLL,"GEOSSTRtree_insert");
-			assert(GEOSSTRtree_insert != NULL);
-			GEOSSTRtree_iterate = (GEOSSTRtree_iterate_t)GetProcAddress(hDLL,"GEOSSTRtree_iterate");
-			assert(GEOSSTRtree_iterate != NULL);
-			GEOSSTRtree_query = (GEOSSTRtree_query_t)GetProcAddress(hDLL,"GEOSSTRtree_query");
-			assert(GEOSSTRtree_query != NULL);
-			GEOSSTRtree_destroy = (GEOSSTRtree_destroy_t)GetProcAddress(hDLL,"GEOSSTRtree_destroy");
-			assert(GEOSSTRtree_destroy != NULL);
-			GEOSEnvelope = (GEOSEnvelope_t)GetProcAddress(hDLL,"GEOSEnvelope");
-			assert(GEOSEnvelope != NULL);
-			GEOSGeom_createCollection = (GEOSGeom_createCollection_t)GetProcAddress(hDLL,"GEOSGeom_createCollection");
-			assert(GEOSGeom_createCollection != NULL);
-			GEOSGeom_createEmptyCollection = (GEOSGeom_createEmptyCollection_t)GetProcAddress(hDLL,"GEOSGeom_createEmptyCollection");
-			assert(GEOSGeom_createEmptyCollection != NULL);
-			GEOS_Intersection = (GEOS_Intersection_t)GetProcAddress(hDLL,"GEOSIntersection");
-			assert(GEOS_Intersection != NULL);
-			GEOSisEmpty = (GEOSisEmpty_t)GetProcAddress(hDLL,"GEOSisEmpty");
-			assert(GEOSisEmpty != NULL);
-			GEOSGeom_Difference = (GEOS_Intersection_t)GetProcAddress(hDLL,"GEOSDifference");
-			assert(GEOSGeom_Difference != NULL);
-			GEOSGetNumGeometries = (GEOSGetNumGeometries_t)GetProcAddress(hDLL,"GEOSGetNumGeometries");
-			assert(GEOSGetNumGeometries != NULL);
-			GEOSGetGeometryN = (GEOSGetGeometryN_t)GetProcAddress(hDLL,"GEOSGetGeometryN");
-			assert(GEOSGetGeometryN != NULL);
-			GEOSGeom_clone = (GEOSGeom_clone_t)GetProcAddress(hDLL,"GEOSGeom_clone");
-			assert(GEOSGeom_clone != NULL);
-			GEOSGeomGetNumPoints = (GEOSGeomGetNumPoints_t)GetProcAddress(hDLL,"GEOSGeomGetNumPoints");
-			assert(GEOSGeomGetNumPoints != NULL);
-			GEOSGeomGetPointN = (GEOSGeomGetPointN_t)GetProcAddress(hDLL,"GEOSGeomGetPointN");
-			assert(GEOSGeomGetPointN != NULL);
-			GEOSGeomGetX = (GEOSGeomGetX_t)GetProcAddress(hDLL,"GEOSGeomGetX");
-			assert(GEOSGeomGetX != NULL);
-			GEOSGeomGetY = (GEOSGeomGetY_t)GetProcAddress(hDLL,"GEOSGeomGetY");
-			assert(GEOSGeomGetY != NULL);
-			GEOSGeom_createLinearRing = (GEOSGeom_createLinearRing_t)GetProcAddress(hDLL,"GEOSGeom_createLinearRing");
-			assert(GEOSGeom_createLinearRing != NULL);
-			GEOSGeom_createPolygon = (GEOSGeom_createPolygon_t)GetProcAddress(hDLL,"GEOSGeom_createPolygon");
-			assert(GEOSGeom_createPolygon != NULL);
-			GEOSUnaryUnion = (GEOSUnaryUnion_t)GetProcAddress(hDLL,"GEOSUnaryUnion");
-			assert(GEOSUnaryUnion != NULL);
-			GEOSGeomTypeId = (GEOSGeomTypeId_t)GetProcAddress(hDLL,"GEOSGeomTypeId");
-			assert(GEOSGeomTypeId != NULL);
+			// // dlsym https://stackoverflow.com/a/4651841/20785734
+			// initGEOS = (initGEOS_t)GetProcAddress(hDLL,"initGEOS");
+			// assert(initGEOS != NULL);
+			// finishGEOS = (finishGEOS_t)GetProcAddress(hDLL,"finishGEOS");
+			// assert(finishGEOS != NULL);
+			// GEOSCoordSeq_create = (GEOSCoordSeq_create_t)GetProcAddress(hDLL,"GEOSCoordSeq_create");
+			// assert(GEOSCoordSeq_create != NULL);
+			// GEOSCoordSeq_setX = (GEOSCoordSeq_set_t)GetProcAddress(hDLL,"GEOSCoordSeq_setX");
+			// assert(GEOSCoordSeq_setX != NULL);
+			// GEOSCoordSeq_setY = (GEOSCoordSeq_set_t)GetProcAddress(hDLL,"GEOSCoordSeq_setY");
+			// assert(GEOSCoordSeq_setY != NULL);
+			// GEOSGeom_createLineString = (GEOSGeom_createLineString_t)GetProcAddress(hDLL,"GEOSGeom_createLineString");
+			// assert(GEOSGeom_createLineString != NULL);
+			// GEOSGeom_createPoint = (GEOSGeom_createPoint_t)GetProcAddress(hDLL,"GEOSGeom_createPoint");
+			// assert(GEOSGeom_createPoint != NULL);
+			// GEOSGeom_destroy = (GEOSGeom_destroy_t)GetProcAddress(hDLL,"GEOSGeom_destroy");
+			// assert(GEOSGeom_destroy != NULL);
+			// GEOSSTRtree_create = (GEOSSTRtree_create_t)GetProcAddress(hDLL,"GEOSSTRtree_create");
+			// assert(GEOSSTRtree_create != NULL);
+			// GEOSSTRtree_insert = (GEOSSTRtree_insert_t)GetProcAddress(hDLL,"GEOSSTRtree_insert");
+			// assert(GEOSSTRtree_insert != NULL);
+			// GEOSSTRtree_iterate = (GEOSSTRtree_iterate_t)GetProcAddress(hDLL,"GEOSSTRtree_iterate");
+			// assert(GEOSSTRtree_iterate != NULL);
+			// GEOSSTRtree_query = (GEOSSTRtree_query_t)GetProcAddress(hDLL,"GEOSSTRtree_query");
+			// assert(GEOSSTRtree_query != NULL);
+			// GEOSSTRtree_destroy = (GEOSSTRtree_destroy_t)GetProcAddress(hDLL,"GEOSSTRtree_destroy");
+			// assert(GEOSSTRtree_destroy != NULL);
+			// GEOSEnvelope = (GEOSEnvelope_t)GetProcAddress(hDLL,"GEOSEnvelope");
+			// assert(GEOSEnvelope != NULL);
+			// GEOSGeom_createCollection = (GEOSGeom_createCollection_t)GetProcAddress(hDLL,"GEOSGeom_createCollection");
+			// assert(GEOSGeom_createCollection != NULL);
+			// GEOSGeom_createEmptyCollection = (GEOSGeom_createEmptyCollection_t)GetProcAddress(hDLL,"GEOSGeom_createEmptyCollection");
+			// assert(GEOSGeom_createEmptyCollection != NULL);
+			// GEOS_Intersection = (GEOS_Intersection_t)GetProcAddress(hDLL,"GEOSIntersection");
+			// assert(GEOS_Intersection != NULL);
+			// GEOSisEmpty = (GEOSisEmpty_t)GetProcAddress(hDLL,"GEOSisEmpty");
+			// assert(GEOSisEmpty != NULL);
+			// GEOSGeom_Difference = (GEOS_Intersection_t)GetProcAddress(hDLL,"GEOSDifference");
+			// assert(GEOSGeom_Difference != NULL);
+			// GEOSGetNumGeometries = (GEOSGetNumGeometries_t)GetProcAddress(hDLL,"GEOSGetNumGeometries");
+			// assert(GEOSGetNumGeometries != NULL);
+			// GEOSGetGeometryN = (GEOSGetGeometryN_t)GetProcAddress(hDLL,"GEOSGetGeometryN");
+			// assert(GEOSGetGeometryN != NULL);
+			// GEOSGeom_clone = (GEOSGeom_clone_t)GetProcAddress(hDLL,"GEOSGeom_clone");
+			// assert(GEOSGeom_clone != NULL);
+			// GEOSGeomGetNumPoints = (GEOSGeomGetNumPoints_t)GetProcAddress(hDLL,"GEOSGeomGetNumPoints");
+			// assert(GEOSGeomGetNumPoints != NULL);
+			// GEOSGeomGetPointN = (GEOSGeomGetPointN_t)GetProcAddress(hDLL,"GEOSGeomGetPointN");
+			// assert(GEOSGeomGetPointN != NULL);
+			// GEOSGeomGetX = (GEOSGeomGetX_t)GetProcAddress(hDLL,"GEOSGeomGetX");
+			// assert(GEOSGeomGetX != NULL);
+			// GEOSGeomGetY = (GEOSGeomGetY_t)GetProcAddress(hDLL,"GEOSGeomGetY");
+			// assert(GEOSGeomGetY != NULL);
+			// GEOSGeom_createLinearRing = (GEOSGeom_createLinearRing_t)GetProcAddress(hDLL,"GEOSGeom_createLinearRing");
+			// assert(GEOSGeom_createLinearRing != NULL);
+			// GEOSGeom_createPolygon = (GEOSGeom_createPolygon_t)GetProcAddress(hDLL,"GEOSGeom_createPolygon");
+			// assert(GEOSGeom_createPolygon != NULL);
+			// GEOSUnaryUnion = (GEOSUnaryUnion_t)GetProcAddress(hDLL,"GEOSUnaryUnion");
+			// assert(GEOSUnaryUnion != NULL);
+			// GEOSGeomTypeId = (GEOSGeomTypeId_t)GetProcAddress(hDLL,"GEOSGeomTypeId");
+			// assert(GEOSGeomTypeId != NULL);
 		}
 	}
 	~ExplicitSDNAPolylineToGeosWrapper()
 	{
+		if (hDLL != NULL)
+		{
 		#ifdef _WINDOWS
 		  FreeLibrary(hDLL);
-		#else
+		#else		
 		  // dlclose https://stackoverflow.com/a/4651841/20785734
 		  dlclose(hDLL);
 		#endif
+		}
 	}
 
 
@@ -228,7 +238,7 @@ private:
 #ifdef _WINDOWS
 	HINSTANCE hDLL;
 #else
-    void* hDLL;
+    void* hDLL = NULL;
 #endif
 
 	typedef GEOSCoordSequence* (*GEOSCoordSeq_create_t)(unsigned int size,unsigned int dims);
