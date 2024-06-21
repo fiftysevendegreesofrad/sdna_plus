@@ -18,7 +18,8 @@ the Zig for Windows build (entirely optional) and the Linux builds.
 ##### Ubuntu 22.04 (Jammy)
 Kitware haven't got a repo for Noble (24.04) yet, so 22.04 is needed for now.
 [Upgrade CMake to 3.29](https://askubuntu.com/a/1157132)
-* ` sudo apt purge --auto-remove cmake`
+Working directory assumed to be `/root`
+* `sudo apt purge --auto-remove cmake`
 * `wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null`
 * `sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'`
 * `sudo apt update`
@@ -27,13 +28,11 @@ Kitware haven't got a repo for Noble (24.04) yet, so 22.04 is needed for now.
 * `cd vcpkg`
 * `./bootstrap-vcpkg.sh`
 * `cd ..`
-* `export VCPKG_ROOT = /path/to/vcpkg`
-* `git clone --depth=1 --branch=Cross_Platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
-* `cd sDNA_plus`
+* `git clone --depth=1 --branch=Cross_platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
+* `cd sdna_plus`
 * `which ninja`
-* `export CMAKE_MAKE_PROGRAM=/usr/bin/path/to/ninja`
-* `cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF  -B build_linux -S .`
-May also require `sudo` or `-D VCPKG_ROOT=/path/to/vcpkg`
+* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S .`
+Alternative: `-D VCPKG_ROOT=/path/to/vcpkg`
 * `cmake --build build_linux --config=Release`
 Run a test
 * `export sdnadll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
