@@ -40,6 +40,8 @@ Download GEOS 3.3.5 and compile it locally (so that it can link to your availabl
 * `which ninja`
 * `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S .`
 * `cmake --build build_linux --config=Release`
+Install user-land dependencies (R).
+* `sudo apt-get install r-cran-optparse r-cran-sjstats`
 Run a smoke test
 * `export sdnadll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
 * `cd sDNA/sdna_vs2008/tests`
