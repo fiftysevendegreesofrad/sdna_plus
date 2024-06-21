@@ -29,10 +29,16 @@ Working directory assumed to be `/root`
 * `./bootstrap-vcpkg.sh`
 * `cd ..`
 * `git clone --depth=1 --branch=Cross_platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
+Download GEOS 3.3.5 and compile it locally (so that it can link to your available version of glibc, instead of whichever one was in the build environment I used).  `.github\workflows\build_geos.yml` can be used in a Github Action Ubuntu runner.
+* `curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2`
+* `tar xfj geos-3.3.5.tar.bz2`
+* `cd geos-3.3.5`
+* `cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B /root/build_geos -S .`
+* `cmake --build /root/build_geos`
+* `cp /root/build_geos/lib/libgeos_c.so /root/sdna_plus/sDNA/geos/x64/src`
 * `cd sdna_plus`
 * `which ninja`
 * `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S .`
-Alternative: `-D VCPKG_ROOT=/path/to/vcpkg`
 * `cmake --build build_linux --config=Release`
 Run a test
 * `export sdnadll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
