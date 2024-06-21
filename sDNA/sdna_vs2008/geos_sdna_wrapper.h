@@ -79,7 +79,6 @@ public:
 	{
 		
 		#ifdef _WINDOWS
-		assert(false);
 		//find path of this dll and look for geos_c.dll in the same place
 		HMODULE this_dll_handle;
 
