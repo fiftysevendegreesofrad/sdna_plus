@@ -23,7 +23,7 @@ Working directory assumed to be `/root`
 * `wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null`
 * `sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'`
 * `sudo apt update`
-* `sudo apt-get install curl zip unzip tar g++ python-is-python3 python3-pip cmake ninja-build `
+* `sudo apt-get install curl zip unzip tar g++ python-is-python3 python3-pip python3-venv cmake ninja-build `
 * `git clone --depth=1 http://www.github.com/Microsoft/vcpkg`
 * `cd vcpkg`
 * `./bootstrap-vcpkg.sh`
@@ -51,6 +51,11 @@ If this isn't a throw away env, make a venv and activate it.
 * `python -m pip install pytest`
 * `cd /root/sdna_plus/sDNA/sdna_vs2008/tests/pytest`
 * `pytest`
+##### Building sDNA Python Wheel (also on Ubuntu 22.04)
+* `python -m venv venv`
+* `. venv/scripts/activate`
+* `pip install build hatchling`
+* `python -m build --no-isolation --wheel`
 ## Compilation notes.
 #### Dynamic changes to the source code when compiling with Visual Studio
 The Python script `sDNA\sdna_vs2008\preppend_muparser_cpps_with_include_stdafx.h.py`
