@@ -53,7 +53,7 @@ runs:
       if: ${{ inputs.python_version  != '3.5' }}
       shell: ${{ inputs.shell }}
       working-directory: ./sDNA/sdna_vs2008/tests/pytest
-      run: pip install pytest numpy
+      run: pip install pytest numpy PyShp==2.1.0
 
     - name: Show versions.
       shell: ${{ inputs.shell }}
