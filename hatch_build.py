@@ -61,7 +61,7 @@ class CustomHook(BuildHookInterface):
         )
 
         subprocess.run(f"""
-            cmake --build build_output_cmake_zig --config Release
+            cmake --build {build_dir} --config Release
             """.replace('\n',''),
             shell=config.shell
         )

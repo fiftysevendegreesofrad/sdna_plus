@@ -36,6 +36,10 @@ Download GEOS 3.3.5 and compile it locally (so that it can link to your availabl
 * `cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B /root/build_geos -S .`
 * `cmake --build /root/build_geos`
 * `cp /root/build_geos/lib/libgeos_c.so /root/sdna_plus/sDNA/geos/x64/src`
+Then pick one of the following package options
+###### Simple output dir 
+The `output/Config` dir is automatically zipped if it was built in one of the Github Actions workflows, 
+e.g. `.github\workflows\smoke_test_gcc.yml`
 * `cd sdna_plus`
 * `which ninja`
 * `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S .`
@@ -51,7 +55,7 @@ If this isn't a throw away env, make a venv and activate it.
 * `python -m pip install pytest`
 * `cd /root/sdna_plus/sDNA/sdna_vs2008/tests/pytest`
 * `pytest`
-##### Building sDNA Python Wheel (also on Ubuntu 22.04)
+###### Building an sDNA Python Wheel (also on Ubuntu 22.04)
 * `python -m venv venv`
 * `. venv/scripts/activate`
 * `pip install build hatchling`
