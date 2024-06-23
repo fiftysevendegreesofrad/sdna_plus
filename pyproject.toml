@@ -16,7 +16,7 @@ classifiers = [
     "Programming Language :: Python",
 ]
 dependencies = [
-    "PyShp",
+    "PyShp==2.1.0",
 ]
 
 [project.scripts]
