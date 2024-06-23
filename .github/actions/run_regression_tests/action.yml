@@ -47,7 +47,7 @@ runs:
       if: ${{ inputs.python_version == '3.5'}}
       shell: ${{ inputs.shell }}
       working-directory: ./sDNA/sdna_vs2008/tests/pytest
-      run: pip install --trusted-host pypi.python.org pytest numpy
+      run: pip install --trusted-host pypi.python.org pytest numpy PyShp==2.1.0
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
       if: ${{ inputs.python_version  != '3.5' }}
