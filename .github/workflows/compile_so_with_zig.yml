@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Testing_cross_platform", "Cross_platform"]
+    branches: [ "Cross_platform"]
 
   pull_request:
-    branches: [ "Testing_cross_platform", "Cross_platform" ]
+    branches: [ "Cross_platform" ]
 
 
 env:
