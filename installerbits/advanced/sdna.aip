@@ -1675,7 +1675,6 @@
     <ROW File="sdnapy.py" Component_="arc_import_itn.py" FileName="sdnapy.py" Attributes="0" SourcePath="..\..\output\release\sdnapy.py" SelfReg="false"/>
     <ROW File="sdnaregutilities.py" Component_="arc_import_itn.py" FileName="SDNARE~1.PY|sdnaregutilities.py" Attributes="0" SourcePath="..\..\output\release\sdnaregutilities.py" SelfReg="false"/>
     <ROW File="sDNAUISpec.py" Component_="arc_import_itn.py" FileName="SDNAUI~1.PY|sDNAUISpec.py" Attributes="0" SourcePath="..\..\output\release\sDNAUISpec.py" SelfReg="false"/>
-    <ROW File="shapefile.py" Component_="arc_import_itn.py" FileName="SHAPEF~1.PY|shapefile.py" Attributes="0" SourcePath="..\..\output\release\shapefile.py" SelfReg="false"/>
     <ROW File="README.txt" Component_="README.txt" FileName="README.txt" Attributes="0" SourcePath="..\..\output\release\bin\README.txt" SelfReg="false"/>
     <ROW File="sdnaintegral.py" Component_="README.txt" FileName="SDNAIN~1.PY|sdnaintegral.py" Attributes="0" SourcePath="..\..\output\release\bin\sdnaintegral.py" SelfReg="false"/>
     <ROW File="sdnalearn.py" Component_="README.txt" FileName="SDNALE~1.PY|sdnalearn.py" Attributes="0" SourcePath="..\..\output\release\bin\sdnalearn.py" SelfReg="false"/>

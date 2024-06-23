@@ -17,7 +17,6 @@
 <scripts Include="arcscripts\arc_utils.py"/>
 <scripts Include="arcscripts\sdna_environment.py"/>
 <scripts Include="arcscripts\sdnapy.py"/>
-<scripts Include="arcscripts\shapefile.py"/>
 <scripts Include="arcscripts\arc_import_itn.py"/>
 <scripts Include="arcscripts\arc_matchsymbologyranges.py"/>
 <scripts Include="arcscripts\sdnaregutilities.py"/>

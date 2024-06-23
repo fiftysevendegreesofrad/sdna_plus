@@ -95,7 +95,6 @@ set(Scripts
     "arcscripts/arc_utils.py"
     "arcscripts/sdna_environment.py"
     "arcscripts/sdnapy.py"
-    "arcscripts/shapefile.py"
     "arcscripts/arc_import_itn.py"
     "arcscripts/arc_matchsymbologyranges.py"
     "arcscripts/sdnaregutilities.py"
