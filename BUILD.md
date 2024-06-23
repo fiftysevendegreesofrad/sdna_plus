@@ -40,9 +40,8 @@ Then pick one of the following package options
 ###### Simple output dir 
 The `output/Config` dir is automatically zipped if it was built in one of the Github Actions workflows, 
 e.g. `.github\workflows\smoke_test_gcc.yml`
-* `cd sdna_plus`
 * `which ninja`
-* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S .`
+* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S sdna_plus`
 * `cmake --build build_linux --config=Release`
 Install user-land dependencies (R).
 * `sudo apt-get install r-cran-optparse r-cran-sjstats`
@@ -59,6 +58,7 @@ If this isn't a throw away env, make a venv and activate it.
 * `python -m venv venv`
 * `. venv/bin/activate`
 * `pip install build hatchling`
+* `cd sdna_plus`
 * `python -m build --no-isolation --wheel`
 TODO:  For better compatibility across Linux distros, the above Ubuntu 22.04 steps need to 
 be generalised to builds from source for
