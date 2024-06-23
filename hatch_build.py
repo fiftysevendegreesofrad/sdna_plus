@@ -45,6 +45,10 @@ class CustomHook(BuildHookInterface):
 
         build_dir = REPO_DIR / build_dir
 
+        env = os.environ.copy()
+
+        env['VCPKG_INSTALLATION_ROOT']='/root/vcpkg'
+
         subprocess.run(f"""
             cmake
                 -G {config.generator}
@@ -52,7 +56,8 @@ class CustomHook(BuildHookInterface):
                 -B {build_dir}
                 -S .
             """.replace('\n',''),
-            shell=config.shell
+            shell=config.shell,
+            env=env,
         )
 
         subprocess.run(f"""
