@@ -11,6 +11,12 @@ from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 REPO_DIR = pathlib.Path(__file__).parent
 BUILD_CONFIG_CMAKE = 'Release'
 
+for __init__dot_py_dir in [REPO_DIR / 'output',
+                            REPO_DIR / 'output' / 'bin',
+                            ]:
+    (__init__dot_py_dir / '__init__.py').touch(exist_ok=True)
+
+
 @dataclasses.dataclass
 class Config:
     build_dir: str
@@ -25,13 +31,6 @@ class CustomHook(BuildHookInterface):
     def initialize(self, version, build_data):
         if self.target_name not in ('wheel', 'bdist'):
             return
-
-
-        for __init__dot_py_dir in [REPO_DIR / 'output',
-                                   REPO_DIR / 'output' / 'bin',
-                                  ]:
-            (__init__dot_py_dir / '__init__.py').touch(exist_ok=True)
-
 
         config = Config('build_output_hatch',
                         '"Ninja Multi-Config"',
