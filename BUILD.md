@@ -57,7 +57,7 @@ If this isn't a throw away env, make a venv and activate it.
 * `pytest`
 ###### Building an sDNA Python Wheel (also on Ubuntu 22.04)
 * `python -m venv venv`
-* `. venv/scripts/activate`
+* `. venv/bin/activate`
 * `pip install build hatchling`
 * `python -m build --no-isolation --wheel`
 ## Compilation notes.
