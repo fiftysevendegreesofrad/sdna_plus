@@ -91,13 +91,12 @@ https://learn.microsoft.com/en-gb/vcpkg/consume/boost-versions
 It is possible to use an override mechanism to pin deps instead, but this would make `sDNA\sdna_vs2008\vcpkg.json` much longer.  https://learn.microsoft.com/en-gb/vcpkg/consume/lock-package-versions?tabs=inspect-powershell#5---force-a-specific-version
 
 #### Geos
-Geos is dynamically linked at run-time.  A custom build step copies in the `geos_c.dll`s (from `sDNA\geos\x64\src`
+Geos v3.3.5 is dynamically linked at run-time.  A custom build step copies in the `geos_c.dll`s (from `sDNA\geos\x64\src`
 and `sDNA\geos\x86\src`), originally compiled for OSGEO4W available hereabouts: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos/
 
 #### Muparser
-A static copy of a slightly modified [`Rev 2.2.3: 22.12.2012`](https://launchpad.net/ubuntu/+source/muparser/2.2.3-6).  Changes:
+A static copy of [`Rev 2.2.3: 22.12.2012`](https://launchpad.net/ubuntu/+source/muparser/2.2.3-6).  Changes:
  * `#define MUP_BASETYPE float` in sDNA\muparser\drop\include\muParserDef.h
- * `#include "stdafx.h"` in 6 of the sDNA\muparser\drop\src\muParser*.cpp (to work with Visual Studio's chosen configuration for the pre-compiled headers).
 
 #### Anyiterator
 ```
