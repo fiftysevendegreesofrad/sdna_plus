@@ -4,7 +4,7 @@ import sdna_environment,sdnaexception
 import optparse,sys
 from optparse import OptionParser
 
-def commandline_integral_prepare(command):
+def commandline_integral_prepare(command, argv = sys.argv[1:]):
     if command=="sdnaintegral":
         example='python -u sdnaintegral.py -i my_infile -o my_outfile "radii=400,800,n;metric=ANGULAR;cont;nohull;start_gs=sgs;end_gs=egs"\n'
     elif command=="sdnaprepare":
@@ -25,7 +25,7 @@ def commandline_integral_prepare(command):
                   help="Mapping of config names to outputs",metavar="FILE")
     op.add_option("--dll",dest="dll",help=optparse.SUPPRESS_HELP,default="")
 
-    (options,args) = op.parse_args()
+    (options,args) = op.parse_args(argv)
 
     if len(args)==0:
         config_string=""

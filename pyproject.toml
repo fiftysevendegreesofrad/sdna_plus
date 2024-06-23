@@ -20,10 +20,10 @@ dependencies = [
 ]
 
 [project.scripts]
-sdnaintegral = "sDNA.bin.sdnaintegral"
-sdnaprepare = "sDNA.bin.sdnaprepare"
-sdnalearn = "sDNA.bin.sdnalearn"
-sdnapredict = "sDNA.bin.sdnapredict"
+sdnaintegral = "sDNA.bin.sdnaintegral:main"
+sdnaprepare = "sDNA.bin.sdnaprepare:main"
+sdnalearn = "sDNA.bin.sdnalearn:main"
+sdnapredict = "sDNA.bin.sdnapredict:main"
 
 
 [tool.hatch.build.targets.wheel]
