@@ -9,8 +9,6 @@ import shutil
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
 REPO_DIR = pathlib.Path(__file__).parent
-PYTHON_LIB_SRC_DIR = REPO_DIR / 'src'
-PYTHON_LIB_SDNA_DIR = PYTHON_LIB_SRC_DIR / 'sDNA'
 BUILD_CONFIG_CMAKE = 'Release'
 
 @dataclasses.dataclass
@@ -22,7 +20,6 @@ class Config:
     output_dir: str
     build_config: str = 'Release'
 
-PYTHON_LIB_SDNA_DIR.mkdir(parents = True, exist_ok = True)
 
 class CustomHook(BuildHookInterface):
     def initialize(self, version, build_data):
@@ -30,11 +27,10 @@ class CustomHook(BuildHookInterface):
             return
 
 
-        for __init__dot_py_dir in [PYTHON_LIB_SDNA_DIR,
-                                   PYTHON_LIB_SDNA_DIR / 'bin',
+        for __init__dot_py_dir in [REPO_DIR / 'output',
+                                   REPO_DIR / 'output' / 'bin',
                                   ]:
-            __init__dot_py = __init__dot_py_dir / '__init__.py'
-            __init__dot_py.touch()
+            (__init__dot_py_dir / '__init__.py').touch(exist_ok=True)
 
 
         config = Config('build_output_hatch',
@@ -65,14 +61,9 @@ class CustomHook(BuildHookInterface):
             shell=config.shell
         )
 
-        shutil.move(REPO_DIR / 'output' / config.output_dir, PYTHON_LIB_SRC_DIR) 
 
-        (PYTHON_LIB_SRC_DIR / config.output_dir).rename(PYTHON_LIB_SRC_DIR / 'sDNA')
+    # def finalize(self, version, build_data, artifact_path):
+    #     pass
 
-    def finalize(self, version, build_data, artifact_path):
-
-        build_data['force_include']["output/Release"]="sDNA"
-
-        shutil.rmtree(PYTHON_LIB_SDNA_DIR)
     
         
