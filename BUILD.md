@@ -60,6 +60,12 @@ If this isn't a throw away env, make a venv and activate it.
 * `. venv/bin/activate`
 * `pip install build hatchling`
 * `python -m build --no-isolation --wheel`
+TODO:  For better compatibility across Linux distros, the above Ubuntu 22.04 steps need to 
+be generalised to builds from source for
+CMake 29 etc. if necessary, and wheels built on the many linux image `quay.io/pypa/manylinux1_x86_64` that
+supports a GCC 4.8 version that was released 16 months after Geos 3.3.5.  See https://github.com/pypa/manylinux
+https://gcc.gnu.org/news.html and https://github.com/libgeos/geos/blob/main/NEWS.md
+
 ## Compilation notes.
 #### Dynamic changes to the source code when compiling with Visual Studio
 The Python script `sDNA\sdna_vs2008\preppend_muparser_cpps_with_include_stdafx.h.py`
