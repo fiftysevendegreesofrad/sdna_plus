@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-requirements-txt"]
 build-backend = "hatchling.build"
 
 
@@ -15,9 +15,13 @@ license = {file = "LICENSE.md"}
 classifiers = [
     "Programming Language :: Python",
 ]
-dependencies = [
-    "PyShp==2.1.0",
-]
+dynamic = ["dependencies"]
+
+[tool.hatch.metadata.hooks.requirements_txt]
+files = ["requirements.txt"]
+
+[tool.hatch.metadata.hooks.requirements_txt.optional-dependencies]
+learn = ["requirements-learn-predict.txt"]
 
 [project.scripts]
 sdnaintegral = "sDNA.bin.sdnaintegral:main"

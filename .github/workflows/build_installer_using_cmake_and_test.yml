@@ -147,3 +147,4 @@ jobs:
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
         sdnadll: 'c:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll'
         sdna_debug: ""
+        install_PyShp: false

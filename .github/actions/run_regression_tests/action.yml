@@ -36,6 +36,16 @@ inputs:
   sdna_debug:
     description: "'' (empty string): filter out the lines in correctout*.txt that are only output by debug builds. Non-empty string: don't. "
   
+  install_PyShp:
+    description: 'Whether to install PyShp in the test environment or not (e.g. if it is already bundled in the test installation).'
+    required: false
+    default: true
+
+  pytest_dir:
+    description: "The directory to run Pytest in"
+    required: false
+    default: "./sDNA/sdna_vs2008/tests/pytest"
+
 runs:
   using: "composite"
   steps:
@@ -43,21 +53,36 @@ runs:
       with:
         python-version: ${{ inputs.python_version }}
 
+
+
+    - name: Install PyShp.
+      if: ${{ inputs.install_PyShp && inputs.python_version == '3.5'}}
+      shell: ${{ inputs.shell }}
+      working-directory: ${{ inputs.pytest_dir }}
+      run: pip install --trusted-host pypi.python.org -r requirements.txt
+
+    - name: Install PyShp.
+      if: ${{ inputs.install_PyShp && inputs.python_version  != '3.5' }}
+      shell: ${{ inputs.shell }}
+      working-directory: ${{ inputs.pytest_dir }}
+      run: pip install -r requirements.txt
+
+
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
       if: ${{ inputs.python_version == '3.5'}}
       shell: ${{ inputs.shell }}
-      working-directory: ./sDNA/sdna_vs2008/tests/pytest
-      run: pip install --trusted-host pypi.python.org pytest numpy PyShp==2.1.0
+      working-directory: ${{ inputs.pytest_dir }}
+      run: pip install --trusted-host pypi.python.org pytest -r requirements-learn-predict.txt
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
       if: ${{ inputs.python_version  != '3.5' }}
       shell: ${{ inputs.shell }}
-      working-directory: ./sDNA/sdna_vs2008/tests/pytest
-      run: pip install pytest numpy PyShp==2.1.0
+      working-directory: ${{ inputs.pytest_dir }}
+      run: pip install pytest -r requirements-learn-predict.txt
 
     - name: Show versions.
       shell: ${{ inputs.shell }}
-      working-directory: './sDNA/sdna_vs2008/tests/pytest'
+      working-directory: '${{ inputs.pytest_dir }}'
       run: |
         python --version
         python -c "import numpy; print(numpy.__version__)"
@@ -77,7 +102,7 @@ runs:
 
     - name: Run all the diff tests with Pytest.
       shell: ${{ inputs.shell }}
-      working-directory: ./sDNA/sdna_vs2008/tests/pytest
+      working-directory: ${{ inputs.pytest_dir }}
       env:
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: ${{ inputs.DONT_TEST_N_LINK_SUBSYSTEMS_ORDER }}
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: ${{ inputs.ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT }}
