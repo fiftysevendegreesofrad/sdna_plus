@@ -2,13 +2,11 @@
 # This file is released under MIT license
 
 import sys
+import optparse
+from optparse import OptionParser
 
 def main(argv = sys.argv[1:]):
-    import sdna_environment
-    from sdnaregutilities import *
 
-    import optparse
-    from optparse import OptionParser
 
     example='python -u sdnapredict.py --input infile --output outfile --modelfile model.csv --predvarname prediction\n'
     desc = 'Examples:\n'\
@@ -116,4 +114,10 @@ def main(argv = sys.argv[1:]):
 
 if __name__ == '__main__':
     import _parentdir
+    import sdna_environment
+    from sdnaregutilities import *
+
     main()
+else:
+    from .. import sdna_environment
+    from ..sdnaregutilities import *

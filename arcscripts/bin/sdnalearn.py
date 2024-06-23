@@ -1,13 +1,11 @@
 # (c) Crispin Cooper on behalf of Cardiff University 2015
 # This file is released under MIT license
 import sys
+import optparse,re
+from optparse import OptionParser
 
 def main(argv = sys.argv[1:]):
-    import sdna_environment
-    from sdnaregutilities import *
 
-    import optparse,re
-    from optparse import OptionParser
 
     example='python -u sdnalearn.py --calibfile cfile --target var0 --vars var1,var2 --varregex "var.*"\n'
     desc = 'Examples:\n'\
@@ -210,4 +208,10 @@ def main(argv = sys.argv[1:]):
 
 if __name__ == '__main__':
     import _parentdir
+    
+    import sdna_environment
+    from sdnaregutilities import *
     main()
+else:
+    from .. import sdna_environment
+    from ..sdnaregutilities import *
