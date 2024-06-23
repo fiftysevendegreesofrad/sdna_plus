@@ -39,8 +39,6 @@ jobs:
       with:
         version: 0.13.0
 
-    # Install vcpkg?
-
     - name: Create Ninja build system from CMake
       run: >
         cmake
@@ -95,6 +93,7 @@ jobs:
 
 
 
+
     - name: Run regression tests
       uses: ./.github/actions/run_regression_tests
       with:
@@ -104,3 +103,4 @@ jobs:
         sdnadll: '${{ github.workspace }}/output/Release/x64/sdna_vs2008.so'
         sdna_debug: ""
         shell: bash
+
