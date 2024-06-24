@@ -12,7 +12,7 @@ RUN: git clone --depth=1 http://www.github.com/Microsoft/vcpkg & \
 RUN: export PATH=/opt/python/cp312-cp312/bin/:$PATH
 
 # Shouldn't be baked into container when container is built - clone at run time.
-# RUN: git clone --depth=1 --branch=CrossBuild_in_Manylinux_image_platform  http://www.github.com/JamesParrott/sdna_plus
+# RUN: git clone --depth=1 --branch=Build_in_Manylinux_image  http://www.github.com/JamesParrott/sdna_plus
 
 
 
