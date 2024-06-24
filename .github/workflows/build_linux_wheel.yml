@@ -25,7 +25,7 @@ jobs:
           git clone --depth=1 http://www.github.com/Microsoft/vcpkg
           cd vcpkg
           ./bootstrap-vcpkg.sh
-          export VCPKG_ROOT=${{ github.workspace }}/vcpkg
+          export VCPKG_INSTALLATION_ROOT=vcpkg
 
       - run: ls .
 
