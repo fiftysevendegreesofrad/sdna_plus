@@ -49,10 +49,11 @@ jobs:
           python -m venv venv
           . venv/bin/activate
           python -m pip install build hatchling hatch-requirements-txt
+          python -m build --no-isolation --wheel
 
       - name: upload_output
         id: installer-upload-step
         uses: actions/upload-artifact@v4
         with:
-          name: output_gcc_linux
-          path: output
+          name: python_wheel_gcc_linux
+          path: dist
