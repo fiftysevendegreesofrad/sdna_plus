@@ -58,26 +58,22 @@ runs:
     - name: Install PyShp.
       if: ${{ inputs.install_PyShp && inputs.python_version == '3.5'}}
       shell: ${{ inputs.shell }}
-      working-directory: ${{ inputs.pytest_dir }}
       run: pip install --trusted-host pypi.python.org -r requirements.txt
 
     - name: Install PyShp.
       if: ${{ inputs.install_PyShp && inputs.python_version  != '3.5' }}
       shell: ${{ inputs.shell }}
-      working-directory: ${{ inputs.pytest_dir }}
       run: pip install -r requirements.txt
 
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
       if: ${{ inputs.python_version == '3.5'}}
       shell: ${{ inputs.shell }}
-      working-directory: ${{ inputs.pytest_dir }}
       run: pip install --trusted-host pypi.python.org pytest -r requirements-learn-predict.txt
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
       if: ${{ inputs.python_version  != '3.5' }}
       shell: ${{ inputs.shell }}
-      working-directory: ${{ inputs.pytest_dir }}
       run: pip install pytest -r requirements-learn-predict.txt
 
     - name: Show versions.
