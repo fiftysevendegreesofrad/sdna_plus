@@ -33,7 +33,7 @@ jobs:
           cd geos-3.3.5
           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B /root/build_geos -S .
           cmake --build /root/build_geos
-          cp /root/build_geos/lib/libgeos_c.so sDNA/geos/x64/src
+          cp /root/build_geos/lib/libgeos_c.so sdna_plus/sDNA/geos/x64/src
 
       - run: |
           export PATH=/opt/python/cp312-cp312/bin/:$PATH
