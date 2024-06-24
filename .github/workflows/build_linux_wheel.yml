@@ -28,7 +28,7 @@ jobs:
           export VCPKG_ROOT=${{ github.workspace }}/vcpkg
 
       - run: |
-          curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2`
+          curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2
           tar xfj geos-3.3.5.tar.bz2
           cd geos-3.3.5
           cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B /root/build_geos -S .
