@@ -1,0 +1,57 @@
+LABEL: sDNA_Linux_Python_Wheel_Builder
+
+# Based on CentOS 5
+FROM: quay.io/pypa/manylinux2014_x86_64
+
+RUN: yum install zip ninja-build
+
+RUN: git clone --depth=1 http://www.github.com/Microsoft/vcpkg & \
+     cd vcpkg && \
+     ./bootstrap-vcpkg.sh \
+
+RUN: export PATH=/opt/python/cp312-cp312/bin/:$PATH
+
+# Shouldn't be baked into container when container is built - clone at run time.
+# RUN: git clone --depth=1 --branch=CrossBuild_in_Manylinux_image_platform  http://www.github.com/JamesParrott/sdna_plus
+
+
+
+# name: Build Wheels
+
+# on: [push, pull_request]
+
+# jobs:
+#   build-wheels:
+#     runs-on: ubuntu-latest
+#     container:
+#       image: quay.io/pypa/manylinux2014_x86_64
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.8
+
+#       - name: Install build dependencies
+#         run: |
+#           pip install --upgrade pip
+#           pip install wheel setuptools
+
+#       - name: Build wheels
+#         run: |
+#           python setup.py bdist_wheel
+
+#       - name: Audit wheels with auditwheel
+#         run: |
+#           for whl in dist/*.whl; do
+#             auditwheel repair "$whl" -w dist/
+#           done
+
+#       - name: Upload wheels
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: wheels
+#           path: dist/*.whl
