@@ -15,7 +15,7 @@ license = {file = "LICENSE.md"}
 classifiers = [
     "Programming Language :: Python",
 ]
-dynamic = ["dependencies"]
+dynamic = ["dependencies", "optional-dependencies"]
 
 [tool.hatch.metadata.hooks.requirements_txt]
 files = ["requirements.txt"]
