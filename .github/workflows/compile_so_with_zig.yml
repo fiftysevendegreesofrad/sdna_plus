@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Testing_cross_platform", "Cross_platform"]
+    branches: [ "Cross_platform"]
 
   pull_request:
-    branches: [ "Testing_cross_platform", "Cross_platform" ]
+    branches: [ "Cross_platform" ]
 
 
 env:
@@ -80,7 +80,6 @@ jobs:
 
     - uses: actions/checkout@v4
 
-
     - name: Install R
       run: |
         sudo apt-get update
@@ -104,3 +103,4 @@ jobs:
         sdnadll: '${{ github.workspace }}/output/Release/x64/sdna_vs2008.so'
         sdna_debug: ""
         shell: bash
+

@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Testing_cross_platform" ]
+    branches: [ "Cross_platform", "Hatch_build" ]
 
   pull_request:
-    branches: [ "Testing_cross_platform" ]
+    branches: [ "Cross_platform", "Hatch_build" ]
 
 env:
   CONFIGURATION: Release
@@ -97,7 +97,7 @@ jobs:
         python-version: ${{ matrix.python_version }}
 
     - name: Install numpy
-      run: python -m pip install numpy
+      run: python -m pip install numpy PyShp==2.1.0
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v4
