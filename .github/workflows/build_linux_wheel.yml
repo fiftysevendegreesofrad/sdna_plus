@@ -10,7 +10,7 @@ on:
     branches: [ "Cross_platform", "Build_in_Manylinux_image" ]
 
 jobs:
-  build-wheels:
+  build-wheel:
     runs-on: ubuntu-latest
     container:
       image: quay.io/pypa/manylinux2014_x86_64
