@@ -17,9 +17,9 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - run: yum install zip ninja-build
+      - run: yum install -y zip ninja-build
 
       - run: |
           git clone --depth=1 http://www.github.com/Microsoft/vcpkg
@@ -35,9 +35,15 @@ jobs:
           cmake --build /root/build_geos
           cp /root/build_geos/lib/libgeos_c.so sDNA/geos/x64/src
 
-
       - run: |
           export PATH=/opt/python/cp312-cp312/bin/:$PATH
           python -m venv venv
           . venv/bin/activate
           python -m pip install build hatchling hatch-requirements-txt
+
+      - name: upload_output
+        id: installer-upload-step
+        uses: actions/upload-artifact@v4
+        with:
+          name: output_gcc_linux
+          path: output
