@@ -37,23 +37,22 @@ jobs:
 
       - run: ls sDNA/geos/x64/src
 
-      # - run: |
-      #     curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2
-      #     tar xfj geos-3.3.5.tar.bz2
-      #     cd geos-3.3.5
-      #     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B /root/build_geos -S .
-      #     cmake --build /root/build_geos
-      #     cp /root/build_geos/lib/libgeos_c.so ${{ github.workspace }}/sDNA/geos/x64/src
+      - run: |
+          curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2
+          tar xfj geos-3.3.5.tar.bz2
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B build_geos -S geos-3.3.5
+          cmake --build build_geos
+          cp build_geos/lib/libgeos_c.so sDNA/geos/x64/src
 
-      # - run: |
-      #     export PATH=/opt/python/cp312-cp312/bin/:$PATH
-      #     python -m venv venv
-      #     . venv/bin/activate
-      #     python -m pip install build hatchling hatch-requirements-txt
+      - run: |
+          export PATH=/opt/python/cp312-cp312/bin/:$PATH
+          python -m venv venv
+          . venv/bin/activate
+          python -m pip install build hatchling hatch-requirements-txt
 
-      # - name: upload_output
-      #   id: installer-upload-step
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: output_gcc_linux
-      #     path: output
+      - name: upload_output
+        id: installer-upload-step
+        uses: actions/upload-artifact@v4
+        with:
+          name: output_gcc_linux
+          path: output
