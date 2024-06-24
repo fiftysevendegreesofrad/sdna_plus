@@ -1,4 +1,4 @@
-name: Build Wheels
+name: Build Wheel
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
       - run: yum install -y zip ninja-build
 
