@@ -7,7 +7,8 @@ RUN: yum install zip ninja-build
 
 RUN: git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
      cd vcpkg && \
-     ./bootstrap-vcpkg.sh \
+     ./bootstrap-vcpkg.sh && \
+     export VCPKG_ROOT=
 
 
 RUN: curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2` && \

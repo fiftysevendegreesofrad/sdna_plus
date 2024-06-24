@@ -52,6 +52,7 @@ class CustomHook(BuildHookInterface):
         subprocess.run(f"""
             cmake
                 -G {config.generator}
+                -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja
                 -D USE_ZIG={config.use_zig}
                 -B {build_dir}
                 -S .

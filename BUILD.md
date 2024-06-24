@@ -55,6 +55,7 @@ If this isn't a throw away env, make a venv and activate it.
 * `cd /root/sdna_plus/sDNA/sdna_vs2008/tests/pytest`
 * `pytest`
 ###### Building an sDNA Python Wheel (also on Ubuntu 22.04)
+* `export VCPKG_INSTALLATION_ROOT=/root/vcpkg`
 * `python -m venv venv`
 * `. venv/bin/activate`
 * `pip install build hatchling`
