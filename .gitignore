@@ -47,3 +47,24 @@ build_output_cmake_zig
 /sDNA/sDNA_2022/x64
 sDNA/sdna_vs2008/sdna_vs2008.vcxproj.user
 output/Release/geos_c.dll
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+*.whl
+*.zip
+*.tar.gz
