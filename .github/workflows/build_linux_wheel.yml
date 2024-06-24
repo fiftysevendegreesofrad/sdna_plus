@@ -27,15 +27,15 @@ jobs:
           ./bootstrap-vcpkg.sh
           export VCPKG_ROOT=${{ github.workspace }}/vcpkg
 
-    - run: ls .
+      - run: ls .
 
-    - run: ls sDNA/
+      - run: ls sDNA/
 
-    - run: ls sDNA/geos/
-      
-    - run: ls sDNA/geos/x64
+      - run: ls sDNA/geos/
+        
+      - run: ls sDNA/geos/x64
 
-    - run: ls sDNA/geos/x64/src
+      - run: ls sDNA/geos/x64/src
 
       # - run: |
       #     curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2
