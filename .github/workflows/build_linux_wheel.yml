@@ -12,8 +12,6 @@ on:
 jobs:
   build-wheel:
     runs-on: ubuntu-latest
-    container:
-      image: quay.io/pypa/manylinux2014_x86_64
 
     steps:
       - name: Checkout code
