@@ -141,4 +141,4 @@ jobs:
       env:
         sdnadll: ''
         SDNA_INSTALLED_IN_PYTHON_ENV: true
-      run: {{ matrix.smoke_test }}
+      run: ${{ matrix.smoke_test }}
