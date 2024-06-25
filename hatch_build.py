@@ -24,7 +24,6 @@ class Config:
     generator: str
     use_zig: str
     shell: bool
-    output_dir: str
     build_config: str = 'Release'
     generator_path: str = ''
     platform: str = 'x64'
@@ -86,7 +85,7 @@ class CustomHook(BuildHookInterface):
 
         subprocess.run(f"""
             cmake --build {build_dir} --config {config.build_config}
-            """.replace('\n',''),
+            """.lstrip().replace('\n',''),
             shell=config.shell
         )
 
