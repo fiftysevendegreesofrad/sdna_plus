@@ -83,7 +83,7 @@ runs:
     - name: Install sDNA.
       if: ${{ inputs.SDNA_INSTALLED_IN_PYTHON_ENV }}
       shell: bash
-      run: pip install dist/sdna_plus*_x86_64.whl
+      run: pip install dist/sdna_plus*.whl
 
 
     - name: Show versions.
