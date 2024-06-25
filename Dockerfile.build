@@ -22,7 +22,7 @@ RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
 RUN curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2` && \
     tar xfj geos-3.3.5.tar.bz2 && \
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B /root/build_geos -S geos-3.3.5 && \
-    cmake --build build_geos
+    cmake --build build_geos && \
     cp /root/build_geos/lib/libgeos_c.so sdna_plus/sDNA/geos/x64/src
 
 RUN python -m venv venv && \
