@@ -5,12 +5,6 @@ LABEL name="sDNA Linux Python Wheel Builder"
 
 ENV PATH=/opt/python/cp312-cp312/bin/:$PATH
 
-RUN python --version
-
-RUN ls -l .
-
-RUN ls -l sdna_plus
-
 RUN yum install -y zip ninja-build && \
     yum clean all
 
@@ -21,63 +15,17 @@ RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
 
 RUN curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2` && \
     tar xfj geos-3.3.5.tar.bz2 && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B /root/build_geos -S geos-3.3.5 && \
-    cmake --build build_geos && \
-    cp /root/build_geos/lib/libgeos_c.so sdna_plus/sDNA/geos/x64/src
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B ~/build_geos -S geos-3.3.5 && \
+    cmake --build ~/build_geos
 
 RUN python -m venv venv && \
     . venv/bin/activate && \
     pip install --no-cache-dir build hatchling hatch-requirements-txt
 
-WORKDIR sdna_plus
+# Repo shouldn't be baked into container when container is built - could also add:
+# CMD: git clone --depth=1 --branch=Build_in_Manylinux_image  http://www.github.com/JamesParrott/sdna_plus
 
-CMD . venv/bin/activate && \
-    python -m build --no-isolation --wheel
-
-# Shouldn't be baked into container when container is built - clone at run time.
-# RUN: git clone --depth=1 --branch=Build_in_Manylinux_image  http://www.github.com/JamesParrott/sdna_plus
-# RUN: cp /root/build_geos/lib/libgeos_c.so /root/sdna_plus/sDNA/geos/x64/src
-#
-# RUN: . venv/bin/activate && \
-#      cd sdna_plus && \
-#      python -m build --no-isolation --wheel
-
-# name: Build Wheels
-
-# on: [push, pull_request]
-
-# jobs:
-#   build-wheels:
-#     runs-on: ubuntu-latest
-#     container:
-#       image: quay.io/pypa/manylinux2014_x86_64
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       - name: Set up Python
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: 3.8
-
-#       - name: Install build dependencies
-#         run: |
-#           pip install --upgrade pip
-#           pip install wheel setuptools
-
-#       - name: Build wheels
-#         run: |
-#           python setup.py bdist_wheel
-
-#       - name: Audit wheels with auditwheel
-#         run: |
-#           for whl in dist/*.whl; do
-#             auditwheel repair "$whl" -w dist/
-#           done
-
-#       - name: Upload wheels
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: wheels
-#           path: dist/*.whl
+# Destination directory depends on container's bind mount
+CMD cp ~/build_geos/lib/libgeos_c.so ~/sdna_plus/sDNA/geos/x64/src && \
+    . venv/bin/activate && \
+    python -m build --no-isolation --wheel ~/sdna_plus

@@ -44,7 +44,7 @@ jobs:
         run: docker build --file Dockerfile.build --tag sdna_manylinux_wheel_builder .
 
       - name: Run Docker Container from image
-        run: docker run --rm -v ..:. sDNA_manylinux_Wheel_builder
+        run: docker run --rm -v .:~/sdna_plus sdna_manylinux_wheel_builder
 
       - name: upload_output
         id: installer-upload-step
