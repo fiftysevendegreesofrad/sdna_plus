@@ -53,7 +53,7 @@ jobs:
 
       - name: upload_output
         id: installer-upload-step
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: python_wheel_gcc_linux
           path: dist
