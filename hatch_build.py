@@ -47,7 +47,7 @@ class CustomHook(BuildHookInterface):
 
         env = os.environ.copy()
 
-        env.setdefault('VCPKG_INSTALLATION_ROOT', '/root/vcpkg')
+        env.setdefault('VCPKG_INSTALLATION_ROOT', '~/vcpkg')
 
         subprocess.run(f"""
             cmake

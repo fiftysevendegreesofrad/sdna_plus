@@ -4,7 +4,7 @@ FROM quay.io/pypa/manylinux2014_x86_64
 LABEL name="sDNA Linux Python Wheel Builder"
 
 ENV PATH=/opt/python/cp312-cp312/bin/:$PATH \
-    VCPKG_INSTALLATION_ROOT=/home/vcpkg
+    VCPKG_INSTALLATION_ROOT=/vcpkg
 
 RUN yum install -y zip ninja-build && \
     yum clean all
