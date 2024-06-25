@@ -41,7 +41,7 @@ jobs:
       #     python -m build --no-isolation --wheel
 
       - name: Build Docker Image
-        run: docker build -f Dockerfile.build -t sDNA_manylinux_Wheel_builder
+        run: docker build --file Dockerfile.build --tag sDNA_manylinux_Wheel_builder .
 
       - name: Run Docker Container from image
         run: docker run --rm -v ..:. sDNA_manylinux_Wheel_builder
