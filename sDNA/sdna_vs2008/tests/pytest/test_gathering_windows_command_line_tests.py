@@ -317,7 +317,7 @@ class PythonCommand(Command):
         self.args_to_python = args_to_python
 
         if SDNA_INSTALLED_IN_PYTHON_ENV:
-            self.command_str = self.command_str. replace(r'%pythonexe% -u', self.to_replace_pythonexe)
+            self.command_str = self.command_str.replace(r'%pythonexe% -u', self.to_replace_pythonexe)
 
         self.command_str = self.command_str.replace(r'%pythonexe%', self.to_replace_pythonexe)
 
