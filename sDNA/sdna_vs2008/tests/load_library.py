@@ -16,6 +16,6 @@ else:
     ON_WINDOWS = (sys.platform == 'win32')
     LIB_EXT = 'dll' if ON_WINDOWS else 'so'
     installed_dll = os.path.join(os.path.dirname(sDNA.__file__), 'x64', 'sdna_vs2008.' + LIB_EXT)
-    os.environ['sdnadll']
+    os.environ['sdnadll'] = installed_dll
     def load_library(ignored_dll):
         return _load_library(installed_dll)
