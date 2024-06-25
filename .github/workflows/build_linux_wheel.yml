@@ -25,8 +25,6 @@ jobs:
           git clone --depth=1 http://www.github.com/Microsoft/vcpkg
           cd vcpkg
           ./bootstrap-vcpkg.sh
-          export VCPKG_INSTALLATION_ROOT=vcpkg
-
       - run: ls .
 
       - run: ls sDNA/
@@ -44,11 +42,13 @@ jobs:
           cmake --build build_geos
           cp build_geos/lib/libgeos_c.so sDNA/geos/x64/src
 
-      - run: |
+      - name: Configure Ninja, compile .so, and build Wheel.
+        run: |
           export PATH=/opt/python/cp312-cp312/bin/:$PATH
           python -m venv venv
           . venv/bin/activate
           python -m pip install build hatchling hatch-requirements-txt
+          export VCPKG_INSTALLATION_ROOT=vcpkg
           python -m build --no-isolation --wheel
 
       - name: upload_output
