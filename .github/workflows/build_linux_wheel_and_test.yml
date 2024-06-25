@@ -68,8 +68,8 @@ jobs:
         python_version: ${{ matrix.python_version }}
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
-        SDNA_INSTALLED_IN_PYTHON_ENV: true
-        install_PyShp: false
+        SDNA_INSTALLED_IN_PYTHON_ENV: 1
+        install_PyShp: 0
         sdnadll: ''
         sdna_debug: ""
         shell: bash
@@ -136,5 +136,5 @@ jobs:
       working-directory: ./sDNA/sdna_vs2008/tests
       env:
         sdnadll: ''
-        SDNA_INSTALLED_IN_PYTHON_ENV: true
+        SDNA_INSTALLED_IN_PYTHON_ENV: 1
       run: ${{ matrix.smoke_test }}
