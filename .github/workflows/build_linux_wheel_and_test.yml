@@ -81,7 +81,7 @@ jobs:
 
   smoke_tests:
 
-    needs: build_and_upload_installer
+    needs: build_linux_wheel
 
     strategy:
       fail-fast: false
