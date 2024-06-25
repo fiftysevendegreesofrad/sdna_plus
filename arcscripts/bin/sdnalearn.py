@@ -10,7 +10,8 @@ from optparse import OptionParser
 def main(argv = sys.argv[1:]):
 
     import sdna_environment
-    from sdnaregutilities import *
+    import sdnaregutilities
+    # from sdnaregutilities import *
 
     example='python -u sdnalearn.py --calibfile cfile --target var0 --vars var1,var2 --varregex "var.*"\n'
     desc = 'Examples:\n'\
@@ -164,7 +165,8 @@ def main(argv = sys.argv[1:]):
         
     # create model
 
-    model,preds,gehs = SdnaRegModel.fromData(targetdata,
+    model,preds,gehs = sdnaregutilities.SdnaRegModel.fromData(
+                                            targetdata,
                                             usable_data,
                                             variable_order,
                                             options.target,

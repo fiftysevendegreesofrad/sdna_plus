@@ -301,7 +301,7 @@ def _run_insecurely_in_shell_without_catching_exceptions(command_str):
 
 class PythonCommand(Command):
 
-    to_replace_pythonexe = '' if SDNA_INSTALLED_IN_PYTHON_ENV else sys.executable
+    sdna_installed_in_python_env = False
 
     def __init__(self, command_str, retcode_zero_expected = False, **kwargs): 
         super(PythonCommand, self).__init__(command_str, **kwargs)
@@ -316,10 +316,7 @@ class PythonCommand(Command):
 
         self.args_to_python = args_to_python
 
-        if SDNA_INSTALLED_IN_PYTHON_ENV:
-            self.command_str = self.command_str.replace(r'%pythonexe% -u', self.to_replace_pythonexe)
-
-        self.command_str = self.command_str.replace(r'%pythonexe%', self.to_replace_pythonexe)
+        self.command_str = self.command_str.replace(r'%pythonexe%', sys.executable)
 
 
     def _run(self):
@@ -344,14 +341,13 @@ class PythonScriptCommand(PythonCommand):
 
         self.args_to_python_file = args_to_py_file
 
-        if not SDNA_INSTALLED_IN_PYTHON_ENV:
-            py_file += '.py'
+        py_file += '.py'
 
-            # Don't support python -c
-            if not os.path.isfile(py_file):
-                raise Exception('Test command: %s references non-existent Python script: %s'
-                            % (command_str, py_file)
-                            )   
+        # Don't support python -c
+        if not os.path.isfile(py_file):
+            raise Exception('Test command: %s references non-existent Python script: %s'
+                        % (command_str, py_file)
+                        )   
 
 
         self.python_file = os.path.basename(py_file)
@@ -361,13 +357,21 @@ class sDNACommand(PythonScriptCommand):
 
     sdna_dll_cli_arg = ('"%s"' % SDNA_DLL) if ' ' in SDNA_DLL else SDNA_DLL
 
-    def __init__(self, command_str, **kwargs): 
-        super(sDNACommand, self).__init__(command_str, **kwargs)
+    sdna_installed_in_python_env = SDNA_INSTALLED_IN_PYTHON_ENV
 
-        if SDNA_INSTALLED_IN_PYTHON_ENV:
-            self.command_str = self.command_str.replace(r'--dll %sdnadll%', '')
-        else:
-            self.command_str = self.command_str.replace(r'%sdnadll%', self.sdna_dll_cli_arg)
+    def __init__(self, command_str, retcode_zero_expected = False, **kwargs): 
+
+        if self.sdna_installed_in_python_env:
+            self.retcode_zero_expected = retcode_zero_expected
+
+            __, ___, rest = command_str.partition('sdna')
+            self.command_str = 'sdna' + rest.replace('.py', '', 1).replace(r'--dll %sdnadll%', '') 
+            return
+
+        super(sDNACommand, self).__init__(command_str, retcode_zero_expected=retcode_zero_expected, **kwargs)
+
+
+        self.command_str = self.command_str.replace(r'%sdnadll%', self.sdna_dll_cli_arg)
 
         # Support testing the released Python files shipped with 
         # sdna_vs2008.dll, not the source code repo's Python files 

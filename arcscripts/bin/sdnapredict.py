@@ -10,7 +10,8 @@ from optparse import OptionParser
 def main(argv = sys.argv[1:]):
 
     import sdna_environment
-    from sdnaregutilities import *
+    # from sdnaregutilities import *
+    import sdnaregutilities
 
     example='python -u sdnapredict.py --input infile --output outfile --modelfile model.csv --predvarname prediction\n'
     desc = 'Examples:\n'\
@@ -65,7 +66,7 @@ def main(argv = sys.argv[1:]):
 
     # load model file
 
-    model = SdnaRegModel.fromFile(options.modelfile)
+    model = sdnaregutilities.SdnaRegModel.fromFile(options.modelfile)
     wanted_fields = model.getVarNames() 
         
     # determine fieldnames and check present

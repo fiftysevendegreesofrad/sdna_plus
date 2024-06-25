@@ -1,7 +1,8 @@
 import sys
 import re
 import os
-from sdnapy import *
+import sdnapy
+# from sdnapy import *
 import time
 import gc
 
@@ -33,7 +34,7 @@ def runcalculation(env, #environment object, IO etc
                     dll=""): #option to specify different dll for debugging - not relevant to you
 
     env.AddMessage("sDNA %s config: %s"%(name,config_string))
-    set_dll_path(dll)
+    sdnapy.set_dll_path(dll)
     
     # if we ever start having multiple geometry inputs we need to address the input spatial referencing bug
     geominputs = [x for x in input_map if x != "tables"]
@@ -52,7 +53,7 @@ def runcalculation(env, #environment object, IO etc
             env.AddMessage("  %s"%x)
         return 0
 
-    set_sdnapy_message_callback(env.AddMessage)
+    sdnapy.set_sdnapy_message_callback(env.AddMessage)
     input_handle = input_map["net"];
     
     input_fieldnames = env.ListFields(input_handle)
@@ -71,7 +72,7 @@ def runcalculation(env, #environment object, IO etc
                     if envtable.dims==1:
                         env.AddMessage(" ...1d variable "+envtable.name)
                         tablenames += [envtable.name]
-                        table = Table(envtable.name,envtable.zonefieldnames[0])
+                        table = sdnapy.Table(envtable.name,envtable.zonefieldnames[0])
                         for zone,data in envtable.rows():
                             table.addrow(zone[0],data)
                         tablecollection1d.add_table(table)
@@ -83,14 +84,14 @@ def runcalculation(env, #environment object, IO etc
                             env.AddMessage("Error: both %s and %s are 2d tables; only one is allowed"%multiple2dtables)
                             sys.exit(1)
                         env.AddMessage(" ...2d variable "+envtable.name)
-                        table = Table2d(envtable.name,envtable.zonefieldnames)
+                        table = sdnapy.Table2d(envtable.name,envtable.zonefieldnames)
                         for (z1,z2),data in envtable.rows():
                             table.addrow(z1,z2,data)
                         table2d = table
                     del envtable
 
     net = Net()
-    calculation = Calculation(name,config_string,net,set_progressor_callback,warning_callback,tablecollection1d)
+    calculation = sdnapy.Calculation(name,config_string,net,set_progressor_callback,warning_callback,tablecollection1d)
     if table2d:
         calculation.add_table2(table2d)
     
