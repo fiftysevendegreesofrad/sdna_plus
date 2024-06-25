@@ -4,13 +4,13 @@ FROM quay.io/pypa/manylinux2014_x86_64
 LABEL name="sDNA Linux Python Wheel Builder"
 
 ENV PATH=/opt/python/cp312-cp312/bin/:$PATH
+    VCPKG_INSTALLATION_ROOT=/home/vcpkg
 
 RUN yum install -y zip ninja-build && \
     yum clean all
 
 RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
-    ./vcpkg/bootstrap-vcpkg.sh && \
-    export VCPKG_INSTALLATION_ROOT=~/vcpkg
+    ./vcpkg/bootstrap-vcpkg.sh
 
 
 RUN curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2 && \
