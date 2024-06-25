@@ -67,7 +67,6 @@ class CustomHook(BuildHookInterface):
         config_command_str = f"""
                 cmake
                 -G {config.generator}
-                -D CMAKE_MAKE_PROGRAM=
                 -D USE_ZIG={config.use_zig}
                 -B {build_dir}
                 -S .
@@ -75,6 +74,8 @@ class CustomHook(BuildHookInterface):
 
         if PLATFORM == 'Windows' and config.platform:
             config_command_str += f' -A {config.platform}'
+        else:
+            config_command_str += f' -D CMAKE_MAKE_PROGRAM={config.generator_path}'
 
 
         subprocess.run(
