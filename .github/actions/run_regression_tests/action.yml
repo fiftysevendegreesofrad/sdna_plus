@@ -80,6 +80,12 @@ runs:
       shell: ${{ inputs.shell }}
       run: pip install pytest -r requirements-learn-predict.txt
 
+    - name: Install sDNA.
+      if: ${{ inputs.SDNA_INSTALLED_IN_PYTHON_ENV }}
+      shell: bash
+      run: pip install dist/sdna_plus*_x86_64.whl
+
+
     - name: Show versions.
       shell: ${{ inputs.shell }}
       working-directory: '${{ inputs.pytest_dir }}'
