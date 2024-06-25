@@ -32,7 +32,7 @@ class Config:
 PLATFORM = 'Windows' if sys.platform=='win32' else 'Linux'
 
 CONFIGS = {'Linux' : Config(
-                        'build_output_hatch_linux',
+                        'build_output_hatchling_linux',
                         '"Ninja Multi-Config"',
                         'OFF',
                         True,
@@ -40,7 +40,7 @@ CONFIGS = {'Linux' : Config(
                         '/usr/bin/ninja'
                        ),
            'Windows' : Config(
-                        'build_output_hatch_windows',
+                        'build_output_hatchling_windows',
                         '"Visual Studio 17 2022"',
                         'OFF',
                         False,
@@ -63,7 +63,7 @@ class CustomHook(BuildHookInterface):
 
         env = os.environ.copy()
 
-        env.setdefault('VCPKG_INSTALLATION_ROOT', '~/vcpkg')
+        env.setdefault('VCPKG_INSTALLATION_ROOT','~/vcpkg')
 
         config_command_str = f"""
                 cmake
