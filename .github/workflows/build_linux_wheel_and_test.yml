@@ -1,60 +1,87 @@
-name: "Smoke test (GCC)."
+name: Build Linux Wheel
 
 on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform", "Hatch_build" ]
+    branches: [ "Cross_platform", "Build_in_Manylinux_image" ]
 
   pull_request:
-    branches: [ "Cross_platform", "Hatch_build" ]
-
-env:
-  CONFIGURATION: Release
-  PLATFORM: x64
-  BOOST_VERSION: '1.8.3'
-
+    branches: [ "Cross_platform", "Build_in_Manylinux_image" ]
 
 jobs:
-  build_and_upload_output_dir:
-    name: "Compile on Ubuntu with CMake & GCC"
-    runs-on: "ubuntu-24.04"
-    # outputs:
-    #   installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
+  build_linux_wheel:
+    runs-on: ubuntu-latest
+
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build --file Dockerfile.build --tag sdna_manylinux_wheel_builder .
+
+      - name: Run Docker Container from image
+        run: docker run --rm -v .:/home/sdna_plus sdna_manylinux_wheel_builder
+
+      - name: upload_output
+        id: installer-upload-step
+        uses: actions/upload-artifact@v4
+        with:
+          name: python_wheel_gcc_linux
+          path: dist
+
+  regression_tests:
+
+    needs: build_linux_wheel
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['3.9', '3.10', '3.11', '3.12']
+
+    name: "Download and run sDNA installer, and run diff tests on it. "
+    
+    runs-on: "ubuntu-24.04"
+
+
+    steps:
+
+
     - uses: actions/checkout@v4
 
-    - name: Install Git
+
+    - name: Install R
       run: |
         sudo apt-get update
-        sudo apt-get install -y git ninja-build
-      # https://cran.r-project.org/bin/linux/ubuntu/fullREADME.html
+        sudo apt-get install -y r-cran-optparse r-cran-sjstats
 
-    - name: Create Ninja build system from CMake
-      run: >
-        cmake
-        -G "Ninja Multi-Config"
-        -D USE_ZIG=OFF
-        -B build_output_cmake_gcc
-        -S .
-        
-    - name: Build sDNA
-      run: |
-        cmake --build build_output_cmake_gcc --config Release
-
-
-
-    - name: upload_output
-      id: installer-upload-step
-      uses: actions/upload-artifact@v4
+    - name: Download output tree built in previous job
+      uses: actions/download-artifact@v4
       with:
-        name: output_gcc_linux
-        path: output
+        name: python_wheel_gcc_linux
+        path: dist
 
 
-  test_output_dir:
+    - name: Install wheel
+      run: python -m pip install dist/sdna_plus*.whl
 
-    needs: build_and_upload_output_dir
+
+    - name: Run regression tests
+      uses: ./.github/actions/run_regression_tests
+      with:
+        python_version: ${{ matrix.python_version }}
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+        ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
+        SDNA_INSTALLED_IN_PYTHON_ENV: true
+        install_PyShp: false
+        sdnadll: ''
+        sdna_debug: ""
+        shell: bash
+
+
+  smoke_tests:
+
+    needs: build_and_upload_installer
 
     strategy:
       fail-fast: false
@@ -76,7 +103,7 @@ jobs:
                       '../../../arcscripts/bin/sdnaprepare.py -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3 --dll="$sdnadll"  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
                       "prepare_test_new.py",]
 
-    name: "Download and run sDNA output dir, and run diff tests on it (without diffing the output). "
+    name: "Download and install sDNA Linux wheel, and run diff tests (without diffing the output). "
     
     runs-on: "ubuntu-24.04"
 
@@ -102,11 +129,16 @@ jobs:
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v4
       with:
-        name: output_gcc_linux
-        path: output
+        name: python_wheel_gcc_linux
+        path: dist
+
+
+    - name: Install wheel
+      run: python -m pip install dist/sdna_plus*.whl
 
     - name: Smoke test
       working-directory: ./sDNA/sdna_vs2008/tests
       env:
-        sdnadll: '${{ github.workspace }}/output/Release/x64/sdna_vs2008.so'
+        sdnadll: ''
+        SDNA_INSTALLED_IN_PYTHON_ENV: true
       run: "python -u ${{ matrix.smoke_test }}"

@@ -26,25 +26,43 @@ REPO_ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), r'..\..\
 
 ON_WINDOWS = (sys.platform == 'win32')
 
-SDNA_DLL_LOCATIONS = (
-             os.path.join(REPO_ROOT_DIR, r'\output\Debug\x64\sdna_vs2008.dll'),
-             os.path.join(REPO_ROOT_DIR, r'\output\release\x64\sdna_vs2008.dll'),
-             r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll',
+LIB_EXT = 'dll' if ON_WINDOWS else 'so'
+
+SDNA_INSTALLATION_LOCATIONS = (
+             os.path.join(REPO_ROOT_DIR, 'output','Debug'),
+             os.path.join(REPO_ROOT_DIR, 'output','release'),
+             r'C:\Program Files (x86)\sDNA',
             )
 
 SDNA_DLL = os.path.abspath(os.getenv('sdnadll', ''))
 
 SDNA_BIN_SUFFIXES = ('integral', 'prepare', 'learn', 'predict')
 
+def get_sdna_lib(sdna_root):
+    return os.path.join(sdna_root, 'x64','sdna_vs2008' + LIB_EXT)
+
+
+if not SDNA_DLL and os.getenv('SDNA_INSTALLED_IN_PYTHON_ENV', ''):
+    try:
+        import sDNA.sdnapy
+    except ImportError:
+        pass
+    else:
+        SDNA_DLL = get_sdna_lib(os.path.dirname(sDNA.sdnapy.__file__))
+
+
 if not SDNA_DLL:
-    for sdna_dll_path in SDNA_DLL_LOCATIONS:
-        if os.path.isfile(sdna_dll_path):
-            SDNA_DLL = sdna_dll_path
+
+    for sdna_root in SDNA_INSTALLATION_LOCATIONS:
+        sdna_lib = get_sdna_lib(sdna_root)
+        if os.path.isfile(sdna_lib):
+            SDNA_DLL = sdna_lib
             break
     else:
-        raise Exception(r'Env variable %sdnadll% not set, and no sdna_vs2008.dll found in locations: \n%s' % 
-                        '\n'.join(SDNA_DLL_LOCATIONS)
-                       )
+        raise Exception(r'Env variable $sdnadll not set, and no sdna_vs2008.%s found in locations: \n%s' % 
+                        (LIB_EXT, '\n'.join(SDNA_INSTALLATION_LOCATIONS))
+                    )
+
 
 
 print('SDNA_DLL: %s' % SDNA_DLL)
