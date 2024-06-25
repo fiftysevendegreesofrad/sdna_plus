@@ -26,19 +26,35 @@ class Config:
     shell: bool
     output_dir: str
     build_config: str = 'Release'
+    generator_path: str = ''
+    platform: str = 'x64'
 
+PLATFORM = 'Windows' if sys.platform=='win32' else 'Linux'
+
+CONFIGS = {'Linux' : Config(
+                        'build_output_hatch_linux',
+                        '"Ninja Multi-Config"',
+                        'OFF',
+                        True,
+                        'Release',
+                        '/usr/bin/ninja'
+                       ),
+           'Windows' : Config(
+                        'build_output_hatch_windows',
+                        '"Visual Studio 17 2022"',
+                        'OFF',
+                        False,
+                        'Release',
+                        '/usr/bin/ninja'
+                       ),
+          }
 
 class CustomHook(BuildHookInterface):
     def initialize(self, version, build_data):
         if self.target_name not in ('wheel', 'bdist'):
             return
 
-        config = Config('build_output_hatch',
-                        '"Ninja Multi-Config"',
-                        'OFF',
-                        True,
-                        'Release'
-                       )
+        config = CONFIGS[PLATFORM]
 
 
         build_dir = pathlib.Path(config.build_dir)
@@ -49,20 +65,27 @@ class CustomHook(BuildHookInterface):
 
         env.setdefault('VCPKG_INSTALLATION_ROOT', '~/vcpkg')
 
-        subprocess.run(f"""
-            cmake
+        config_command_str = f"""
+                cmake
                 -G {config.generator}
-                -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja
+                -D CMAKE_MAKE_PROGRAM=
                 -D USE_ZIG={config.use_zig}
                 -B {build_dir}
                 -S .
-            """.replace('\n',''),
+            """.lstrip().replace('\n','')
+
+        if PLATFORM == 'Windows' and config.platform:
+            config_command_str += f' -A {config.platform}'
+
+
+        subprocess.run(
+            config_command_str,
             shell=config.shell,
             env=env,
         )
 
         subprocess.run(f"""
-            cmake --build {build_dir} --config Release
+            cmake --build {build_dir} --config {config.build_config}
             """.replace('\n',''),
             shell=config.shell
         )
