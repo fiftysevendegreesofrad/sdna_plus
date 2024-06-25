@@ -777,12 +777,14 @@ class DiffTest(object):
         self.steps = steps
         self.diff_command = diff_command
 
-    def run(self):
+    def run_steps(self):
         for step in self.steps:
             # piped output is passed via Command.pseudo_files_to_pipe_output_to,
             # not via retvals.
             step.run()
-        
+
+    def run(self):
+        self.run_steps()
         self.diff_command.run()
 
     def __str__(self):
