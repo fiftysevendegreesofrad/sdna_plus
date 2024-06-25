@@ -26,6 +26,7 @@ RUN python -m venv venv && \
 # CMD: git clone --depth=1 --branch=Build_in_Manylinux_image  http://www.github.com/JamesParrott/sdna_plus
 
 # Destination directory depends on container's bind mount
-CMD cp ~/build_geos/lib/libgeos_c.so /home/sdna_plus/sDNA/geos/x64/src && \
+CMD git config --global --add safe.directory /home/sdna_plus && \
+    cp ~/build_geos/lib/libgeos_c.so /home/sdna_plus/sDNA/geos/x64/src && \
     . venv/bin/activate && \
     python -m build --no-isolation --wheel /home/sdna_plus
