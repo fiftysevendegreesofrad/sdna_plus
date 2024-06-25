@@ -14,6 +14,9 @@ keywords = ["GIS", "Spatial Networks", "Urban planning"]
 license = {file = "LICENSE.md"}
 classifiers = [
     "Programming Language :: Python",
+    "License :: OSI Approved :: AGPL-3.0-only",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
 ]
 dynamic = ["dependencies", "optional-dependencies"]
 
