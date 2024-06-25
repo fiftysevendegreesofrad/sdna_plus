@@ -12,5 +12,6 @@ try:
 except ImportError:
     pass
 else:
+    ON_WINDOWS = (sys.platform == 'win32')
     LIB_EXT = 'dll' if ON_WINDOWS else 'so'
     os.environ['sdnadll'] = os.path.join(os.path.dirname(sDNA.sdnapy), 'x64', 'sdna_vs2008.' + LIB_EXT)
