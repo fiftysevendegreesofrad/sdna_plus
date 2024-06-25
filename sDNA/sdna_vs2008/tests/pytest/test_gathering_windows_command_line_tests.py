@@ -91,22 +91,24 @@ def sdna_bin_dirs():
     # e.g. for SDNA_DLL == \sDNA\output\Release\x64\sdna_vs2008.dll'
     yield os.path.join(REPO_ROOT_DIR, 'arcscripts', 'bin')
 
-for dir_ in sdna_bin_dirs():
-    if not is_sdna_bin_dir(dir_):
-        continue
-    SDNA_BIN_DIR = dir_
-    break
-else:
-    raise Exception(
-        ("Could not find sDNA 'bin'/ python files "
-        "associated with SDNA_DLL: %s. "
-        "Set SDNA_BIN_DIR to the dir containing the "
-        "sDNA 'bin'/python files to be tested "
-        "(sdna+ %s +.py), or ensure the dll is part of a"
-        "complete sDNA installation. "
-        )
-        % (SDNA_DLL, SDNA_BIN_SUFFIXES)
-        )
+if not SDNA_BIN_DIR and not SDNA_INSTALLED_IN_PYTHON_ENV:
+    for dir_ in sdna_bin_dirs():
+        if not is_sdna_bin_dir(dir_):
+            continue
+        SDNA_BIN_DIR = dir_
+        break
+    else:
+
+        raise Exception(
+            ("Could not find sDNA 'bin'/ python files "
+            "associated with SDNA_DLL: %s. "
+            "Set SDNA_BIN_DIR to the dir containing the "
+            "sDNA 'bin'/python files to be tested "
+            "(sdna+ %s +.py), or ensure the dll is part of a"
+            "complete sDNA installation. "
+            )
+            % (SDNA_DLL, SDNA_BIN_SUFFIXES)
+            )
 
 
 
