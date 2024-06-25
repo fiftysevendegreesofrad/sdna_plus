@@ -62,9 +62,7 @@ set(Supported_platforms
 if ("${CMAKE_VS_PLATFORM_NAME}" IN_LIST Supported_platforms)
     message("${CMAKE_VS_PLATFORM_NAME} architecture in use")
 elseif (MSVC)
-    message(FATAL_ERROR "${CMAKE_VS_PLATFORM_NAME} arch is not supported!")
-else()
-    message("Attempting to configure for arch: ${CMAKE_VS_PLATFORM_NAME} unsupported by Visual Studio config. ")
+    message(FATAL_ERROR "${CMAKE_VS_PLATFORM_NAME} arch is not supported by Visual Studio!")
 endif()
 
 # "For multi-configuration generators like Visual Studio, Xcode, 
