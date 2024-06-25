@@ -61,11 +61,7 @@ endif()
 
 
 
-message("!
-!
-Bin_sub_dir: ${Bin_sub_dir}
-!
-!")
+message("Bin_sub_dir: ${Bin_sub_dir}")
 
 add_subdirectory("sDNA/sdna_vs2008")
 
