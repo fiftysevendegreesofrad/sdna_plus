@@ -53,6 +53,8 @@ class CustomHook(BuildHookInterface):
         if self.target_name not in ('wheel', 'bdist'):
             return
 
+        build_data['infer_tag'] = True
+        
         config = CONFIGS[PLATFORM]
 
 
