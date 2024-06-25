@@ -160,7 +160,8 @@ BATCH_FILES_GLOB = '*.bat' if (__name__=='__main__' and not PYTHON_3) else '../*
 
 ENV = os.environ.copy()
 
-ENV['sdnadll'] = SDNA_DLL
+if SDNA_DLL:
+    ENV['sdnadll'] = SDNA_DLL
 
 
 def batch_file_tests():
