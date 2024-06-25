@@ -1,5 +1,6 @@
 import os
 import sys
+import sysconfig
 import subprocess
 import pathlib
 import dataclasses
@@ -53,8 +54,11 @@ class CustomHook(BuildHookInterface):
         if self.target_name not in ('wheel', 'bdist'):
             return
 
-        build_data['infer_tag'] = True
-        
+        # https://peps.python.org/pep-0425/#platform-tag
+        platform_tag = sysconfig.get_platform().replace('-','_').replace('.','_')
+
+        build_data['tag'] = f'py2.py3-none-{platform_tag}'
+
         config = CONFIGS[PLATFORM]
 
 
