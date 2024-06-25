@@ -17,43 +17,40 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - run: yum install -y zip ninja-build
+      # - run: yum install -y zip ninja-build
 
-      - run: |
-          git clone --depth=1 http://www.github.com/Microsoft/vcpkg
-          cd vcpkg
-          ./bootstrap-vcpkg.sh
-      - run: ls .
+      # - run: |
+      #     git clone --depth=1 http://www.github.com/Microsoft/vcpkg
+      #     cd vcpkg
+      #     ./bootstrap-vcpkg.sh
 
-      - run: ls sDNA/
+      # - run: |
+      #     curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2
+      #     tar xfj geos-3.3.5.tar.bz2
+      #     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B build_geos -S geos-3.3.5
+      #     cmake --build build_geos
+      #     cp build_geos/lib/libgeos_c.so sDNA/geos/x64/src
 
-      - run: ls sDNA/geos/
-        
-      - run: ls sDNA/geos/x64
+      # - name: Configure Ninja, compile .so, and build Wheel.
+      #   run: |
+      #     export PATH=/opt/python/cp312-cp312/bin/:$PATH
+      #     python -m venv venv
+      #     . venv/bin/activate
+      #     python -m pip install build hatchling hatch-requirements-txt
+      #     export VCPKG_INSTALLATION_ROOT=vcpkg
+      #     python -m build --no-isolation --wheel
 
-      - run: ls sDNA/geos/x64/src
+      - name: Build Docker Image
+        run: docker build -f Dockerfile.build -t sDNA_manylinux_Wheel_builder
 
-      - run: |
-          curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2
-          tar xfj geos-3.3.5.tar.bz2
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B build_geos -S geos-3.3.5
-          cmake --build build_geos
-          cp build_geos/lib/libgeos_c.so sDNA/geos/x64/src
-
-      - name: Configure Ninja, compile .so, and build Wheel.
-        run: |
-          export PATH=/opt/python/cp312-cp312/bin/:$PATH
-          python -m venv venv
-          . venv/bin/activate
-          python -m pip install build hatchling hatch-requirements-txt
-          export VCPKG_INSTALLATION_ROOT=vcpkg
-          python -m build --no-isolation --wheel
+      - name: Run Docker Container from image
+        run: docker run --rm -v ..:. sDNA_manylinux_Wheel_builder
 
       - name: upload_output
         id: installer-upload-step
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: python_wheel_gcc_linux
           path: dist
