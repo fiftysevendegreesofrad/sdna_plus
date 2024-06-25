@@ -4,6 +4,12 @@ import sys
 import optparse,re
 from optparse import OptionParser
 
+
+import _parentdir
+
+import sdna_environment
+from sdnaregutilities import *
+
 def main(argv = sys.argv[1:]):
 
 
@@ -207,11 +213,4 @@ def main(argv = sys.argv[1:]):
     return 0
 
 if __name__ == '__main__':
-    import _parentdir
-    
-    import sdna_environment
-    from sdnaregutilities import *
     main()
-else:
-    from .. import sdna_environment
-    from ..sdnaregutilities import *
