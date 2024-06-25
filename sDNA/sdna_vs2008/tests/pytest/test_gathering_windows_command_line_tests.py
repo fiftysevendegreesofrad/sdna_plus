@@ -787,6 +787,10 @@ class DiffTest(object):
         self.run_steps()
         self.diff_command.run()
 
+    def smoke_test(self):
+        self.run_steps()
+        print(Command.pseudo_files_to_pipe_output_to[self.diff_command.input_file])
+
     def __str__(self):
         sep = ',\n' + ' ' * (len(self.expected_output_file) + 4)
         return '%s:  [%s%s%s]\n' % (
