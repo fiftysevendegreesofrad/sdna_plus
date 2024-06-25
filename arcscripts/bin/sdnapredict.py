@@ -5,13 +5,12 @@ import sys
 import optparse
 from optparse import OptionParser
 
-import _parentdir
-import sdna_environment
-from sdnaregutilities import *
 
 
 def main(argv = sys.argv[1:]):
 
+    import sdna_environment
+    from sdnaregutilities import *
 
     example='python -u sdnapredict.py --input infile --output outfile --modelfile model.csv --predvarname prediction\n'
     desc = 'Examples:\n'\
@@ -118,4 +117,7 @@ def main(argv = sys.argv[1:]):
     return 0
 
 if __name__ == '__main__':
+    import _parentdir
     main()
+else:
+    from . import _parentdir

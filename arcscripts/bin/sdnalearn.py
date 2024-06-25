@@ -5,13 +5,12 @@ import optparse,re
 from optparse import OptionParser
 
 
-import _parentdir
 
-import sdna_environment
-from sdnaregutilities import *
 
 def main(argv = sys.argv[1:]):
 
+    import sdna_environment
+    from sdnaregutilities import *
 
     example='python -u sdnalearn.py --calibfile cfile --target var0 --vars var1,var2 --varregex "var.*"\n'
     desc = 'Examples:\n'\
@@ -213,4 +212,7 @@ def main(argv = sys.argv[1:]):
     return 0
 
 if __name__ == '__main__':
+    import _parentdir
     main()
+else:
+    from . import _parentdir
