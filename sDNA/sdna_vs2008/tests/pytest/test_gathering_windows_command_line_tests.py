@@ -362,9 +362,11 @@ class sDNACommand(PythonScriptCommand):
     def __init__(self, command_str, retcode_zero_expected = False, **kwargs): 
 
         if self.sdna_installed_in_python_env:
+            Command.__init__(self, command_str, **kwargs)
+
             self.retcode_zero_expected = retcode_zero_expected
 
-            __, ___, rest = command_str.partition('sdna')
+            __, ___, rest = self.command_str.partition('sdna')
             self.command_str = 'sdna' + rest.replace('.py', '', 1).replace(r'--dll %sdnadll%', '') 
             return
 
@@ -840,15 +842,16 @@ def sequential_diff_tests():
             diff_test_commands = []
 
 
-diff_tests = list(sequential_diff_tests())
-diff_test_expected_files = [diff_test.diff_command.expected_output_file 
-                            for diff_test in diff_tests
-                           ]
+diff_tests = collections.OrderedDict(
+                    (test.diff_command.expected_output_file, test) 
+                    for test in sequential_diff_tests()
+                    )
+diff_test_expected_files = list(diff_tests.keys())
 
 try:
     import pytest
 
-    @pytest.mark.parametrize('diff_test', diff_tests, ids = diff_test_expected_files)
+    @pytest.mark.parametrize('diff_test', diff_tests.values(), ids = diff_test_expected_files)
     def test_diff_(diff_test):
         diff_test.run()
 
@@ -876,11 +879,11 @@ if __name__=='__main__':
     else:
         try:
             test_index = int(sys.argv[1])
-            diff_test = diff_tests[test_index]
+            diff_test = list(diff_tests.values())[test_index]
         except:
-            diff_test = next(diff_test
-                             for diff_test in diff_tests
-                             if sys.argv[1] in diff_test.expected_output_file
+            diff_test = next(v
+                             for k, v in diff_tests.items()
+                             if sys.argv[1] in k
                             )
 
         print(diff_test)
