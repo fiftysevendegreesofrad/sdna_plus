@@ -45,7 +45,7 @@ DIR = os.path.dirname(__file__)
 R_BUNDLED_LOCATION=os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","Rscript.exe")
 SHELL_MODE = (sys.platform == 'win32')
 
-if sys.platform != 'win32' or not os.path.isfile(R_BUNDLED_LOCATION):
+if sys.platform == 'win32' and os.path.isfile(R_BUNDLED_LOCATION):
     R_COMMAND = R_BUNDLED_LOCATION
     NO_R_CONSOLE = "--no-Rconsole"
 else:
