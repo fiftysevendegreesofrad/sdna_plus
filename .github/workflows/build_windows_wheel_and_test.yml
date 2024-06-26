@@ -95,7 +95,7 @@ jobs:
                      'python -u make_od_test_shp.py && sdnaintegral --im "net=odtest;tables=testodmatrix-nonsparse.csv" --om "net=odtestoutnonsparse_py3" "radii=n;odmatrix" ',
                      'sdnaprepare -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
                      "python -u prepare_test_new.py",
-                     "python -c \"import sDNA.bin._parentdir; import sDNA.sdnaregutilities; assert sDNA.sdnaregutilities.R_COMMAND != 'Rscript'\""",
+                     "python -c \"import sDNA.bin._parentdir; import sDNA.sdnaregutilities; assert sDNA.sdnaregutilities.R_COMMAND != 'Rscript'\" ",
                      "python -c \"import subprocess, sDNA.bin._parentdir; import sDNA.sdnaregutilities; assert subprocess.check_output(sDNA.sdnaregutilities.R_COMMAND + ' --version') == 'R scripting front-end version 3.2.3 (2015-12-10)'\" ",
                      ]
 
