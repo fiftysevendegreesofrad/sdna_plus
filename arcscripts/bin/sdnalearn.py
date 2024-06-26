@@ -28,7 +28,7 @@ def main(argv = sys.argv[1:]):
     op.add_option("--boxcoxtarget",dest="boxcoxtarget",help="Box-Cox transform the target variable",action="store_true",default=False)
     #op.add_option("--btregex",dest="btregex",help="Regex specifying which predictor variables to transform using Box-Tidwell",metavar="REGEX",default="")
     op.add_option("--bcregex",dest="bcregex",help="Regex specifying which predictor variables to transform using Box-Cox",metavar="REGEX",default="")
-    op.add_option("--mode",dest="mode",help="Mode",metavar=sdnaregutilities.MODES,default=SINGLE_BEST)
+    op.add_option("--mode",dest="mode",help="Mode",metavar=sdnaregutilities.MODES,default=sdnaregutilities.SINGLE_BEST)
     op.add_option("--weightlambda",dest="weightlambda",help="Lambda for weighting",metavar="L",default=1,type="float")
     op.add_option("--nfolds",dest="nfolds",help="Number of folds for cross-validation",metavar="N",default=7,type="int")
     op.add_option("--reps",dest="reps",help="Number of times to repeat N-fold cross-validation",metavar="REPS",default=50,type="int")
