@@ -84,7 +84,7 @@ def __initialize_dll():
 
         global __send_message_callback
         if __send_message_callback:    
-            __send_message_callback("Loading shared library: %s" % __sdna_dll_path)
+            __send_message_callback("Loading DLL %s" % __sdna_dll_path)
 
     # if __sdna_dll_path is non empty,
     # custom dll has been set for debugging

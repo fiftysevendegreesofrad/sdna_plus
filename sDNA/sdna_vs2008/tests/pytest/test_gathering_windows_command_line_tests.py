@@ -34,12 +34,14 @@ SDNA_INSTALLATION_LOCATIONS = (
              r'C:\Program Files (x86)\sDNA',
             )
 
-SDNA_DLL = os.path.abspath(os.getenv('sdnadll', ''))
+SDNA_DLL = os.getenv('sdnadll', '')
+if SDNA_DLL:
+    SDNA_DLL = os.path.abspath(SDNA_DLL)
 
 SDNA_BIN_SUFFIXES = ('integral', 'prepare', 'learn', 'predict')
 
 def get_sdna_lib(sdna_root):
-    return os.path.join(sdna_root, 'x64','sdna_vs2008' + LIB_EXT)
+    return os.path.join(sdna_root, 'x64','sdna_vs2008.' + LIB_EXT)
 
 SDNA_INSTALLED_IN_PYTHON_ENV = bool(os.getenv('SDNA_INSTALLED_IN_PYTHON_ENV', ''))
 
@@ -176,7 +178,8 @@ def batch_file_tests():
                                        'run_tests_windows.bat',
                                        'sdnavars64.bat',
                                        'quick_test.bat', # Duplicates debug_test.py in pause_debug_test.bat
-                                       'run_benchmark.bat'
+                                       'run_benchmark.bat',
+                                       'approve_debug_output.bat',
                                       }:
             continue
 
@@ -368,7 +371,7 @@ class sDNACommand(PythonScriptCommand):
             self.retcode_zero_expected = retcode_zero_expected
 
             __, ___, rest = self.command_str.partition('sdna')
-            self.command_str = 'sdna' + rest.replace('.py', '', 1).replace(r'--dll %sdnadll%', '') 
+            self.command_str = 'sdna' + rest.replace('.py', '', 1).replace(r'%sdnadll%', self.sdna_dll_cli_arg) 
             return
 
         super(sDNACommand, self).__init__(command_str, retcode_zero_expected=retcode_zero_expected, **kwargs)
