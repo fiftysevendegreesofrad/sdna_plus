@@ -42,17 +42,14 @@ def make_positive(datalist):
 
 DIR = os.path.dirname(__file__)
 
+R_BUNDLED_LOCATION=os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","Rscript.exe")
+SHELL_MODE = (sys.platform == 'win32')
 
-try:
-    R_COMMAND = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","Rscript.exe")
-    SHELL_MODE = False
+if sys.platform != 'win32' or not os.path.isfile(R_BUNDLED_LOCATION):
+    R_COMMAND = R_BUNDLED_LOCATION
     NO_R_CONSOLE = "--no-Rconsole"
-    if sys.platform != 'win32' or not os.path.isfile(R_COMMAND):
-        raise Exception
-    __ = subprocess.check_output('%s --version' % R_COMMAND)
-except (Exception, FileNotFoundError, subprocess.CalledProcessError):
+else:
     R_COMMAND = "Rscript"
-    SHELL_MODE = True
     NO_R_CONSOLE = ""
 
 def R_call(script,args):

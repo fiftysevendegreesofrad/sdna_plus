@@ -165,6 +165,7 @@ ENV = os.environ.copy()
 if SDNA_DLL:
     ENV['sdnadll'] = SDNA_DLL
 
+ENV['PYTHONUNBUFFERED'] = '1'
 
 def batch_file_tests():
     for file_ in glob.glob(os.path.join(os.path.dirname(__file__), BATCH_FILES_GLOB)):
