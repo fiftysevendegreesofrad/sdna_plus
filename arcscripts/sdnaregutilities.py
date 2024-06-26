@@ -47,7 +47,7 @@ try:
     R_COMMAND = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","Rscript.exe")
     SHELL_MODE = False
     NO_R_CONSOLE = "--no-Rconsole"
-    if sys.platform!='win32' or not os.path.is_file(R_COMMAND):
+    if sys.platform != 'win32' or not os.path.isfile(R_COMMAND):
         raise Exception
     subprocess.check_output('%s --version' % R_COMMAND)
 except (Exception, FileNotFoundError, subprocess.CalledProcessError):
