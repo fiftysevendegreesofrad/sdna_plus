@@ -99,6 +99,8 @@ set(Scripts
     "arcscripts/regularizedregression.R"
     "arcscripts/runsdnacommand.py"
     "arcscripts/sdnaexception.py"
+    "arcscripts/__init__.py"
+    "arcscripts/__main__.py"
 )
 source_group("Scripts" FILES ${Scripts})
 
@@ -109,6 +111,7 @@ set(ScriptsBin
     "arcscripts/bin/sdnaprepare.py"
     "arcscripts/bin/sdnalearn.py"
     "arcscripts/bin/sdnapredict.py"
+    "arcscripts/bin/__init__.py"
 )
 source_group("ScriptsBin" FILES ${ScriptsBin})
 
