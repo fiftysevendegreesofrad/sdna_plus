@@ -27,11 +27,11 @@ num_progress_steps = 1000
 
 def runcalculation(env, #environment object, IO etc
                    name, #name of sdna calculation to run
-                    config_string, #config as specified in sDNA Advanced Config document
-                    input_map, #dictionary mapping input names (such as "net") to their handles ("c:\myfolder\inputnet")
-                    output_map, #dictionary mapping output names (such as "net") to their handles ("c:\myfolder\outputnet")
-                                #The output names created depend on config_string - see use of get_geom_outputs() below
-                    dll=""): #option to specify different dll for debugging - not relevant to you
+                   config_string, #config as specified in sDNA Advanced Config document
+                   input_map, #dictionary mapping input names (such as "net") to their handles ("c:\myfolder\inputnet")
+                   output_map, #dictionary mapping output names (such as "net") to their handles ("c:\myfolder\outputnet")
+                               #The output names created depend on config_string - see use of get_geom_outputs() below
+                   dll=""): #option to specify different dll for debugging - not relevant to you
 
     env.AddMessage("sDNA %s config: %s"%(name,config_string))
     sdnapy.set_dll_path(dll)
@@ -90,7 +90,7 @@ def runcalculation(env, #environment object, IO etc
                         table2d = table
                     del envtable
 
-    net = Net()
+    net = sdnapy.Net()
     calculation = sdnapy.Calculation(name,config_string,net,set_progressor_callback,warning_callback,tablecollection1d)
     if table2d:
         calculation.add_table2(table2d)
