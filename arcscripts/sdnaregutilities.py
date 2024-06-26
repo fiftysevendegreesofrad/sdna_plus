@@ -49,7 +49,7 @@ try:
     NO_R_CONSOLE = "--no-Rconsole"
     if sys.platform != 'win32' or not os.path.isfile(R_COMMAND):
         raise Exception
-    subprocess.check_output('%s --version' % R_COMMAND)
+    __ = subprocess.check_output('%s --version' % R_COMMAND)
 except (Exception, FileNotFoundError, subprocess.CalledProcessError):
     R_COMMAND = "Rscript"
     SHELL_MODE = True
