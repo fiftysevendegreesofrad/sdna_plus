@@ -44,7 +44,7 @@ DIR = os.path.dirname(__file__)
 
 
 try:
-    R_COMMAND = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","RScript.exe")
+    R_COMMAND = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","Rscript.exe")
     SHELL_MODE = False
     NO_R_CONSOLE = "--no-Rconsole"
     if sys.platform!='win32' or not os.path.is_file(R_COMMAND):
