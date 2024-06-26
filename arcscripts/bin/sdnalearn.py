@@ -4,6 +4,8 @@ import sys
 import optparse,re
 from optparse import OptionParser
 
+import numpy
+
 
 
 
