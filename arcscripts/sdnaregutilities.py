@@ -42,11 +42,15 @@ def make_positive(datalist):
 
 DIR = os.path.dirname(__file__)
 
-if sys.platform=='win32':
+
+try:
     R_COMMAND = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","RScript.exe")
     SHELL_MODE = False
     NO_R_CONSOLE = "--no-Rconsole"
-else:
+    if sys.platform!='win32' or not os.path.is_file(R_COMMAND):
+        raise Exception
+    subprocess.check_output('%s --version' % R_COMMAND)
+except (Exception, FileNotFoundError, subprocess.CalledProcessError):
     R_COMMAND = "Rscript"
     SHELL_MODE = True
     NO_R_CONSOLE = ""
