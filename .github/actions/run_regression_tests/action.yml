@@ -116,7 +116,7 @@ runs:
         sdnadll: ${{ inputs.sdnadll }}
         sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
         sdna_debug: ${{ inputs.sdna_debug }}
-      run: pytest -rA
+      run: pytest -rA --tb=short
       # -rA shows summary of tests, one per line, even when they all pass.
       #
       # To run the same tests locally, the command is something like:

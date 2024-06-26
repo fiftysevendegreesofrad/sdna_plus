@@ -47,12 +47,12 @@ def set_sdnapy_message_callback(callback):
 # for license checking, so don't change it
 def _dll():
     global __dll_instance
-    if __dll_instance == None:
+    if __dll_instance is None:
         __initialize_dll()
     return __dll_instance
     
 def __initialize_dll():
-    global __sdna_dll_path,__dll_instance
+    global __sdna_dll_path, __dll_instance
 
     if __sdna_dll_path=="":
         dll_name = sdna_lib_name
@@ -84,7 +84,7 @@ def __initialize_dll():
 
         global __send_message_callback
         if __send_message_callback:    
-            __send_message_callback("Loading shared library: %s"%__sdna_dll_path)
+            __send_message_callback("Loading shared library: %s" % __sdna_dll_path)
 
     # if __sdna_dll_path is non empty,
     # custom dll has been set for debugging
