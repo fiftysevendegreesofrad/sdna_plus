@@ -59,7 +59,7 @@ def runcalculation(env, #environment object, IO etc
     input_fieldnames = env.ListFields(input_handle)
 
     #read tables and send to dll at this stage (as tables inform expected zone fields calc wants to see on network)
-    tablecollection1d = TableCollection()
+    tablecollection1d = sdnapy.TableCollection()
     table2d = None
     
     tablenames = []
