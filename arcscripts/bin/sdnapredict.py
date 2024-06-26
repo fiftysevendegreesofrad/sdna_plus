@@ -5,6 +5,7 @@ import sys
 import optparse
 from optparse import OptionParser
 
+import numpy
 
 
 def main(argv = sys.argv[1:]):
