@@ -27,7 +27,7 @@ inputs:
     description: 'The path to the sdna_vs2008.dll of the installation to be tested.'
     required: true
 
-  SDNA_INSTALLED_IN_PYTHON_ENV:
+  sdna_installed_in_python_env:
     description: 'Test the sDNA .dll or .so installed in the Python environment, e.g. in a venv, from a Wheel installed by pip'
     required: false
     default: 0
@@ -70,7 +70,7 @@ runs:
       run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} pytest -r requirements-learn-predict.txt
 
     - name: Install sDNA.
-      if: inputs.SDNA_INSTALLED_IN_PYTHON_ENV
+      if: inputs.sdna_installed_in_python_env
       shell: bash
       run: pip install --no-deps dist/sdna_plus*.whl
 
@@ -101,7 +101,7 @@ runs:
       env:
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: ${{ inputs.DONT_TEST_N_LINK_SUBSYSTEMS_ORDER }}
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: ${{ inputs.ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT }}
-        SDNA_INSTALLED_IN_PYTHON_ENV: ${{ inputs.SDNA_INSTALLED_IN_PYTHON_ENV }}
+        SDNA_INSTALLED_IN_PYTHON_ENV: ${{ inputs.sdna_installed_in_python_env }}
         sdnadll: ${{ inputs.sdnadll }}
         sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
         sdna_debug: ${{ inputs.sdna_debug }}
