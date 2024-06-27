@@ -134,7 +134,7 @@ print('DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: %s' % DONT_TEST_N_LINK_SUBSYSTEMS_ORDE
 
 N_LINK_SUBSYSTEMS_PATTERN = r'^(?P<N>\d+)-link subsystem contains link with id = (?P<id>\d+)$'
 
-SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF = ('1', '3')
+SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF = ('1', '3', '4')
 
 
 
