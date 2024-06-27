@@ -39,7 +39,7 @@ jobs:
       matrix:
         python_version: ['3.9', '3.10', '3.11', '3.12']
 
-    name: "Download and run sDNA installer, and run diff tests on it. "
+    name: "Run regression tests. "
     
     runs-on: "ubuntu-24.04"
 
