@@ -54,7 +54,7 @@ if not SDNA_DLL and SDNA_INSTALLED_IN_PYTHON_ENV:
         pass
     else:
         SDNA_DLL = get_sdna_lib(os.path.dirname(sDNA.sdnapy.__file__))
-        print('SDNA_DLL: ' % SDNA_DLL)
+        print('SDNA_DLL: %s' % SDNA_DLL)
 
 
 if not SDNA_DLL:
