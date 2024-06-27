@@ -1,0 +1,140 @@
+name: Build a Linux Wheel and test it.
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: [ "Cross_platform", "Build_in_Manylinux_image" ]
+
+  pull_request:
+    branches: [ "Cross_platform", "Build_in_Manylinux_image" ]
+
+jobs:
+  build_linux_wheel:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build --file Dockerfile.build --tag sdna_manylinux_wheel_builder .
+
+      - name: Run Docker Container from image
+        run: docker run --rm -v .:/home/sdna_plus sdna_manylinux_wheel_builder
+
+      - name: upload_output
+        id: installer-upload-step
+        uses: actions/upload-artifact@v4
+        with:
+          name: python_wheel_gcc_linux
+          path: dist
+
+  regression_tests:
+
+    needs: build_linux_wheel
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['3.9', '3.10', '3.11', '3.12']
+
+    name: "Run regression tests. "
+    
+    runs-on: "ubuntu-24.04"
+
+
+    steps:
+
+
+    - uses: actions/checkout@v4
+
+
+    - name: Install R
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y r-cran-optparse r-cran-sjstats
+
+    - name: Download output tree built in previous job
+      uses: actions/download-artifact@v4
+      with:
+        name: python_wheel_gcc_linux
+        path: dist
+
+
+    - name: Run regression tests
+      uses: ./.github/actions/run_regression_tests
+      with:
+        python_version: ${{ matrix.python_version }}
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+        ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
+        SDNA_INSTALLED_IN_PYTHON_ENV: 1
+        install_PyShp: 0
+        sdnadll: ''
+        sdna_debug: ""
+        shell: bash
+
+
+  smoke_tests:
+
+    needs: build_linux_wheel
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['3.12']
+        smoke_test: ["python -u debug_test.py",
+                     "python -u hybrid_test.py",
+                     "python -u 3d_test.py",
+                     "python -u partial_test.py",
+                     "python -u test_parallel_results.py",
+                     "python -u prepare_barns_test.py",
+                     'sdnalearn --calibfile tiny.shp --target MADn --vars MGLAn,MCFn --boxcoxtarget --bcregex ".*" --mode single_best_variable --output regtestout_single_py3.txt --resids regtestresids_py3.shp',
+                     'sdnalearn --calibfile tiny.shp --target MADn --vars MGLAn,MCFn --mode multiple_variables --output regtestout_multiple_py3.txt',
+                     "python -u make_od_test_shp.py",
+                     'sdnaintegral --im "net=skimtest" --om "skim=testout_od_skim_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean"',
+                     'sdnaintegral --im "net=skimtestzeroweight" --om "skim=testout_od_skimzeroweight_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean;weight=weight"',
+                     'python -u make_od_test_shp.py && sdnaintegral --im "net=odtest;tables=testodmatrix.csv" --om "net=odtestoutsparse_py3" "radii=n;odmatrix"', 
+                     'python -u make_od_test_shp.py && sdnaintegral --im "net=odtest;tables=testodmatrix-nonsparse.csv" --om "net=odtestoutnonsparse_py3" "radii=n;odmatrix" ',
+                     'sdnaprepare -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
+                     "python -u prepare_test_new.py",]
+
+    name: "Run smoke test. "
+    
+    runs-on: "ubuntu-24.04"
+
+
+    steps:
+
+
+    - uses: actions/checkout@v4
+
+        # echo "new line of text" | sudo tee -a /etc/apt/sources.list
+    - name: Install R and deps
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y r-cran-optparse r-cran-sjstats
+
+    - uses: LizardByte/setup-python-action@master
+      with:
+        python-version: ${{ matrix.python_version }}
+
+    - name: Install numpy
+      run: python -m pip install -r requirements.txt -r requirements-learn-predict.txt
+
+    - name: Download output tree built in previous job
+      uses: actions/download-artifact@v4
+      with:
+        name: python_wheel_gcc_linux
+        path: dist
+
+
+    - name: Install wheel
+      run: python -m pip install dist/sdna_plus*.whl
+
+    - name: Smoke test
+      working-directory: ./sDNA/sdna_vs2008/tests
+      env:
+        sdnadll: ''
+        SDNA_INSTALLED_IN_PYTHON_ENV: 1
+      run: ${{ matrix.smoke_test }}

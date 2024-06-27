@@ -1,5 +1,5 @@
 from runcalculation import runcalculation
-import sdna_environment,sdnaexception
+import sdna_environment, sdnaexception
 
 import optparse,sys
 from optparse import OptionParser
@@ -25,7 +25,7 @@ def commandline_integral_prepare(command, argv = sys.argv[1:]):
                   help="Mapping of config names to outputs",metavar="FILE")
     op.add_option("--dll",dest="dll",help=optparse.SUPPRESS_HELP,default="")
 
-    (options,args) = op.parse_args(argv)
+    (options, args) = op.parse_args(argv)
 
     if len(args)==0:
         config_string=""
@@ -43,11 +43,11 @@ def commandline_integral_prepare(command, argv = sys.argv[1:]):
         using_maps = True
         if options.infilename or options.outfilename:
             op.error("Can't use in/out filenames and file maps together")
-        complain_if_missing(options.infilemap,"input file map")
-        complain_if_missing(options.outfilemap,"output file map")
+        complain_if_missing(options.infilemap, "input file map")
+        complain_if_missing(options.outfilemap, "output file map")
     else:
-        complain_if_missing(options.infilename,"input filename")
-        complain_if_missing(options.outfilename,"output filename")
+        complain_if_missing(options.infilename, "input filename")
+        complain_if_missing(options.outfilename, "output filename")
 
     def to_map(s):
         m = {}

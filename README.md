@@ -1,5 +1,25 @@
 # sDNA+: Spatial Design Network Analysis plus
 
+This is the experimental Cross Platform branch of sDNA+, now available for Linux as well as Windows.
+
+## Quick start
+
+`pipx install sdna_plus `
+`sdnaintegral -i input_network.shp -o output_network.shp`
+
+## Notes
+On Linux there are five unsolved regressions (compared to the Windows build), which may or may not be important.
+See issues #61, #65, #83, #84, and #83.
+
+The Linux Wheel, including `geos_c.so` as well as `sdna_vs2008.so` is built in a Docker image based on the 
+oldest (now unsupported) ManyLinux image.  See `Dockerfile.build`.  It is compiled with GCC 4.8 ish, so 
+different run time behaviour is possible between it and both the GCC and zig c++ Linux builds.  A 
+build hook (`./hatch_build.py`) triggers a near normal CMake build of sDNA, and Hatchling 
+repackages the standard sDNA output directory for PyPi (instead of just zipping it 
+or running AdvancedInstaller on Windows).
+
+## History
+
 This is the open source fork of the formerly proprietary sDNA+ software - all the sDNA features plus hybrid metrics. 
 
 sDNA+ was created by Crispin Cooper on behalf of [Cardiff University](https://www.cardiff.ac.uk).  Alain Chiaradia was responsible for the initial idea, and Chris Webster for the initial funding and project mentoring. We are grateful to various parties for financial contributions towards development: in no particular order, Hong Kong University, Tongji University, the UK Economic and Social Research Council, BRE, Wedderburn Transport Planning. Also research contributions in kind from Arup Ltd, WSP Global Engineering, BuroHappold and Sustrans. Also to James Parrott both for developing the [sDNA for Grasshopper](https://github.com/fiftysevendegreesofrad/sDNA_GH) plugin, and for assistance in updating the sDNA build process during 2023. And Jeffrey Morgan for updating sDNA to Python 3.
@@ -92,11 +112,15 @@ It is possible to use an override mechanism to pin deps instead, but this would 
 
 #### Geos
 Geos v3.3.5 is dynamically linked at run-time.  A custom build step copies in the `geos_c.dll`s (from `sDNA\geos\x64\src`
-and `sDNA\geos\x86\src`), originally compiled for OSGEO4W available hereabouts: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos/
+and `sDNA\geos\x86\src`), originally compiled for OSGEO4W available hereabouts: https://download.osgeo.org/osgeo4w/v2/x86_64/release/geos/ .  On Linux `geos_c.so` is first compiled in the build environment, see e.g. `.github\workflows\build_geos.yml` 
+or in the oldest manylinux image for greatest compatibility: `Dockerfile.build`.
 
 #### Muparser
 A static copy of [`Rev 2.2.3: 22.12.2012`](https://launchpad.net/ubuntu/+source/muparser/2.2.3-6).  Changes:
  * `#define MUP_BASETYPE float` in sDNA\muparser\drop\include\muParserDef.h
+At build time on Windows, using MSVC and MSBuild (no CMake), the source code is dynamically changed.
+A custom prebuild step (`sDNA\sdna_vs2008\preppend_muparser_cpps_with_include_stdafx.h.py`) makes each Muparser file
+compatible with Visual Studio's particular (not force included) pre-compiled header rules.
 
 #### Anyiterator
 ```
@@ -106,7 +130,7 @@ A static copy of [`Rev 2.2.3: 22.12.2012`](https://launchpad.net/ubuntu/+source/
 // 12 Jul 2010 
 ```
 #### R-portable
-TODO
+Version 3.2.3.  Available here: https://sourceforge.net/projects/rportable/files/
 
 ### Packaging
 The Windows installer contains x64 and Win32 binaries (for both `sdna_vs2008.dll` and `geos_c.dll`)
