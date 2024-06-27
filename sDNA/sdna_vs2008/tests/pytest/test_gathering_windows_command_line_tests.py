@@ -45,6 +45,8 @@ def get_sdna_lib(sdna_root):
 
 SDNA_INSTALLED_IN_PYTHON_ENV = bool(os.getenv('SDNA_INSTALLED_IN_PYTHON_ENV', ''))
 
+print('SDNA_INSTALLED_IN_PYTHON_ENV: %s' % SDNA_INSTALLED_IN_PYTHON_ENV)
+
 if not SDNA_DLL and SDNA_INSTALLED_IN_PYTHON_ENV:
     try:
         import sDNA.sdnapy
@@ -52,6 +54,7 @@ if not SDNA_DLL and SDNA_INSTALLED_IN_PYTHON_ENV:
         pass
     else:
         SDNA_DLL = get_sdna_lib(os.path.dirname(sDNA.sdnapy.__file__))
+        print('SDNA_DLL: ' % SDNA_DLL)
 
 
 if not SDNA_DLL:

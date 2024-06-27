@@ -29,7 +29,6 @@ inputs:
 
   SDNA_INSTALLED_IN_PYTHON_ENV:
     description: 'Test the sDNA .dll or .so installed in the Python environment, e.g. in a venv, from a Wheel installed by pip'
-    type: boolean
     required: false
     default: false
 
@@ -82,7 +81,7 @@ runs:
       run: pip install pytest -r requirements-learn-predict.txt
 
     - name: Install sDNA.
-      if: ${{ inputs.SDNA_INSTALLED_IN_PYTHON_ENV == true }}
+      if: ${{ inputs.SDNA_INSTALLED_IN_PYTHON_ENV == 'true' }}
       shell: bash
       run: pip install --no-deps dist/sdna_plus*.whl
 
