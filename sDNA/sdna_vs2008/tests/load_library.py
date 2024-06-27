@@ -11,7 +11,6 @@ try:
     import sDNA
 except ImportError as e:
     load_library = _load_library
-    raise e
 else:
     ON_WINDOWS = (sys.platform == 'win32')
     LIB_EXT = 'dll' if ON_WINDOWS else 'so'
