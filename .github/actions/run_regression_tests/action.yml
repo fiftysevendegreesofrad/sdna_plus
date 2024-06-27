@@ -82,7 +82,7 @@ runs:
       run: pip install pytest -r requirements-learn-predict.txt
 
     - name: Install sDNA.
-      if: inputs.SDNA_INSTALLED_IN_PYTHON_ENV
+      if: ${{ inputs.SDNA_INSTALLED_IN_PYTHON_ENV }}
       shell: bash
       run: pip install --no-deps dist/sdna_plus*.whl
 
