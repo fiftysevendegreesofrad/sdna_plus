@@ -40,7 +40,7 @@ jobs:
       matrix:
         python_version: ['3.9', '3.10', '3.11', '3.12']
 
-    name: "Download and run sDNA installer, and run diff tests on it. "
+    name: "Run regression tests. "
     
     runs-on: windows-2022
 
@@ -97,7 +97,7 @@ jobs:
                      "python -u prepare_test_new.py",
                      ]
 
-    name: "Download and install sDNA Windows wheel, and run diff tests (without diffing the output). "
+    name: "Run smoke test. "
     
     runs-on: windows-2022
 

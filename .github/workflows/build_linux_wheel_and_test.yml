@@ -99,7 +99,7 @@ jobs:
                      'sdnaprepare -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
                      "python -u prepare_test_new.py",]
 
-    name: "Download and install sDNA Linux wheel, and run diff tests (without diffing the output). "
+    name: "Run smoke test. "
     
     runs-on: "ubuntu-24.04"
 
