@@ -27,6 +27,10 @@ inputs:
     description: 'The path to the sdna_vs2008.dll of the installation to be tested.'
     required: true
 
+  SDNA_INSTALLED_IN_PYTHON_ENV:
+    description: 'Test the sDNA .dll or .so installed in the Python environment, e.g. in a venv, from a Wheel installed by pip'
+    required: false
+    default: ''
 
   sdna_bin_dir:
     description: 'The path to the python entry point files (sdnaintegral.py) to be tested.  Default: (dirname $sdnadll)/../bin/'
@@ -56,25 +60,19 @@ runs:
 
 
     - name: Install PyShp.
-      if: ${{ inputs.install_PyShp && inputs.python_version == '3.5'}}
+      if: inputs.install_PyShp
       shell: ${{ inputs.shell }}
-      run: pip install --trusted-host pypi.python.org -r requirements.txt
-
-    - name: Install PyShp.
-      if: ${{ inputs.install_PyShp && inputs.python_version  != '3.5' }}
-      shell: ${{ inputs.shell }}
-      run: pip install -r requirements.txt
-
+      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} -r requirements.txt
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
-      if: ${{ inputs.python_version == '3.5'}}
       shell: ${{ inputs.shell }}
-      run: pip install --trusted-host pypi.python.org pytest -r requirements-learn-predict.txt
+      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} pytest -r requirements-learn-predict.txt
 
-    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
-      if: ${{ inputs.python_version  != '3.5' }}
-      shell: ${{ inputs.shell }}
-      run: pip install pytest -r requirements-learn-predict.txt
+    - name: Install sDNA.
+      if: inputs.sdna_installed_in_python_env
+      shell: bash
+      run: pip install --no-deps dist/sdna_plus*.whl
+
 
     - name: Show versions.
       shell: ${{ inputs.shell }}
@@ -102,10 +100,11 @@ runs:
       env:
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: ${{ inputs.DONT_TEST_N_LINK_SUBSYSTEMS_ORDER }}
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: ${{ inputs.ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT }}
+        SDNA_INSTALLED_IN_PYTHON_ENV: ${{ inputs.SDNA_INSTALLED_IN_PYTHON_ENV }}
         sdnadll: ${{ inputs.sdnadll }}
         sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
         sdna_debug: ${{ inputs.sdna_debug }}
-      run: pytest -rA
+      run: pytest -rA --tb=short
       # -rA shows summary of tests, one per line, even when they all pass.
       #
       # To run the same tests locally, the command is something like:

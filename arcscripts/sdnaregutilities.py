@@ -42,14 +42,16 @@ def make_positive(datalist):
 
 DIR = os.path.dirname(__file__)
 
-if sys.platform=='win32':
-    R_COMMAND = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","RScript.exe")
-    SHELL_MODE = False
-    NO_R_CONSOLE = "--no-Rconsole"
+R_BUNDLED_LOCATION=os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","Rscript.exe")
+SHELL_MODE = (sys.platform != 'win32')
+
+# Windows only option https://rstudio.github.io/r-manuals/r-intro/Invoking-R.html
+NO_R_CONSOLE = "--no-Rconsole" if sys.platform == 'win32' else "" 
+
+if sys.platform == 'win32' and os.path.isfile(R_BUNDLED_LOCATION):
+    R_COMMAND = R_BUNDLED_LOCATION
 else:
     R_COMMAND = "Rscript"
-    SHELL_MODE = True
-    NO_R_CONSOLE = ""
 
 def R_call(script,args):
     scriptpath = os.path.join(DIR, script)

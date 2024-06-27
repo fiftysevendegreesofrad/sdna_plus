@@ -1,0 +1,37 @@
+# Based on CentOS 5
+FROM quay.io/pypa/manylinux2014_x86_64
+
+LABEL name="sDNA Linux Python Wheel Builder"
+
+ENV PATH=/opt/python/cp312-cp312/bin/:$PATH \
+    VCPKG_INSTALLATION_ROOT=/vcpkg
+
+RUN yum install -y zip ninja-build && \
+    yum clean all
+
+RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
+    ./vcpkg/bootstrap-vcpkg.sh
+
+
+RUN curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2 && \
+    tar xfj geos-3.3.5.tar.bz2 && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B ~/build_geos -S geos-3.3.5 && \
+    cmake --build ~/build_geos
+
+COPY requirements-build-wheel.txt .
+
+RUN python -m venv venv && \
+    . venv/bin/activate && \
+    pip install --no-cache-dir -r requirements-build-wheel.txt
+
+# Repo shouldn't be baked into container when container is built - could also add:
+# CMD: git clone --depth=1 --branch=Build_in_Manylinux_image  http://www.github.com/JamesParrott/sdna_plus
+
+# Destination directory depends on container's bind mount
+CMD git config --global --add safe.directory /home/sdna_plus && \
+    cp ~/build_geos/lib/libgeos_c.so /home/sdna_plus/sDNA/geos/x64/src && \
+    . venv/bin/activate && \
+    python -m build --no-isolation --wheel /home/sdna_plus && \
+    auditwheel repair /home/sdna_plus/dist/*.whl && \
+    rm /home/sdna_plus/dist/*.whl && \
+    cp /wheelhouse/*.whl /home/sdna_plus/dist

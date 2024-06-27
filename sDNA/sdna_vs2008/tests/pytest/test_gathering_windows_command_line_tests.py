@@ -26,25 +26,49 @@ REPO_ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), r'..\..\
 
 ON_WINDOWS = (sys.platform == 'win32')
 
-SDNA_DLL_LOCATIONS = (
-             os.path.join(REPO_ROOT_DIR, r'\output\Debug\x64\sdna_vs2008.dll'),
-             os.path.join(REPO_ROOT_DIR, r'\output\release\x64\sdna_vs2008.dll'),
-             r'C:\Program Files (x86)\sDNA\x64\sdna_vs2008.dll',
+LIB_EXT = 'dll' if ON_WINDOWS else 'so'
+
+SDNA_INSTALLATION_LOCATIONS = (
+             os.path.join(REPO_ROOT_DIR, 'output','Debug'),
+             os.path.join(REPO_ROOT_DIR, 'output','release'),
+             r'C:\Program Files (x86)\sDNA',
             )
 
-SDNA_DLL = os.path.abspath(os.getenv('sdnadll', ''))
+SDNA_DLL = os.getenv('sdnadll', '')
+if SDNA_DLL:
+    SDNA_DLL = os.path.abspath(SDNA_DLL)
 
 SDNA_BIN_SUFFIXES = ('integral', 'prepare', 'learn', 'predict')
 
+def get_sdna_lib(sdna_root):
+    return os.path.join(sdna_root, 'x64','sdna_vs2008.' + LIB_EXT)
+
+SDNA_INSTALLED_IN_PYTHON_ENV = bool(os.getenv('SDNA_INSTALLED_IN_PYTHON_ENV', ''))
+
+print('SDNA_INSTALLED_IN_PYTHON_ENV: %s' % SDNA_INSTALLED_IN_PYTHON_ENV)
+
+if not SDNA_DLL and SDNA_INSTALLED_IN_PYTHON_ENV:
+    try:
+        import sDNA.sdnapy
+    except ImportError:
+        pass
+    else:
+        SDNA_DLL = get_sdna_lib(os.path.dirname(sDNA.sdnapy.__file__))
+        print('SDNA_DLL: %s' % SDNA_DLL)
+
+
 if not SDNA_DLL:
-    for sdna_dll_path in SDNA_DLL_LOCATIONS:
-        if os.path.isfile(sdna_dll_path):
-            SDNA_DLL = sdna_dll_path
+
+    for sdna_root in SDNA_INSTALLATION_LOCATIONS:
+        sdna_lib = get_sdna_lib(sdna_root)
+        if os.path.isfile(sdna_lib):
+            SDNA_DLL = sdna_lib
             break
     else:
-        raise Exception(r'Env variable %sdnadll% not set, and no sdna_vs2008.dll found in locations: \n%s' % 
-                        '\n'.join(SDNA_DLL_LOCATIONS)
-                       )
+        raise Exception(r'Env variable $sdnadll not set, and no sdna_vs2008.%s found in locations: \n%s' % 
+                        (LIB_EXT, '\n'.join(SDNA_INSTALLATION_LOCATIONS))
+                    )
+
 
 
 print('SDNA_DLL: %s' % SDNA_DLL)
@@ -72,22 +96,24 @@ def sdna_bin_dirs():
     # e.g. for SDNA_DLL == \sDNA\output\Release\x64\sdna_vs2008.dll'
     yield os.path.join(REPO_ROOT_DIR, 'arcscripts', 'bin')
 
-for dir_ in sdna_bin_dirs():
-    if not is_sdna_bin_dir(dir_):
-        continue
-    SDNA_BIN_DIR = dir_
-    break
-else:
-    raise Exception(
-        ("Could not find sDNA 'bin'/ python files "
-        "associated with SDNA_DLL: %s. "
-        "Set SDNA_BIN_DIR to the dir containing the "
-        "sDNA 'bin'/python files to be tested "
-        "(sdna+ %s +.py), or ensure the dll is part of a"
-        "complete sDNA installation. "
-        )
-        % (SDNA_DLL, SDNA_BIN_SUFFIXES)
-        )
+if not SDNA_BIN_DIR and not SDNA_INSTALLED_IN_PYTHON_ENV:
+    for dir_ in sdna_bin_dirs():
+        if not is_sdna_bin_dir(dir_):
+            continue
+        SDNA_BIN_DIR = dir_
+        break
+    else:
+
+        raise Exception(
+            ("Could not find sDNA 'bin'/ python files "
+            "associated with SDNA_DLL: %s. "
+            "Set SDNA_BIN_DIR to the dir containing the "
+            "sDNA 'bin'/python files to be tested "
+            "(sdna+ %s +.py), or ensure the dll is part of a"
+            "complete sDNA installation. "
+            )
+            % (SDNA_DLL, SDNA_BIN_SUFFIXES)
+            )
 
 
 
@@ -111,7 +137,7 @@ print('DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: %s' % DONT_TEST_N_LINK_SUBSYSTEMS_ORDE
 
 N_LINK_SUBSYSTEMS_PATTERN = r'^(?P<N>\d+)-link subsystem contains link with id = (?P<id>\d+)$'
 
-SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF = ('1', '3')
+SUBSYSTEM_LINK_NUMS_NOT_TO_TEST_ORDER_OF = ('1', '3', '4')
 
 
 
@@ -141,8 +167,10 @@ BATCH_FILES_GLOB = '*.bat' if (__name__=='__main__' and not PYTHON_3) else '../*
 
 ENV = os.environ.copy()
 
-ENV['sdnadll'] = SDNA_DLL
+if SDNA_DLL:
+    ENV['sdnadll'] = SDNA_DLL
 
+ENV['PYTHONUNBUFFERED'] = '1'
 
 def batch_file_tests():
     for file_ in glob.glob(os.path.join(os.path.dirname(__file__), BATCH_FILES_GLOB)):
@@ -153,7 +181,8 @@ def batch_file_tests():
                                        'run_tests_windows.bat',
                                        'sdnavars64.bat',
                                        'quick_test.bat', # Duplicates debug_test.py in pause_debug_test.bat
-                                       'run_benchmark.bat'
+                                       'run_benchmark.bat',
+                                       'approve_debug_output.bat',
                                       }:
             continue
 
@@ -279,6 +308,8 @@ def _run_insecurely_in_shell_without_catching_exceptions(command_str):
 
 class PythonCommand(Command):
 
+    sdna_installed_in_python_env = False
+
     def __init__(self, command_str, retcode_zero_expected = False, **kwargs): 
         super(PythonCommand, self).__init__(command_str, **kwargs)
 
@@ -315,25 +346,39 @@ class PythonScriptCommand(PythonCommand):
         assert '.py' in self.args_to_python, self.args_to_python
         py_file, __, args_to_py_file = self.args_to_python.lstrip().partition('.py')
 
+        self.args_to_python_file = args_to_py_file
+
         py_file += '.py'
 
         # Don't support python -c
         if not os.path.isfile(py_file):
             raise Exception('Test command: %s references non-existent Python script: %s'
-                           % (command_str, py_file)
-                           )   
+                        % (command_str, py_file)
+                        )   
 
 
         self.python_file = os.path.basename(py_file)
-        self.args_to_python_file = args_to_py_file
 
 
 class sDNACommand(PythonScriptCommand):
 
     sdna_dll_cli_arg = ('"%s"' % SDNA_DLL) if ' ' in SDNA_DLL else SDNA_DLL
 
-    def __init__(self, command_str, **kwargs): 
-        super(sDNACommand, self).__init__(command_str, **kwargs)
+    sdna_installed_in_python_env = SDNA_INSTALLED_IN_PYTHON_ENV
+
+    def __init__(self, command_str, retcode_zero_expected = False, **kwargs): 
+
+        if self.sdna_installed_in_python_env:
+            Command.__init__(self, command_str, **kwargs)
+
+            self.retcode_zero_expected = retcode_zero_expected
+
+            __, ___, rest = self.command_str.partition('sdna')
+            self.command_str = 'sdna' + rest.replace('.py', '', 1).replace(r'%sdnadll%', self.sdna_dll_cli_arg) 
+            return
+
+        super(sDNACommand, self).__init__(command_str, retcode_zero_expected=retcode_zero_expected, **kwargs)
+
 
         self.command_str = self.command_str.replace(r'%sdnadll%', self.sdna_dll_cli_arg)
 
@@ -741,13 +786,19 @@ class DiffTest(object):
         self.steps = steps
         self.diff_command = diff_command
 
-    def run(self):
+    def run_steps(self):
         for step in self.steps:
             # piped output is passed via Command.pseudo_files_to_pipe_output_to,
             # not via retvals.
             step.run()
-        
+
+    def run(self):
+        self.run_steps()
         self.diff_command.run()
+
+    def smoke_test(self):
+        self.run_steps()
+        print(Command.pseudo_files_to_pipe_output_to[self.diff_command.input_file])
 
     def __str__(self):
         sep = ',\n' + ' ' * (len(self.expected_output_file) + 4)
@@ -798,15 +849,16 @@ def sequential_diff_tests():
             diff_test_commands = []
 
 
-diff_tests = list(sequential_diff_tests())
-diff_test_expected_files = [diff_test.diff_command.expected_output_file 
-                            for diff_test in diff_tests
-                           ]
+diff_tests = collections.OrderedDict(
+                    (test.diff_command.expected_output_file, test) 
+                    for test in sequential_diff_tests()
+                    )
+diff_test_expected_files = list(diff_tests.keys())
 
 try:
     import pytest
 
-    @pytest.mark.parametrize('diff_test', diff_tests, ids = diff_test_expected_files)
+    @pytest.mark.parametrize('diff_test', diff_tests.values(), ids = diff_test_expected_files)
     def test_diff_(diff_test):
         diff_test.run()
 
@@ -834,11 +886,11 @@ if __name__=='__main__':
     else:
         try:
             test_index = int(sys.argv[1])
-            diff_test = diff_tests[test_index]
+            diff_test = list(diff_tests.values())[test_index]
         except:
-            diff_test = next(diff_test
-                             for diff_test in diff_tests
-                             if sys.argv[1] in diff_test.expected_output_file
+            diff_test = next(v
+                             for k, v in diff_tests.items()
+                             if sys.argv[1] in k
                             )
 
         print(diff_test)

@@ -39,11 +39,9 @@ installerbits/advanced/sdna-cache
 
 sDNA_setup*.msi
 
-build_cmake
-build_output_cmake
-build_output_cmake_x64
-build_output_cmake_Win32
-build_output_cmake_zig
+build_cmake*/**/*
+build_output_cmake*/**/*
+build_output_hatch*/**/*
 /sDNA/sDNA_2022/x64
 sDNA/sdna_vs2008/sdna_vs2008.vcxproj.user
 output/Release/geos_c.dll

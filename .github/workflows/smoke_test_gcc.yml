@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform", "Hatch_build" ]
+    branches: [ "Cross_platform", "Build_in_Manylinux_image" ]
 
   pull_request:
-    branches: [ "Cross_platform", "Hatch_build" ]
+    branches: [ "Cross_platform", "Build_in_Manylinux_image" ]
 
 env:
   CONFIGURATION: Release
@@ -16,7 +16,7 @@ env:
 
 
 jobs:
-  build_and_upload_installer:
+  build_and_upload_output_dir:
     name: "Compile on Ubuntu with CMake & GCC"
     runs-on: "ubuntu-24.04"
     # outputs:
@@ -52,9 +52,9 @@ jobs:
         path: output
 
 
-  test_installer:
+  test_output_dir:
 
-    needs: build_and_upload_installer
+    needs: build_and_upload_output_dir
 
     strategy:
       fail-fast: false
@@ -76,7 +76,7 @@ jobs:
                       '../../../arcscripts/bin/sdnaprepare.py -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3 --dll="$sdnadll"  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
                       "prepare_test_new.py",]
 
-    name: "Download and run sDNA installer, and run diff tests on it. "
+    name: "Download and run sDNA output dir, and run diff tests on it (without diffing the output). "
     
     runs-on: "ubuntu-24.04"
 

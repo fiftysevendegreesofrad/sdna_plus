@@ -4,8 +4,16 @@ import sys
 import optparse,re
 from optparse import OptionParser
 
+import numpy
+
+
+
+
 def main(argv = sys.argv[1:]):
 
+    import sdna_environment
+    import sdnaregutilities
+    # from sdnaregutilities import *
 
     example='python -u sdnalearn.py --calibfile cfile --target var0 --vars var1,var2 --varregex "var.*"\n'
     desc = 'Examples:\n'\
@@ -22,7 +30,7 @@ def main(argv = sys.argv[1:]):
     op.add_option("--boxcoxtarget",dest="boxcoxtarget",help="Box-Cox transform the target variable",action="store_true",default=False)
     #op.add_option("--btregex",dest="btregex",help="Regex specifying which predictor variables to transform using Box-Tidwell",metavar="REGEX",default="")
     op.add_option("--bcregex",dest="bcregex",help="Regex specifying which predictor variables to transform using Box-Cox",metavar="REGEX",default="")
-    op.add_option("--mode",dest="mode",help="Mode",metavar=MODES,default=SINGLE_BEST)
+    op.add_option("--mode",dest="mode",help="Mode",metavar=sdnaregutilities.MODES,default=sdnaregutilities.SINGLE_BEST)
     op.add_option("--weightlambda",dest="weightlambda",help="Lambda for weighting",metavar="L",default=1,type="float")
     op.add_option("--nfolds",dest="nfolds",help="Number of folds for cross-validation",metavar="N",default=7,type="int")
     op.add_option("--reps",dest="reps",help="Number of times to repeat N-fold cross-validation",metavar="REPS",default=50,type="int")
@@ -65,7 +73,7 @@ def main(argv = sys.argv[1:]):
         op.error("Trailing arguments on command line")
 
     options.mode = options.mode.lower()
-    if options.mode not in MODES.split("|"):
+    if options.mode not in sdnaregutilities.MODES.split("|"):
         op.error("Unrecognized mode")
         
     for thing,name in [(options.calibfile,"calibration file"),(options.target,"target variable")]:
@@ -159,7 +167,8 @@ def main(argv = sys.argv[1:]):
         
     # create model
 
-    model,preds,gehs = SdnaRegModel.fromData(targetdata,
+    model,preds,gehs = sdnaregutilities.SdnaRegModel.fromData(
+                                            targetdata,
                                             usable_data,
                                             variable_order,
                                             options.target,
@@ -208,10 +217,6 @@ def main(argv = sys.argv[1:]):
 
 if __name__ == '__main__':
     import _parentdir
-    
-    import sdna_environment
-    from sdnaregutilities import *
     main()
 else:
-    from .. import sdna_environment
-    from ..sdnaregutilities import *
+    from . import _parentdir
