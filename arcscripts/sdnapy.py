@@ -187,8 +187,8 @@ class GeometryLayer(object):
                 self.datatypes = [bytes_to_str(x,"ascii") for x in c_datatypes[0:self.datalength]]
                 
         def toString(self):
-                output = "%s - %s (%d items)\n"%(self.name,self.type,self.get_num_items())
-                output += list(zip(self.datanames,self.shortdatanames,self.datatypes)).__repr__()
+                output = "%s - %s (%d items)\n"%(self.name, self.type, self.get_num_items())
+                output += list(zip(self.datanames, self.shortdatanames, self.datatypes)).__repr__()
                 for item in self.get_items():
                         output += "\n"
                         output += list(zip(self.shortdatanames,item.data)).__repr__()

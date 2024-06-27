@@ -9,15 +9,8 @@ import shutil
 # https://discuss.python.org/t/custom-build-steps-moving-bokeh-off-setup-py/16128/3
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
+
 REPO_DIR = pathlib.Path(__file__).parent
-# BUILD_CONFIG_CMAKE = 'Release'
-
-# for __init__dot_py_dir in [REPO_DIR / 'output' / BUILD_CONFIG_CMAKE,
-#                             REPO_DIR / 'output' / BUILD_CONFIG_CMAKE / 'bin',
-#                             ]:
-#     __init__dot_py_dir.mkdir(exist_ok = True, parents=True)
-#     (__init__dot_py_dir / '__init__.py').touch(exist_ok=True)
-
 
 @dataclasses.dataclass
 class Config:
