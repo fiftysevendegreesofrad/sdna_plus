@@ -24,7 +24,7 @@ class Config:
     build_dir: str
     generator: str
     use_zig: str
-    shell: bool
+    shell: bool = False  # Needs to be True on Linux, but adds security on Windows.
     build_config: str = 'Release'
     generator_path: str = ''
     platform: str = 'x64'
