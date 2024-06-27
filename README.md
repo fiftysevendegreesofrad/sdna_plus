@@ -1,12 +1,22 @@
 # sDNA+: Spatial Design Network Analysis plus
 
-This is the experimental Cross Platform branch of sDNA+, for Linux now as well as Windows, available on PyPi.
-
+This is the experimental Cross Platform branch of sDNA+, now available for Linux as well as Windows.
 
 ## Quick start
 
 `pipx install sdna_plus `
 `sdnaintegral -i input_network.shp -o output_network.shp`
+
+## Notes
+On Linux there are five unsolved regressions (compared to the Windows build), which may or may not be important.
+See issues #61, #65, #83, #84, and #83.
+
+The Linux Wheel, including `geos_c.so` as well as `sdna_vs2008.so` is built in a Docker image based on the 
+oldest (now unsupported) ManyLinux image.  See `Dockerfile.build`.  It is compiled with GCC 4.8 ish, so 
+different run time behaviour is possible between it and both the GCC and zig c++ Linux builds.  A 
+build hook (`./hatch_build.py`) triggers a near normal CMake build of sDNA, and Hatchling 
+repackages the standard sDNA output directory for PyPi (instead of just zipping it 
+or running AdvancedInstaller on Windows).
 
 ## History
 
