@@ -52,7 +52,7 @@ Hosted on [readthedocs](https://sdna-plus.readthedocs.io/en/latest/).
 
 Please see the original project [support page](https://sdna.cardiff.ac.uk/sdna/support/).
 
-If filing a bug, please file to the database here on github. 
+If filing a bug, please file to [the database here on github](https://github.com/fiftysevendegreesofrad/sdna_plus/issues). 
 
 ## For Developers
 See BUILD.md for notes regarding the impact of switching to CMake from sdna_vs2008.vcxproj
@@ -61,8 +61,7 @@ See BUILD.md for notes regarding the impact of switching to CMake from sdna_vs20
 The GCC builds are prioritised, but the 'Clang' builds (using `zig c++`) have been invaluable.
 There are  a handful of open regressions (compared to the Windows build), which may or may not be important.
 #### Installation
-* Build from source (see `./BUILD.md`) or if on Ubuntu, download and unzip an "output" installation directory from a Github Action that built it (e.g. 
-https://github.com/fiftysevendegreesofrad/sdna_plus/actions/runs/9584489142).  If the artifacts have expired, a public fork can
+* Build from source (see `./BUILD.md`) or if on Ubuntu, download and unzip an "output" installation directory from a Github Action that built it ([e.g.](https://github.com/fiftysevendegreesofrad/sdna_plus/actions/runs/9584489142)).  If the artifacts have expired, a public fork can
 be made, on which Github Actions can be run for free.  Using this, the "CMake, GCC & Ubuntu" one will rebuild it for
 you automatically in about 5 minutes.  The copy of `libgeos_c.so` may require a specific version of glibc.  If this is not available, it will have to be recompiled (see `./BUILD.md` or `.github/workflows/build_geos.yml`).
 * Create a venv and activate it (to avoid installing packages into the operating system's Python, and to isolate Numpy).
