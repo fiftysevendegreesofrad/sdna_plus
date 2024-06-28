@@ -33,7 +33,7 @@
 <scriptsbin Include="arcscripts\bin\sdnalearn.py"/>
 <scriptsbin Include="arcscripts\bin\sdnapredict.py"/>
 
-<rportable Include="arcscripts\rportable\**\*.*" />
+<!-- <rportable Include="arcscripts\rportable\**\*.*" /> -->
 
 <installerbits Include="installerbits\license.rtf"/>
 
@@ -59,7 +59,7 @@
              DestinationFolder="output\$(Configuration)"
         />
 
-        <Copy SourceFiles="@(rportable)" DestinationFolder="output\$(Configuration)\rportable\%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <!-- <Copy SourceFiles="@(rportable)" DestinationFolder="output\$(Configuration)\rportable\%(RecursiveDir)" SkipUnchangedFiles="true" /> -->
 
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=Win32" Targets="Rebuild"/>
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=x64" Targets="Rebuild"/>
