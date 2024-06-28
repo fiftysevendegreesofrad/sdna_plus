@@ -20,6 +20,11 @@ classifiers = [
 ]
 dynamic = ["dependencies", "optional-dependencies"]
 
+[project.urls]   
+"Homepage" = "https://sdna.cardiff.ac.uk/sdna/"
+"Source code" = "https://github.com/fiftysevendegreesofrad/sdna_plus/"
+"Bug Tracker" = "https://github.com/fiftysevendegreesofrad/sdna_plus/issues"
+
 [tool.hatch.metadata.hooks.requirements_txt]
 files = ["requirements.txt"]
 
