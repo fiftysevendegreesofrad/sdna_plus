@@ -25,6 +25,9 @@ dynamic = ["dependencies", "optional-dependencies"]
 "Source code" = "https://github.com/fiftysevendegreesofrad/sdna_plus/"
 "Bug Tracker" = "https://github.com/fiftysevendegreesofrad/sdna_plus/issues"
 
+[tool.hatch.metadata]
+allow-direct-references=true
+
 [tool.hatch.metadata.hooks.requirements_txt]
 files = ["requirements/base.txt"]
 
