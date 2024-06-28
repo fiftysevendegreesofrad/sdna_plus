@@ -18,11 +18,11 @@ RUN curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2 && \
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B ~/build_geos -S geos-3.3.5 && \
     cmake --build ~/build_geos
 
-COPY requirements-build-wheel.txt .
+COPY requirements/build-wheel.txt .
 
 RUN python -m venv venv && \
     . venv/bin/activate && \
-    pip install --no-cache-dir -r requirements-build-wheel.txt
+    pip install --no-cache-dir -r build-wheel.txt
 
 # Repo shouldn't be baked into container when container is built - could also add:
 # CMD: git clone --depth=1 --branch=Build_in_Manylinux_image  http://www.github.com/JamesParrott/sdna_plus
