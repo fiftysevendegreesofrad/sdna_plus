@@ -26,10 +26,12 @@ dynamic = ["dependencies", "optional-dependencies"]
 "Bug Tracker" = "https://github.com/fiftysevendegreesofrad/sdna_plus/issues"
 
 [tool.hatch.metadata.hooks.requirements_txt]
-files = ["requirements.txt"]
+files = ["requirements/base.txt"]
 
 [tool.hatch.metadata.hooks.requirements_txt.optional-dependencies]
-learn = ["requirements-learn-predict.txt"]
+learn = ["requirements/learn-predict.txt"]
+predict = ["requirements/learn-predict.txt"]
+R = ["requirements/R.txt"]
 
 [project.scripts]
 sdnaintegral = "sDNA.bin.sdnaintegral:main"

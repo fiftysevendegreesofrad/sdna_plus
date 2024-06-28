@@ -61,12 +61,12 @@ runs:
 
     - name: Install PyShp.
       if: inputs.install_PyShp
-      shell: ${{ inputs.shell }}
-      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} -r requirements.txt
+      shell: bash
+      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} -r requirements/base.txt
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
-      shell: ${{ inputs.shell }}
-      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} pytest -r requirements-learn-predict.txt
+      shell: bash
+      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} pytest -r requirements/learn-predict.txt
 
     - name: Install sDNA.
       if: inputs.sdna_installed_in_python_env
