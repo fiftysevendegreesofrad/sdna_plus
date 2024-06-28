@@ -65,7 +65,7 @@ runs:
         pip
         install
         ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }}
-        sdna_plus @ dist/sdna_plus*.whl
+        dist/sdna_plus*.whl
 
     # All builds require PyTest and Numpy
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).

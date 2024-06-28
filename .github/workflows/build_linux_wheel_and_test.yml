@@ -69,7 +69,6 @@ jobs:
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
         SDNA_INSTALLED_IN_PYTHON_ENV: 1
-        install_PyShp: 0
         sdnadll: ''
         sdna_debug: ""
         shell: bash
@@ -131,7 +130,7 @@ jobs:
 
 
     - name: Install wheel
-      run: python -m pip install sdna_plus[learn] @ dist/sdna_plus*.whl
+      run: python -m pip install dist/sdna_plus*.whl [learn]
 
     - name: Smoke test
       working-directory: ./sDNA/sdna_vs2008/tests

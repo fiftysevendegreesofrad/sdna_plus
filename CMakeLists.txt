@@ -166,17 +166,20 @@ foreach(installer_bit ${InstallerBits})
     )
 endforeach()
 
+# if()TODO: Don't add this command if building a wheel.
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND python -m pip install -r  "${CMAKE_CURRENT_SOURCE_DIR}/requirements/base.txt"  --target "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/"
 )
-
+# else()
+# TODO: Add else from above.
 if(CMAKE_SYSTEM MATCHES Windows)
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND python -m pip install -r  "${CMAKE_CURRENT_SOURCE_DIR}/requirements/R.txt"  --target "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/"
 )
 endif()
+# endif()
 
 # python -m pip install -r %THIS_FILE_DIR%\requirements\base.txt -r %THIS_FILE_DIR%\requirements\R.txt --target %THIS_FILE_DIR%\output\%CONFIG% 
 
