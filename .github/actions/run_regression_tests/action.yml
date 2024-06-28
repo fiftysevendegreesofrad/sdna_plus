@@ -40,10 +40,10 @@ inputs:
   sdna_debug:
     description: "'' (empty string): filter out the lines in correctout*.txt that are only output by debug builds. Non-empty string: don't. "
   
-  install_PyShp:
-    description: 'Whether to install PyShp in the test environment or not (e.g. if it is already bundled in the test installation).'
-    required: false
-    default: true
+  # install_PyShp:
+  #   description: 'Whether to install PyShp in the test environment or not (e.g. if it is already bundled in the test installation).'
+  #   required: false
+  #   default: true
 
   pytest_dir:
     description: "The directory to run Pytest in"
@@ -58,21 +58,29 @@ runs:
         python-version: ${{ inputs.python_version }}
 
 
-    # This step is required as the current Linux builds don't ship with PyShp bundled.
-    - name: Install PyShp.
-      if: inputs.install_PyShp
+    - name: Install sDNA.
+      if: inputs.SDNA_INSTALLED_IN_PYTHON_ENV
       shell: bash
-      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} -r requirements/base.txt
+      run: >
+        pip
+        install
+        ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }}
+        sdna_plus @ dist/sdna_plus*.whl
 
-    # All builds require this step, so this cannot be combined with the previous one.
+    # All builds require PyTest and Numpy
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
       shell: bash
-      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} pytest -r requirements/learn-predict.txt
+      run: >
+        pip
+        install
+        ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }}
+        pytest
+        -r requirements/learn-predict.txt
 
-    - name: Install sDNA.
-      if: inputs.sdna_installed_in_python_env
-      shell: bash
-      run: pip install --no-deps dist/sdna_plus*.whl
+    # - name: Install sDNA.
+    #   if: inputs.sdna_installed_in_python_env
+    #   shell: bash
+    #   run: pip install --no-deps dist/sdna_plus*.whl
 
 
     - name: Show versions.

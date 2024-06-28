@@ -119,9 +119,9 @@ jobs:
       with:
         python-version: ${{ matrix.python_version }}
 
-    - name: Install numpy
-      shell: bash
-      run: python -m pip install -r requirements/base.txt -r requirements/learn-predict.txt
+    # - name: Install numpy
+    #   shell: bash
+    #   run: python -m pip install -r requirements/base.txt -r requirements/learn-predict.txt
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v4
@@ -131,7 +131,7 @@ jobs:
 
 
     - name: Install wheel
-      run: python -m pip install dist/sdna_plus*.whl
+      run: python -m pip install sdna_plus[learn] @ dist/sdna_plus*.whl
 
     - name: Smoke test
       working-directory: ./sDNA/sdna_vs2008/tests
