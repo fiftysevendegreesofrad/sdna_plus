@@ -386,7 +386,7 @@ class sDNACommand(PythonScriptCommand):
         # sdna_vs2008.dll, not the source code repo's Python files 
         # at '..\..\..\arcscripts\bin'
         if SDNA_BIN_DIR and (DEFAULT_TEST_SDNA_BIN in self.python_file):
-            self.python_file = self.python_file.replace(DEFAULT_TEST_SDNA_BIN, SDNA_BIN_DIR)
+            self.command_str = self.command_str.replace(DEFAULT_TEST_SDNA_BIN, SDNA_BIN_DIR)
 
 
 
