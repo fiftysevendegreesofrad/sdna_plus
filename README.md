@@ -38,7 +38,7 @@ If filing a bug, please file to [the database here on github](https://github.com
 See BUILD.md for notes regarding the impact of switching to CMake from sdna_vs2008.vcxproj
 
 ### Experimental Linux build
-The GCC builds are prioritised, but the 'Clang' builds (using `zig c++`) have been invaluable.
+Requires the `Cross_platform` branch.  The GCC builds are prioritised, but the 'Clang' builds (using `zig c++`) have been invaluable.
 There are  a handful of open regressions (compared to the Windows build), which may or may not be important.
 #### Installation
 * Build from source (see `./BUILD.md`) or if on Ubuntu, download and unzip an "output" installation directory from a Github Action that built it ([e.g.](https://github.com/fiftysevendegreesofrad/sdna_plus/actions/runs/9584489142)).  If the artifacts have expired, a public fork can
