@@ -58,12 +58,13 @@ runs:
         python-version: ${{ inputs.python_version }}
 
 
-
+    # This step is required as the current Linux builds don't ship with PyShp bundled.
     - name: Install PyShp.
       if: inputs.install_PyShp
       shell: bash
       run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} -r requirements/base.txt
 
+    # All builds require this step, so this cannot be combined with the previous one.
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
       shell: bash
       run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} pytest -r requirements/learn-predict.txt
