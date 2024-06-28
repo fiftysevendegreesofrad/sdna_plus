@@ -59,19 +59,19 @@ runs:
 
 
 
-    - name: Install PyShp.
-      if: inputs.install_PyShp
-      shell: ${{ inputs.shell }}
-      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} -r requirements.txt
+    # - name: Install PyShp.
+    #   if: inputs.install_PyShp
+    #   shell: ${{ inputs.shell }}
+    #   run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} -r requirements.txt
 
-    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
+    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict).
       shell: ${{ inputs.shell }}
       run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} pytest -r requirements-learn-predict.txt
 
-    - name: Install sDNA.
+    - name: Install sDNA.  Automaticall installs PyShp too.
       if: inputs.sdna_installed_in_python_env
       shell: bash
-      run: pip install --no-deps dist/sdna_plus*.whl
+      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} pytest dist/sdna_plus*.whl
 
 
     - name: Show versions.
