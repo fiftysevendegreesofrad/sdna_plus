@@ -40,13 +40,13 @@ Then pick one of the following package options
 ###### Simple output dir 
 The `output/Config` dir is automatically zipped if it was built in one of the Github Actions workflows, 
 e.g. `.github\workflows\smoke_test_gcc.yml`
-* `which ninja`
-* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S sdna_plus`
+* `cd sdna_plus`
+* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S .`
 * `cmake --build build_linux --config=Release`
 Install user-land dependencies (R).
 * `sudo apt-get install r-cran-optparse r-cran-sjstats`
 Run a smoke test
-* `export sdnadll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
+* `export sdna_dll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
 * `cd sDNA/sdna_vs2008/tests`
 * `python prepare_test_new.py`
 Run all regression tests:

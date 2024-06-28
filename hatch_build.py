@@ -63,10 +63,12 @@ class CustomHook(BuildHookInterface):
 
         env.setdefault('VCPKG_INSTALLATION_ROOT','~/vcpkg')
 
+
         config_command_str = f"""
                 cmake
                 -G {config.generator}
                 -D USE_ZIG={config.use_zig}
+                -D BUNDLE_PYSHP=OFF
                 -B {build_dir}
                 -S .
             """.lstrip().replace('\n','')
