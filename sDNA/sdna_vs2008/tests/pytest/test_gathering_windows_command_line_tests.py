@@ -172,6 +172,9 @@ if SDNA_DLL:
 
 ENV['PYTHONUNBUFFERED'] = '1'
 
+if not SDNA_INSTALLED_IN_PYTHON_ENV:
+    ENV['PYTHONPATH'] = os.path.dirname(SDNA_BIN_DIR)
+
 def batch_file_tests():
     for file_ in glob.glob(os.path.join(os.path.dirname(__file__), BATCH_FILES_GLOB)):
         if os.path.basename(file_) in {'colourdiff.bat',
