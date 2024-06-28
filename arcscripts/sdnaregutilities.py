@@ -2,10 +2,17 @@
 # This file is released under MIT license
 
 from __future__ import unicode_literals
+
+import os
 import sys
 import subprocess
 from subprocess import Popen,PIPE
-import csv,sys,numpy,tempfile,os,copy
+import csv
+import tempfile
+import copy
+
+import numpy
+
 from sdna_environment import UnicodeCSVReader,UnicodeCSVWriter,bytes_to_str
 
 SINGLE_BEST="single_best_variable"
@@ -53,7 +60,7 @@ if sys.platform == 'win32' and os.path.isfile(R_BUNDLED_LOCATION):
 else:
     R_COMMAND = "Rscript"
 
-def R_call(script,args):
+def R_call(script, args):
     scriptpath = os.path.join(DIR, script)
     return '"%s" --no-site-file --no-save --no-environ --no-init-file --no-restore %s "%s" %s' % (R_COMMAND,
                                                                                                   NO_R_CONSOLE,
@@ -61,6 +68,10 @@ def R_call(script,args):
                                                                                                   " ".join(args)
                                                                                                  )
 
+ENV = os.environ.copy()
+
+def R_Process(script, args):
+    return Popen(R_call(script, args), shell=SHELL_MODE, stdout=PIPE, stderr=PIPE, stdin=PIPE, env = ENV)
 
 def Rcall_estimate(script,arrays,env):
     assert len(arrays)>0
@@ -74,7 +85,7 @@ def Rcall_estimate(script,arrays,env):
         tmpfile.write("\n")
         tmpfile.close()
     # call R
-    process = subprocess.Popen(R_call(script,['"%s"'%t.name for t in tmpfiles]),shell=SHELL_MODE,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE) 
+    process = R_Process(script, ['"%s"' % t.name for t in tmpfiles])
     result = []
     stdout,stderr = process.communicate()
     stdout = bytes_to_str(stdout,"utf8")
@@ -155,9 +166,10 @@ def regularizedregression(data,names,targetdata,targetname,alpha,nfolds,reps,env
         reglambda_s = "--reglambdamin %f --reglambdamax %f"%tuple(reglambda)
     else:
         reglambda_s = ""
-    call = R_call("regularizedregression.R",['--calibrationfile "%s" --target %s --xs %s --alpha %f --nfolds %d --reps %d --weightfile "%s" %s %s'
-                                                %(tmpfile.name,targetname,xs,alpha,nfolds,reps,weightfile.name,intercept_s,reglambda_s)])
-    p = Popen(call,shell=SHELL_MODE,stdout=PIPE,stderr=PIPE,stdin=PIPE)
+    args = ['--calibrationfile "%s" --target %s --xs %s --alpha %f --nfolds %d --reps %d --weightfile "%s" %s %s'
+            %(tmpfile.name,targetname,xs,alpha,nfolds,reps,weightfile.name,intercept_s,reglambda_s)
+           ]
+    p = R_Process("regularizedregression.R", args)
     stdout,stderr = p.communicate()
     stdout = bytes_to_str(stdout,"utf8")
     stderr = bytes_to_str(stderr,"utf8")

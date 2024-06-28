@@ -58,6 +58,7 @@ runs:
         python-version: ${{ inputs.python_version }}
 
 
+    # Windows only version specifier in R.txt
     - name: Install sDNA.
       if: inputs.SDNA_INSTALLED_IN_PYTHON_ENV
       shell: bash
@@ -66,6 +67,7 @@ runs:
         install
         ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }}
         dist/sdna_plus*.whl
+        -r requirements/R.txt
 
     # All builds require PyTest and Numpy
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
