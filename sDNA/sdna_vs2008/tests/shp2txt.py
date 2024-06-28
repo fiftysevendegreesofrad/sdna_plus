@@ -1,32 +1,35 @@
 from __future__ import print_function
-import sys,glob,shapefile
+
+import sys
+import glob
+import shapefile
 
 filenames = sys.argv[1:]
 
-def prettify(stuff,precision):
+def prettify(stuff, precision):
     if type(stuff)==list:
-        raise Exception("Crap")
+        raise Exception("stuff should not be a list")
     try:
-        formatstring = "%%.%df"%precision
-        return formatstring%float(stuff)
+        formatstring = "%%.%df" % precision
+        return formatstring % float(stuff)
     except TypeError:
         return str(stuff)
     except ValueError:
         return str(stuff)
 
-def structure(x,depth=-1):
+def structure(x, depth=-1):
     depth += 1
-    prefix = " "*depth
-    if not hasattr(x,"__iter__"):
-        return prefix+prettify(x,1)+"\n"
+    prefix = " " * depth
+    if not hasattr(x, "__iter__"):
+        return prefix+prettify(x, 1) + "\n"
     else:
-        if all([not hasattr(i,"__iter__") for i in x]):
-            return prefix+",".join([prettify(i,1) for i in x])+"\n"
+        if all([not hasattr(i, "__iter__") for i in x]):
+            return prefix + ",".join([prettify(i, 1) for i in x]) + "\n"
         else:
-            retval=prefix+"[\n"
+            retval=prefix + "[\n"
             for i in x:
-                retval += structure(i,depth)
-            retval+=prefix+"]\n"
+                retval += structure(i, depth)
+            retval += prefix + "]\n"
             return retval
 
 def _sf_getfields(filename):
