@@ -382,10 +382,10 @@ class sDNACommand(PythonScriptCommand):
 
         self.command_str = self.command_str.replace(r'%sdnadll%', self.sdna_dll_cli_arg)
 
-        # Support testing the released Python files shipped with 
+        # Test the released Python files shipped with 
         # sdna_vs2008.dll, not the source code repo's Python files 
         # at '..\..\..\arcscripts\bin'
-        if SDNA_BIN_DIR and (DEFAULT_TEST_SDNA_BIN in self.python_file):
+        if SDNA_BIN_DIR and (DEFAULT_TEST_SDNA_BIN in self.command_str):
             self.command_str = self.command_str.replace(DEFAULT_TEST_SDNA_BIN, SDNA_BIN_DIR)
 
 
