@@ -130,7 +130,7 @@ jobs:
 
 
     - name: Install wheel
-      run: python -m pip install dist/sdna_plus*.whl [learn]
+      run: python -m pip install dist/sdna_plus*.whl -r requirements/learn.txt
 
     - name: Smoke test
       working-directory: ./sDNA/sdna_vs2008/tests
