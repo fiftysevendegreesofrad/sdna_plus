@@ -41,7 +41,7 @@ Then pick one of the following package options
 The `output/Config` dir is automatically zipped if it was built in one of the Github Actions workflows, 
 e.g. `.github\workflows\smoke_test_gcc.yml`
 * `cd sdna_plus`
-* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S .`
+* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -D BUNDLE_PYSHP=ON -B build_linux -S .`
 * `cmake --build build_linux --config=Release`
 Install user-land dependencies (R).
 * `sudo apt-get install r-cran-optparse r-cran-sjstats`

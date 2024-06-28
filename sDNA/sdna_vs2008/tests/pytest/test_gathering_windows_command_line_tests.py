@@ -75,7 +75,7 @@ print('SDNA_DLL: %s' % SDNA_DLL)
 
 
 SDNA_BIN_DIR = os.getenv('sdna_bin_dir', '')
-DEFAULT_TEST_SDNA_BIN = r'..\..\..\arcscripts\bin'
+DEFAULT_TEST_SDNA_BIN = r'..\..\..\arcscripts\bin'.replace('\\', os.sep)
 
 def is_sdna_bin_dir(dir_):
     if not os.path.isdir(dir_):
