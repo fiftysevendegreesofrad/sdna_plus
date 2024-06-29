@@ -49,18 +49,22 @@ def make_positive(datalist):
 
 DIR = os.path.dirname(__file__)
 
-R_BUNDLED_LOCATION=os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","Rscript.exe")
+ENV = os.environ.copy()
+
+R_BUNDLED_DIR = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386")
+R_BUNDLED_LOCATION = os.path.join(R_BUNDLED_DIR, "Rscript.exe")
 # SHELL_MODE = True #(sys.platform != 'win32')
 
 # Windows only option https://rstudio.github.io/r-manuals/r-intro/Invoking-R.html
 NO_R_CONSOLE = "--no-Rconsole" if sys.platform == 'win32' else "" 
 
-if sys.platform == 'win32' and os.path.isfile(R_BUNDLED_LOCATION):
-    R_COMMAND = R_BUNDLED_LOCATION
-    SHELL_MODE = False
-else:
-    R_COMMAND = "Rscript"
-    SHELL_MODE = True
+# if sys.platform == 'win32' and os.path.isfile(R_BUNDLED_LOCATION):
+#     ENV['PATH'] = '%s;%s' % (R_BUNDLED_DIR ,ENV['PATH'])
+#     R_COMMAND = R_BUNDLED_LOCATION
+#     SHELL_MODE = False
+# else:
+R_COMMAND = "Rscript"
+SHELL_MODE = False
 
 def R_call(script, args):
     scriptpath = os.path.join(DIR, script)
@@ -70,10 +74,27 @@ def R_call(script, args):
                                                                                                   " ".join(args)
                                                                                                  )
 
-ENV = os.environ.copy()
 
-def R_Process(script, args):
-    return Popen(R_call(script, args), shell=SHELL_MODE, stdout=PIPE, stderr=PIPE, stdin=PIPE, env = ENV)
+def R_Process(script, args, shell = SHELL_MODE, env = ENV):
+    return Popen(R_call(script, args), shell=shell, stdout=PIPE, stderr=PIPE, stdin=PIPE, env = env)
+
+def R_Process_stdout_stderr(script, args, **kwargs):
+    process = R_Process(script, args, **kwargs)
+    stdout,stderr = process.communicate()
+    stdout_str = bytes_to_str(stdout,"utf8")
+    stderr_str = bytes_to_str(stderr,"utf8")
+
+    return stdout_str, stderr_str
+
+try:
+    __, stderr = R_Process_stdout_stderr(R_BUNDLED_LOCATION, ["--version"])
+    if stderr:
+        raise Exception
+except:
+    SHELL_MODE = True
+else:
+    ENV['PATH'] = '%s;%s' % (R_BUNDLED_DIR ,ENV['PATH'])
+    R_COMMAND += '.exe'
 
 def Rcall_estimate(script,arrays,env):
     assert len(arrays)>0
@@ -87,11 +108,8 @@ def Rcall_estimate(script,arrays,env):
         tmpfile.write("\n")
         tmpfile.close()
     # call R
-    process = R_Process(script, ['"%s"' % t.name for t in tmpfiles])
+    stdout,stderr = R_Process_stdout_stderr(script, ['"%s"' % t.name for t in tmpfiles])
     result = []
-    stdout,stderr = process.communicate()
-    stdout = bytes_to_str(stdout,"utf8")
-    stderr = bytes_to_str(stderr,"utf8")
     lines = stdout.split('\n')[0:arrays[0].shape[1]]
     if stderr:
         env.AddError("Estimation error ******")
@@ -154,16 +172,16 @@ def regularizedregression(data,names,targetdata,targetname,alpha,nfolds,reps,env
     writer = csv.writer(tmpfile)
     writer.writerow([targetname]+names)
     for trow,row in zip(targetdata,data.T):
-        writer.writerow([trow]+list(row))
+        writer.writerow([trow] + list(row))
     tmpfile.close()
-    weightfile = tempfile.NamedTemporaryFile(delete=False,mode="w")
-    weightfile.write(" ".join(["%.15f"%w for w in weights])+"\n")
+    weightfile = tempfile.NamedTemporaryFile(delete = False, mode = "w")
+    weightfile.write(" ".join(["%.15f" % w for w in weights]) + "\n")
     weightfile.close()
     xs = "+".join(names)
     if intercept:
-        intercept_s="--intercept 1"
+        intercept_s = "--intercept 1"
     else:
-        intercept_s="--intercept 0"
+        intercept_s = "--intercept 0"
     if reglambda:
         reglambda_s = "--reglambdamin %f --reglambdamax %f"%tuple(reglambda)
     else:
@@ -171,15 +189,14 @@ def regularizedregression(data,names,targetdata,targetname,alpha,nfolds,reps,env
     args = ['--calibrationfile "%s" --target %s --xs %s --alpha %f --nfolds %d --reps %d --weightfile "%s" %s %s'
             %(tmpfile.name,targetname,xs,alpha,nfolds,reps,weightfile.name,intercept_s,reglambda_s)
            ]
-    p = R_Process("regularizedregression.R", args)
-    stdout,stderr = p.communicate()
-    stdout = bytes_to_str(stdout,"utf8")
-    stderr = bytes_to_str(stderr,"utf8")
+
+    stdout, stderr = R_Process_stdout_stderr("regularizedregression.R", args)
+
     os.unlink(tmpfile.name)
     os.unlink(weightfile.name)
-    coefs,regcurve = unpack_regres_output(stdout,env)
+    coefs,regcurve = unpack_regres_output(stdout, env)
     if coefs and regcurve:
-        return coefs,regcurve
+        return coefs, regcurve
     else:
         env.AddError("R call failed")
         env.AddError("STDOUT: *************************")
@@ -188,11 +205,11 @@ def regularizedregression(data,names,targetdata,targetname,alpha,nfolds,reps,env
         env.AddError(stderr)
         sys.exit(1)
     
-def boxcox_estimate(vars,env):
-    return Rcall_estimate("boxcox.R",[vars],env)
+def boxcox_estimate(vars, env):
+    return Rcall_estimate("boxcox.R", [vars],  env)
 
-def boxtidwell_estimate(x1,x2,y,env):
-    return Rcall_estimate("boxtidwell.R",[y,x1,x2],env)
+def boxtidwell_estimate(x1, x2, y, env):
+    return Rcall_estimate("boxtidwell.R",[y,x1,x2], env)
     
 def boxcox(data,names,env):
     assert((data>0).all())
