@@ -38,7 +38,8 @@ CONFIGS = {'Linux' : Config(
                         'OFF',
                         False,
                         'Release',
-                        '/usr/bin/ninja'
+                        '',
+                        'x64',
                        ),
           }
 
@@ -85,11 +86,11 @@ class CustomHook(BuildHookInterface):
             env=env,
         )
 
-        subprocess.run(f"""
-            cmake --build {build_dir} --config {config.build_config}
-            """.lstrip().replace('\n',''),
-            shell=config.shell
-        )
+        # subprocess.run(f"""
+        #     cmake --build {build_dir} --config {config.build_config}
+        #     """.lstrip().replace('\n',''),
+        #     shell=config.shell
+        # )
 
 
     # def finalize(self, version, build_data, artifact_path):
