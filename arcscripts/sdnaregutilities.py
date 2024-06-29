@@ -74,7 +74,7 @@ def R_call(script, args):
                                                                                                  )
 
 
-def R_Process(script, args env = ENV):
+def R_Process(script, args, env = ENV):
     return Popen(R_call(script, args), shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE, env = env)
 
 def R_Process_stdout_stderr(script, args, **kwargs):
