@@ -64,7 +64,6 @@ NO_R_CONSOLE = "--no-Rconsole" if sys.platform == 'win32' else ""
 #     SHELL_MODE = False
 # else:
 R_COMMAND = "Rscript"
-SHELL_MODE = False
 
 def R_call(script, args):
     scriptpath = os.path.join(DIR, script)
@@ -75,8 +74,8 @@ def R_call(script, args):
                                                                                                  )
 
 
-def R_Process(script, args, shell = SHELL_MODE, env = ENV):
-    return Popen(R_call(script, args), shell=shell, stdout=PIPE, stderr=PIPE, stdin=PIPE, env = env)
+def R_Process(script, args env = ENV):
+    return Popen(R_call(script, args), shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE, env = env)
 
 def R_Process_stdout_stderr(script, args, **kwargs):
     process = R_Process(script, args, **kwargs)
@@ -91,7 +90,7 @@ try:
     if stderr:
         raise Exception
 except:
-    SHELL_MODE = True
+    pass
 else:
     ENV['PATH'] = '%s;%s' % (R_BUNDLED_DIR ,ENV['PATH'])
     R_COMMAND += '.exe'
