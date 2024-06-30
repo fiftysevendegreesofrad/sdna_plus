@@ -67,7 +67,7 @@ R_COMMAND = "Rscript"
 
 def R_call(script, args):
     scriptpath = os.path.join(DIR, script)
-    return '"%s" --no-site-file --no-save --no-environ --no-init-file --no-restore %s "%s" %s' % (R_COMMAND,
+    return '%s --no-site-file --no-save --no-environ --no-init-file --no-restore %s "%s" %s' % (R_COMMAND,
                                                                                                   NO_R_CONSOLE,
                                                                                                   scriptpath,
                                                                                                   " ".join(args)
@@ -91,7 +91,9 @@ except:
     subprocess.CalledProcessError
 else:
     # Used by R_call defined above
-    R_COMMAND = R_BUNDLED_LOCATION
+    R_COMMAND = R_BUNDLED_LOCATION 
+    if ' ' in R_COMMAND:
+        R_COMMAND = '"%s"' % R_COMMAND
 
 def Rcall_estimate(script, arrays, env):
     assert len(arrays)>0
