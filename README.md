@@ -4,8 +4,42 @@ This is the experimental Cross Platform branch of sDNA+, now available for Linux
 
 ## Quick start
 
-`pipx install sdna_plus `
-`sdnaintegral -i input_network.shp -o output_network.shp`
+If not already available, install [`pipx`](https://github.com/pypa/pipx) to automatically 
+install Python applications into virtual environments (avoiding Python dependency conflicts):
+```
+pip install pipx
+```
+
+Use pipx to install an sDNA Wheel from PyPi:
+```
+pipx install sdna_plus
+```
+
+Example command line use:
+```
+sdnaintegral -i input_network.shp -o output_network.shp`
+```
+
+### To use sDNA Learn or sDNA Predict
+The `[learn]` or `[predict]` optional dependencies (including Numpy) are also required (Numpy 2 needs ~35MB).  
+As is an installation of [`R`](https://www.r-project.org/)
+
+#### On Linux 
+
+Install R separately, with e.g.:
+```
+pipx install sdna_plus[learn]
+```
+
+#### Using R Portable 3.2.3 (Windows only). 
+This is the same [R-Portable](https://github.com/JamesParrott/rportable) as bundled 
+with sDNA previously.  Requires ~100MB.
+```
+pipx install sdna_plus[learn][R]
+```
+
+
+
 
 ## Notes
 On Linux there are five unsolved regressions (compared to the Windows build), which may or may not be important.
