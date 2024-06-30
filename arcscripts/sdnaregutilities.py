@@ -74,11 +74,11 @@ def R_call(script, args):
                                                                                                  )
 
 
-def R_Process(script, args, env = ENV):
-    return Popen(R_call(script, args), shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE, env = env)
+def R_Process(script, args):
+    return Popen(R_call(script, args), shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE)
 
-def R_Process_stdout_stderr(script, args, **kwargs):
-    process = R_Process(script, args, **kwargs)
+def R_Process_stdout_stderr(script, args):
+    process = R_Process(script, args)
     stdout,stderr = process.communicate()
     stdout_str = bytes_to_str(stdout,"utf8")
     stderr_str = bytes_to_str(stderr,"utf8")
@@ -90,8 +90,8 @@ try:
 except:
     subprocess.CalledProcessError
 else:
-    ENV['PATH'] = '%s;%s' % (R_BUNDLED_DIR ,ENV['PATH'])
-    R_COMMAND += '.exe'
+    # Used by R_call defined above
+    R_COMMAND = R_BUNDLED_LOCATION
 
 def Rcall_estimate(script, arrays, env):
     assert len(arrays)>0
