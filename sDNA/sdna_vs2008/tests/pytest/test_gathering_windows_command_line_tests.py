@@ -103,22 +103,21 @@ if not SDNA_BIN_DIR and not SDNA_INSTALLED_IN_PYTHON_ENV:
         SDNA_BIN_DIR = dir_
         break
     else:
-
         raise Exception(
             ("Could not find sDNA 'bin'/ python files "
-            "associated with SDNA_DLL: %s. "
-            "Set SDNA_BIN_DIR to the dir containing the "
-            "sDNA 'bin'/python files to be tested "
-            "(sdna+ %s +.py), or ensure the dll is part of a"
-            "complete sDNA installation. "
+             "associated with SDNA_DLL: %s. "
+             "Set SDNA_BIN_DIR to the dir containing the "
+             "sDNA 'bin'/python files to be tested "
+             "(sdna+ %s +.py), or ensure the dll is part of a"
+             "complete sDNA installation. "
             )
             % (SDNA_DLL, SDNA_BIN_SUFFIXES)
             )
 
-
-
 print(r'Testing the sdnaintegral.py etc. in: %sdna_bin_dir%== ' + SDNA_BIN_DIR)
 
+if ' ' in SDNA_BIN_DIR:
+    SDNA_BIN_DIR = '"%s"' % SDNA_BIN_DIR
 
 SDNA_DEBUG = bool(os.getenv('sdna_debug', ''))
 
@@ -173,7 +172,7 @@ if SDNA_DLL:
 ENV['PYTHONUNBUFFERED'] = '1'
 
 if not SDNA_INSTALLED_IN_PYTHON_ENV:
-    ENV['PYTHONPATH'] = os.path.dirname(SDNA_BIN_DIR)
+    ENV['PYTHONPATH'] = SDNA_BIN_DIR
 
 def batch_file_tests():
     for file_ in glob.glob(os.path.join(os.path.dirname(__file__), BATCH_FILES_GLOB)):
