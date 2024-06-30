@@ -20,11 +20,21 @@ classifiers = [
 ]
 dynamic = ["dependencies", "optional-dependencies"]
 
+[project.urls]   
+"Homepage" = "https://sdna.cardiff.ac.uk/sdna/"
+"Source code" = "https://github.com/fiftysevendegreesofrad/sdna_plus/"
+"Bug Tracker" = "https://github.com/fiftysevendegreesofrad/sdna_plus/issues"
+
+[tool.hatch.metadata]
+allow-direct-references=true
+
 [tool.hatch.metadata.hooks.requirements_txt]
-files = ["requirements.txt"]
+files = ["requirements/base.txt"]
 
 [tool.hatch.metadata.hooks.requirements_txt.optional-dependencies]
-learn = ["requirements-learn-predict.txt"]
+learn = ["requirements/learn-predict.txt"]
+predict = ["requirements/learn-predict.txt"]
+R = ["requirements/R.txt"]
 
 [project.scripts]
 sdnaintegral = "sDNA.bin.sdnaintegral:main"

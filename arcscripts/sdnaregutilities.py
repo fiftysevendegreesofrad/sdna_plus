@@ -2,10 +2,17 @@
 # This file is released under MIT license
 
 from __future__ import unicode_literals
+
+import os
 import sys
 import subprocess
-from subprocess import Popen,PIPE
-import csv,sys,numpy,tempfile,os,copy
+from subprocess import Popen, PIPE
+import csv
+import tempfile
+import copy
+
+import numpy
+
 from sdna_environment import UnicodeCSVReader,UnicodeCSVWriter,bytes_to_str
 
 SINGLE_BEST="single_best_variable"
@@ -42,27 +49,48 @@ def make_positive(datalist):
 
 DIR = os.path.dirname(__file__)
 
-R_BUNDLED_LOCATION=os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386","Rscript.exe")
-SHELL_MODE = (sys.platform != 'win32')
+R_BUNDLED_DIR = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386")
+R_COMMAND = os.path.join(R_BUNDLED_DIR, "Rscript.exe")
+
+if ' ' in R_COMMAND:
+    R_COMMAND = '"%s"' % R_COMMAND
 
 # Windows only option https://rstudio.github.io/r-manuals/r-intro/Invoking-R.html
 NO_R_CONSOLE = "--no-Rconsole" if sys.platform == 'win32' else "" 
 
-if sys.platform == 'win32' and os.path.isfile(R_BUNDLED_LOCATION):
-    R_COMMAND = R_BUNDLED_LOCATION
-else:
-    R_COMMAND = "Rscript"
+DEFAULT_ARGS = "--no-site-file --no-save --no-environ --no-init-file --no-restore".split()
 
-def R_call(script,args):
-    scriptpath = os.path.join(DIR, script)
-    return '"%s" --no-site-file --no-save --no-environ --no-init-file --no-restore %s "%s" %s' % (R_COMMAND,
-                                                                                                  NO_R_CONSOLE,
-                                                                                                  scriptpath,
-                                                                                                  " ".join(args)
-                                                                                                 )
+def R_call(script, args):
+    scriptpath = os.path.join(DIR, script) if script else ''
+    if ' ' in scriptpath:
+        scriptpath = '"%s"' % scriptpath 
+    return " ".join([R_COMMAND] + DEFAULT_ARGS + [NO_R_CONSOLE, scriptpath] + list(args))
 
 
-def Rcall_estimate(script,arrays,env):
+R_PROCESS_KWARGS=dict(shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE)
+
+def R_Process(script, args):
+    return Popen(R_call(script, args), **R_PROCESS_KWARGS)
+
+def R_Process_stdout_stderr(script, args):
+    process = R_Process(script, args)
+    stdout,stderr = process.communicate()
+    stdout_str = bytes_to_str(stdout,"utf8")
+    stderr_str = bytes_to_str(stderr,"utf8")
+
+    return stdout_str, stderr_str
+
+try:
+    cmd = '%s --version' % R_COMMAND
+    p = Popen(cmd, **R_PROCESS_KWARGS)
+    p.communicate()
+    if p.returncode != 0:
+        raise subprocess.CalledProcessError(returncode=p.returncode, cmd=cmd)
+
+except subprocess.CalledProcessError:
+    R_COMMAND = 'Rscript' 
+
+def Rcall_estimate(script, arrays, env):
     assert len(arrays)>0
     # write each var to temporary file
     tmpfiles = [tempfile.NamedTemporaryFile(delete=False,mode="w") for _ in arrays]
@@ -74,11 +102,8 @@ def Rcall_estimate(script,arrays,env):
         tmpfile.write("\n")
         tmpfile.close()
     # call R
-    process = subprocess.Popen(R_call(script,['"%s"'%t.name for t in tmpfiles]),shell=SHELL_MODE,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE) 
+    stdout,stderr = R_Process_stdout_stderr(script, ['"%s"' % t.name for t in tmpfiles])
     result = []
-    stdout,stderr = process.communicate()
-    stdout = bytes_to_str(stdout,"utf8")
-    stderr = bytes_to_str(stderr,"utf8")
     lines = stdout.split('\n')[0:arrays[0].shape[1]]
     if stderr:
         env.AddError("Estimation error ******")
@@ -87,13 +112,13 @@ def Rcall_estimate(script,arrays,env):
         try:
             result.append(float(line))
         except ValueError:
-            env.AddWarning("Failed estimation: "+line)
+            env.AddWarning("Failed estimation: " + line)
             result.append(None)
     for tmpfile in tmpfiles:
         os.unlink(tmpfile.name)
     return numpy.array(result)
 
-def unpack_regres_output(r_output,env):
+def unpack_regres_output(r_output, env):
     lines = r_output.split("\n")
     in_coefs_section = False
     in_regcurve_section = False
@@ -115,7 +140,7 @@ def unpack_regres_output(r_output,env):
         if in_coefs_section:
             coefparts = line.strip().split()
             varname,coef = coefparts
-            coefs += [(varname,float(coef))]
+            coefs += [(varname, float(coef))]
         elif in_regcurve_section:
             rcparts = line.strip().split(",")
             regcurve += [list(map(float,rcparts))]
@@ -141,31 +166,31 @@ def regularizedregression(data,names,targetdata,targetname,alpha,nfolds,reps,env
     writer = csv.writer(tmpfile)
     writer.writerow([targetname]+names)
     for trow,row in zip(targetdata,data.T):
-        writer.writerow([trow]+list(row))
+        writer.writerow([trow] + list(row))
     tmpfile.close()
-    weightfile = tempfile.NamedTemporaryFile(delete=False,mode="w")
-    weightfile.write(" ".join(["%.15f"%w for w in weights])+"\n")
+    weightfile = tempfile.NamedTemporaryFile(delete = False, mode = "w")
+    weightfile.write(" ".join(["%.15f" % w for w in weights]) + "\n")
     weightfile.close()
     xs = "+".join(names)
     if intercept:
-        intercept_s="--intercept 1"
+        intercept_s = "--intercept 1"
     else:
-        intercept_s="--intercept 0"
+        intercept_s = "--intercept 0"
     if reglambda:
         reglambda_s = "--reglambdamin %f --reglambdamax %f"%tuple(reglambda)
     else:
         reglambda_s = ""
-    call = R_call("regularizedregression.R",['--calibrationfile "%s" --target %s --xs %s --alpha %f --nfolds %d --reps %d --weightfile "%s" %s %s'
-                                                %(tmpfile.name,targetname,xs,alpha,nfolds,reps,weightfile.name,intercept_s,reglambda_s)])
-    p = Popen(call,shell=SHELL_MODE,stdout=PIPE,stderr=PIPE,stdin=PIPE)
-    stdout,stderr = p.communicate()
-    stdout = bytes_to_str(stdout,"utf8")
-    stderr = bytes_to_str(stderr,"utf8")
+    args = ['--calibrationfile "%s" --target %s --xs %s --alpha %f --nfolds %d --reps %d --weightfile "%s" %s %s'
+            %(tmpfile.name,targetname,xs,alpha,nfolds,reps,weightfile.name,intercept_s,reglambda_s)
+           ]
+
+    stdout, stderr = R_Process_stdout_stderr("regularizedregression.R", args)
+
     os.unlink(tmpfile.name)
     os.unlink(weightfile.name)
-    coefs,regcurve = unpack_regres_output(stdout,env)
+    coefs,regcurve = unpack_regres_output(stdout, env)
     if coefs and regcurve:
-        return coefs,regcurve
+        return coefs, regcurve
     else:
         env.AddError("R call failed")
         env.AddError("STDOUT: *************************")
@@ -174,55 +199,55 @@ def regularizedregression(data,names,targetdata,targetname,alpha,nfolds,reps,env
         env.AddError(stderr)
         sys.exit(1)
     
-def boxcox_estimate(vars,env):
-    return Rcall_estimate("boxcox.R",[vars],env)
+def boxcox_estimate(vars, env):
+    return Rcall_estimate("boxcox.R", [vars],  env)
 
-def boxtidwell_estimate(x1,x2,y,env):
-    return Rcall_estimate("boxtidwell.R",[y,x1,x2],env)
+def boxtidwell_estimate(x1, x2, y, env):
+    return Rcall_estimate("boxtidwell.R", [y, x1, x2], env)
     
-def boxcox(data,names,env):
-    assert((data>0).all())
-    assert len(data.shape)==2
-    assert len(names)==data.shape[1]
-    lambdas = boxcox_estimate(data,env)
-    for L,name in zip(lambdas,names):
-        if L==None:
-            raise ValueError(name+" failed Box Cox estimation")  # FIXME TRY 1/3 ETC?
-    data = boxcox_transform(data,lambdas)
-    return data,lambdas
+def boxcox(data, names, env):
+    assert((data > 0).all())
+    assert len(data.shape) == 2
+    assert len(names) == data.shape[1]
+    lambdas = boxcox_estimate(data, env)
+    for L,name in zip(lambdas, names):
+        if L is None:
+            raise ValueError(name + " failed Box Cox estimation")  # FIXME TRY 1/3 ETC?
+    data = boxcox_transform(data, lambdas)
+    return data, lambdas
 
-def boxtidwell(xdata_bt,xdata_non_bt,ydata,btnames,env):
-    assert type(xdata_bt)==type(numpy.array([]))
-    assert type(xdata_non_bt)==type(numpy.array([]))
-    assert type(ydata)==type(numpy.array([]))
-    assert((xdata_bt>0).all())
-    assert len(xdata_bt.shape)==2
-    assert len(ydata.shape)==2
-    assert ydata.shape[0]==1
-    lambdas = boxtidwell_estimate(xdata_bt,xdata_non_bt,ydata,env)
-    for L,name in zip(lambdas,btnames):
-        if L==None:
-            raise ValueError(name+" failed Box Tidwell estimation")  # FIXME
-    data = boxcox_transform(xdata_bt,lambdas)
-    return data,lambdas
+def boxtidwell(xdata_bt, xdata_non_bt, ydata, btnames, env):
+    assert type(xdata_bt) == type(numpy.array([]))
+    assert type(xdata_non_bt) == type(numpy.array([]))
+    assert type(ydata) == type(numpy.array([]))
+    assert((xdata_bt > 0).all())
+    assert len(xdata_bt.shape) == 2
+    assert len(ydata.shape) == 2
+    assert ydata.shape[0] == 1
+    lambdas = boxtidwell_estimate(xdata_bt, xdata_non_bt, ydata, env)
+    for L,name in zip(lambdas, btnames):
+        if L is None:
+            raise ValueError(name + " failed Box Tidwell estimation")  # FIXME
+    data = boxcox_transform(xdata_bt, lambdas)
+    return data, lambdas
     
 boxcox_vectorized=numpy.vectorize(lambda d,t: (numpy.log(d) if t==0 else (pow(d,t)-1)/t) if t!=1 else d)
 
-def boxcox_transform(data,transform):
+def boxcox_transform(data, transform):
     '''data: indexed by point then variable
        transform: vector'''
-    for d,t in zip(data,transform):
-        assert t==1 or (d>0).all()
-    assert len(data.shape)==2
-    assert len(transform)==data.shape[1]
-    t = numpy.tile(transform,(data.shape[0],1))
-    result = boxcox_vectorized(data,t)
-    assert result.shape==data.shape
+    for d, t in zip(data,transform):
+        assert t==1 or (d >0 ).all()
+    assert len(data.shape) == 2
+    assert len(transform) == data.shape[1]
+    t = numpy.tile(transform, (data.shape[0], 1))
+    result = boxcox_vectorized(data, t)
+    assert result.shape == data.shape
     return result
     
-def boxcox_inverse_transform(data,transform):
+def boxcox_inverse_transform(data, transform):
     '''data: vector, transform: scalar'''
-    if transform==0:
+    if transform == 0:
         return numpy.exp(data)
     elif transform==1:
         return data

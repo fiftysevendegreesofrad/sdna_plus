@@ -982,9 +982,13 @@ endif()
 # not defined for targets created by the add_custom_target() command.
 # "
 # https://cmake.org/cmake/help/latest/command/add_custom_command.html#build-events
+
+
+find_package(Python REQUIRED COMPONENTS Interpreter)
+
 add_custom_command(
     TARGET ${PROJECT_NAME} PRE_BUILD
-    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
+    COMMAND Python::Interpreter ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
 )
 
 

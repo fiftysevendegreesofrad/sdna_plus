@@ -27,6 +27,8 @@ Working directory assumed to be `/root`
 * `git clone --depth=1 http://www.github.com/Microsoft/vcpkg`
 * `cd vcpkg`
 * `./bootstrap-vcpkg.sh`
+On ARM:
+* `export VCPKG_FORCE_SYSTEM_BINARIES=1`
 * `cd ..`
 * `git clone --depth=1 --branch=Cross_platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
 Download GEOS 3.3.5 and compile it locally (so that it can link to your available version of glibc, instead of whichever one was in the build environment I used).  `.github\workflows\build_geos.yml` can be used in a Github Action Ubuntu runner.
@@ -40,8 +42,8 @@ Then pick one of the following package options
 ###### Simple output dir 
 The `output/Config` dir is automatically zipped if it was built in one of the Github Actions workflows, 
 e.g. `.github\workflows\smoke_test_gcc.yml`
-* `which ninja`
-* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -B build_linux -S sdna_plus`
+* `cd sdna_plus`
+* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -D BUNDLE_PYSHP=ON -B build_linux -S .`
 * `cmake --build build_linux --config=Release`
 Install user-land dependencies (R).
 * `sudo apt-get install r-cran-optparse r-cran-sjstats`

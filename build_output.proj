@@ -33,7 +33,7 @@
 <scriptsbin Include="arcscripts\bin\sdnalearn.py"/>
 <scriptsbin Include="arcscripts\bin\sdnapredict.py"/>
 
-<rportable Include="arcscripts\rportable\**\*.*" />
+<!-- <rportable Include="arcscripts\rportable\**\*.*" /> -->
 
 <installerbits Include="installerbits\license.rtf"/>
 
@@ -44,7 +44,7 @@
 
         <MakeDir Directories="output\$(Configuration)\x64"/>
 
-        <Exec Command="python -m pip install -r requirements.txt --target output\$(Configuration)"/>
+        <Exec Command="python -m pip install -r requirements\base.txt -r requirements\R.txt --target output\$(Configuration)"/>
 
         <Copy
              SourceFiles="@(scripts)"
@@ -59,7 +59,7 @@
              DestinationFolder="output\$(Configuration)"
         />
 
-        <Copy SourceFiles="@(rportable)" DestinationFolder="output\$(Configuration)\rportable\%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <!-- <Copy SourceFiles="@(rportable)" DestinationFolder="output\$(Configuration)\rportable\%(RecursiveDir)" SkipUnchangedFiles="true" /> -->
 
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=Win32" Targets="Rebuild"/>
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=x64" Targets="Rebuild"/>
