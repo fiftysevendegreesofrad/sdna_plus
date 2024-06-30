@@ -95,7 +95,7 @@ else:
     ENV['PATH'] = '%s;%s' % (R_BUNDLED_DIR ,ENV['PATH'])
     R_COMMAND += '.exe'
 
-def Rcall_estimate(script,arrays,env):
+def Rcall_estimate(script, arrays, env):
     assert len(arrays)>0
     # write each var to temporary file
     tmpfiles = [tempfile.NamedTemporaryFile(delete=False,mode="w") for _ in arrays]
@@ -117,13 +117,13 @@ def Rcall_estimate(script,arrays,env):
         try:
             result.append(float(line))
         except ValueError:
-            env.AddWarning("Failed estimation: "+line)
+            env.AddWarning("Failed estimation: " + line)
             result.append(None)
     for tmpfile in tmpfiles:
         os.unlink(tmpfile.name)
     return numpy.array(result)
 
-def unpack_regres_output(r_output,env):
+def unpack_regres_output(r_output, env):
     lines = r_output.split("\n")
     in_coefs_section = False
     in_regcurve_section = False
@@ -145,7 +145,7 @@ def unpack_regres_output(r_output,env):
         if in_coefs_section:
             coefparts = line.strip().split()
             varname,coef = coefparts
-            coefs += [(varname,float(coef))]
+            coefs += [(varname, float(coef))]
         elif in_regcurve_section:
             rcparts = line.strip().split(",")
             regcurve += [list(map(float,rcparts))]
