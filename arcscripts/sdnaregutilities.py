@@ -59,11 +59,13 @@ NO_R_CONSOLE = "--no-Rconsole" if sys.platform == 'win32' else ""
 
 def R_call(script, args):
     scriptpath = os.path.join(DIR, script) if script else ''
-    return '%s --no-site-file --no-save --no-environ --no-init-file --no-restore %s "%s" %s' % (R_COMMAND,
-                                                                                                NO_R_CONSOLE,
-                                                                                                scriptpath,
-                                                                                                " ".join(args)
-                                                                                               )
+    if ' ' in scriptpath:
+        scriptpath = '"%s"' % scriptpath 
+    return '%s --no-site-file --no-save --no-environ --no-init-file --no-restore %s %s %s' % (R_COMMAND,
+                                                                                              NO_R_CONSOLE,
+                                                                                              scriptpath,
+                                                                                              " ".join(args)
+                                                                                             )
 
 
 def R_Process(script, args):
