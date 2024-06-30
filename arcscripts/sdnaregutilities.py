@@ -50,15 +50,15 @@ def make_positive(datalist):
 DIR = os.path.dirname(__file__)
 
 R_BUNDLED_DIR = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386")
-R_BUNDLED_LOCATION = os.path.join(R_BUNDLED_DIR, "Rscript.exe")
+R_COMMAND = os.path.join(R_BUNDLED_DIR, "Rscript.exe")
+if ' ' in R_COMMAND:
+    R_COMMAND = '"%s"' % R_COMMAND
 
 # Windows only option https://rstudio.github.io/r-manuals/r-intro/Invoking-R.html
 NO_R_CONSOLE = "--no-Rconsole" if sys.platform == 'win32' else "" 
 
-R_COMMAND = "Rscript"
-
 def R_call(script, args):
-    scriptpath = os.path.join(DIR, script)
+    scriptpath = os.path.join(DIR, script) if script else ''
     return '%s --no-site-file --no-save --no-environ --no-init-file --no-restore %s "%s" %s' % (R_COMMAND,
                                                                                                 NO_R_CONSOLE,
                                                                                                 scriptpath,
@@ -78,14 +78,12 @@ def R_Process_stdout_stderr(script, args):
     return stdout_str, stderr_str
 
 try:
-    subprocess.check_call(R_call(R_BUNDLED_LOCATION, ["--version"]))
+    subprocess.check_call(R_call('',['--version']), shell = True)
 except:
     subprocess.CalledProcessError
 else:
     # Used by R_call defined above
-    R_COMMAND = R_BUNDLED_LOCATION 
-    if ' ' in R_COMMAND:
-        R_COMMAND = '"%s"' % R_COMMAND
+    R_COMMAND = 'Rscript' 
 
 def Rcall_estimate(script, arrays, env):
     assert len(arrays)>0
