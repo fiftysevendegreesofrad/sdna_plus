@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import os
 import sys
 import subprocess
-from subprocess import Popen,PIPE
+from subprocess import Popen, PIPE
 import csv
 import tempfile
 import copy
@@ -86,11 +86,9 @@ def R_Process_stdout_stderr(script, args, **kwargs):
     return stdout_str, stderr_str
 
 try:
-    __, stderr = R_Process_stdout_stderr(R_BUNDLED_LOCATION, ["--version"])
-    if stderr:
-        raise Exception
+    subprocess.check_call(R_call(R_BUNDLED_LOCATION, ["--version"]))
 except:
-    pass
+    subprocess.CalledProcessError
 else:
     ENV['PATH'] = '%s;%s' % (R_BUNDLED_DIR ,ENV['PATH'])
     R_COMMAND += '.exe'

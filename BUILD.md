@@ -27,6 +27,8 @@ Working directory assumed to be `/root`
 * `git clone --depth=1 http://www.github.com/Microsoft/vcpkg`
 * `cd vcpkg`
 * `./bootstrap-vcpkg.sh`
+On ARM:
+* `export VCPKG_FORCE_SYSTEM_BINARIES=1`
 * `cd ..`
 * `git clone --depth=1 --branch=Cross_platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
 Download GEOS 3.3.5 and compile it locally (so that it can link to your available version of glibc, instead of whichever one was in the build environment I used).  `.github\workflows\build_geos.yml` can be used in a Github Action Ubuntu runner.
@@ -46,7 +48,7 @@ e.g. `.github\workflows\smoke_test_gcc.yml`
 Install user-land dependencies (R).
 * `sudo apt-get install r-cran-optparse r-cran-sjstats`
 Run a smoke test
-* `export sdna_dll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
+* `export sdnadll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
 * `cd sDNA/sdna_vs2008/tests`
 * `python prepare_test_new.py`
 Run all regression tests:
