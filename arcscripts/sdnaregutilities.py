@@ -51,25 +51,26 @@ DIR = os.path.dirname(__file__)
 
 R_BUNDLED_DIR = os.path.join(DIR,"rportable","R-Portable","App","R-Portable","bin","i386")
 R_COMMAND = os.path.join(R_BUNDLED_DIR, "Rscript.exe")
+
 if ' ' in R_COMMAND:
     R_COMMAND = '"%s"' % R_COMMAND
 
 # Windows only option https://rstudio.github.io/r-manuals/r-intro/Invoking-R.html
 NO_R_CONSOLE = "--no-Rconsole" if sys.platform == 'win32' else "" 
 
+DEFAULT_ARGS = "--no-site-file --no-save --no-environ --no-init-file --no-restore".split()
+
 def R_call(script, args):
     scriptpath = os.path.join(DIR, script) if script else ''
     if ' ' in scriptpath:
         scriptpath = '"%s"' % scriptpath 
-    return '%s --no-site-file --no-save --no-environ --no-init-file --no-restore %s %s %s' % (R_COMMAND,
-                                                                                              NO_R_CONSOLE,
-                                                                                              scriptpath,
-                                                                                              " ".join(args)
-                                                                                             )
+    return " ".join([R_COMMAND] + DEFAULT_ARGS + [NO_R_CONSOLE, scriptpath] + list(args))
 
+
+R_PROCESS_KWARGS=dict(shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE)
 
 def R_Process(script, args):
-    return Popen(R_call(script, args), shell=True, stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    return Popen(R_call(script, args), **R_PROCESS_KWARGS)
 
 def R_Process_stdout_stderr(script, args):
     process = R_Process(script, args)
@@ -80,11 +81,11 @@ def R_Process_stdout_stderr(script, args):
     return stdout_str, stderr_str
 
 try:
-    subprocess.check_call(R_call('',['--version']), shell = True)
-except:
-    subprocess.CalledProcessError
-else:
-    # Used by R_call defined above
+    p = Popen('%s --version' % R_COMMAND, **R_PROCESS_KWARGS)
+    p.communicate()
+    if p.returncode != 0:
+        raise subprocess.CalledProcessError
+except subprocess.CalledProcessError:
     R_COMMAND = 'Rscript' 
 
 def Rcall_estimate(script, arrays, env):
