@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "main", "Cross_platform", "Build_in_Manylinux_image"]
+    branches: [ "main", "Cross_platform", ]
 
   pull_request:
     branches: [ "main", "Cross_platform", ]

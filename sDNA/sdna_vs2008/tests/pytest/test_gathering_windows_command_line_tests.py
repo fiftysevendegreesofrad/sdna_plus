@@ -857,17 +857,34 @@ diff_tests = collections.OrderedDict(
                     (test.diff_command.expected_output_file, test) 
                     for test in sequential_diff_tests()
                     )
-diff_test_expected_files = list(diff_tests.keys())
+
+XFAIL_ON_LINUX = ['correctout.txt',
+                  'correctout_geom.txt',
+                  'correctout_prep.txt',
+                  'correctout_learn.txt',
+                 ]
 
 try:
     import pytest
-
-    @pytest.mark.parametrize('diff_test', diff_tests.values(), ids = diff_test_expected_files)
+except ImportError:
+    pass
+else:
+    @pytest.mark.parametrize(
+        'diff_test', 
+        (pytest.param(test, marks=pytest.mark.xfail(
+                        sys.platform != "win32",
+                        reason = "Documented bug on Linux sDNA build",
+                        )
+                     ) if any(exp_file in test.diff_command.expected_output_file
+                              for exp_file in XFAIL_ON_LINUX
+                             ) else test 
+         for test in diff_tests.values()
+        ),
+        ids = diff_tests.keys(),
+        )
     def test_diff_(diff_test):
         diff_test.run()
 
-except ImportError:
-    pass
 
 if __name__=='__main__':
 
