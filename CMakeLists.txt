@@ -169,14 +169,18 @@ endforeach()
 set(BUNDLE_PYSHP ON CACHE BOOL "Bundle static copies of deps (not making wheel) or let pip install them from metadata.")
 
 if(BUNDLE_PYSHP)
+
+    
+    find_package(Python REQUIRED COMPONENTS Interpreter)
+
     add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND python -m pip install -r "${CMAKE_CURRENT_SOURCE_DIR}/requirements/base.txt"  --target "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/"
+        COMMAND Python::Interpreter -m pip install -r "${CMAKE_CURRENT_SOURCE_DIR}/requirements/base.txt"  --target "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/"
     )
     if(CMAKE_SYSTEM MATCHES Windows)
         add_custom_command(
             TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND python -m pip install -r  "${CMAKE_CURRENT_SOURCE_DIR}/requirements/R.txt"  --target "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/"
+            COMMAND Python::Interpreter -m pip install -r  "${CMAKE_CURRENT_SOURCE_DIR}/requirements/R.txt"  --target "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/"
         )
     endif() 
 endif()
