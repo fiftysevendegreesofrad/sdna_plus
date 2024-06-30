@@ -81,10 +81,11 @@ def R_Process_stdout_stderr(script, args):
     return stdout_str, stderr_str
 
 try:
-    p = Popen('%s --version' % R_COMMAND, **R_PROCESS_KWARGS)
+    cmd = '%s --version' % R_COMMAND
+    p = Popen(cmd, **R_PROCESS_KWARGS)
     p.communicate()
     if p.returncode != 0:
-        raise subprocess.CalledProcessError
+        raise subprocess.CalledProcessError(returncode=p.returncode, cmd=cmd)
 except subprocess.CalledProcessError:
     R_COMMAND = 'Rscript' 
 
