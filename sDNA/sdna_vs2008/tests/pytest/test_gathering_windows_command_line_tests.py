@@ -864,6 +864,27 @@ XFAIL_ON_LINUX = ['correctout.txt',
                   'correctout_learn.txt',
                  ]
 
+
+def xfailed_diff_tests():
+    for test in diff_tests.values():
+        if sys.platform == "win32" and os.getenv('USED_ZIG', ''):
+            yield pytest.param(
+                        test,
+                        mark = pytest.mark.xfail(reason = "Zig on Windows unsupported. ")
+                        )  
+        elif (sys.platform != "win32" and any(
+                              exp_file in test.diff_command.expected_output_file
+                              for exp_file in XFAIL_ON_LINUX
+                              )):
+            yield pytest.param(
+                        test,
+                        mark = pytest.mark.xfail(reason = "Documented bug on Linux sDNA build"),
+                        ) 
+        else:
+            yield test
+
+
+
 try:
     import pytest
 except ImportError:
@@ -871,15 +892,7 @@ except ImportError:
 else:
     @pytest.mark.parametrize(
         'diff_test', 
-        (pytest.param(test, marks=pytest.mark.xfail(
-                        sys.platform != "win32",
-                        reason = "Documented bug on Linux sDNA build",
-                        )
-                     ) if any(exp_file in test.diff_command.expected_output_file
-                              for exp_file in XFAIL_ON_LINUX
-                             ) else test 
-         for test in diff_tests.values()
-        ),
+        xfailed_diff_tests(),
         ids = diff_tests.keys(),
         )
     def test_diff_(diff_test):
@@ -895,10 +908,6 @@ if __name__=='__main__':
             for l in f:
                 first_word = l.partition(' ')[0]
                 s.add(first_word)
-
-
-
-   
 
 
     if len(sys.argv) == 1:

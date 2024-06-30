@@ -27,6 +27,11 @@ inputs:
     description: 'The path to the sdna_vs2008.dll of the installation to be tested.'
     required: true
 
+  USED_ZIG:
+    description: 'Was the sDNA being tested built with Zig C++?'
+    required: false
+    default: ''
+
   sdna_installed_in_python_env:
     description: 'Test the sDNA .dll or .so installed in the Python environment, e.g. in a venv, from a Wheel installed by pip'
     required: false
@@ -115,6 +120,7 @@ runs:
         sdnadll: ${{ inputs.sdnadll }}
         sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
         sdna_debug: ${{ inputs.sdna_debug }}
+        USED_ZIG: ${{ inputs.USED_ZIG }}
       run: pytest -rA --tb=short
       # -rA shows summary of tests, one per line, even when they all pass.
       #
