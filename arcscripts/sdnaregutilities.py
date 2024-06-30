@@ -86,6 +86,7 @@ try:
     p.communicate()
     if p.returncode != 0:
         raise subprocess.CalledProcessError(returncode=p.returncode, cmd=cmd)
+
 except subprocess.CalledProcessError:
     R_COMMAND = 'Rscript' 
 
@@ -202,51 +203,51 @@ def boxcox_estimate(vars, env):
     return Rcall_estimate("boxcox.R", [vars],  env)
 
 def boxtidwell_estimate(x1, x2, y, env):
-    return Rcall_estimate("boxtidwell.R",[y,x1,x2], env)
+    return Rcall_estimate("boxtidwell.R", [y, x1, x2], env)
     
-def boxcox(data,names,env):
-    assert((data>0).all())
-    assert len(data.shape)==2
-    assert len(names)==data.shape[1]
-    lambdas = boxcox_estimate(data,env)
-    for L,name in zip(lambdas,names):
-        if L==None:
-            raise ValueError(name+" failed Box Cox estimation")  # FIXME TRY 1/3 ETC?
-    data = boxcox_transform(data,lambdas)
-    return data,lambdas
+def boxcox(data, names, env):
+    assert((data > 0).all())
+    assert len(data.shape) == 2
+    assert len(names) == data.shape[1]
+    lambdas = boxcox_estimate(data, env)
+    for L,name in zip(lambdas, names):
+        if L is None:
+            raise ValueError(name + " failed Box Cox estimation")  # FIXME TRY 1/3 ETC?
+    data = boxcox_transform(data, lambdas)
+    return data, lambdas
 
-def boxtidwell(xdata_bt,xdata_non_bt,ydata,btnames,env):
-    assert type(xdata_bt)==type(numpy.array([]))
-    assert type(xdata_non_bt)==type(numpy.array([]))
-    assert type(ydata)==type(numpy.array([]))
-    assert((xdata_bt>0).all())
-    assert len(xdata_bt.shape)==2
-    assert len(ydata.shape)==2
-    assert ydata.shape[0]==1
-    lambdas = boxtidwell_estimate(xdata_bt,xdata_non_bt,ydata,env)
-    for L,name in zip(lambdas,btnames):
-        if L==None:
-            raise ValueError(name+" failed Box Tidwell estimation")  # FIXME
-    data = boxcox_transform(xdata_bt,lambdas)
-    return data,lambdas
+def boxtidwell(xdata_bt, xdata_non_bt, ydata, btnames, env):
+    assert type(xdata_bt) == type(numpy.array([]))
+    assert type(xdata_non_bt) == type(numpy.array([]))
+    assert type(ydata) == type(numpy.array([]))
+    assert((xdata_bt > 0).all())
+    assert len(xdata_bt.shape) == 2
+    assert len(ydata.shape) == 2
+    assert ydata.shape[0] == 1
+    lambdas = boxtidwell_estimate(xdata_bt, xdata_non_bt, ydata, env)
+    for L,name in zip(lambdas, btnames):
+        if L is None:
+            raise ValueError(name + " failed Box Tidwell estimation")  # FIXME
+    data = boxcox_transform(xdata_bt, lambdas)
+    return data, lambdas
     
 boxcox_vectorized=numpy.vectorize(lambda d,t: (numpy.log(d) if t==0 else (pow(d,t)-1)/t) if t!=1 else d)
 
-def boxcox_transform(data,transform):
+def boxcox_transform(data, transform):
     '''data: indexed by point then variable
        transform: vector'''
-    for d,t in zip(data,transform):
-        assert t==1 or (d>0).all()
-    assert len(data.shape)==2
-    assert len(transform)==data.shape[1]
-    t = numpy.tile(transform,(data.shape[0],1))
-    result = boxcox_vectorized(data,t)
-    assert result.shape==data.shape
+    for d, t in zip(data,transform):
+        assert t==1 or (d >0 ).all()
+    assert len(data.shape) == 2
+    assert len(transform) == data.shape[1]
+    t = numpy.tile(transform, (data.shape[0], 1))
+    result = boxcox_vectorized(data, t)
+    assert result.shape == data.shape
     return result
     
-def boxcox_inverse_transform(data,transform):
+def boxcox_inverse_transform(data, transform):
     '''data: vector, transform: scalar'''
-    if transform==0:
+    if transform == 0:
         return numpy.exp(data)
     elif transform==1:
         return data

@@ -361,6 +361,8 @@ class PythonScriptCommand(PythonCommand):
 
 
         self.python_file = os.path.basename(py_file)
+        if ' ' in self.python_file:
+            self.python_file = '"%s"' % self.python_file
 
 
 class sDNACommand(PythonScriptCommand):
