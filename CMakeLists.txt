@@ -185,11 +185,4 @@ if(BUNDLE_PYSHP)
     endif() 
 endif()
 
-# python -m pip install -r %THIS_FILE_DIR%\requirements\base.txt -r %THIS_FILE_DIR%\requirements\R.txt --target %THIS_FILE_DIR%\output\%CONFIG% 
 
-# if(CMAKE_SYSTEM MATCHES Windows)
-#     add_custom_command(
-#         TARGET ${PROJECT_NAME} POST_BUILD
-#         COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${CMAKE_CURRENT_SOURCE_DIR}/arcscripts/rportable" "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/rportable"
-#     )
-# endif()
