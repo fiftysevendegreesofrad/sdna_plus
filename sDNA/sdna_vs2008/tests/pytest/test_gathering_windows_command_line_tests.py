@@ -870,7 +870,7 @@ def xfailed_diff_tests():
         if sys.platform == "win32" and os.getenv('USED_ZIG', ''):
             yield pytest.param(
                         test,
-                        mark = pytest.mark.xfail(reason = "Zig on Windows unsupported. ")
+                        marks = pytest.mark.xfail(reason = "Zig on Windows unsupported. ")
                         )  
         elif (sys.platform != "win32" and any(
                               exp_file in test.diff_command.expected_output_file
@@ -878,7 +878,7 @@ def xfailed_diff_tests():
                               )):
             yield pytest.param(
                         test,
-                        mark = pytest.mark.xfail(reason = "Documented bug on Linux sDNA build"),
+                        marks = pytest.mark.xfail(reason = "Documented bug on Linux sDNA build"),
                         ) 
         else:
             yield test
