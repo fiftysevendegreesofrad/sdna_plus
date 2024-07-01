@@ -1,1 +1,4 @@
 rportable @ https://github.com/JamesParrott/rportable/releases/download/v3.2.3/rportable-3.2.3-py2.py3-none-win32.win_amd64.whl ; platform_system=="Windows"
+rportable_docs @ https://github.com/JamesParrott/rportable/releases/download/v3.2.3/rportable_docs-3.2.3-py2.py3-none-win32.win_amd64.whl ; platform_system=="Windows"
+rportable_i386 @ https://github.com/JamesParrott/rportable/releases/download/v3.2.3/rportable_i386-3.2.3-py2.py3-none-win32.win_amd64.whl ; platform_system=="Windows"
+rportable_x64 @ https://github.com/JamesParrott/rportable/releases/download/v3.2.3/rportable_x64-3.2.3-py2.py3-none-win_amd64.whl ; platform_system=="Windows"
