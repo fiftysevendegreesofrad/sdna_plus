@@ -6,6 +6,18 @@ LABEL name="sDNA Linux Python Wheel Builder"
 ENV PATH=/opt/python/cp312-cp312/bin/:$PATH \
     VCPKG_INSTALLATION_ROOT=/vcpkg
 
+
+# Install yum-utils to get yum-config-manager
+# RUN yum install -y yum-utils
+
+# Remove existing repository files
+RUN rm -f /etc/yum.repos.d/CentOS-*.repo
+
+# Add the new repository files from vault.centos.org
+RUN yum-config-manager --add-repo=http://vault.centos.org/centos/7/os/x86_64/
+RUN yum-config-manager --add-repo=http://vault.centos.org/centos/7/updates/x86_64/
+RUN yum-config-manager --add-repo=http://vault.centos.org/centos/7/extras/x86_64/
+
 RUN yum install -y zip ninja-build && \
     yum clean all
 
