@@ -6,7 +6,20 @@ LABEL name="sDNA Linux Python Wheel Builder"
 ENV PATH=/opt/python/cp312-cp312/bin/:$PATH \
     VCPKG_INSTALLATION_ROOT=/vcpkg
 
-RUN yum install -y zip ninja-build && \
+
+# Install yum-utils to get yum-config-manager
+# RUN yum install -y yum-utils
+
+# Remove existing repository files
+RUN rm -f /etc/yum.repos.d/CentOS-*.repo
+
+# Add the new repository files from vault.centos.org
+RUN yum-config-manager --add-repo=http://vault.centos.org/centos/7/os/x86_64/ && \
+    yum-config-manager --add-repo=http://vault.centos.org/centos/7/updates/x86_64/ && \
+    yum-config-manager --add-repo=http://vault.centos.org/centos/7/extras/x86_64/
+
+RUN yum check-update && \
+    yum install -y zip ninja-build && \
     yum clean all
 
 RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
@@ -18,11 +31,11 @@ RUN curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2 && \
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B ~/build_geos -S geos-3.3.5 && \
     cmake --build ~/build_geos
 
-COPY requirements-build-wheel.txt .
+COPY requirements/build-wheel.txt .
 
 RUN python -m venv venv && \
     . venv/bin/activate && \
-    pip install --no-cache-dir -r requirements-build-wheel.txt
+    pip install --no-cache-dir -r build-wheel.txt
 
 # Repo shouldn't be baked into container when container is built - could also add:
 # CMD: git clone --depth=1 --branch=Build_in_Manylinux_image  http://www.github.com/JamesParrott/sdna_plus

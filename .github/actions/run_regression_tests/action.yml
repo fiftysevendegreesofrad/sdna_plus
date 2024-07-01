@@ -27,7 +27,12 @@ inputs:
     description: 'The path to the sdna_vs2008.dll of the installation to be tested.'
     required: true
 
-  SDNA_INSTALLED_IN_PYTHON_ENV:
+  USED_ZIG:
+    description: 'Was the sDNA being tested built with Zig C++?'
+    required: false
+    default: ''
+
+  sdna_installed_in_python_env:
     description: 'Test the sDNA .dll or .so installed in the Python environment, e.g. in a venv, from a Wheel installed by pip'
     required: false
     default: ''
@@ -40,10 +45,10 @@ inputs:
   sdna_debug:
     description: "'' (empty string): filter out the lines in correctout*.txt that are only output by debug builds. Non-empty string: don't. "
   
-  install_PyShp:
-    description: 'Whether to install PyShp in the test environment or not (e.g. if it is already bundled in the test installation).'
-    required: false
-    default: true
+  # install_PyShp:
+  #   description: 'Whether to install PyShp in the test environment or not (e.g. if it is already bundled in the test installation).'
+  #   required: false
+  #   default: true
 
   pytest_dir:
     description: "The directory to run Pytest in"
@@ -58,20 +63,31 @@ runs:
         python-version: ${{ inputs.python_version }}
 
 
-
-    - name: Install PyShp.
-      if: inputs.install_PyShp
-      shell: ${{ inputs.shell }}
-      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} -r requirements.txt
-
-    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
-      shell: ${{ inputs.shell }}
-      run: pip install ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }} pytest -r requirements-learn-predict.txt
-
+    # Windows only version specifier in R_full.txt
     - name: Install sDNA.
-      if: inputs.sdna_installed_in_python_env
+      if: ${{ inputs.sdna_installed_in_python_env }}
       shell: bash
-      run: pip install --no-deps dist/sdna_plus*.whl
+      run: >
+        pip
+        install
+        ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || '' }}
+        dist/sdna_plus*.whl
+        -r requirements/R_full.txt
+
+    # All builds require PyTest and Numpy
+    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
+      shell: bash
+      run: >
+        pip
+        install
+        ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }}
+        pytest
+        -r requirements/learn-predict.txt
+
+    # - name: Install sDNA.
+    #   if: inputs.sdna_installed_in_python_env
+    #   shell: bash
+    #   run: pip install --no-deps dist/sdna_plus*.whl
 
 
     - name: Show versions.
@@ -100,10 +116,11 @@ runs:
       env:
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: ${{ inputs.DONT_TEST_N_LINK_SUBSYSTEMS_ORDER }}
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: ${{ inputs.ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT }}
-        SDNA_INSTALLED_IN_PYTHON_ENV: ${{ inputs.SDNA_INSTALLED_IN_PYTHON_ENV }}
+        SDNA_INSTALLED_IN_PYTHON_ENV: ${{ inputs.sdna_installed_in_python_env }}
         sdnadll: ${{ inputs.sdnadll }}
         sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
         sdna_debug: ${{ inputs.sdna_debug }}
+        USED_ZIG: ${{ inputs.USED_ZIG }}
       run: pytest -rA --tb=short
       # -rA shows summary of tests, one per line, even when they all pass.
       #

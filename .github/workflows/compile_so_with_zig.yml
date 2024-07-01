@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform", "Build_in_Manylinux_image"]
+    branches: [ "Cross_platform" ]
 
   pull_request:
     branches: [ "Cross_platform" ]
@@ -44,6 +44,7 @@ jobs:
         cmake
         -G "Ninja Multi-Config"
         -D USE_ZIG=ON
+        -D BUNDLE_PYSHP=ON
         -B build_output_cmake_zig
         -S .
 

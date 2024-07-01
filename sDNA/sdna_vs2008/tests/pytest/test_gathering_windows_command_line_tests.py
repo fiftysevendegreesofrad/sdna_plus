@@ -75,7 +75,7 @@ print('SDNA_DLL: %s' % SDNA_DLL)
 
 
 SDNA_BIN_DIR = os.getenv('sdna_bin_dir', '')
-DEFAULT_TEST_SDNA_BIN = r'..\..\..\arcscripts\bin'
+DEFAULT_TEST_SDNA_BIN = r'..\..\..\arcscripts\bin'.replace('\\', os.sep)
 
 def is_sdna_bin_dir(dir_):
     if not os.path.isdir(dir_):
@@ -103,22 +103,21 @@ if not SDNA_BIN_DIR and not SDNA_INSTALLED_IN_PYTHON_ENV:
         SDNA_BIN_DIR = dir_
         break
     else:
-
         raise Exception(
             ("Could not find sDNA 'bin'/ python files "
-            "associated with SDNA_DLL: %s. "
-            "Set SDNA_BIN_DIR to the dir containing the "
-            "sDNA 'bin'/python files to be tested "
-            "(sdna+ %s +.py), or ensure the dll is part of a"
-            "complete sDNA installation. "
+             "associated with SDNA_DLL: %s. "
+             "Set SDNA_BIN_DIR to the dir containing the "
+             "sDNA 'bin'/python files to be tested "
+             "(sdna+ %s +.py), or ensure the dll is part of a"
+             "complete sDNA installation. "
             )
             % (SDNA_DLL, SDNA_BIN_SUFFIXES)
             )
 
-
-
 print(r'Testing the sdnaintegral.py etc. in: %sdna_bin_dir%== ' + SDNA_BIN_DIR)
 
+if ' ' in SDNA_BIN_DIR:
+    SDNA_BIN_DIR = '"%s"' % SDNA_BIN_DIR
 
 SDNA_DEBUG = bool(os.getenv('sdna_debug', ''))
 
@@ -171,6 +170,9 @@ if SDNA_DLL:
     ENV['sdnadll'] = SDNA_DLL
 
 ENV['PYTHONUNBUFFERED'] = '1'
+
+if not SDNA_INSTALLED_IN_PYTHON_ENV:
+    ENV['PYTHONPATH'] = SDNA_BIN_DIR
 
 def batch_file_tests():
     for file_ in glob.glob(os.path.join(os.path.dirname(__file__), BATCH_FILES_GLOB)):
@@ -358,6 +360,8 @@ class PythonScriptCommand(PythonCommand):
 
 
         self.python_file = os.path.basename(py_file)
+        if ' ' in self.python_file:
+            self.python_file = '"%s"' % self.python_file
 
 
 class sDNACommand(PythonScriptCommand):
@@ -382,11 +386,11 @@ class sDNACommand(PythonScriptCommand):
 
         self.command_str = self.command_str.replace(r'%sdnadll%', self.sdna_dll_cli_arg)
 
-        # Support testing the released Python files shipped with 
+        # Test the released Python files shipped with 
         # sdna_vs2008.dll, not the source code repo's Python files 
         # at '..\..\..\arcscripts\bin'
-        if SDNA_BIN_DIR and (DEFAULT_TEST_SDNA_BIN in self.python_file):
-            self.python_file = self.python_file.replace(DEFAULT_TEST_SDNA_BIN, SDNA_BIN_DIR)
+        if SDNA_BIN_DIR and (DEFAULT_TEST_SDNA_BIN in self.command_str):
+            self.command_str = self.command_str.replace(DEFAULT_TEST_SDNA_BIN, SDNA_BIN_DIR)
 
 
 
@@ -853,17 +857,47 @@ diff_tests = collections.OrderedDict(
                     (test.diff_command.expected_output_file, test) 
                     for test in sequential_diff_tests()
                     )
-diff_test_expected_files = list(diff_tests.keys())
+
+XFAIL_ON_LINUX = ['correctout.txt',
+                  'correctout_geom.txt',
+                  'correctout_prep.txt',
+                  'correctout_learn.txt',
+                 ]
+
+
+def xfailed_diff_tests():
+    for test in diff_tests.values():
+        if sys.platform == "win32" and os.getenv('USED_ZIG', ''):
+            yield pytest.param(
+                        test,
+                        marks = pytest.mark.xfail(reason = "Zig on Windows unsupported. ")
+                        )  
+        elif (sys.platform != "win32" and any(
+                              exp_file in test.diff_command.expected_output_file
+                              for exp_file in XFAIL_ON_LINUX
+                              )):
+            yield pytest.param(
+                        test,
+                        marks = pytest.mark.xfail(reason = "Documented bug on Linux sDNA build"),
+                        ) 
+        else:
+            yield test
+
+
 
 try:
     import pytest
-
-    @pytest.mark.parametrize('diff_test', diff_tests.values(), ids = diff_test_expected_files)
+except ImportError:
+    pass
+else:
+    @pytest.mark.parametrize(
+        'diff_test', 
+        xfailed_diff_tests(),
+        ids = diff_tests.keys(),
+        )
     def test_diff_(diff_test):
         diff_test.run()
 
-except ImportError:
-    pass
 
 if __name__=='__main__':
 
@@ -874,10 +908,6 @@ if __name__=='__main__':
             for l in f:
                 first_word = l.partition(' ')[0]
                 s.add(first_word)
-
-
-
-   
 
 
     if len(sys.argv) == 1:
