@@ -1,0 +1,1 @@
+rportable[i386,x64,docs]==3.2.3 ; platform_system=="Windows"
