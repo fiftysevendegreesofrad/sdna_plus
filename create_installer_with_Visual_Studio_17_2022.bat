@@ -21,4 +21,4 @@ cmake --build %THIS_FILE_DIR%\build_output_cmake_x64 --config %CONFIG% && ^
 AdvancedInstaller.com /build installerbits\advanced\sdna.aip && ^
 python -u installerbits\rename_version.py installerbits/advanced/output/sdna_setup.msi .
 
-@REM python -m pip install -r %THIS_FILE_DIR%\requirements\base.txt -r %THIS_FILE_DIR%\requirements\R.txt --target %THIS_FILE_DIR%\output\%CONFIG% && ^
+@REM python -m pip install -r %THIS_FILE_DIR%\requirements\base.txt -r %THIS_FILE_DIR%\requirements\R_full.txt --target %THIS_FILE_DIR%\output\%CONFIG% && ^

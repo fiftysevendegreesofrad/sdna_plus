@@ -34,7 +34,7 @@ files = ["requirements/base.txt"]
 [tool.hatch.metadata.hooks.requirements_txt.optional-dependencies]
 learn = ["requirements/learn-predict.txt"]
 predict = ["requirements/learn-predict.txt"]
-R = ["requirements/R.txt"]
+R = ["requirements/R_minimal.txt"]
 
 [project.scripts]
 sdnaintegral = "sDNA.bin.sdnaintegral:main"
