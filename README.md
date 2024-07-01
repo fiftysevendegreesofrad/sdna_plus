@@ -36,7 +36,7 @@ sudo apt-get install -y r-cran-optparse r-cran-sjstats
 This is the same [R-Portable](https://github.com/JamesParrott/rportable) as bundled 
 with sDNA previously.  Requires ~100MB.
 ```
-pipx install sdna_plus[learn][R]
+pipx install sdna_plus[learn,R]
 ```
 
 
