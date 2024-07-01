@@ -22,13 +22,14 @@ sdnaintegral -i input_network.shp -o output_network.shp`
 
 ### To use sDNA Learn or sDNA Predict
 The `[learn]` or `[predict]` optional dependencies (including Numpy) are also required (Numpy 2 needs ~35MB).  
-As is an installation of [`R`](https://www.r-project.org/)
+As is an installation of [`R`](https://www.r-project.org/) with optparse and Car.
 
 #### On Linux 
 
-Install R separately, with e.g.:
+Install R and the two deps separately, e.g. on Ubuntu with:
 ```
-pipx install sdna_plus[learn]
+sudo apt-get update
+sudo apt-get install -y r-cran-optparse r-cran-sjstats
 ```
 
 #### Using R Portable 3.2.3 (Windows only). 

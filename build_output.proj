@@ -44,7 +44,7 @@
 
         <MakeDir Directories="output\$(Configuration)\x64"/>
 
-        <Exec Command="python -m pip install -r requirements\base.txt -r requirements\R.txt --target output\$(Configuration)"/>
+        <Exec Command="python -m pip install -r requirements\base.txt -r requirements\R_full.txt --target output\$(Configuration)"/>
 
         <Copy
              SourceFiles="@(scripts)"

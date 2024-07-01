@@ -180,7 +180,7 @@ if(BUNDLE_PYSHP)
     if(CMAKE_SYSTEM MATCHES Windows)
         add_custom_command(
             TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND Python::Interpreter -m pip install -r  "${CMAKE_CURRENT_SOURCE_DIR}/requirements/R.txt"  --target "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/"
+            COMMAND Python::Interpreter -m pip install -r  "${CMAKE_CURRENT_SOURCE_DIR}/requirements/R_full.txt"  --target "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/"
         )
     endif() 
 endif()

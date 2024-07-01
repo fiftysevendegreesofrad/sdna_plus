@@ -1643,7 +1643,6 @@
     <ROW Component="tools.dll" ComponentId="{66E979AC-876C-4A82-A6ED-E53B217F88AB}" Directory_="i386_66_Dir" Attributes="0" KeyPath="tools.dll"/>
     <ROW Component="tools.dll_2" ComponentId="{013FEC21-1166-4B38-886D-DE1A5B7683B9}" Directory_="x64_65_Dir" Attributes="256" KeyPath="tools.dll_2"/>
     <ROW Component="undoc.R" ComponentId="{DB9ADE7F-CA2A-4B1D-864F-E9ADBF9AC07E}" Directory_="tests_49_Dir" Attributes="0" KeyPath="undoc.R" Type="0"/>
-    <ROW Component="unins000.exe" ComponentId="{4161B4DF-F548-4F12-AEE7-7820A9973406}" Directory_="RPortable_2_Dir" Attributes="0" KeyPath="unins000.exe"/>
     <ROW Component="utils" ComponentId="{AF4220FE-CD92-4DC1-9EA4-C8E88FBCE59B}" Directory_="R_92_Dir" Attributes="0" KeyPath="utils" Type="0"/>
     <ROW Component="utils.dll" ComponentId="{77C7F795-6E31-4768-A0A6-6FFAB5C53B7E}" Directory_="i386_67_Dir" Attributes="0" KeyPath="utils.dll"/>
     <ROW Component="utils.dll_2" ComponentId="{AAAA28FF-6324-4944-A809-3A8D1B145270}" Directory_="x64_66_Dir" Attributes="256" KeyPath="utils.dll_2"/>
@@ -6931,8 +6930,6 @@
     <ROW File="simpletrue.Rout.save" Component_="anyall.R" FileName="SIMPLE~1.SAV|simple-true.Rout.save" Attributes="0" SourcePath="..\..\output\release\rportable\R-Portable\App\R-Portable\tests\simple-true.Rout.save" SelfReg="false"/>
     <ROW File="utf8regex.R" Component_="anyall.R" FileName="UTF8-R~1.R|utf8-regex.R" Attributes="0" SourcePath="..\..\output\release\rportable\R-Portable\App\R-Portable\tests\utf8-regex.R" SelfReg="false"/>
     <ROW File="WinUnicode.dat" Component_="anyall.R" FileName="WINUNI~1.DAT|WinUnicode.dat" Attributes="0" SourcePath="..\..\output\release\rportable\R-Portable\App\R-Portable\tests\WinUnicode.dat" SelfReg="false"/>
-    <ROW File="unins000.dat" Component_="CHANGES" FileName="unins000.dat" Attributes="0" SourcePath="..\..\output\release\rportable\R-Portable\App\R-Portable\unins000.dat" SelfReg="false"/>
-    <ROW File="unins000.exe" Component_="unins000.exe" FileName="unins000.exe" Attributes="0" SourcePath="..\..\output\release\rportable\R-Portable\App\R-Portable\unins000.exe" SelfReg="false" DigSign="true"/>
     <ROW File="RPortableSettings.ini" Component_="RPortableSettings.ini" FileName="R-PORT~1.INI|R-PortableSettings.ini" Attributes="0" SourcePath="..\..\output\release\rportable\R-Portable\Data\settings\R-PortableSettings.ini" SelfReg="false"/>
     <ROW File="help.html" Component_="help.html" FileName="HELP~1.HTM|help.html" Attributes="0" SourcePath="..\..\output\release\rportable\R-Portable\help.html" SelfReg="false"/>
     <ROW File="Donation_Button.png" Component_="Donation_Button.png" FileName="DONATI~1.PNG|Donation_Button.png" Attributes="0" SourcePath="..\..\output\release\rportable\R-Portable\Other\Help\Images\Donation_Button.png" SelfReg="false"/>
@@ -7821,7 +7818,6 @@
     <ROW Feature_="MainFeature" Component_="license.terms"/>
     <ROW Feature_="MainFeature" Component_="anyall.R"/>
     <ROW Feature_="MainFeature" Component_="datasetsEx.Rout.save"/>
-    <ROW Feature_="MainFeature" Component_="unins000.exe"/>
     <ROW Feature_="MainFeature" Component_="RPortableSettings.ini"/>
     <ROW Feature_="MainFeature" Component_="help.html"/>
     <ROW Feature_="MainFeature" Component_="Donation_Button.png"/>
