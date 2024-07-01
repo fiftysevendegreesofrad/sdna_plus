@@ -24,6 +24,8 @@ Use the software via any of the following means:
   * To see examples of command line calls, run sDNA from QGIS, the plugin will tell you what command line it uses for each task
 * Use the Python interface `sdnapy.py`; look at `runcalculation.py` for the reference example of how to do this
 
+The experimental Cross Platform branch (that runs on Linux, as well as Windows) can be installed from [PyPi](https://pypi.org/project/sDNA-plus/).
+
 ### Documentation
 
 Hosted on [readthedocs](https://sdna-plus.readthedocs.io/en/latest/).
