@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "main", "Cross_platform", ]
+    branches: [ "main", "Cross_platform", "Build_in_Manylinux_image" ]
 
   pull_request:
-    branches: [ "main", "Cross_platform", ]
+    branches: [ "main", "Cross_platform", "Build_in_Manylinux_image" ]
 
 env:
   CONFIGURATION: Release
