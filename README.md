@@ -1,6 +1,6 @@
 # sDNA+: Spatial Design Network Analysis plus
 
-This is the experimental Cross Platform branch of sDNA+, now available for Linux as well as Windows.
+This is the experimental [Cross Platform](https://github.com/fiftysevendegreesofrad/sdna_plus/tree/Cross_platform) branch of sDNA+, now available for Linux as well as Windows.
 
 ## Quick start
 
