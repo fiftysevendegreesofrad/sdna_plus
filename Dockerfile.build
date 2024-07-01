@@ -6,7 +6,8 @@ LABEL name="sDNA Linux Python Wheel Builder"
 ENV PATH=/opt/python/cp312-cp312/bin/:$PATH \
     VCPKG_INSTALLATION_ROOT=/vcpkg
 
-RUN yum install -y zip ninja-build && \
+RUN yum check-update && \
+    yum install -y zip ninja-build && \
     yum clean all
 
 RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
