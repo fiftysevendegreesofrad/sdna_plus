@@ -22,7 +22,7 @@ dynamic = ["dependencies", "optional-dependencies"]
 
 [project.urls]   
 "Homepage" = "https://sdna.cardiff.ac.uk/sdna/"
-"Source code" = "https://github.com/fiftysevendegreesofrad/sdna_plus/"
+"Source code" = "https://github.com/fiftysevendegreesofrad/sdna_plus/tree/Cross_platform"
 "Bug Tracker" = "https://github.com/fiftysevendegreesofrad/sdna_plus/issues"
 
 [tool.hatch.metadata]
@@ -41,6 +41,7 @@ sdnaintegral = "sDNA.bin.sdnaintegral:main"
 sdnaprepare = "sDNA.bin.sdnaprepare:main"
 sdnalearn = "sDNA.bin.sdnalearn:main"
 sdnapredict = "sDNA.bin.sdnapredict:main"
+sdna = "sDNA.__main__:main"
 
 
 [tool.hatch.build.targets.wheel]
