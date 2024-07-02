@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sDNA_plus"
-version = "5.0.1"
+version = "5.0.2"
 authors = [ {name = 'Crispin Cooper', email = 'sdna@cardiff.ac.uk'}, {name = "James Parrott", email = "james.parrott@proton.me"}]
 description = "sDNA is a world leading tool for Spatial Design Network Analysis.  "
 readme = {file = "README.md", content-type = "text/markdown"}
