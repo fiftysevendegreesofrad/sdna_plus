@@ -100,7 +100,7 @@ There are  a handful of open regressions (compared to the Windows build), which 
 be made, on which Github Actions can be run for free.  Using this, the "CMake, GCC & Ubuntu" one will rebuild it for
 you automatically in about 5 minutes.  The copy of `libgeos_c.so` may require a specific version of glibc.  If this is not available, it will have to be recompiled (see `./BUILD.md` or `.github/workflows/build_geos.yml`).
 * Create a venv and activate it (to avoid installing packages into the operating system's Python, and to isolate Numpy).
-* Install PyShp: `pip install -r requirements.txt`
+* Install latest PyShp (currently 2.3.1): `pip install -r requirements.txt`
 * The entry points in './bin' should be able to be used as normal.
 * The Python API may first require: `SDNADLL=/path/to/output/Release/x64/sdna_vs2008.so`  
 * If sDNA Learn or Predict is required:
