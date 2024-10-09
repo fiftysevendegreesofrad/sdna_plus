@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform" ]
+    branches: [ "Cross_platform", "Latest_PyShp_(do_not_pin_to_v2.1.0)"  ]
 
   pull_request:
-    branches: [ "Cross_platform" ]
+    branches: [ "Cross_platform", "Latest_PyShp_(do_not_pin_to_v2.1.0)"  ]
 
 jobs:
   build_windows_wheel:
