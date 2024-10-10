@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "main_PyShp_2.3.1" ] 
+    branches: [ "Cross_platform" ] 
 
   pull_request:
-    branches: [ "main_PyShp_2.3.1" ]
+    branches: [ "Cross_platform" ]
 
 env:
   CONFIGURATION: Release
