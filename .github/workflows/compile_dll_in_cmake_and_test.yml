@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "CMake"]
+    branches: [ "main_PyShp_2.3.1" ] 
 
   pull_request:
-    branches: [ "CMake" ]
+    branches: [ "main_PyShp_2.3.1" ]
 
 env:
   CONFIGURATION: Release
