@@ -143,5 +143,5 @@ for tool in get_tools():
 class Toolbox(object):
     def __init__(self):
         self.label = "Spatial Design Network Analysis"
-        self.alias = "Spatial Design Network Analysis"
+        self.alias = "sDNA"
         self.tools = tool_list
