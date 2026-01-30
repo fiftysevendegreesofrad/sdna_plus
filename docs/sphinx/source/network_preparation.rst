@@ -131,10 +131,7 @@ rather than crossroads? By using some different connectivity rules:
 The problem then remains to convert from these other formats to a network
 with a coincident endpoint connectivity rule.
 
--  **For link-unlink (polygon) rule**, sDNA for Autocad includes a tool
-   to convert the network. If you need this tool for GIS, drop us a line
-   – nobody has asked for it yet but we can look at making it.
-   Alternatively, in any GIS system, convert the network to link-unlink
+-  **For link-unlink (polygon) rule**, in any GIS system, convert the network to link-unlink
    (data) format as follows:
 
    -  use the unlink polygon layer to split links at unlink polygon
