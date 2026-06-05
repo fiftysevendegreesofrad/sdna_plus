@@ -1,7 +1,10 @@
 import arcpy
 import sdna_environment
 import sDNAUISpec
-import imp
+try:
+    import imp
+except ModuleNotFoundError:
+    import importlib as imp
 imp.reload(sDNAUISpec)
 from sDNAUISpec import get_tools
 import runsdnacommand
