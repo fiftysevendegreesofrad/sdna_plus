@@ -39,6 +39,12 @@ If filing a bug, please file to [the database here on github](https://github.com
 ## For Developers
 See BUILD.md for notes regarding the impact of switching to CMake from sdna_vs2008.vcxproj
 
+### New releases
+ - Bump the version in [SDNA_VERSION](https://github.com/fiftysevendegreesofrad/sdna_plus/blob/main/sDNA/sdna_vs2008/version_template.h#L15)
+ - Run the CI workflow .github\workflows\build_installer_and_test.yml and wait for the tests to pass.
+ - Download the zip file this workflow builds from https://github.com/fiftysevendegreesofrad/sdna_plus/actions and extract the .msi file within.
+ - Create a [new release](https://github.com/fiftysevendegreesofrad/sdna_plus/releases/new), uploading the .msi file, and add a tag to the repo matching the value of SDNA_VERSION
+
 ### Experimental Linux build
 Requires the `Cross_platform` branch.  The GCC builds are prioritised, but the 'Clang' builds (using `zig c++`) have been invaluable.
 There are  a handful of open regressions (compared to the Windows build), which may or may not be important.
