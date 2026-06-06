@@ -68,3 +68,4 @@ wheels/
 *.whl
 *.zip
 *.tar.gz
+/build_output_hatchling_windows
