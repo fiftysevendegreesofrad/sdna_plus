@@ -30,7 +30,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Licenses for libraries used in sDNA
 
-shapefile.py - MIT license as above.
+PyShp (shapefile.py) - Copyright (C) 2013 Joel Lawhead.  [MIT license (as above)](https://github.com/GeospatialPython/pyshp/blob/master/LICENSE.TXT), 
 
 muparser has its own permissive license, see muparser source files for details.
 
