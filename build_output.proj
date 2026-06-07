@@ -54,10 +54,15 @@
              SourceFiles="@(scriptsbin)"
              DestinationFolder="output\$(Configuration)\bin"
         />
+        <Exec
+             Command="python insert_sDNA_versions_and_headers.py output\$(Configuration)\"
+             WorkingDirectory="."
+        />
         <Copy
              SourceFiles="@(installerbits)"
              DestinationFolder="output\$(Configuration)"
         />
+        <!-- TODO Adjust AdvancedInstaller config to ship docsandlicense files in the .msi -->
         <Copy
              SourceFiles="@(docsandlicense)"
              DestinationFolder="output\$(Configuration)"
@@ -69,6 +74,7 @@
              Command="python version_generated.h.creator.py"
              WorkingDirectory="sDNA\sdna_vs2008"
         />
+        <!-- TODO Adjust AdvancedInstaller config to ship version_generated.h in the .msi -->
         <Copy
              SourceFiles="@(versioninfo)"
              DestinationFolder="output\$(Configuration)"

@@ -1,17 +1,15 @@
-import os
+import pathlib
 import subprocess
 
-
-version_template = r'version_template.h'
-version_generated = r'version_generated.h'
+PARENT_DIR = Path(__file__).parent
+version_template = PARENT_DIR / 'version_template.h'
+version_generated = PARENT_DIR / 'version_generated.h'
 
 git_hash = subprocess.check_output('git rev-parse HEAD').decode('utf8').rstrip()
 
-with open(os.path.join(os.path.dirname(__file__), version_template), 'rt') as f:
-    template_content = f.read()
+template_content =  version_template.read_text()
 
 content = template_content.replace('#GITHASH#', git_hash)
 
-# "w" mode (not "a") - "an existing file with the same name will be erased"
-with open(version_generated, 'wt') as f:
-    f.write(content)
+# Overwrites any existing file.
+version_generated.write_text(content)

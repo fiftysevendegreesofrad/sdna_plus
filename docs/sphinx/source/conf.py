@@ -54,13 +54,13 @@ project = u'sDNA'
 copyright = u'2016, Crispin Cooper'
 author = u'Crispin Cooper'
 
-# find getSdnaVersion
+# find insert_sDNA_versions_and_headers
 encoding = sys.getfilesystemencoding()
 path = os.path.dirname(__file__)
 parentdir = os.path.dirname(os.path.dirname(os.path.dirname(path)))
 if parentdir not in sys.path:
     sys.path.insert(0,parentdir)
-from getSdnaVersion import getVersion
+from insert_sDNA_versions_and_headers import getVersion
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
