@@ -25,13 +25,21 @@ RUN yum check-update && \
 RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
     ./vcpkg/bootstrap-vcpkg.sh
 
-    
+
 
 RUN curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2
 
 RUN tar xfj geos-3.3.5.tar.bz2
     
-RUN cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B ~/build_geos -S geos-3.3.5
+RUN cmake \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=~/build_geos/_installed \
+  -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF \
+  -DBUILD_TESTING=OFF \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+  -G Ninja \
+  -B ~/build_geos \
+  -S geos-3.3.5
 
 RUN cmake --build ~/build_geos
 
