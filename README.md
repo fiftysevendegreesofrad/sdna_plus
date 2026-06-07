@@ -30,6 +30,7 @@ Install R and the two deps separately, e.g. on Ubuntu with:
 ```
 sudo apt-get update
 sudo apt-get install -y r-cran-optparse r-cran-sjstats
+pipx install sdna_plus[learn]
 ```
 
 #### Using R Portable 3.2.3 (Windows only). 
