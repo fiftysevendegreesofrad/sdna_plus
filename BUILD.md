@@ -59,10 +59,10 @@ step similar to `sDNA\sdna_vs2008\version_generated.h.creator.py`
 from `sDNA\sdna_vs2008\sdna_vs2008.vcxproj`.
 
 This is because in order to compile code that will link to a pre-compiled 
-header `stdafx.h` with Visual Studio, it must occur after an `#include stdafx.h` 
+header (PCH) `stdafx.h` with Visual Studio, it must occur after an `#include stdafx.h` 
 directive.  All lines before the first such directive are ignored by Visual Studio. 
 CMake configures PCHs as "forced includes", for which there must be no `#include stdafx.h`s,
-so the above "preppend_" Python script is not used in those builds. 
+so the above "preppend_" Python script is not used in builds using CMake. 
 ### Background
  0) The sDNA dll is compiled using Visual Studio, and a pre-compiled header (stdafx.h in sDNA).  
  1) Its source code follows the Visual Studio convention of making the 
