@@ -3,11 +3,11 @@ name: "Compile with CMake, and Zig for Windows, and test"
 on:
   workflow_dispatch:
 
-  push:
-    branches: [ "main", "Cross_platform" ]
+  # push:
+  #   branches: [ "main", "Cross_platform" ]
 
-  pull_request:
-    branches: [ "main", "Cross_platform", ]
+  # pull_request:
+  #   branches: [ "main", "Cross_platform", ]
 
 
 

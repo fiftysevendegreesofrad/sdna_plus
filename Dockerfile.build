@@ -13,9 +13,6 @@ ENV PATH=/opt/python/cp312-cp312/bin/:$PATH \
 # Remove existing repository files
 RUN rm -f /etc/yum.repos.d/CentOS-*.repo
 
-RUN yum check-update && \
-    yum install -y zip ninja-build && \
-    yum clean all
 
 RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
     ./vcpkg/bootstrap-vcpkg.sh

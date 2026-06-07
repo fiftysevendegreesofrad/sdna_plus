@@ -3,11 +3,11 @@ name: "CMake, GCC, & Ubuntu.  Compile .so."
 on:
   workflow_dispatch:
 
-  push:
-    branches: [ "Cross_platform" ]
+  # push:
+  #   branches: [ "Cross_platform" ]
 
-  pull_request:
-    branches: [ "Cross_platform" ]
+  # pull_request:
+  #   branches: [ "Cross_platform" ]
 
 
 env:
