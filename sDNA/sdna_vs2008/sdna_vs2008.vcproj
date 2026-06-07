@@ -27,11 +27,6 @@
 			CharacterSet="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x86\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -109,11 +104,6 @@
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -195,11 +185,6 @@
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -286,11 +271,6 @@
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -379,11 +359,6 @@
 			WholeProgramOptimization="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x86\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -468,11 +443,6 @@
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -560,11 +530,6 @@
 			WholeProgramOptimization="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x86\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -650,11 +615,6 @@
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -743,11 +703,6 @@
 			WholeProgramOptimization="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x86\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -833,11 +788,6 @@
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -926,11 +876,6 @@
 			WholeProgramOptimization="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x86\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -1014,11 +959,6 @@
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -1104,11 +1044,6 @@
 			CharacterSet="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x86\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -1185,11 +1120,6 @@
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -1268,11 +1198,6 @@
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -1353,11 +1278,6 @@
 			CharacterSet="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x64\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -1437,11 +1357,6 @@
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -1528,11 +1443,6 @@
 			WholeProgramOptimization="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x64\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -1618,11 +1528,6 @@
 			CharacterSet="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x86\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -1699,11 +1604,6 @@
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
@@ -1783,11 +1683,6 @@
 			CharacterSet="1"
 			>
 			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
-			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
 				CommandLine="copy ..\geos\x86\src\geos_c.dll $(OutDir)&#x0D;&#x0A;"
@@ -1865,11 +1760,6 @@
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				Description="Getting version number"
-				CommandLine="python version_generated.h.creator.py"
-			/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="copying geos dll"
