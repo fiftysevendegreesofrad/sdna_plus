@@ -109,7 +109,7 @@ jobs:
 
 
 
-    - uses: LizardByte/setup-python-action@master
+    - uses: LizardByte/actions/actions/setup_python@master
       with:
         python-version: ${{ matrix.python_version }}
 

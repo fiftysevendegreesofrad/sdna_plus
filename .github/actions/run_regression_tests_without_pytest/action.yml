@@ -39,7 +39,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: LizardByte/setup-python-action@master
+    - uses: LizardByte/actions/actions/setup_python@master
       with:
         python-version: ${{ inputs.python_version }}
 
