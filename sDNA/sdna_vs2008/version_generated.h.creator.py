@@ -12,5 +12,6 @@ with open(os.path.join(os.path.dirname(__file__), version_template), 'rt') as f:
 
 content = template_content.replace('#GITHASH#', git_hash)
 
+# "w" mode (not "a") - "an existing file with the same name will be erased"
 with open(version_generated, 'wt') as f:
     f.write(content)

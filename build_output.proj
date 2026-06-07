@@ -34,6 +34,7 @@
 <installerbits Include="installerbits\license.rtf"/>
 
 <versioninfo Include="sDNA\sdna_vs2008\version_template.h"/>
+<versioninfo Include="sDNA\sdna_vs2008\version_generated.h"/>
 
 <docsandlicense Include="README.md"/>
 <docsandlicense Include="LICENSE.md"/>
@@ -58,16 +59,20 @@
              DestinationFolder="output\$(Configuration)"
         />
         <Copy
-             SourceFiles="@(versioninfo)"
-             DestinationFolder="output\$(Configuration)"
-        />
-        <Copy
              SourceFiles="@(docsandlicense)"
              DestinationFolder="output\$(Configuration)"
         />
 
         <Copy SourceFiles="@(rportable)" DestinationFolder="output\$(Configuration)\rportable\%(RecursiveDir)" SkipUnchangedFiles="true" />
-
+        
+        <Exec
+             Command="python version_generated.h.creator.py"
+             WorkingDirectory="sDNA\sdna_vs2008"
+        />
+        <Copy
+             SourceFiles="@(versioninfo)"
+             DestinationFolder="output\$(Configuration)"
+        />
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=Win32" Targets="Rebuild"/>
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=x64" Targets="Rebuild"/>
 
