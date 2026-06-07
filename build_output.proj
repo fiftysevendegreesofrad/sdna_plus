@@ -34,7 +34,6 @@
 <installerbits Include="installerbits\license.rtf"/>
 
 <versioninfo Include="sDNA\sdna_vs2008\version_template.h"/>
-<versioninfo Include="sDNA\sdna_vs2008\version_generated.h"/>
 
 <docsandlicense Include="README.md"/>
 <docsandlicense Include="LICENSE.md"/>
