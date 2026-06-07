@@ -26,10 +26,10 @@ jobs:
 
 
     # - name: Deploy Advinst
-    #   uses: caphyon/advinst-github-action@v2.0
+    #   uses: caphyon/advinst-github-action@v2.0.3
     #   with:
     #     # advinst-version: '21.3'
-    #     advinst-version: '21.7.1'
+    #     advinst-version: '21.8.2'
 
     #     # advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
     #     # " advinst-license
