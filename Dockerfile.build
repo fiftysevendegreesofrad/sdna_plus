@@ -14,17 +14,28 @@ ENV PATH=/opt/python/cp312-cp312/bin/:$PATH \
 RUN rm -f /etc/yum.repos.d/CentOS-*.repo
 
 RUN yum check-update && \
-    yum install -y ninja-build && \
+    yum install -y ninja-build zip && \
     yum clean all
 
+# TODO: Figure out where to install zip to satisfy vcpkg, to avoid:
+# Updating files: 100% (13968/13968)
+# Updating files: 100% (13968/13968), done.
+#9 2.487 Could not find zip. Please install it (and other dependencies) with:
+#9 2.487 On Debian and Ubuntu derivatives:
+#9 2.487   sudo apt-get install curl zip unzip tar
+#9 2.487 On recent Red Hat and Fedora derivatives:
+#9 2.487   sudo dnf install curl zip unzip tar
+#9 2.487 On older Red Hat and Fedora derivatives:
+#9 2.487   sudo yum install curl zip unzip tar
+#
 # Download specific version of libzip (for vcpkg), compile it from source and install it
-RUN git clone --branch=v1.11.4 --depth=1 https://github.com/nih-at/libzip.git && \
-    cd libzip && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=/usr/lib64/ && \
-    make && \
-    make install
+# RUN git clone --branch=v1.11.4 --depth=1 https://github.com/nih-at/libzip.git && \
+#     cd libzip && \
+#     mkdir build && \
+#     cd build && \
+#     cmake .. -DCMAKE_INSTALL_PREFIX=/usr/lib64/ && \
+#     make && \
+#     make install
 
 
 RUN git clone --branch=2026.06.01 --depth=1 https://github.com/microsoft/vcpkg.git && \
