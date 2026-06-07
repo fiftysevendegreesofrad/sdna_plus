@@ -3,11 +3,11 @@ name: "CMake, VS 2022, & Windows.  Build installer and test it"
 on:
   workflow_dispatch:
 
-  # push:
-  #   branches: [ "main", "Cross_platform" ]
+  push:
+    branches: [ "main", "Cross_platform" ]
 
-  # pull_request:
-  #   branches: [ "main", "Cross_platform" ]
+  pull_request:
+    branches: [ "main", "Cross_platform" ]
 
 
 env:
@@ -43,7 +43,7 @@ jobs:
     # - name: Install vcpkg on the same drive as the working dir
     #   shell: cmd
     #   run: |
-    #     git clone --depth=1 https://github.com/microsoft/vcpkg/
+    #     git clone --depth=1 --branch=2026.06.01 https://github.com/microsoft/vcpkg/
     #     .\vcpkg\bootstrap-vcpkg.bat
 
 

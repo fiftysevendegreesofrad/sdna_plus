@@ -3,11 +3,11 @@ name: "Smoke test (GCC)."
 on:
   workflow_dispatch:
 
-  # push:
-  #   branches: [ "Cross_platform" ]
+  push:
+    branches: [ "Cross_platform" ]
 
-  # pull_request:
-  #   branches: [ "Cross_platform" ]
+  pull_request:
+    branches: [ "Cross_platform" ]
 
 env:
   CONFIGURATION: Release

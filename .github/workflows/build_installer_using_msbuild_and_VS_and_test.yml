@@ -3,11 +3,11 @@ name: "MSBuild, VS 2022, & Windows.  Build installer and test it."
 on:
   workflow_dispatch:
 
-  # push:
-  #   branches: [ "main", "Cross_platform" ]
+  push:
+    branches: [ "main", "Cross_platform" ]
 
-  # pull_request:
-  #   branches: [ "main", "Cross_platform" ]
+  pull_request:
+    branches: [ "main", "Cross_platform" ]
 
 env:
   CONFIGURATION: Release
