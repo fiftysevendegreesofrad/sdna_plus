@@ -1,5 +1,5 @@
 # Based on CentOS 5
-FROM quay.io/pypa/manylinux2014_x86_64
+FROM quay.io/pypa/manylinux_2_28_x86_64
 
 LABEL name="sDNA Linux Python Wheel Builder"
 
@@ -13,23 +13,54 @@ ENV PATH=/opt/python/cp312-cp312/bin/:$PATH \
 # Remove existing repository files
 RUN rm -f /etc/yum.repos.d/CentOS-*.repo
 
-# Add the new repository files from vault.centos.org
-RUN yum-config-manager --add-repo=http://vault.centos.org/centos/7/os/x86_64/ && \
-    yum-config-manager --add-repo=http://vault.centos.org/centos/7/updates/x86_64/ && \
-    yum-config-manager --add-repo=http://vault.centos.org/centos/7/extras/x86_64/
-
 RUN yum check-update && \
-    yum install -y zip ninja-build && \
+    yum install -y ninja-build zip && \
     yum clean all
 
-RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
+# TODO: Figure out where to install zip to satisfy vcpkg, to avoid:
+# Updating files: 100% (13968/13968)
+# Updating files: 100% (13968/13968), done.
+#9 2.487 Could not find zip. Please install it (and other dependencies) with:
+#9 2.487 On Debian and Ubuntu derivatives:
+#9 2.487   sudo apt-get install curl zip unzip tar
+#9 2.487 On recent Red Hat and Fedora derivatives:
+#9 2.487   sudo dnf install curl zip unzip tar
+#9 2.487 On older Red Hat and Fedora derivatives:
+#9 2.487   sudo yum install curl zip unzip tar
+#
+# Download specific version of libzip (for vcpkg), compile it from source and install it
+# RUN git clone --branch=v1.11.4 --depth=1 https://github.com/nih-at/libzip.git && \
+#     cd libzip && \
+#     mkdir build && \
+#     cd build && \
+#     cmake .. -DCMAKE_INSTALL_PREFIX=/usr/lib64/ && \
+#     make && \
+#     make install
+
+
+RUN git clone --branch=2026.06.01 --depth=1 https://github.com/microsoft/vcpkg.git && \
     ./vcpkg/bootstrap-vcpkg.sh
 
 
-RUN curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2 && \
-    tar xfj geos-3.3.5.tar.bz2 && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B ~/build_geos -S geos-3.3.5 && \
-    cmake --build ~/build_geos
+
+
+RUN curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2
+
+RUN tar xfj geos-3.3.5.tar.bz2
+    
+RUN cmake \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=~/build_geos/_installed \
+  -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF \
+  -DBUILD_TESTING=OFF \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+  -G Ninja \
+  -B ~/build_geos \
+  -S geos-3.3.5
+
+RUN cmake --build ~/build_geos
+
+
 
 COPY requirements/build-wheel.txt .
 

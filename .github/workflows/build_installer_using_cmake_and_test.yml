@@ -33,18 +33,17 @@ jobs:
       run: echo "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\bin" >> $GITHUB_PATH
 
     - name: Deploy Advinst
-      uses: caphyon/advinst-github-action@v2.0
+      uses: caphyon/advinst-github-action@v2.0.3
       with:
-        # advinst-version: '21.3'
-        advinst-version: '21.7.1'
-
+        advinst-version: '21.8.2'
+        
     # - name: Make vcpkg dir on this drive
     #   run: mkdir c:\my_vcpkg
 
     # - name: Install vcpkg on the same drive as the working dir
     #   shell: cmd
     #   run: |
-    #     git clone --depth=1 https://github.com/microsoft/vcpkg/
+    #     git clone --depth=1 --branch=2026.06.01 https://github.com/microsoft/vcpkg/
     #     .\vcpkg\bootstrap-vcpkg.bat
 
 
