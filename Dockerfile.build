@@ -22,7 +22,7 @@ RUN git clone --branch=v1.11.4 --depth=1 https://github.com/nih-at/libzip.git &&
     cd libzip && \
     mkdir build && \
     cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr/lib64/ && \
     make && \
     make install
 
