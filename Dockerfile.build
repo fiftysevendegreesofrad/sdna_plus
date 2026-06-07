@@ -17,8 +17,9 @@ RUN yum check-update && \
     yum install -y zip ninja-build && \
     yum clean all
 
-RUN git clone --depth=1 http://www.github.com/Microsoft/vcpkg && \
+RUN git clone --branch=2026.06.01 --depth=1 https://github.com/microsoft/vcpkg.git && \
     ./vcpkg/bootstrap-vcpkg.sh
+
 
 
 
