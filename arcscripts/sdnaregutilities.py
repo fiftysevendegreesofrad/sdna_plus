@@ -1,6 +1,9 @@
 # (c) Crispin Cooper on behalf of Cardiff University 2015
 # This file is released under MIT license
 
+__version__ = "VERSION_PLACEHOLDER"
+
+
 from __future__ import unicode_literals
 import subprocess
 from subprocess import Popen,PIPE

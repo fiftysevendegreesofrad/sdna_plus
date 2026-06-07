@@ -24,6 +24,9 @@
 ##OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ##THE SOFTWARE.
 
+__version__ = "VERSION_PLACEHOLDER"
+
+
 def metric_dropdown(name,label,include_match_analytical=False):
     optlist = ["EUCLIDEAN","ANGULAR","HYBRID","CUSTOM","CYCLE","CYCLE_ROUNDTRIP","PEDESTRIAN","VEHICLE","PUBLIC_TRANSPORT","EUCLIDEAN_ANGULAR"]
     if include_match_analytical:
