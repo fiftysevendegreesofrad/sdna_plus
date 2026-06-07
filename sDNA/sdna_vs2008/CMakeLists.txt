@@ -1,6 +1,5 @@
-# 3.29 for IF(IS_READABLE ... )
-# 3.5 to avoid "Compatibility with CMake < 3.5 has been removed from CMake." (as I stupidly haven't pinned CMake)
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.29)
+
 
 # "The version of the operating system for which CMake is to build."
 # https://cmake.org/cmake/help/latest/variable/CMAKE_SYSTEM_VERSION.html

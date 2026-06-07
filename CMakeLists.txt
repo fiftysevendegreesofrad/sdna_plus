@@ -1,6 +1,5 @@
 # 3.29 for IF(IS_READABLE ... )
-# 3.5 to avoid "Compatibility with CMake < 3.5 has been removed from CMake." (as I stupidly haven't pinned CMake)
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.29)
 
 # set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
 # # (i.e. Windows 10)
