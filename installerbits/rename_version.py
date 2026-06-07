@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 import os,re,sys,_parentdir,shutil
-from insert_sDNA_versions_and_headers import getVersion
+from insert_sDNA_versions import getVersion
 
 installfile,outputdir = sys.argv[1:3]
 
