@@ -53,7 +53,7 @@ If this isn't a throw away env, make a venv and activate it.
 * `pytest`
 ## Compilation notes.
 #### Dynamic changes to the source code when compiling with Visual Studio
-The Python script `sDNA\sdna_vs2008\preppend_muparser_cpps_with_include_stdafx.h.py`
+The Python script (on the Cross_Platform branch only) `sDNA\sdna_vs2008\preppend_muparser_cpps_with_include_stdafx.h.py`
 dynamically changes the static copy of the MuParser code. It is run in a custom pre-build 
 step similar to `sDNA\sdna_vs2008\version_generated.h.creator.py`  
 from `sDNA\sdna_vs2008\sdna_vs2008.vcxproj`.
