@@ -1,14 +1,13 @@
 # (c) Crispin Cooper on behalf of Cardiff University 2015
 # This file is released under MIT license
 
-__version__ = "VERSION_PLACEHOLDER"
-
-
 from __future__ import unicode_literals
 import subprocess
 from subprocess import Popen,PIPE
 import csv,sys,numpy,tempfile,os,copy
 from sdna_environment import UnicodeCSVReader,UnicodeCSVWriter,bytes_to_str
+
+__version__ = "VERSION_PLACEHOLDER"
 
 SINGLE_BEST="single_best_variable"
 MULTIPLE_LASSO="multiple_variables"

@@ -1,9 +1,9 @@
 # sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
 
-__version__ = "VERSION_PLACEHOLDER"
-
 from __future__ import print_function
 import sys,glob,shapefile
+
+__version__ = "VERSION_PLACEHOLDER"
 
 filenames = sys.argv[1:]
 
