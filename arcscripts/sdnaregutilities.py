@@ -7,6 +7,8 @@ from subprocess import Popen,PIPE
 import csv,sys,numpy,tempfile,os,copy
 from sdna_environment import UnicodeCSVReader,UnicodeCSVWriter,bytes_to_str
 
+__version__ = "VERSION_PLACEHOLDER"
+
 SINGLE_BEST="single_best_variable"
 MULTIPLE_LASSO="multiple_variables"
 MULTIPLE_RIDGE="all_variables"

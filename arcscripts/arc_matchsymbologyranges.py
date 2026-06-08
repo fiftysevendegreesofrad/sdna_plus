@@ -1,3 +1,7 @@
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
+
+__version__ = "VERSION_PLACEHOLDER"
+
 import arcpy,ctypes,sys
 from sdnapy import _dll as sdna_dll
 

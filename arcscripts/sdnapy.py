@@ -1,4 +1,11 @@
-# This is the python wrapper for the sDNA backend DLL
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
+
+""" Python wrapper for the main sDNA computation engine 
+    (the backend DLL/.so compiled from the C++ code) 
+"""
+
+__version__ = "VERSION_PLACEHOLDER"
+
 
 from sdnaexception import SDNAException
 
