@@ -39,9 +39,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: LizardByte/actions/actions/setup_python@master
+    # - uses: LizardByte/actions/actions/setup_python@master
+    - uses: JamesParrott/LizardByte_actions/actions/setup_python@master
       with:
         python-version: ${{ inputs.python_version }}
+        update-pyenv: 'false'
 
     - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
       if: ${{ inputs.python_version == '3.5'}}
