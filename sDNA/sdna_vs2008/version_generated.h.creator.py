@@ -1,7 +1,7 @@
 import pathlib
 import subprocess
 
-PARENT_DIR = Path(__file__).parent
+PARENT_DIR = pathlib.Path(__file__).parent
 version_template = PARENT_DIR / 'version_template.h'
 version_generated = PARENT_DIR / 'version_generated.h'
 
@@ -11,5 +11,5 @@ template_content =  version_template.read_text()
 
 content = template_content.replace('#GITHASH#', git_hash)
 
-# Overwrites any existing file.
+# Overwrites an existing file.
 version_generated.write_text(content)
