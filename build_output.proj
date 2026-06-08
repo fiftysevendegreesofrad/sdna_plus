@@ -33,6 +33,12 @@
 
 <installerbits Include="installerbits\license.rtf"/>
 
+<versioninfo Include="sDNA\sdna_vs2008\version_template.h"/>
+<versioninfo Include="sDNA\sdna_vs2008\version_generated.h"/>
+
+<docsandlicense Include="README.md"/>
+<docsandlicense Include="LICENSE.md"/>
+
 </ItemGroup>
 
 
@@ -48,13 +54,31 @@
              SourceFiles="@(scriptsbin)"
              DestinationFolder="output\$(Configuration)\bin"
         />
+        <Exec
+             Command="python insert_sDNA_versions.py"
+             WorkingDirectory="."
+        />
         <Copy
              SourceFiles="@(installerbits)"
              DestinationFolder="output\$(Configuration)"
         />
+        <!-- TODO Adjust AdvancedInstaller config to ship docsandlicense files in the .msi -->
+        <Copy
+             SourceFiles="@(docsandlicense)"
+             DestinationFolder="output\$(Configuration)"
+        />
 
         <Copy SourceFiles="@(rportable)" DestinationFolder="output\$(Configuration)\rportable\%(RecursiveDir)" SkipUnchangedFiles="true" />
-
+        
+        <Exec
+             Command="python version_generated.h.creator.py"
+             WorkingDirectory="sDNA\sdna_vs2008"
+        />
+        <!-- TODO Adjust AdvancedInstaller config to ship version_generated.h in the .msi -->
+        <Copy
+             SourceFiles="@(versioninfo)"
+             DestinationFolder="output\$(Configuration)"
+        />
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=Win32" Targets="Rebuild"/>
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=x64" Targets="Rebuild"/>
 

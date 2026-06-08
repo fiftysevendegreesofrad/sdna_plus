@@ -1,3 +1,7 @@
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
+
+__version__ = "VERSION_PLACEHOLDER"
+
 import arcpy, os
 
 in_file = arcpy.GetParameterAsText(0)
