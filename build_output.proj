@@ -55,7 +55,7 @@
              DestinationFolder="output\$(Configuration)\bin"
         />
         <Exec
-             Command="python insert_sDNA_versions.py"
+             Command="python insert_sDNA_versions.py scripts"
              WorkingDirectory="."
         />
         <Copy
