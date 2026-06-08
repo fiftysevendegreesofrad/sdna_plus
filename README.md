@@ -1,8 +1,6 @@
 # sDNA+: Spatial Design Network Analysis plus
 
-sDNA+ has now been open sourced (under AGPL3).  All the sDNA-open features, plus previously proprietary ones (including hybrid metrics), are included. 
-![build status](https://github.com/fiftysevendegreesofrad/sdna_plus/actions/workflows/build_installer_and_test.yml/badge.svg)
-
+This is the open source fork of the formerly proprietary sDNA+ software - all the sDNA features plus hybrid metrics. 
 
 sDNA+ was created by Crispin Cooper on behalf of [Cardiff University](https://www.cardiff.ac.uk).  Alain Chiaradia was responsible for the initial idea, and Chris Webster for the initial funding and project mentoring. We are grateful to various parties for financial contributions towards development: in no particular order, Hong Kong University, Tongji University, the UK Economic and Social Research Council, BRE, Wedderburn Transport Planning. Also research contributions in kind from Arup Ltd, WSP Global Engineering, BuroHappold and Sustrans. Also to James Parrott both for developing the [sDNA for Grasshopper](https://github.com/fiftysevendegreesofrad/sDNA_GH) plugin, and for assistance in updating the sDNA build process during 2023. And Jeffrey Morgan for updating sDNA to Python 3.
 
@@ -14,7 +12,6 @@ Copyright rests with Cardiff University and the code is released under GPL Affer
 
 ### Installation
 
-#### Windows
 Use the software via any of the following means:
 
 * QGIS 2.14 onwards
@@ -27,7 +24,6 @@ Use the software via any of the following means:
   * To see examples of command line calls, run sDNA from QGIS, the plugin will tell you what command line it uses for each task
 * Use the Python interface `sdnapy.py`; look at `runcalculation.py` for the reference example of how to do this
 
-#### Linux
 The experimental Cross Platform branch (that runs on Linux, as well as Windows) can be installed from [PyPi](https://pypi.org/project/sDNA-plus/).
 
 ### Documentation
