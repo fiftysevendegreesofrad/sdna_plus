@@ -221,7 +221,7 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 find_package(Python REQUIRED COMPONENTS Interpreter)
 
-set(VERSION_GENERATED_H_ABS_PATH "${CMAKE_CURRENT_BINARY_DIR}/version_generated.h")
+set(VERSION_GENERATED_H_ABS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/version_generated.h")
 
 add_custom_command(
     OUTPUT "${VERSION_GENERATED_H_ABS_PATH}"
