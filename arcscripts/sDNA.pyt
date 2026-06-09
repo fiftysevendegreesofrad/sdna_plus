@@ -5,8 +5,10 @@ __version__ = "VERSION_PLACEHOLDER"
 import arcpy
 import sdna_environment
 import sDNAUISpec
-import imp
-imp.reload(sDNAUISpec)
+try:
+    import imp
+except ModuleNotFoundError:
+    import importlib as impimp.reload(sDNAUISpec)
 from sDNAUISpec import get_tools
 import runsdnacommand
 imp.reload (runsdnacommand)
