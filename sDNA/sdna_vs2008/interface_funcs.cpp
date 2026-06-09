@@ -5,6 +5,7 @@
 #include "sdna.h"
 #include "sDNACalculationFactory.h"
 #include "tables.h"
+#include "version_generated.h"
 
 //thinly veiled OO access methods to export
 
@@ -12,6 +13,10 @@
 //sdna specs do not currently permit trying to put bigger numbers than longs through the interface
 //most internal handling is now done by size_t though with some exceptions (GEOS library, count junctions to name two)
 
+SDNA_API const char* __stdcall get_sDNA_version()
+{
+	return SDNA_VERSION;
+}
 //for nets...
 
 SDNA_API Net* __stdcall net_create() 
