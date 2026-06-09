@@ -33,18 +33,21 @@
 <scriptsbin Include="arcscripts\bin\sdnalearn.py"/>
 <scriptsbin Include="arcscripts\bin\sdnapredict.py"/>
 
-<!-- <rportable Include="arcscripts\rportable\**\*.*" /> -->
-
 <installerbits Include="installerbits\license.rtf"/>
 
+<versioninfo Include="sDNA\sdna_vs2008\version_template.h"/>
+<versioninfo Include="sDNA\sdna_vs2008\version_generated.h"/>
+
+<docsandlicense Include="README.md"/>
+<docsandlicense Include="LICENSE.md"/>
+
 </ItemGroup>
+
 
 
     <Target Name="Rebuild">
 
         <MakeDir Directories="output\$(Configuration)\x64"/>
-
-        <Exec Command="python -m pip install -r requirements\base.txt -r requirements\R_full.txt --target output\$(Configuration)"/>
 
         <Copy
              SourceFiles="@(scripts)"
@@ -54,17 +57,29 @@
              SourceFiles="@(scriptsbin)"
              DestinationFolder="output\$(Configuration)\bin"
         />
+        <Exec
+             Command="python insert_sDNA_versions.py scripts"
+             WorkingDirectory="."
+        />
         <Copy
              SourceFiles="@(installerbits)"
              DestinationFolder="output\$(Configuration)"
         />
-
-        <!-- <Copy SourceFiles="@(rportable)" DestinationFolder="output\$(Configuration)\rportable\%(RecursiveDir)" SkipUnchangedFiles="true" /> -->
-
+        <Copy
+             SourceFiles="@(docsandlicense)"
+             DestinationFolder="output\$(Configuration)"
+        />
+        <Exec
+             Command="python version_generated.h.creator.py"
+             WorkingDirectory="sDNA\sdna_vs2008"
+        />
+        <Copy
+             SourceFiles="@(versioninfo)"
+             DestinationFolder="output\$(Configuration)"
+        />
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=Win32" Targets="Rebuild"/>
         <MSBuild Projects="sdna\sdna_vs2008\sdna_vs2008.sln" Properties="Configuration=$(Configuration);Platform=x64" Targets="Rebuild"/>
 
     </Target>
-
     
 </Project>
