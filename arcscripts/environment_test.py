@@ -1,3 +1,7 @@
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
+
+__version__ = "VERSION_PLACEHOLDER"
+
 from sdna_environment import *
 from distutils import dir_util
 import os

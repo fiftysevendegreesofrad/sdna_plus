@@ -22,6 +22,9 @@
 ##OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ##THE SOFTWARE.
 
+__version__ = "VERSION_PLACEHOLDER"
+
+
 import os,sys,time,re
 from subprocess import PIPE, Popen, STDOUT
 try:

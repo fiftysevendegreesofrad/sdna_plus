@@ -1,5 +1,3 @@
-'''This file defines user interfaces to sDNA tools and how to convert inputs to config'''
-
 ##This file (and this file only) is released under the MIT license
 ##
 ##The MIT License (MIT)
@@ -23,6 +21,10 @@
 ##LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 ##OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ##THE SOFTWARE.
+'''This file defines user interfaces to sDNA tools and how to convert inputs to config'''
+
+__version__ = "VERSION_PLACEHOLDER"
+
 
 def metric_dropdown(name,label,include_match_analytical=False):
     optlist = ["EUCLIDEAN","ANGULAR","HYBRID","CUSTOM","CYCLE","CYCLE_ROUNDTRIP","PEDESTRIAN","VEHICLE","PUBLIC_TRANSPORT","EUCLIDEAN_ANGULAR"]

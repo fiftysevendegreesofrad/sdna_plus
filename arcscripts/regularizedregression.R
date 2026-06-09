@@ -1,5 +1,8 @@
-# (c) Crispin Cooper on behalf of Cardiff University 2015
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
 # This file is released under MIT license
+
+__version__ = "VERSION_PLACEHOLDER"
+
 
 # options(echo=TRUE) # if you want see commands in output file
 

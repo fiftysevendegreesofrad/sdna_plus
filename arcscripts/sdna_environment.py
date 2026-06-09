@@ -1,9 +1,13 @@
-# (c) Crispin Cooper on behalf of Cardiff University 2013-2015
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2013-2015
 # This file is released under MIT license
 
-# This encapsulates the different environments in which the
-# sDNA python scripts might run.
-# At present there are two: 1. within ArcGIS; 2. directly on shapefiles
+""" Encapsulates the different environments in which the
+    sDNA python scripts might run.
+    At present there are two: 1. within ArcGIS; 2. directly on shapefiles
+"""
+
+__version__ = "VERSION_PLACEHOLDER"
+
 
 import abc,sys,os,re,shutil,csv,codecs
 from os import path

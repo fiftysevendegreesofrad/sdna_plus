@@ -1,4 +1,8 @@
-# This is the python wrapper for the sDNA backend DLL
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
+
+__version__ = "VERSION_PLACEHOLDER"
+
+""" Python wrapper for the sDNA backend DLL """
 
 from sdnaexception import SDNAException
 
