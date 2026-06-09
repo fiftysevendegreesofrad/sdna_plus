@@ -3,6 +3,9 @@
 
 from __future__ import unicode_literals
 
+__version__ = "VERSION_PLACEHOLDER"
+
+
 import os
 import sys
 import subprocess

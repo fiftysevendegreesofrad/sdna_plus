@@ -1,4 +1,6 @@
 #!/usr/bin/Rscript
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
+
 
 yfilename = commandArgs(trailingOnly=TRUE)[1]
 xfilename = commandArgs(trailingOnly=TRUE)[2]

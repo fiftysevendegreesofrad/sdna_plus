@@ -40,6 +40,8 @@ union SDNAOutputUnion;
 using namespace std;
 using namespace boost;
 
+SDNA_API const char* __stdcall get_sDNA_version() ;
+
 SDNA_API Net* __stdcall net_create() ;
 SDNA_API int __stdcall net_add_polyline(Net *c,long arcid,int geom_length,double *xs, double *ys); //deprecated but used by autocad
 SDNA_API int __stdcall net_add_polyline_3d(Net *c,long arcid,int geom_length,double *xs, double *ys, float *zs);

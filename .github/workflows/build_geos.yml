@@ -56,7 +56,7 @@ jobs:
 
     - name: upload_output
       id: installer-upload-step
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: geos_built_${{ env.version }}
         path: ${{ env.dir }}

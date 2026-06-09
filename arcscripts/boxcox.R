@@ -1,4 +1,6 @@
 #!/usr/bin/Rscript
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
+
 
 filename = commandArgs(trailingOnly=TRUE)[1]
 data = read.table(filename)

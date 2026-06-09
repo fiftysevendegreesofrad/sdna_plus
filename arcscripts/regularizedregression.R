@@ -1,4 +1,4 @@
-# (c) Crispin Cooper on behalf of Cardiff University 2015
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
 # This file is released under MIT license
 
 # options(echo=TRUE) # if you want see commands in output file

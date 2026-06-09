@@ -1,3 +1,13 @@
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
+
+""" Populates version tags in text and Python files, matching: 
+__version__ = "VERSION_PLACEHOLDER" with SDNA_VERSION from
+./sDNA/sdna_vs2008/version_template.h
+Please refer to adacent files or Git for the version of this 
+file itself.  It does not actually get shipped in formally versioned 
+.msi releases or wheels.
+"""
+
 import argparse
 from pathlib import Path
 import sys
@@ -38,27 +48,15 @@ def _insert_version_info(file: Path, version: str) -> None:
     ]
     file.write_text("\n".join(lines))
 
-def main(args = sys.argv[1:]) -> int:
-    parser = argparse.ArgumentParser(
-        prog = Path(__file__).name,
-        description = "sDNA version updater build tool",
-    )
 
-    parser.add_argument(
-        "--target",
-        type=Path,
-        default=PARENT_DIR / "output" / "release",
-    )
-    args_namespace = parser.parse_args(args)    
-
+def _replace_version_specifiers_in_scripts_files(version: str) -> None:
     sub_dirs = ["", "bin"]
     exclude = {"shapefile.py", "placeholder.txt"}
     target_exts = {".py", ".pyt", ".r", ".txt"} # must all be lower case to run on Windows.
 
-    version = getVersion()
 
     for sub_dir in sub_dirs:
-        dir_ = args_namespace.target / sub_dir
+        dir_ = PARENT_DIR / "output" / "release" / sub_dir
         if not dir_.is_dir():
             continue
         for file in dir_.iterdir():
@@ -70,8 +68,56 @@ def main(args = sys.argv[1:]) -> int:
                 continue
             _insert_version_info(file, version)
 
+def _replace_version_specifier_in_advinst_config_file(version: str) -> None:
+    version_line_template = '    <ROW Property="ProductVersion" Value="{version}" Options="32"/>'
+    old = version_line_template.format(version="1.0.0")
+    new = version_line_template.format(version=version)
+    pattern=version_line_template.format(version=r"\d+\.\d+\.\d+")
+
+    file = PARENT_DIR / "installerbits" / "advanced" / "sdna.aip"
+    lines = file.read_text().splitlines()
+
+    matches = [(j, m) for j, line in enumerate(lines) if (m := re.match(pattern, line))]
+
+    if not matches:
+        raise Exception(f"Pattern: {pattern} not found in: {file}")
+
+    if len(matches) >= 2:
+        raise Exception(f"Multiple lines in {file} match pattern: {pattern}, {matches=}")
+
+    i = matches[0][0]
+    lines[i] = new
+    lines.append("")
+
+    file.write_text("\n".join(lines))
+
+    
+
+def main(args = sys.argv[1:]) -> int:
+    parser = argparse.ArgumentParser(
+        prog = Path(__file__).name,
+        description = "sDNA version updater build tool",
+    )
+
+    parser.add_argument(
+        "targets",
+        nargs='*',
+        type=str,
+        default="scripts",
+    )
+
+    args_namespace = parser.parse_args(args)    
+    version = getVersion()
+
+    if "scripts" in args_namespace.targets:
+        _replace_version_specifiers_in_scripts_files(version)
+
+    if "advinst-config-file" in args_namespace.targets:
+        _replace_version_specifier_in_advinst_config_file(version)
+
+
+
     return 0
 
 if __name__ == '__main__':
     sys.exit(main())
-

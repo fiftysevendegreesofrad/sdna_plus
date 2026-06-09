@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform" ]
+    branches: [ "Cross_platform", "Linux_and_PyPi",  ]
 
   pull_request:
-    branches: [ "Cross_platform" ]
+    branches: [ "Cross_platform", "Linux_and_PyPi",  ]
 
 
 env:
@@ -24,7 +24,7 @@ jobs:
     # outputs:
     #   installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
 
 
@@ -56,7 +56,7 @@ jobs:
 
     - name: upload_output
       id: installer-upload-step
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: output_zig_cpp_linux
         path: output
@@ -69,7 +69,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.9', '3.10', '3.11', '3.12']
+        python_version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
 
     name: "Download and run sDNA installer, and run diff tests on it. "
     
@@ -79,7 +79,7 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Install R
       run: |
@@ -87,7 +87,7 @@ jobs:
         sudo apt-get install -y r-cran-optparse  r-cran-sjstats
 
     - name: Download output tree built in previous job
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: output_zig_cpp_linux
         path: output

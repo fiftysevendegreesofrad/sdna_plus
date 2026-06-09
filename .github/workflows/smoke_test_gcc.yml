@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform" ]
+    branches: [ "Cross_platform", "Linux_and_PyPi", ]
 
   pull_request:
-    branches: [ "Cross_platform" ]
+    branches: [ "Cross_platform", "Linux_and_PyPi", ]
 
 env:
   CONFIGURATION: Release
@@ -22,7 +22,7 @@ jobs:
     # outputs:
     #   installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Install Git
       run: |
@@ -46,7 +46,7 @@ jobs:
 
     - name: upload_output
       id: installer-upload-step
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: output_gcc_linux
         path: output
@@ -84,7 +84,7 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
         # echo "new line of text" | sudo tee -a /etc/apt/sources.list
     - name: Install R and deps
@@ -100,7 +100,7 @@ jobs:
       run: python -m pip install numpy PyShp==2.1.0
 
     - name: Download output tree built in previous job
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: output_gcc_linux
         path: output

@@ -215,7 +215,20 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 
 
+################################################################################
+# Dynamically generated source header (bake in the version to the .dll or .so)
+################################################################################
 
+find_package(Python REQUIRED COMPONENTS Interpreter)
+
+set(VERSION_GENERATED_H_ABS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/version_generated.h")
+
+add_custom_command(
+    OUTPUT "${VERSION_GENERATED_H_ABS_PATH}"
+    COMMAND Python::Interpreter "${CMAKE_CURRENT_SOURCE_DIR}/version_generated.h.creator.py"
+    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/version_generated.h.creator.py" 
+    COMMENT "Generating version_generated.h via Python..."
+)
 
 ################################################################################
 # Source groups
@@ -244,6 +257,7 @@ set(Headers
     "targetver.h"
     "unique_id.h"
     "version_template.h"
+    "${VERSION_GENERATED_H_ABS_PATH}"
     "version_generated.h.creator.py"
     "IteratorTypeErasure/any_iterator/any_iterator.hpp"
 )
@@ -958,6 +972,7 @@ else() # Not MSVC
     )
 endif()
 
+
 ################################################################################
 # Pre build events
 ################################################################################
@@ -982,15 +997,6 @@ endif()
 # not defined for targets created by the add_custom_target() command.
 # "
 # https://cmake.org/cmake/help/latest/command/add_custom_command.html#build-events
-
-
-find_package(Python REQUIRED COMPONENTS Interpreter)
-
-add_custom_command(
-    TARGET ${PROJECT_NAME} PRE_BUILD
-    COMMAND Python::Interpreter ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
-)
-
 
 ################################################################################
 # Post build events

@@ -22,7 +22,7 @@ jobs:
     # outputs:
     #   installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
 
     # - name: Deploy Advinst
@@ -75,7 +75,7 @@ jobs:
 
     - name: upload_output
       id: installer-upload-step
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: output
         # this file name pattern is defined in installerbits\rename_version.py
@@ -90,7 +90,7 @@ jobs:
   #   strategy:
   #     fail-fast: false
   #     matrix:
-  #       python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+  #       python_version: ['2.7', '3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
 
   #   name: "Download and run sDNA installer, and run diff tests on it. "
     
@@ -109,10 +109,10 @@ jobs:
   #   steps:
 
 
-  #   - uses: actions/checkout@v4
+  #   - uses: actions/checkout@v5
 
   #   - name: Download installer built in previous job
-  #     uses: actions/download-artifact@v4
+  #     uses: actions/download-artifact@v5
   #     with:
   #       name: installer_file
 

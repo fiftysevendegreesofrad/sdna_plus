@@ -1,5 +1,16 @@
-# This is the python wrapper for the sDNA backend DLL
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
 
+""" Python wrapper for the sDNA backend DLL """
+
+__version__ = "VERSION_PLACEHOLDER"
+
+def get_dll_sDNA_version():
+    # type: () -> str
+    dll = _dll()
+    dll.get_sDNA_version.restype = c_char_p
+    return bytes_to_str(dll.get_sDNA_version(), "ascii")
+
+    
 from sdnaexception import SDNAException
 
 from ctypes import *
