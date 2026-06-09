@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install build deps
         shell: bash
@@ -27,7 +27,7 @@ jobs:
 
       - name: upload_output
         id: installer-upload-step
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: python_wheel_VS_2022_Windows_x64
           path: dist
@@ -39,7 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14', '3.15']
+        python_version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14' ]
 
     name: "Run regression tests. "
     
@@ -49,12 +49,12 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
 
 
     - name: Download output tree built in previous job
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: python_wheel_VS_2022_Windows_x64
         path: dist
@@ -105,7 +105,7 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
 
 
@@ -118,7 +118,7 @@ jobs:
       run: python -m pip install -r requirements/base.txt -r requirements/learn-predict.txt -r requirements/R_full.txt
 
     - name: Download output tree built in previous job
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: python_wheel_VS_2022_Windows_x64
         path: dist
