@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform", "Linux_and_PyPi",  ]
+    branches: [ "Cross_platform"]
 
   pull_request:
-    branches: [ "Cross_platform", "Linux_and_PyPi",  ]
+    branches: [ "Cross_platform"]
 
 
 env:
