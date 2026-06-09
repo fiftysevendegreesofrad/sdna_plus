@@ -226,7 +226,15 @@ add_custom_command(
     COMMAND Python::Interpreter ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
 )
 
+set(VERSION_GENERATED_H_ABS_PATH "${CMAKE_CURRENT_BINARY_DIR}/version_generated.h")
 
+# 2. Setup the generation command
+add_custom_command(
+    OUTPUT "${VERSION_GENERATED_H_ABS_PATH}"
+    COMMAND Python::Interpreter "${CMAKE_CURRENT_SOURCE_DIR}/version_generated.h.creator.py"
+    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/version_generated.h.creator.py" 
+    COMMENT "Generating version_generated.h via Python..."
+)
 
 ################################################################################
 # Source groups
@@ -255,7 +263,7 @@ set(Headers
     "targetver.h"
     "unique_id.h"
     "version_template.h"
-    "version_generated.h"
+    "${VERSION_GENERATED_H_ABS_PATH}"
     "version_generated.h.creator.py"
     "IteratorTypeErasure/any_iterator/any_iterator.hpp"
 )
