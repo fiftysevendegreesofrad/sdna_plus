@@ -244,6 +244,7 @@ set(Headers
     "targetver.h"
     "unique_id.h"
     "version_template.h"
+    "version_generated.h"
     "version_generated.h.creator.py"
     "IteratorTypeErasure/any_iterator/any_iterator.hpp"
 )
