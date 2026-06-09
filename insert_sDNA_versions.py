@@ -1,3 +1,13 @@
+# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
+
+""" Populates version tags in text and Python files, matching: 
+__version__ = "VERSION_PLACEHOLDER" with SDNA_VERSION from
+./sDNA/sdna_vs2008/version_template.h
+Please refer to adacent files or Git for the version of this 
+file itself.  It does not actually get shipped in formally versioned 
+.msi releases or wheels.
+"""
+
 import argparse
 from pathlib import Path
 import sys
@@ -25,9 +35,6 @@ def getVersion() -> str:
     return version
 
 
-# sDNA+ (c) Crispin Cooper on behalf of Cardiff University 2015
-
-__version__ = "VERSION_PLACEHOLDER"
 
 def _insert_version_info(file: Path, version: str) -> None:
     line = ""
