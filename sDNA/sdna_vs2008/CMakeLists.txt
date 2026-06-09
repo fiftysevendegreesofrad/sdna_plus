@@ -221,14 +221,8 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 find_package(Python REQUIRED COMPONENTS Interpreter)
 
-add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/version_generated.h
-    COMMAND Python::Interpreter ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
-)
-
 set(VERSION_GENERATED_H_ABS_PATH "${CMAKE_CURRENT_BINARY_DIR}/version_generated.h")
 
-# 2. Setup the generation command
 add_custom_command(
     OUTPUT "${VERSION_GENERATED_H_ABS_PATH}"
     COMMAND Python::Interpreter "${CMAKE_CURRENT_SOURCE_DIR}/version_generated.h.creator.py"
