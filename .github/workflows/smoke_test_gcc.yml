@@ -46,7 +46,7 @@ jobs:
 
     - name: upload_output
       id: installer-upload-step
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: output_gcc_linux
         path: output
@@ -100,7 +100,7 @@ jobs:
       run: python -m pip install numpy PyShp==2.1.0
 
     - name: Download output tree built in previous job
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: output_gcc_linux
         path: output

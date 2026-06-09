@@ -75,7 +75,7 @@ jobs:
 
     - name: upload_installer_msi
       id: installer-upload-step
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: installer_file
         # this file name pattern is defined in installerbits\rename_version.py
@@ -112,7 +112,7 @@ jobs:
     - uses: actions/checkout@v5
 
     - name: Download installer built in previous job
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: installer_file
 

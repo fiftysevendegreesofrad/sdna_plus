@@ -40,7 +40,7 @@ jobs:
       run: pip install ninja
 
     - name: Install Zig
-      uses: goto-bus-stop/setup-zig@v2
+      uses: goto-bus-stop/setup-zig@v3
       with:
         version: 0.13.0
 
@@ -75,7 +75,7 @@ jobs:
 
     - name: upload_output
       id: installer-upload-step
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: output
         # this file name pattern is defined in installerbits\rename_version.py
@@ -112,7 +112,7 @@ jobs:
   #   - uses: actions/checkout@v5
 
   #   - name: Download installer built in previous job
-  #     uses: actions/download-artifact@v5
+  #     uses: actions/download-artifact@v6
   #     with:
   #       name: installer_file
 

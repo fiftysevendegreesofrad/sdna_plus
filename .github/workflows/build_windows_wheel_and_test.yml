@@ -27,7 +27,7 @@ jobs:
 
       - name: upload_output
         id: installer-upload-step
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: python_wheel_VS_2022_Windows_x64
           path: dist
@@ -54,7 +54,7 @@ jobs:
 
 
     - name: Download output tree built in previous job
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: python_wheel_VS_2022_Windows_x64
         path: dist
@@ -118,7 +118,7 @@ jobs:
       run: python -m pip install -r requirements/base.txt -r requirements/learn-predict.txt -r requirements/R_full.txt
 
     - name: Download output tree built in previous job
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: python_wheel_VS_2022_Windows_x64
         path: dist

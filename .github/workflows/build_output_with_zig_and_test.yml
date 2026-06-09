@@ -28,7 +28,7 @@ jobs:
 
 
     - name: Install Zig
-      uses: goto-bus-stop/setup-zig@v2
+      uses: goto-bus-stop/setup-zig@v3
       with:
         version: 0.13.0
 
@@ -51,7 +51,7 @@ jobs:
 
     - name: upload_output
       id: installer-upload-step
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: output_zig_windows
         path: output
@@ -84,7 +84,7 @@ jobs:
     - uses: actions/checkout@v5
 
     - name: Download output tree built in previous job
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: output_zig_windows
         path: output
