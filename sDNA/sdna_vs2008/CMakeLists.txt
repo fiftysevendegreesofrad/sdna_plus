@@ -214,6 +214,41 @@ include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
 
+################################################################################
+# Pre build events
+################################################################################
+#
+# "If you have any custom build steps in your workspace, 
+# these can be added to your CMakeLists files using the 
+# add_custom_command command. Custom targets (Utility Targets) 
+# in Visual Studio can be added with the add_custom_target command. "
+# https://cmake.org/cmake/help/book/mastering-cmake/chapter/Converting%20Existing%20Systems%20To%20CMake.html#converting-windows-based-workspaces
+#
+# "PRE_BUILD
+#     This option has unique behavior for the Visual Studio Generators. 
+# When using one of the Visual Studio generators, the command will run 
+# before any other rules are executed within the target. With all other 
+# generators, this option behaves the same as PRE_LINK instead. 
+# Because of this, it is recommended to avoid using PRE_BUILD except when 
+# it is known that a Visual Studio generator is being used.
+#
+# PRE_LINK
+#     Run after sources have been compiled but before linking the binary 
+# or running the librarian or archiver tool of a static library. This is 
+# not defined for targets created by the add_custom_target() command.
+# "
+# https://cmake.org/cmake/help/latest/command/add_custom_command.html#build-events
+
+################################################################################
+# Dynamically generated source header (bake in the version to the .dll or .so)
+################################################################################
+
+find_package(Python REQUIRED COMPONENTS Interpreter)
+
+add_custom_command(
+    TARGET ${PROJECT_NAME} PRE_BUILD
+    COMMAND Python::Interpreter ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
+)
 
 
 
@@ -959,38 +994,6 @@ else() # Not MSVC
     )
 endif()
 
-################################################################################
-# Pre build events
-################################################################################
-#
-# "If you have any custom build steps in your workspace, 
-# these can be added to your CMakeLists files using the 
-# add_custom_command command. Custom targets (Utility Targets) 
-# in Visual Studio can be added with the add_custom_target command. "
-# https://cmake.org/cmake/help/book/mastering-cmake/chapter/Converting%20Existing%20Systems%20To%20CMake.html#converting-windows-based-workspaces
-#
-# "PRE_BUILD
-#     This option has unique behavior for the Visual Studio Generators. 
-# When using one of the Visual Studio generators, the command will run 
-# before any other rules are executed within the target. With all other 
-# generators, this option behaves the same as PRE_LINK instead. 
-# Because of this, it is recommended to avoid using PRE_BUILD except when 
-# it is known that a Visual Studio generator is being used.
-#
-# PRE_LINK
-#     Run after sources have been compiled but before linking the binary 
-# or running the librarian or archiver tool of a static library. This is 
-# not defined for targets created by the add_custom_target() command.
-# "
-# https://cmake.org/cmake/help/latest/command/add_custom_command.html#build-events
-
-
-find_package(Python REQUIRED COMPONENTS Interpreter)
-
-add_custom_command(
-    TARGET ${PROJECT_NAME} PRE_BUILD
-    COMMAND Python::Interpreter ${CMAKE_CURRENT_SOURCE_DIR}"/version_generated.h.creator.py"
-)
 
 
 ################################################################################
