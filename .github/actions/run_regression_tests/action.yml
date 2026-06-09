@@ -61,6 +61,7 @@ runs:
     - uses: LizardByte/actions/actions/setup_python@master
       with:
         python-version: ${{ inputs.python_version }}
+        update-pyenv: 'false'
 
 
     # Windows only version specifier in R_full.txt
