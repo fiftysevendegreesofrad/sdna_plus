@@ -153,7 +153,7 @@ class Net:
                 
     def toString(self,data="",textdata=""):
             def warn(x):
-                    #print (x) #uncomment to debug
+                    #print(x) #uncomment to debug
                     return 0
             # use dll to build net
             c = Calculation("sdnaprepare",("null;data_absolute=%s;data_text=%s"%(data,textdata)),self,_PROGFUNCTYPE(warn),_WARNFUNCTYPE(warn))
