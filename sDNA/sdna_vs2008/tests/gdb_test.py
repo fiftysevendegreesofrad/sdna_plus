@@ -1,5 +1,7 @@
 import arcpy
-import os,time,sys
+import os
+import time
+import sys
 import ctypes
 
 from load_library import load_library
@@ -18,8 +20,8 @@ def add_dll_defined_fields_to_table(dll,calculation,table,overwrite):
     dll.calc_get_output_length.restype = ctypes.c_int
 
     outlength = dll.calc_get_output_length(calculation)
-    alii = list(dll.calc_get_all_output_names(calculation)[0:outlength]);
-    names = list(dll.calc_get_short_output_names(calculation)[0:outlength]);
+    alii = list(dll.calc_get_all_output_names(calculation)[0:outlength])
+    names = list(dll.calc_get_short_output_names(calculation)[0:outlength])
 
     # ensure names are valid for table type
     names = [arcpy.ValidateFieldName(x,os.path.dirname(table)) for x in names]
@@ -80,20 +82,20 @@ def populate_dll_defined_fields(dll,calculation,table,idfield):
 
 CALLBACKFUNCTYPE = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_long)
 def set_progressor(x):
-    print "progress callback: %d"%x
+    print("progress callback: %d"%x)
     return 0
 set_progressor_callback = CALLBACKFUNCTYPE(set_progressor)
 WARNINGCALLBACKFUNCTYPE = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_char_p)
 def warning(x):
-    print "warning callback: %s"%x
+    print("warning callback: %s"%x)
     return 0
 warning_callback = WARNINGCALLBACKFUNCTYPE(warning)
 
 last_time = 0
 def timestamp():
     global last_time
-    result = time.clock() - last_time
-    # arcpy.AddMessage("took %f ms"%(result*1000))
+    _result = time.clock() - last_time
+    # arcpy.AddMessage("took %f ms"%(_result*1000))
     last_time = time.clock()
 
 def string_to_radius(r):
@@ -141,10 +143,10 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
 
     fieldnames = [f.name for f in arcpy.ListFields(in_polyline_feature_class)]
     if in_start__gsation != "" or in_end__gsation != "":
-        if not in_start__gsation in fieldnames:
+        if in_start__gsation not in fieldnames:
             arcpy.AddError('Start _gsation field does not exist: %s'%in_start__gsation)
             raise Exception('Start _gsation field does not exist: %s'%in_start__gsation)
-        if not in_end__gsation in fieldnames:
+        if in_end__gsation not in fieldnames:
             arcpy.AddError('End _gsation field does not exist: %s'%in_end__gsation)
             raise Exception('End _gsation field does not exist: %s'%in_end__gsation)
         using__gsation = True
@@ -152,7 +154,7 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
         using__gsation = False
 
     if custom_activity_weight_field != "":
-        if not custom_activity_weight_field in fieldnames:
+        if custom_activity_weight_field not in fieldnames:
             arcpy.AddError('Custom activity weight field does not exist: %s'%custom_activity_weight_field)
             raise Exception('Custom activity weight field does not exist: %s'%custom_activity_weight_field)
         using_custom_weight = True
@@ -175,7 +177,7 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
     #initialize dll and create add_polyline wrapper func
     dirname = os.path.dirname(sys.argv[0])
     dllpath = dirname+r"\\..\\Release\\sdna_vs2008.dll"
-    print dllpath
+    print(dllpath)
     dll = load_library(dllpath)
 
     net = ctypes.c_void_p(dll.net_create(weight_activity_by_link_length))
@@ -191,12 +193,12 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
         for i,(x,y) in enumerate(points):
             point_array_x[i] = x
             point_array_y[i] = y
-		dll.net_add_polyline(net,arcid,len(points),point_array_x,point_array_y)
-		dll.net_add_polyline_data(net,arcid,"start_gs",ctypes.c_float(_gs[0]))
-		dll.net_add_polyline_data(net,arcid,"end_gs",ctypes.c_float(_gs[1]))
-		dll.net_add_polyline_data(net,arcid,"weight",ctypes.c_float(weight))
-		dll.net_add_polyline_data(net,arcid,"custom_cost",ctypes.c_float(1))
-		dll.net_add_polyline_data(net,arcid,"is_island",ctypes.c_float(0))
+        dll.net_add_polyline(net,arcid,len(points),point_array_x,point_array_y)
+        dll.net_add_polyline_data(net,arcid,"start_gs",ctypes.c_float(_gs[0]))
+        dll.net_add_polyline_data(net,arcid,"end_gs",ctypes.c_float(_gs[1]))
+        dll.net_add_polyline_data(net,arcid,"weight",ctypes.c_float(weight))
+        dll.net_add_polyline_data(net,arcid,"custom_cost",ctypes.c_float(1))
+        dll.net_add_polyline_data(net,arcid,"is_island",ctypes.c_float(0))
 
     timestamp()
 
@@ -266,7 +268,7 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
     dll.calc_destroy(calculation)
 
 for i in range(10):
-    print i,arcpy.GetParameterAsText(i)
+    print(i,arcpy.GetParameterAsText(i))
 
 #get input params
 in_polyline_feature_class = arcpy.GetParameterAsText(0)
