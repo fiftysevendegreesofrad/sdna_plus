@@ -17,8 +17,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # - name: Build Docker Image
+      #   run: docker build --file Dockerfile.build --tag sdna_manylinux_wheel_builder .
+
       - name: Build Docker Image
-        run: docker build --file Dockerfile.build --tag sdna_manylinux_wheel_builder .
+        uses: docker/build-push-action@v6
+        with:
+          file: Dockerfile.build
+          tags: sdna_manylinux_wheel_builder
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
 
       - name: Run Docker Container from image
         run: docker run --rm -v .:/home/sdna_plus sdna_manylinux_wheel_builder
