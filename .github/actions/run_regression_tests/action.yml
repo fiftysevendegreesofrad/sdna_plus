@@ -138,10 +138,10 @@ runs:
         sdna_debug: ${{ inputs.sdna_debug }}
         USED_ZIG: ${{ inputs.USED_ZIG }}
   
-      run: pytest -rA --tb=short -c pyproject.toml .
-      # run: |
-      #   . ~/.venv/bin/activate
-      #   pytest -rA --tb=short -c pyproject.toml
+      # run: pytest -rA --tb=short -c pyproject.toml .
+      run: |
+        . ~/.venv/bin/activate
+        pytest -rA --tb=short -c pyproject.toml
       # -rA shows summary of tests, one per line, even when they all pass.
       #
       # To run the same tests locally, the command is something like:
