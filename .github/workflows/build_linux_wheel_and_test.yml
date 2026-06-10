@@ -43,7 +43,7 @@ jobs:
     
     runs-on: ubuntu-latest
     container:
-      image: rocker/r2u:latest
+      image: rocker/r2u4ci:latest
 
 
     steps:
@@ -106,7 +106,7 @@ jobs:
         
     runs-on: ubuntu-latest
     container:
-      image: rocker/r2u:latest
+      image: rocker/r2u4ci:latest
 
 
 
