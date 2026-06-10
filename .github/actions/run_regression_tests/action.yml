@@ -128,6 +128,7 @@ runs:
 
     - name: Run all the diff tests with Pytest.
       shell: ${{ inputs.shell }}
+      # working-directory: '${{ inputs.pytest_dir }}'
       env:
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: ${{ inputs.DONT_TEST_N_LINK_SUBSYSTEMS_ORDER }}
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: ${{ inputs.ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT }}
@@ -139,7 +140,7 @@ runs:
   
       run: |
         . ~/.venv/bin/activate
-        pytest -rA --tb=short
+        pytest -rA --tb=short -c pyproject.toml
       # -rA shows summary of tests, one per line, even when they all pass.
       #
       # To run the same tests locally, the command is something like:
