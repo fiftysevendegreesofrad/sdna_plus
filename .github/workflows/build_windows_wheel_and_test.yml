@@ -112,6 +112,7 @@ jobs:
     - uses: LizardByte/actions/actions/setup_python@master
       with:
         python-version: ${{ matrix.python_version }}
+        update-pyenv: 'false'
 
     - name: Install dependencies (PyShp, Numpy & R Portable)
       shell: bash
