@@ -238,11 +238,11 @@ def test_net_all_options(test_name,net_definition,euclidean_radii,problink,do_we
     print("\n\n%s, Custom analysis, cont space"%test_name)
     test_net(net_definition,euclidean_radii,CUSTOM,True,False,problink)
 
-    print ("%s, Hybrid analysis, discrete space"%test_name)
+    print("%s, Hybrid analysis, discrete space"%test_name)
     test_net(net_definition,euclidean_radii,HYBRID,False,False,problink,"lineformula=1,(FULLeuc!=0)?euc/FULLeuc*custom_cost:custom_cost;")
-    print ("\n\n%s, Hybrid analysis, cont space"%test_name)
+    print("\n\n%s, Hybrid analysis, cont space"%test_name)
     test_net(net_definition,euclidean_radii,HYBRID,True,False,problink,"lineformula=1,(FULLeuc!=0)?euc/FULLeuc*custom_cost:custom_cost;")
-    print ("%s, Hybrid analysis, negative formula"%test_name)
+    print("%s, Hybrid analysis, negative formula"%test_name)
     test_net(net_definition,euclidean_radii,HYBRID,False,False,problink,"lineformula=-1;")
     
 
@@ -305,8 +305,8 @@ test_net(oneway_test,choice_test_radii,ANGULAR,True,False,12,"bidir;oneway=onewa
 
 test_net_all_options("Zero length link test",zero_length_link_test,zero_length_link_test_radii,1,False)
 
-print ("Hybrid radius euc comparison")
+print("Hybrid radius euc comparison")
 test_net(choice_test,[5,6,10,50,63],EUCLIDEAN,False,False,12,"radmetric=hybrid;radlineformula=euc")
 
-print ("Hybrid radius")
+print("Hybrid radius")
 test_net(choice_test,[10,12,20,100,126],EUCLIDEAN,False,False,12,"radmetric=hybrid;radlineformula=2*euc")

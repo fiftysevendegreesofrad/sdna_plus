@@ -85,7 +85,7 @@ def test_net(net_definition,euclidean_radii,analysis_type,cont_space,prob_link):
         print("cont,")
     else:
         print("disc,")
-    print (after_time-before_time)*1000,"ms\n"
+    print(after_time-before_time)*1000,"ms\n"
 
     dll.net_destroy(net)
     dll.calc_destroy(calculation)
