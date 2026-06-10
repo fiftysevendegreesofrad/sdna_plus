@@ -122,11 +122,14 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y --no-install-recommends git
-        
-    - uses: LizardByte/actions/actions/setup_python@master
+
+    - uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python_version }}
-        update-pyenv: false
+    # - uses: LizardByte/actions/actions/setup_python@master
+    #   with:
+    #     python-version: ${{ matrix.python_version }}
+    #     update-pyenv: false
 
     # - name: Install numpy
     #   shell: bash
