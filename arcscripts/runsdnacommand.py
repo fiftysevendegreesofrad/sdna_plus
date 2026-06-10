@@ -34,10 +34,10 @@ except ImportError:
 from threading import Thread
 
 def ensure_string(byte):
-	if sys.version_info>=(3,0):
-		return str(byte,"ascii")
-	else:
-		return byte
+    if sys.version_info>=(3,0):
+        return str(byte,"ascii")
+    else:
+        return byte
 
 def map_to_string(map):
     return '"'+";".join((k+"="+v.replace("\\","/") for k,v in map.items()))+'"'
