@@ -57,7 +57,7 @@ jobs:
     - name: Install Git etc.
       run: |
         sudo apt-get update
-        sudo apt-get install -y --no-recommends git
+        sudo apt-get install -y --no-install-recommends git
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6
@@ -121,7 +121,7 @@ jobs:
     - name: Install Git etc.
       run: |
         sudo apt-get update
-        sudo apt-get install -y --no-recommends git
+        sudo apt-get install -y --no-install-recommends git
         
     - uses: LizardByte/actions/actions/setup_python@master
       with:
