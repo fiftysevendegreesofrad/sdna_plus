@@ -48,12 +48,12 @@ def populate_dll_defined_fields(dll,calculation,table,idfield):
 
 CALLBACKFUNCTYPE = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_long)
 def set_progressor(x):
-    print "progress callback: %d"%x
+    print("progress callback: %d"%x)
     return 0
 set_progressor_callback = CALLBACKFUNCTYPE(set_progressor)
 WARNINGCALLBACKFUNCTYPE = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_char_p)
 def warning(x):
-    print "warning callback: %s"%x
+    print("warning callback: %s"%x)
     return 0
 warning_callback = WARNINGCALLBACKFUNCTYPE(warning)
 
@@ -142,7 +142,7 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
     #initialize dll and create add_polyline wrapper func
     dirname = os.path.dirname(sys.argv[0])
     dllpath = dirname+r"\\..\\Debug\\sdna_vs2008.dll"
-    print dllpath
+    print(dllpath)
     dll = ctypes.windll.LoadLibrary(dllpath)
 
     net = ctypes.c_void_p(dll.net_create(weight_activity_by_link_length))
@@ -228,13 +228,13 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
         out_array += [list(out_buffer)]
 
     for i in range(outlength):
-        print names[i]+' '*(25-len(names[i]))+'  '.join("%.6g"%link_data[i] for link_data in out_array)
+        print(names[i]+' '*(25-len(names[i]))+'  '.join("%.6g"%link_data[i] for link_data in out_array))
 
     dll.net_destroy(net)
     dll.calc_destroy(calculation)
 
 for i in range(10):
-    print i,arcpy.GetParameterAsText(i)
+    print(i,arcpy.GetParameterAsText(i))
 
 #get input params
 in_polyline_feature_class = arcpy.GetParameterAsText(0)
