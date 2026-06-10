@@ -5,7 +5,7 @@
 filename = commandArgs(trailingOnly=TRUE)[1]
 data = read.table(filename)
 
-suppressPackageStartupMessages(require(car,quietly=TRUE))
+suppressPackageStartupMessages(require("car",quietly=TRUE))
 
 for (col in data)
 {

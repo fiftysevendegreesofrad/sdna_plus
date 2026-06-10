@@ -3,9 +3,9 @@
 
 # options(echo=TRUE) # if you want see commands in output file
 
-suppressPackageStartupMessages(require(optparse,quietly=TRUE))
-suppressPackageStartupMessages(require(glmnet,quietly=TRUE))
-suppressPackageStartupMessages(require(methods,quietly=TRUE))
+suppressPackageStartupMessages(require("optparse",quietly=TRUE))
+suppressPackageStartupMessages(require("glmnet",quietly=TRUE))
+suppressPackageStartupMessages(require("methods",quietly=TRUE))
 
 op = OptionParser()
 op = add_option(op,"--calibrationfile",type="character")

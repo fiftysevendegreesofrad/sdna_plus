@@ -95,6 +95,7 @@ jobs:
     - uses: LizardByte/actions/actions/setup_python@master
       with:
         python-version: ${{ matrix.python_version }}
+        update-pyenv: 'false'
 
     - name: Install numpy
       run: python -m pip install numpy PyShp==2.1.0
