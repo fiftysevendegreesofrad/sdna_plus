@@ -201,7 +201,7 @@ def polyline_geom_to_pointlist(shape):
                 arcpy.AddError("Please run ArcToolbox -> Data Management")
                 arcpy.AddError("     -> Features -> Multipart to Singlepart")
                 arcpy.AddError(" to fix the input feature class before running sDNA")
-                raise StandardError, "Invalid shape"
+                raise Exception("Invalid shape")
         
         for point in shape.getPart(0):
                 pointlist.append((point.X,point.Y))
@@ -214,7 +214,7 @@ def point_geom_to_point(shape):
                 arcpy.AddError("Please run ArcToolbox -> Data Management")
                 arcpy.AddError("     -> Features -> Multipart to Singlepart")
                 arcpy.AddError(" to fix the input feature class before running sDNA")
-                raise StandardError, "Invalid shape"
+                raise Exception("Invalid shape")
 
         point = shape.getPart(0)
         return point.X, point.Y

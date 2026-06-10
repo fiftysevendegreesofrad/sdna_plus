@@ -33,7 +33,7 @@ def add_dll_defined_fields_to_table(dll,calculation,table,overwrite):
         if error_happened:
             arcpy.AddError("Either enable 'Overwrite output fields' in the tool dialog box\n\
                             Or delete/rename the existing fields")
-            raise StandardError, "Can't overwrite output data"
+            raise Exception("Can't overwrite output data")
 
     arcpy.SetProgressor("step", "Checking output columns", 0, outlength, 1)
             
@@ -103,7 +103,7 @@ def string_to_radius(r):
         except ValueError:
             errorstring = 'Invalid radius specified: %s'%r
             arcpy.AddError(errorstring)
-            raise StandardError, errorstring
+            raise Exception(errorstring)
         return result
 
 def string_to_measure_index(s):
@@ -132,7 +132,7 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
 
     if not arcpy.Describe(in_polyline_feature_class).hasOID:
         arcpy.AddError('Feature class has no object ID field')
-        raise StandardError, 'Feature class has no object ID field'
+        raise Exception('Feature class has no object ID field')
     in_arc_idfield = arcpy.Describe(in_polyline_feature_class).OIDfieldname
 
     shapefieldname = arcpy.Describe(in_polyline_feature_class).ShapeFieldName
@@ -141,10 +141,10 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
     if in_start__gsation != "" or in_end__gsation != "":
         if not in_start__gsation in fieldnames:
             arcpy.AddError('Start _gsation field does not exist: %s'%in_start__gsation)
-            raise StandardError, 'Start _gsation field does not exist: %s'%in_start__gsation
+            raise Exception('Start _gsation field does not exist: %s'%in_start__gsation)
         if not in_end__gsation in fieldnames:
             arcpy.AddError('End _gsation field does not exist: %s'%in_end__gsation)
-            raise StandardError, 'End _gsation field does not exist: %s'%in_end__gsation
+            raise Exception('End _gsation field does not exist: %s'%in_end__gsation)
         using__gsation = True
     else:
         using__gsation = False
@@ -152,7 +152,7 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
     if custom_activity_weight_field != "":
         if not custom_activity_weight_field in fieldnames:
             arcpy.AddError('Custom activity weight field does not exist: %s'%custom_activity_weight_field)
-            raise StandardError, 'Custom activity weight field does not exist: %s'%custom_activity_weight_field
+            raise Exception('Custom activity weight field does not exist: %s'%custom_activity_weight_field)
         using_custom_weight = True
     else:
         using_custom_weight = False
@@ -160,7 +160,7 @@ def integral_common(in_polyline_feature_class,in_start__gsation,in_end__gsation,
     num_rows = int(arcpy.GetCount_management(in_polyline_feature_class).getOutput(0))
     if num_rows == 0:
         arcpy.AddError('No rows in input')
-        raise StandardError, 'No rows in input'
+        raise Exception('No rows in input')
     arcpy.AddMessage('Input has %d rows'%num_rows)
 
     radii = map(string_to_radius,in_radii)
