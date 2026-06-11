@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform"]
+    branches: [ "Cross_platform",]
 
   pull_request:
     branches: [ "Cross_platform"]
@@ -24,7 +24,7 @@ jobs:
     # outputs:
     #   installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
 
 
@@ -79,7 +79,7 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - name: Install R
       run: |

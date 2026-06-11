@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform", "Test_in_R_container",]
+    branches: [ "Cross_platform",]
 
   pull_request:
-    branches: [ "Cross_platform", "Test_in_R_container",]
+    branches: [ "Cross_platform",]
 
 jobs:
   build_linux_wheel:
@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -55,14 +55,15 @@ jobs:
     name: "Run regression tests. "
     
     runs-on: ubuntu-latest
-    container:
-      image: rocker/r2u4ci:latest
 
 
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
+
+    - name: Setup r2u
+      uses: eddelbuettel/github-actions/r2u-setup@master
 
     - name: Install R deps
       run: Rscript -e "install.packages(c('optparse', 'sjstats', 'car', 'glmnet'))"
@@ -118,15 +119,15 @@ jobs:
     name: "Run smoke test. "
         
     runs-on: ubuntu-latest
-    container:
-      image: rocker/r2u4ci:latest
-
 
 
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
+
+    - name: Setup r2u
+      uses: eddelbuettel/github-actions/r2u-setup@master
 
     - name: Install R deps
       run: Rscript -e "install.packages(c('optparse', 'sjstats',  'car', 'glmnet'))"
@@ -139,14 +140,6 @@ jobs:
     - uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python_version }}
-    # - uses: LizardByte/actions/actions/setup_python@master
-    #   with:
-    #     python-version: ${{ matrix.python_version }}
-    #     update-pyenv: false
-
-    # - name: Install numpy
-    #   shell: bash
-    #   run: python -m pip install -r requirements/base.txt -r requirements/learn-predict.txt
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6

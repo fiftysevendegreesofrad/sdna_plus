@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "main", "Cross_platform"]
+    branches: [ "main", "Cross_platform",]
 
   pull_request:
     branches: [ "main", "Cross_platform"]
@@ -22,7 +22,7 @@ jobs:
     outputs:
       installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
 
 
@@ -132,7 +132,7 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - name: Download installer built in previous job
       uses: actions/download-artifact@v6
