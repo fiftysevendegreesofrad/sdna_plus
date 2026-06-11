@@ -58,46 +58,32 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # - uses: LizardByte/actions/actions/setup_python@master
-    #   with:
-    #     python-version: ${{ inputs.python_version }}
-    #     update-pyenv: 'false'
-
-    - name: Install uv
-      shell: bash
-      run: wget -qO- https://astral.sh/uv/install.sh | sh
-
-    - name: Install Python
-      shell: bash
-      run: |
-        . $HOME/.local/bin/env
-        uv python install ${{ inputs.python_version }}
-        uv venv ~/.venv
+    - uses: LizardByte/actions/actions/setup_python@master
+      with:
+        python-version: ${{ inputs.python_version }}
+        update-pyenv: 'false'
 
 
     # Windows only version specifier in R_full.txt
     - name: Install sDNA.
       if: ${{ inputs.sdna_installed_in_python_env }}
       shell: bash
-      run: |
-        . ~/.venv/bin/activate
-        uv pip install pytest dist/sdna_plus*.whl -r requirements/R_full.txt -r requirements/learn-predict.txt
-      
-        # pip
-        # install
-        # ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || '' }}
-        # dist/sdna_plus*.whl
-        # -r requirements/R_full.txt
+      run: >
+        pip
+        install
+        ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || '' }}
+        dist/sdna_plus*.whl
+        -r requirements/R_full.txt
 
     # All builds require PyTest and Numpy
-    # - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
-    #   shell: bash
-    #   run: >
-    #     pip
-    #     install
-    #     ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }}
-    #     pytest
-    #     -r requirements/learn-predict.txt
+    - name: Install Pytest, and Numpy (the latter for sDNA Learn & Predict, Python 3.5 only).
+      shell: bash
+      run: >
+        pip
+        install
+        ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || ' ' }}
+        pytest
+        -r requirements/learn-predict.txt
 
     # - name: Install sDNA.
     #   if: inputs.sdna_installed_in_python_env
@@ -109,7 +95,6 @@ runs:
       shell: ${{ inputs.shell }}
       working-directory: '${{ inputs.pytest_dir }}'
       run: |
-        . ~/.venv/bin/activate
         python --version
         python -c "import numpy; print(numpy.__version__)"
         python -m pytest --version
@@ -128,7 +113,7 @@ runs:
 
     - name: Run all the diff tests with Pytest.
       shell: ${{ inputs.shell }}
-      # working-directory: '${{ inputs.pytest_dir }}'
+      working-directory: ${{ inputs.pytest_dir }}
       env:
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: ${{ inputs.DONT_TEST_N_LINK_SUBSYSTEMS_ORDER }}
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: ${{ inputs.ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT }}
@@ -137,11 +122,7 @@ runs:
         sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
         sdna_debug: ${{ inputs.sdna_debug }}
         USED_ZIG: ${{ inputs.USED_ZIG }}
-  
-      # run: pytest -rA --tb=short -c pyproject.toml .
-      run: |
-        . ~/.venv/bin/activate
-        pytest -rA --tb=short -c pyproject.toml ${{ inputs.pytest_dir }}
+      run: pytest -rA --tb=short
       # -rA shows summary of tests, one per line, even when they all pass.
       #
       # To run the same tests locally, the command is something like:
