@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform", "Linux_and_PyPi", ]
+    branches: [ "Cross_platform", ]
 
   pull_request:
-    branches: [ "Cross_platform", "Linux_and_PyPi", ]
+    branches: [ "Cross_platform", ]
 
 env:
   CONFIGURATION: Release
@@ -22,7 +22,7 @@ jobs:
     # outputs:
     #   installer_file_name: ${{ steps.output_installer_file_name.outputs.name }}
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - name: Install Git
       run: |
@@ -84,7 +84,7 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
         # echo "new line of text" | sudo tee -a /etc/apt/sources.list
     - name: Install R and deps
@@ -95,6 +95,7 @@ jobs:
     - uses: LizardByte/actions/actions/setup_python@master
       with:
         python-version: ${{ matrix.python_version }}
+        update-pyenv: 'false'
 
     - name: Install numpy
       run: python -m pip install numpy PyShp==2.1.0

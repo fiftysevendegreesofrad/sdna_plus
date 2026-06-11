@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform"]
+    branches: [ "Cross_platform",]
 
   pull_request:
     branches: [ "Cross_platform"]
@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install build deps
         shell: bash
@@ -49,7 +49,7 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
 
 
@@ -105,13 +105,14 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
 
 
     - uses: LizardByte/actions/actions/setup_python@master
       with:
         python-version: ${{ matrix.python_version }}
+        update-pyenv: 'false'
 
     - name: Install dependencies (PyShp, Numpy & R Portable)
       shell: bash

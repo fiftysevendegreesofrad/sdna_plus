@@ -138,10 +138,10 @@ def test_net(net_definition,config):
                                                            warning_callback)
 
     if not calculation:
-        print ("config failed")
-        print ()
+        print("config failed")
+        print()
         return
-    print ("calc created with config",config)
+    print("calc created with config",config)
     
     dll.icalc_get_all_output_names.restype = ctypes.POINTER(ctypes.c_char_p)
     dll.icalc_get_output_length.restype = ctypes.c_int
@@ -181,7 +181,7 @@ def test_net(net_definition,config):
             dll.icalc_get_all_outputs(calculation,out_buffer,i)
             out_array += [list(out_buffer)]
             
-        print ("arcid"+' '*(35-len("arcid"))+'  '.join("%.6g"%link_data for link_data in current_net_arcids))
+        print("arcid"+' '*(35-len("arcid"))+'  '.join("%.6g"%link_data for link_data in current_net_arcids))
         for i in range(outlength):
             print(names[i]+' '*(35-len(names[i]))+'  '.join("%.6g"%link_data[i] for link_data in out_array))
 
@@ -212,9 +212,9 @@ test_net(oneway_conflict_test,"vertoneway=one")
 test_net(oneway_conflict_test,"oneway=one;vertoneway=one")
 test_net(oneway_conflict_test,"oneway=one;vertoneway=minusone")
 test_net(oneway_conflict_test,"oneway=minusone;vertoneway=one")
-print ("ambig oneway")
+print("ambig oneway")
 test_net(ambig_oneway_test,"vertoneway=one")
-print ("ambig oneway defeated by _gs field")
+print("ambig oneway defeated by _gs field")
 test_net(ambig_oneway_test,"vertoneway=one;start_gs=se;end_gs=ee")
 test_net(simple_oneway,"oneway=oneway;weight=weight")
 test_net(ambig_oneway_test,"vertoneway=nonexist")

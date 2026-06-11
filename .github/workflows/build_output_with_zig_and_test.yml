@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "main", "Cross_platform"]
+    branches: [ "main", "Cross_platform",]
 
   pull_request:
     branches: [ "main", "Cross_platform"]
@@ -22,7 +22,7 @@ jobs:
     name: Build output on Windows with Zig C++ (Ninja and CMake)
     runs-on: windows-2022
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
 
 
@@ -81,7 +81,7 @@ jobs:
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6

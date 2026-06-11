@@ -18,7 +18,7 @@ def structure(x,depth=-1):
             retval+=prefix+"]\n"
             return retval
             
-#print structure([[[1,2],[3,4]],[[5,6],[7,8]]])
+#print(structure([[[1,2],[3,4]],[[5,6],[7,8]]]))
 
 
 for infilen,outfilen in zip(infiles,outfiles):

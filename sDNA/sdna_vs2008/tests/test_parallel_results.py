@@ -16,7 +16,7 @@ def eprint(*args, **kwargs):
 class my_void_p(ctypes.c_void_p):
     pass
 
-#eprint "attach debugger"
+#eprint("attach debugger")
 #sys.stdin.readline()
 
 serial_dll_path = os.environ["sdnadll"]
@@ -24,11 +24,11 @@ parallel_dll_path = re.sub("debug","parallel_debug",serial_dll_path,flags=re.IGN
 sdnapy.set_dll_path(serial_dll_path)
 
 if os.path.getmtime(serial_dll_path)-os.path.getmtime(parallel_dll_path) > 3600*10:
-    eprint ("dlls built more than 10 hours apart")
+    eprint("dlls built more than 10 hours apart")
     sys.exit(1)
 
-#eprint ("serial dll",serial_dll_path)
-#eprint ("parallel dll",parallel_dll_path)
+#eprint("serial dll",serial_dll_path)
+#eprint("parallel dll",parallel_dll_path)
 
 parallel_dll = load_library(parallel_dll_path)
 serial_dll = load_library(serial_dll_path)
@@ -42,7 +42,7 @@ def set_progressor(x):
 set_progressor_callback = CALLBACKFUNCTYPE(set_progressor)
 WARNINGCALLBACKFUNCTYPE = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_char_p)
 def warning(x):
-    #eprint (str(x,"ascii"))
+    #eprint(str(x,"ascii"))
     return 0
 warning_callback = WARNINGCALLBACKFUNCTYPE(warning)
 
@@ -96,7 +96,7 @@ def test_net(dll,net_definition,euclidean_radii,cont_space,prob_link):
     dll.integral_calc_create.restype = my_void_p
     calculation = dll.integral_calc_create(net,config_string.encode("ascii"),set_progressor_callback,warning_callback)
     if not calculation:
-        eprint ("calc create failed")
+        eprint("calc create failed")
         sys.exit(0)
     
     net_definition(dll,net)
@@ -104,7 +104,7 @@ def test_net(dll,net_definition,euclidean_radii,cont_space,prob_link):
     dll.calc_run.restype = ctypes.c_int
     calcres = dll.calc_run(calculation)
     if not calcres:
-        eprint ("calc run failed")
+        eprint("calc run failed")
         sys.exit(0)
     
     dll.icalc_get_short_output_names.restype = ctypes.POINTER(ctypes.c_char_p)
@@ -143,16 +143,16 @@ desired_num_links = 50
 bound_grid_test = lambda d,n: grid_test(d,n,5000,desired_num_links)
 
 start = time.time()
-eprint ("testing serial")
+eprint("testing serial")
 snames,sdata,sskim = test_net(serial_dll,bound_grid_test,[400,1000,"n"],True,1)
 serial_end = time.time()
-eprint (serial_end-start,"secs")
-eprint ("testing parallel")
+eprint(serial_end-start,"secs")
+eprint("testing parallel")
 parallel_start = time.time()
 pnames,pdata,pskim = test_net(parallel_dll,bound_grid_test,[400,1000,"n"],True,1)
 parallel_end = time.time()
-eprint (parallel_end-parallel_start,"secs")
-eprint ("though most of this is io so times will be very similar")
+eprint(parallel_end-parallel_start,"secs")
+eprint("though most of this is io so times will be very similar")
 assert(pnames==snames)
 
 all_matches = True
@@ -161,17 +161,17 @@ for link in current_net_arcids:
     for i,name in enumerate(pnames):
         items += 1
         if str(pdata[link][i])!=str(sdata[link][i]):
-            eprint (link,name,sdata[link][i],pdata[link][i])
+            eprint(link,name,sdata[link][i],pdata[link][i])
             all_matches = False
 
 for sd,pd in zip(sskim,pskim):
     if sd!=pd:
-        eprint ("skim mismatch: ")
-        eprint (sd)
-        eprint (pd)
+        eprint("skim mismatch: ")
+        eprint(sd)
+        eprint(pd)
         all_matches = False
 
 assert(all_matches)    
        
-eprint ("Serial and parallel results match")
-eprint (items,"items checked")
+eprint("Serial and parallel results match")
+eprint(items,"items checked")

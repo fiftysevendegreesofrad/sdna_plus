@@ -56,3 +56,12 @@ sources = {"output/Release" = "sDNA"}
 [tool.hatch.build.hooks.custom]
 path = "hatch_build.py"
 
+
+[tool.pytest.ini_options]
+collect_ignore = [
+  "sDNA/sdna_vs2008/tests/awkward_test.py",
+  "sDNA/sdna_vs2008/tests/gdb_test.py",
+  "arcscripts/arc_utils.py",
+  "arcscripts/devel_utils.py",
+  "arcscripts/importmeridian_utils.py",
+  ]

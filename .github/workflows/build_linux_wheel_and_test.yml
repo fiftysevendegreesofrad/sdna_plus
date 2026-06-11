@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform"]
+    branches: [ "Cross_platform",]
 
   pull_request:
-    branches: [ "Cross_platform"]
+    branches: [ "Cross_platform",]
 
 jobs:
   build_linux_wheel:
@@ -15,10 +15,23 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # - name: Build Docker Image
+      #   run: docker build --file Dockerfile.build --tag sdna_manylinux_wheel_builder .
 
       - name: Build Docker Image
-        run: docker build --file Dockerfile.build --tag sdna_manylinux_wheel_builder .
+        uses: docker/build-push-action@v6
+        with:
+          file: Dockerfile.build
+          tags: sdna_manylinux_wheel_builder
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
 
       - name: Run Docker Container from image
         run: docker run --rm -v .:/home/sdna_plus sdna_manylinux_wheel_builder
@@ -41,19 +54,24 @@ jobs:
 
     name: "Run regression tests. "
     
-    runs-on: "ubuntu-24.04"
+    runs-on: ubuntu-latest
 
 
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
+    - name: Setup r2u
+      uses: eddelbuettel/github-actions/r2u-setup@master
 
-    - name: Install R
+    - name: Install R deps
+      run: Rscript -e "install.packages(c('optparse', 'sjstats', 'car', 'glmnet'))"
+
+    - name: Install Git etc.
       run: |
         sudo apt-get update
-        sudo apt-get install -y r-cran-optparse r-cran-sjstats
+        sudo apt-get install -y --no-install-recommends git
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6
@@ -99,28 +117,29 @@ jobs:
                      "python -u prepare_test_new.py",]
 
     name: "Run smoke test. "
-    
-    runs-on: "ubuntu-24.04"
+        
+    runs-on: ubuntu-latest
 
 
     steps:
 
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
-        # echo "new line of text" | sudo tee -a /etc/apt/sources.list
-    - name: Install R and deps
+    - name: Setup r2u
+      uses: eddelbuettel/github-actions/r2u-setup@master
+
+    - name: Install R deps
+      run: Rscript -e "install.packages(c('optparse', 'sjstats',  'car', 'glmnet'))"
+
+    - name: Install Git etc.
       run: |
         sudo apt-get update
-        sudo apt-get install -y r-cran-optparse r-cran-sjstats
+        sudo apt-get install -y --no-install-recommends git
 
-    - uses: LizardByte/actions/actions/setup_python@master
+    - uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python_version }}
-
-    # - name: Install numpy
-    #   shell: bash
-    #   run: python -m pip install -r requirements/base.txt -r requirements/learn-predict.txt
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6
