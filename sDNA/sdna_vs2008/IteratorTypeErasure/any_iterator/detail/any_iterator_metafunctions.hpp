@@ -36,6 +36,7 @@
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/not.hpp>
+#include <boost/mpl/if.hpp>
 
 namespace IteratorTypeErasure
 {

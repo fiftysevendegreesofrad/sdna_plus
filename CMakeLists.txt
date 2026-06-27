@@ -23,7 +23,7 @@ elseif (NOT MSVC)
     set(CMAKE_CXX_COMPILER "g++")
 endif()
 
-if (IS_READABLE ENV{VCPKG_ROOT})
+if (IS_READABLE "$ENV{VCPKG_ROOT}")
     SET(VCPKG_ROOT 
     "$ENV{VCPKG_ROOT}"
     )
