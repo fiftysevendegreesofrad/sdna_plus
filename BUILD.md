@@ -22,7 +22,8 @@ On any modern Ubuntu/Debian system (20.04+):
 
 ```bash
 # Install prerequisites (one-time)
-sudo apt install cmake make g++ libboost-dev python3
+sudo apt update
+sudo apt install cmake make g++ libboost-dev python3 -y
 
 # Clone and build
 git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus
