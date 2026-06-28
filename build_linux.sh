@@ -4,11 +4,16 @@ set -euo pipefail
 # build_linux.sh — Single-command Linux build for sDNA+
 # Produces output/Release/x64/sdna_vs2008.so with OpenMP support
 #
-# Usage:
-#   sudo bash build_linux.sh
+# Usage (does NOT need root):
+#   bash build_linux.sh
 #
-# Prerequisites are checked automatically. On a fresh Ubuntu/Debian system:
+# Install the prerequisites first (this is the only step that needs root).
+# On a fresh Ubuntu/Debian system:
 #   sudo apt install cmake make g++ libboost-dev python3
+#
+# Note: a recent CMake is required (see CMakeLists.txt for the exact minimum).
+# Some older distro CMake packages are too old; install a newer CMake from
+# Kitware's apt repo or pip (pip install cmake) if the configure step fails.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILD_DIR="${SCRIPT_DIR}/build_linux"
@@ -32,7 +37,8 @@ done
 if [ -n "$MISSING" ]; then
     echo ""
     echo "ERROR: Required tools not found:$MISSING"
-    echo "Install with: sudo apt install cmake make g++ libboost-dev python3"
+    echo "Install them first (needs root), e.g. on Ubuntu/Debian:"
+    echo "  sudo apt install cmake make g++ libboost-dev python3"
     exit 1
 fi
 
@@ -167,7 +173,7 @@ if [ -f "${SO_FILE}" ]; then
 
     echo ""
     echo "Quick test:"
-    echo "  export SDNADLL=${SO_FILE}"
+    echo "  export SDNADLL=\"${SO_FILE}\""
     echo "  cd sDNA/sdna_vs2008/tests"
     echo "  python3 prepare_test_new.py"
     echo ""
@@ -177,9 +183,7 @@ if [ -f "${SO_FILE}" ]; then
     # ---- Offer permanent install ----
     echo ""
     echo "----------------------------------------"
-    REAL_USER="${SUDO_USER:-$USER}"
-    REAL_HOME="$(eval echo ~"${REAL_USER}")"
-    BASHRC="${REAL_HOME}/.bashrc"
+    BASHRC="${HOME}/.bashrc"
     EXPORT_LINE="export SDNADLL=\"${SO_FILE}\""
     PATH_LINE="export PATH=\"\${PATH}:${SCRIPT_DIR}/output/Release/bin\""
 

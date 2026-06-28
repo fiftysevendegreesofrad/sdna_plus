@@ -40,7 +40,7 @@ pipx install sdna_plus[learn]
 sudo apt install cmake make g++ libboost-dev python3
 git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus
 cd sdna_plus
-sudo bash build_linux.sh
+bash build_linux.sh
 ```
 
 This produces `output/Release/x64/sdna_vs2008.so` with OpenMP enabled.

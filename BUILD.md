@@ -18,6 +18,7 @@ the Zig for Windows build (entirely optional) and the Linux builds.
 
 ##### Quick build (recommended)
 
+```bash
 On any modern Ubuntu/Debian system (20.04+):
 
 ```bash
@@ -25,10 +26,10 @@ On any modern Ubuntu/Debian system (20.04+):
 sudo apt update
 sudo apt install cmake make g++ libboost-dev python3 -y
 
-# Clone and build
+# Clone and build (build_linux.sh itself does NOT need root)
 git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus
 cd sdna_plus
-sudo bash build_linux.sh
+bash build_linux.sh
 ```
 
 This produces `output/Release/x64/sdna_vs2008.so` with **OpenMP multi-threading** enabled,
@@ -43,7 +44,7 @@ To use with vcpkg for pinned Boost 1.83 (matching CI exactly):
 git clone --depth=1 https://github.com/microsoft/vcpkg ~/vcpkg
 cd ~/vcpkg && ./bootstrap-vcpkg.sh
 cd path/to/sdna_plus
-VCPKG_ROOT=~/vcpkg sudo bash build_linux.sh
+VCPKG_ROOT=~/vcpkg bash build_linux.sh
 ```
 
 ##### Manual CMake build
@@ -51,6 +52,7 @@ VCPKG_ROOT=~/vcpkg sudo bash build_linux.sh
 If you prefer to run the steps individually:
 
 ```bash
+# Prerequisites (needs root); the build steps below do not
 sudo apt install cmake make g++ libboost-dev
 
 # Create a stub vcpkg (or use real vcpkg)
