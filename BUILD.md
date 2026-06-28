@@ -21,7 +21,7 @@ the Zig for Windows build (entirely optional) and the Linux builds.
 On any modern Ubuntu/Debian system (20.04+):
 
 ```bash
-# Install prerequisites (one-time)
+# Install prerequisites (one-time, needs ~480 MB space)
 sudo apt update
 sudo apt install cmake make g++ libboost-dev python3 -y
 
