@@ -35,7 +35,6 @@ pipx install sdna_plus[learn]
 
 ##### Building from source (with OpenMP multi-threading)
 
-The pip wheel is built without OpenMP. For multi-threaded performance, build from source:
 
 ```bash
 sudo apt install cmake make g++ libboost-dev python3
