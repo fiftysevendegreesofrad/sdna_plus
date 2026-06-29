@@ -117,7 +117,7 @@ jobs:
 
   smoke_tests:
 
-    needs: build_and_upload_output_dir
+    needs: build
 
     strategy:
       fail-fast: false
