@@ -48,7 +48,7 @@ jobs:
       # run:         cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${{ env.dir }}/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B ${{ env.dir }} -S geos-${{ env.version}}  
 
     - name: Run Geos build system
-      run: cmake --build ${{ env.dir }}
+      run: cmake --build ${{ env.dir }} --parallel "$(nproc)"
       
 
 

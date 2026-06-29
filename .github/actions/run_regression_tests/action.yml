@@ -58,7 +58,21 @@ inputs:
 runs:
   using: "composite"
   steps:
+
+    - name: Parse and compare version
+      id: version_check
+      uses: madhead/semver-utils@latest
+      with:
+        version: ${{ inputs.python_version }}
+        compare-to: "3.9"
+
+    - uses: actions/setup-python@v6
+      if: steps.version_check.outputs.comparison-result == '>='
+      with:
+        python-version:  ${{ inputs.python_version }}
+        
     - uses: LizardByte/actions/actions/setup_python@master
+      if: steps.version_check.outputs.comparison-result == '<'
       with:
         python-version: ${{ inputs.python_version }}
         update-pyenv: 'false'
@@ -122,7 +136,8 @@ runs:
         sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
         sdna_debug: ${{ inputs.sdna_debug }}
         USED_ZIG: ${{ inputs.USED_ZIG }}
-      run: pytest -rA --tb=short
+      run: pytest -rA -vv
+      #--tb=short
       # -rA shows summary of tests, one per line, even when they all pass.
       #
       # To run the same tests locally, the command is something like:

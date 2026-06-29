@@ -2,9 +2,9 @@ name: Build sdna_plus
 
 on:
   push:
-    branches: [ Cross_platform ]
+    branches: [ "Cross_platform", "Apply---parallel-${nproc}-to-all-build-steps",]
   pull_request:
-    branches: [ Cross_platform ]
+    branches: [ "Cross_platform"]
   workflow_dispatch:  
 
 jobs:
@@ -16,10 +16,13 @@ jobs:
         container_image:
           - ubuntu:26.04
           - ubuntu:24.04
-          - ubuntu:22.04
-          - ubuntu:20.04
-          - debian:bookworm
-          - debian:bullseye
+          # TODO:  work out how to set up CMake properly (
+          #        otherwise fix) on these distros, so apt
+          #        can resolve the dependency tree.
+          # - ubuntu:22.04
+          # - ubuntu:20.04
+          # - debian:bookworm
+          # - debian:bullseye
           - debian:trixie
 
     
@@ -27,11 +30,9 @@ jobs:
       image: ${{ matrix.container_image }}
     
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
     
         
-    - name: "Configure apy to use Kitware's repos (for CMake 3.29+)"
+    - name: "Configure apt to use Kitware's repos (for CMake 3.29+)"
       run: |
         apt update
         apt install -y ca-certificates gpg wget
@@ -42,30 +43,138 @@ jobs:
     - name: Install dependencies
       run: |
         apt install -y cmake make g++ libboost-dev python3 git
-        
-    - name: Clone sdna_plus repository
-      run: |
-        git clone --depth=1 --branch=build-linux-openmp https://github.com/Robinlovelace/sdna_plus/
     
+    - name: Checkout repository
+      uses: actions/checkout@v5
+
+    - name: Avoid Git complaining about "dubious ownership"
+      run: git config --global --add safe.directory /__w/sdna_plus/sdna_plus
+
     - name: Build sdna_plus
       continue-on-error: true # Even when the build is successful, the interactive script hangs at a "read" command
       run: |
-        cd sdna_plus
         bash build_linux.sh
 
     - name: Smoke test
-      working-directory: sdna_plus
       run: |
         export sdnadll=$(pwd)/output/Release/x64/sdna_vs2008.so
         cd sDNA/sdna_vs2008/tests
         python3 prepare_test_new.py
     
-    - name: Upload build artifacts (optional)
+    - name: Upload build artifacts
+      if: ${{ matrix.container_image == 'ubuntu:26.04' }}
       uses: actions/upload-artifact@v4
       with:
         name: sdna_plus-build
-        path: sdna_plus/
-      if: always()  # Upload even if build fails for debugging
+        path: output
+
+
+
+  pytest_regression_tests:
+
+    needs: build
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
+
+    name: "Download and run sDNA installer, and run diff tests on it. "
+    
+    runs-on: "ubuntu-24.04"
+
+
+    steps:
+
+
+    - uses: actions/checkout@v6
+
+
+    - name: Install Git and R, etc.
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends git r-cran-optparse r-cran-sjstats
+
+    - name: Download output tree built in previous job
+      uses: actions/download-artifact@v6
+      with:
+        name: sdna_plus-build
+        path: output
+
+
+
+
+    - name: Run regression tests
+      uses: ./.github/actions/run_regression_tests
+      with:
+        python_version: ${{ matrix.python_version }}
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+        ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
+        sdnadll: '${{ github.workspace }}/output/Release/x64/sdna_vs2008.so'
+        sdna_debug: ""
+        shell: bash
+
+
+  smoke_tests:
+
+    needs: build
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['3.11']
+        smoke_test: ["debug_test.py",
+                      "hybrid_test.py",
+                      "3d_test.py",
+                      "partial_test.py",
+                      "test_parallel_results.py",
+                      "prepare_barns_test.py",
+                      '../../../arcscripts/bin/sdnalearn.py --calibfile tiny.shp --target MADn --vars MGLAn,MCFn --boxcoxtarget --bcregex ".*" --mode single_best_variable --output regtestout_single_py3.txt --resids regtestresids_py3.shp',
+                      '../../../arcscripts/bin/sdnalearn.py --calibfile tiny.shp --target MADn --vars MGLAn,MCFn --mode multiple_variables --output regtestout_multiple_py3.txt',
+                      "make_od_test_shp.py",
+                      '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=skimtest" --om "skim=testout_od_skim_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean"',
+                      '../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=skimtestzeroweight" --om "skim=testout_od_skimzeroweight_py3.csv" "radii=n;outputskim;skimzone=zone;nonetdata;metric=euclidean;weight=weight"',
+                      'make_od_test_shp.py && python -u ../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=odtest;tables=testodmatrix.csv" --om "net=odtestoutsparse_py3" "radii=n;odmatrix"', 
+                      'make_od_test_shp.py && python -u ../../../arcscripts/bin/sdnaintegral.py --dll="$sdnadll" --im "net=odtest;tables=testodmatrix-nonsparse.csv" --om "net=odtestoutnonsparse_py3" "radii=n;odmatrix" ',
+                      '../../../arcscripts/bin/sdnaprepare.py -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3 --dll="$sdnadll"  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
+                      "prepare_test_new.py",]
+
+    name: "Download and run sDNA output dir, and run diff tests on it (without diffing the output). "
+    
+    runs-on: "ubuntu-24.04"
+
+
+    steps:
+
+
+    - uses: actions/checkout@v6
+
+    - name: Install R, and Git etc.
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends git r-cran-optparse r-cran-sjstats
+
+
+    - uses: LizardByte/actions/actions/setup_python@master
+      with:
+        python-version: ${{ matrix.python_version }}
+        update-pyenv: 'false'
+
+    - name: Install numpy
+      run: python -m pip install numpy
+
+    - name: Download output tree built in previous job
+      uses: actions/download-artifact@v6
+      with:
+        name: sdna_plus-build
+        path: output
+
+    - name: Smoke test
+      working-directory: ./sDNA/sdna_vs2008/tests
+      env:
+        sdnadll: '${{ github.workspace }}/output/Release/x64/sdna_vs2008.so'
+      run: "python -u ${{ matrix.smoke_test }}"
+
 
 
 

@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform",]
+    branches: [ "Cross_platform"]
 
   pull_request:
-    branches: [ "Cross_platform"]
+    branches: [ "Cross_platform", "Apply---parallel-${nproc}-to-all-build-steps"]
 
 
 env:
@@ -50,7 +50,7 @@ jobs:
 
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_zig --config Release
+        cmake --build build_output_cmake_zig --config Release --parallel "$(nproc)"
 
 
 
@@ -81,10 +81,10 @@ jobs:
 
     - uses: actions/checkout@v6
 
-    - name: Install R
+    - name: Install R, and Git etc.
       run: |
         sudo apt-get update
-        sudo apt-get install -y r-cran-optparse  r-cran-sjstats
+        sudo apt-get install -y --no-install-recommends git r-cran-optparse r-cran-sjstats
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6
