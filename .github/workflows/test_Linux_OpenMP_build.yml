@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "Cross_platform", "Apply---parallel-${nproc}-to-all-build-steps",]
   pull_request:
-    branches: [ "Cross_platform", "Apply---parallel-${nproc}-to-all-build-steps",]
+    branches: [ "Cross_platform"]
   workflow_dispatch:  
 
 jobs:
@@ -46,6 +46,9 @@ jobs:
     
     - name: Checkout repository
       uses: actions/checkout@v5
+
+    - name: Avoid Git complaining about "dubious ownership"
+      run: git config --global --add safe.directory /__w/sdna_plus/sdna_plus
 
     - name: Build sdna_plus
       continue-on-error: true # Even when the build is successful, the interactive script hangs at a "read" command
