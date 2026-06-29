@@ -46,7 +46,7 @@ bash build_linux.sh
 This produces `output/Release/x64/sdna_vs2008.so` with OpenMP enabled.
 Then set `export SDNADLL=$(pwd)/output/Release/x64/sdna_vs2008.so` before running sDNA commands.
 
-See [BUILD.md](BUILD.md) for detailed build instructions.
+CMake 3.29 is required.  See [BUILD.md](BUILD.md) for detailed build instructions, including guidance for installing later versions of CMake on older distros.
 
 #### Using R Portable 3.2.3 (Windows only). 
 This is the same [R-Portable](https://github.com/JamesParrott/rportable) as bundled 
