@@ -87,7 +87,7 @@ class CustomHook(BuildHookInterface):
         )
 
         subprocess.run(f"""
-            cmake --build {build_dir} --config {config.build_config}
+            cmake --build {build_dir} --config {config.build_config} --parallel {os.cpu_count()}
             """.lstrip().replace('\n',''),
             shell=config.shell
         )

@@ -58,9 +58,9 @@ jobs:
     #   shell: bash
     #   run: |
     #     cmake -G "Visual Studio 17 2022" -A Win32 -B build_output_cmake_Win32 -S . -D USE_ZIG=OFF
-    #     cmake --build build_output_cmake_Win32 --config Release
+    #     cmake --build build_output_cmake_Win32 --config Release --parallel "$(nproc)"
     #     cmake -G "Visual Studio 17 2022" -A x64 -B build_output_cmake_x64 -S . -D USE_ZIG=OFF
-    #     cmake --build build_output_cmake_x64 --config Release
+    #     cmake --build build_output_cmake_x64 --config Release --parallel "$(nproc)"
 
     # - name: Make installer
     #   run: AdvancedInstaller.com /build installerbits\advanced\sdna.aip && ^

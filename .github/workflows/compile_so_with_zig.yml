@@ -50,7 +50,7 @@ jobs:
 
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_zig --config Release
+        cmake --build build_output_cmake_zig --config Release --parallel "$(nproc)"
 
 
 

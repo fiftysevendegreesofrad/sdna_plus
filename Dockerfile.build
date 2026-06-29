@@ -58,7 +58,7 @@ RUN cmake \
   -B ~/build_geos \
   -S geos-3.3.5
 
-RUN cmake --build ~/build_geos
+RUN cmake --build ~/build_geos --parallel "$(nproc)"
 
 
 

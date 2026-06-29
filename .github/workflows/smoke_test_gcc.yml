@@ -40,7 +40,7 @@ jobs:
         
     - name: Build sDNA
       run: |
-        cmake --build build_output_cmake_gcc --config Release
+        cmake --build build_output_cmake_gcc --config Release --parallel "$(nproc)"
 
 
 
