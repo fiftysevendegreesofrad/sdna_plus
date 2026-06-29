@@ -35,7 +35,7 @@ This produces `output/Release/x64/sdna_vs2008.so` with **OpenMP multi-threading*
 and bundles `libgeos_c.so` for spatial operations. All dependencies come from system packages —
 no vcpkg required.
 
-The script works on Ubuntu 20.04 through 26.04, and Debian 11+.
+The script works on Ubuntu 24.04 through 26.04, and Debian 13+.
 Tested with GCC 10–15 and Boost 1.71–1.90.
 
 To use with vcpkg for pinned Boost 1.83 (matching CI exactly):
