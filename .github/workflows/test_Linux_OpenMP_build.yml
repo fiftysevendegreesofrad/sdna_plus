@@ -2,9 +2,9 @@ name: Build sdna_plus
 
 on:
   push:
-    branches: [ Cross_platform ]
+    branches: [ "Cross_platform", "Apply---parallel-${nproc}-to-all-build-steps",]
   pull_request:
-    branches: [ Cross_platform ]
+    branches: [ "Cross_platform", "Apply---parallel-${nproc}-to-all-build-steps",]
   workflow_dispatch:  
 
 jobs:
@@ -48,7 +48,7 @@ jobs:
         
     - name: Clone sdna_plus repository
       run: |
-        git clone --depth=1 --branch=build-linux-openmp https://github.com/Robinlovelace/sdna_plus/
+        git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus/
     
     - name: Build sdna_plus
       continue-on-error: true # Even when the build is successful, the interactive script hangs at a "read" command
@@ -68,7 +68,57 @@ jobs:
       with:
         name: sdna_plus-build
         path: sdna_plus/
-      if: always()  # Upload even if build fails for debugging
+
+
+
+  test_installer:
+
+    needs: build
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
+
+    name: "Download and run sDNA installer, and run diff tests on it. "
+    
+    runs-on: "ubuntu-24.04"
+
+
+    steps:
+
+
+    - uses: actions/checkout@v6
+
+    - name: Setup r2u
+      uses: eddelbuettel/github-actions/r2u-setup@master
+
+    - name: Install R deps
+      run: Rscript -e "install.packages(c('optparse', 'sjstats', 'car', 'glmnet'))"
+
+    - name: Install Git etc.
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends git
+
+    - name: Download output tree built in previous job
+      uses: actions/download-artifact@v6
+      with:
+        name: sdna_plus-build
+        path: output
+
+
+
+
+    - name: Run regression tests
+      uses: ./.github/actions/run_regression_tests
+      with:
+        python_version: ${{ matrix.python_version }}
+        DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
+        ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
+        sdnadll: '${{ github.workspace }}/output/Release/x64/sdna_vs2008.so'
+        sdna_debug: ""
+        shell: bash
 
 
 
