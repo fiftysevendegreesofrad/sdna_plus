@@ -23,7 +23,7 @@ Tested on Ubuntu 26.04, 24.04, and on Debian Trixie.  On Ubuntu 24.04 and other 
 ```bash
 # Install prerequisites (one-time, needs ~480 MB space)
 sudo apt update
-sudo apt install cmake make g++ libboost-dev python3 -y
+sudo apt install git cmake make g++ libboost-dev python3-pip -y
 
 # Clone and build (build_linux.sh itself does NOT need root)
 git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus

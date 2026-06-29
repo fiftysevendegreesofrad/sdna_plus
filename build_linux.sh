@@ -87,7 +87,7 @@ echo "=== Configuring (Unix Makefiles, Release) ==="
 cmake -G "Unix Makefiles" \
     -DCMAKE_BUILD_TYPE=Release \
     -DUSE_ZIG=OFF \
-    -DBUNDLE_PYSHP=OFF \
+    -DBUNDLE_PYSHP=ON \
     -DCMAKE_MAKE_PROGRAM="$(command -v make)" \
     -B "${BUILD_DIR}" \
     -S "${SCRIPT_DIR}"
@@ -231,3 +231,4 @@ if [ -f "${SO_FILE}" ]; then
 else
     echo "BUILD FAILED — ${SO_FILE} not found"
     exit 1
+fi
