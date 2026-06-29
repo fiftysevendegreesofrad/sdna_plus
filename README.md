@@ -59,7 +59,7 @@ you automatically in about 5 minutes.  The copy of `libgeos_c.so` may require a 
 * Create a venv and activate it (to avoid installing packages into the operating system's Python, and to isolate Numpy).
 * Install PyShp: `pip install -r requirements.txt`
 * The entry points in './bin' should be able to be used as normal.
-* The Python API may first require: `SDNADLL=/path/to/output/Release/x64/sdna_vs2008.so`  
+* The Python API may first require: `export sdnadll=/path/to/output/Release/x64/sdna_vs2008.so`  
 * If sDNA Learn or Predict is required:
   - Numpy must be installed: `pip install -r requirements-learn-predict.txt`
   - R (and the "optparser" and "can" packages) must be installed separately, e.g. on Ubuntu: 
