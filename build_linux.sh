@@ -173,7 +173,7 @@ if [ -f "${SO_FILE}" ]; then
 
     echo ""
     echo "Quick test:"
-    echo "  export SDNADLL=\"${SO_FILE}\""
+    echo "  export sdnadll=\"${SO_FILE}\""
     echo "  cd sDNA/sdna_vs2008/tests"
     echo "  python3 prepare_test_new.py"
     echo ""
