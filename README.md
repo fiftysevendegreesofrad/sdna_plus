@@ -33,6 +33,21 @@ sudo apt-get install -y r-cran-optparse r-cran-sjstats
 pipx install sdna_plus[learn]
 ```
 
+##### Building from source (with OpenMP multi-threading)
+
+
+```bash
+sudo apt install cmake make g++ libboost-dev python3
+git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus
+cd sdna_plus
+bash build_linux.sh
+```
+
+This produces `output/Release/x64/sdna_vs2008.so` with OpenMP enabled.
+Then set `export sdnadll=$(pwd)/output/Release/x64/sdna_vs2008.so` before running sDNA commands.
+
+CMake 3.29 is required.  See [BUILD.md](BUILD.md) for detailed build instructions, including guidance for installing later versions of CMake on older distros.
+
 #### Using R Portable 3.2.3 (Windows only). 
 This is the same [R-Portable](https://github.com/JamesParrott/rportable) as bundled 
 with sDNA previously.  Requires ~100MB.

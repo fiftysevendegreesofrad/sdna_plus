@@ -36,6 +36,10 @@
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/not.hpp>
+// boost::mpl::if_ is used directly below (e.g. make_iterator_reference_const,
+// reference_types_erasure_compatible). Older Boost happened to pull this header
+// in transitively, but Boost >= ~1.75 no longer does, so include it explicitly.
+#include <boost/mpl/if.hpp>
 
 namespace IteratorTypeErasure
 {

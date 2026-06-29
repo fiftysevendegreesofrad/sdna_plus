@@ -12,7 +12,7 @@ set(CMAKE_SYSTEM_VERSION 10.0 CACHE STRING "" FORCE)
 # https://learn.microsoft.com/en-gb/vcpkg/users/buildsystems/cmake-integration#cmake_toolchain_file
 
 
-if (IS_READABLE ENV{VCPKG_ROOT})
+if (IS_READABLE "$ENV{VCPKG_ROOT}")
     SET(VCPKG_ROOT 
     "$ENV{VCPKG_ROOT}"
     )
@@ -23,7 +23,7 @@ else()
 endif()
 
 set(CMAKE_TOOLCHAIN_FILE
-    "{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+    "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
 )
  
 set(VCPKG_MANIFEST_DIR "${CMAKE_SOURCE_DIR}/../..")
@@ -210,6 +210,8 @@ set(boost_packages
 
 find_package(Boost REQUIRED)
 
+find_package(OpenMP)
+
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
@@ -365,7 +367,12 @@ add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
 # If building with Ninja, by default libraries are prefixed with "lib"
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 
-target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
+if(OpenMP_FOUND)
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES} OpenMP::OpenMP_CXX)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE _OPENMP)
+else()
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
+endif()
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE "stdafx.h")
 
@@ -966,6 +973,14 @@ elseif(WIN32) # E.g. zig c++ for Windows
         "_UNICODE"
     )
 else() # Not MSVC
+    find_package(OpenMP)
+    if(OpenMP_CXX_FOUND)
+        target_compile_options(${PROJECT_NAME} PRIVATE ${OpenMP_CXX_FLAGS})
+        target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
+        message(STATUS "OpenMP enabled for GCC/Linux build")
+    else()
+        message(WARNING "OpenMP not found — building single-threaded")
+    endif()
     target_compile_definitions(${PROJECT_NAME} PRIVATE
         "UNICODE;"
         "_UNICODE"
