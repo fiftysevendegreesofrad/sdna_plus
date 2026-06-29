@@ -11,9 +11,10 @@ set -euo pipefail
 # On a fresh Ubuntu/Debian system:
 #   sudo apt install cmake make g++ libboost-dev python3
 #
-# Note: a recent CMake is required (see CMakeLists.txt for the exact minimum).
+# Note: CMake 3.29 is required.
 # Some older distro CMake packages are too old; install a newer CMake from
 # Kitware's apt repo or pip (pip install cmake) if the configure step fails.
+# E.g. https://apt.kitware.com/
 
 SCRIPT_DIR="$(dirname $0)"
 BUILD_DIR="${SCRIPT_DIR}/build_linux"

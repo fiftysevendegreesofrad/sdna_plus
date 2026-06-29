@@ -30,8 +30,6 @@ jobs:
       image: ${{ matrix.container_image }}
     
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
     
         
     - name: "Configure apt to use Kitware's repos (for CMake 3.29+)"
@@ -46,6 +44,9 @@ jobs:
       run: |
         apt install -y cmake make g++ libboost-dev python3 git
     
+    - name: Checkout repository
+      uses: actions/checkout@v5
+
     - name: Build sdna_plus
       continue-on-error: true # Even when the build is successful, the interactive script hangs at a "read" command
       run: |
