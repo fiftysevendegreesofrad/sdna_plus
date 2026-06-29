@@ -57,7 +57,8 @@ jobs:
         cd sDNA/sdna_vs2008/tests
         python3 prepare_test_new.py
     
-    - name: Upload build artifacts (optional)
+    - name: Upload build artifacts
+      if: ${{ matrix.container_image == 'ubuntu:26.04' }}
       uses: actions/upload-artifact@v4
       with:
         name: sdna_plus-build
