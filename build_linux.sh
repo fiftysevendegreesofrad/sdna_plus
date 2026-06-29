@@ -184,7 +184,7 @@ if [ -f "${SO_FILE}" ]; then
     echo ""
     echo "----------------------------------------"
     BASHRC="${HOME}/.bashrc"
-    EXPORT_LINE="export SDNADLL=\"${SO_FILE}\""
+    EXPORT_LINE="export sdnadll=\"${SO_FILE}\""
     PATH_LINE="export PATH=\"\${PATH}:${SCRIPT_DIR}/output/Release/bin\""
 
     echo "Make sDNA permanently available in new shells?"
