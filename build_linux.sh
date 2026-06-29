@@ -4,11 +4,11 @@ set -euo pipefail
 # build_linux.sh — Single-command Linux build for sDNA+
 # Produces output/Release/x64/sdna_vs2008.so with OpenMP support
 #
-# Usage (does NOT need root):
+# Usage:
 #   bash build_linux.sh
 #
 # Install the prerequisites first (this is the only step that needs root).
-# On a fresh Ubuntu/Debian system:
+# On Debian based distros (e.g. Ubuntu):
 #   sudo apt install cmake make g++ libboost-dev python3
 #
 # Note: CMake 3.29 is required.
@@ -181,7 +181,53 @@ if [ -f "${SO_FILE}" ]; then
     echo "To run benchmarks:"
     echo "  pip install sdna-plus  # for Python bindings (or use arcscripts from output/)"
 
+    if [ "${CI}" ] || [ "${GITHUB_ACTIONS}"]; then
+        exit 0
+    fi
+
+    # ---- Offer permanent install ----
+    echo ""
+    echo "----------------------------------------"
+    BASHRC="${HOME}/.bashrc"
+    EXPORT_LINE="export sdnadll=\"${SO_FILE}\""
+    PATH_LINE="export PATH=\"\${PATH}:${SCRIPT_DIR}/output/Release/bin\""
+
+    echo "Make sDNA permanently available in new shells?"
+    echo "  This will add two lines to ${BASHRC}:"
+    echo "    ${EXPORT_LINE}"
+    echo "    ${PATH_LINE}"
+    echo ""
+    read -r -p "  Update ~/.bashrc? [y/N] " REPLY
+    echo ""
+
+    if [ "${REPLY,,}" = "y" ] || [ "${REPLY,,}" = "yes" ]; then
+        # Avoid duplicates
+        if [ -f "${BASHRC}" ]; then
+            if grep -qF "sdnadll=" "${BASHRC}" 2>/dev/null; then
+                echo "sDNA entries already found in ${BASHRC} — skipping"
+            else
+                {
+                    echo ""
+                    echo "# sDNA+ (added by build_linux.sh on $(date -I))"
+                    echo "${EXPORT_LINE}"
+                    echo "${PATH_LINE}"
+                } >> "${BASHRC}"
+                echo "Added sDNA to ${BASHRC}"
+                echo "Run 'source ${BASHRC}' or open a new terminal to apply."
+            fi
+        else
+            {
+                echo "# sDNA+ (added by build_linux.sh on $(date -I))"
+                echo "${EXPORT_LINE}"
+                echo "${PATH_LINE}"
+            } > "${BASHRC}"
+            echo "Created ${BASHRC} with sDNA entries"
+        fi
+    else
+        echo "Skipped. To enable manually later:"
+        echo "  echo '${EXPORT_LINE}' >> ~/.bashrc"
+        echo "  echo '${PATH_LINE}' >> ~/.bashrc"
+    fi
 else
     echo "BUILD FAILED — ${SO_FILE} not found"
     exit 1
-fi

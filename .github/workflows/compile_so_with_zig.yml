@@ -81,16 +81,10 @@ jobs:
 
     - uses: actions/checkout@v6
 
-    - name: Setup r2u
-      uses: eddelbuettel/github-actions/r2u-setup@master
-
-    - name: Install R deps
-      run: Rscript -e "install.packages(c('optparse', 'sjstats', 'car', 'glmnet'))"
-
-    - name: Install Git etc.
+    - name: Install R, and Git etc.
       run: |
         sudo apt-get update
-        sudo apt-get install -y --no-install-recommends git
+        sudo apt-get install -y --no-install-recommends git r-cran-optparse r-cran-sjstats
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6
