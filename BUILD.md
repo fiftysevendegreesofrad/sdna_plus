@@ -79,7 +79,7 @@ sudo apt-get install r-cran-optparse r-cran-sjstats
 
 Run a smoke test:
 ```bash
-export SDNADLL=$(pwd)/output/Release/x64/sdna_vs2008.so
+export sdnadll=$(pwd)/output/Release/x64/sdna_vs2008.so
 cd sDNA/sdna_vs2008/tests
 python3 prepare_test_new.py
 ```
