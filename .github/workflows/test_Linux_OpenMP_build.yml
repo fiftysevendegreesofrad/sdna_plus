@@ -34,7 +34,7 @@ jobs:
       uses: actions/checkout@v4
     
         
-    - name: "Configure apy to use Kitware's repos (for CMake 3.29+)"
+    - name: "Configure apt to use Kitware's repos (for CMake 3.29+)"
       run: |
         apt update
         apt install -y ca-certificates gpg wget
