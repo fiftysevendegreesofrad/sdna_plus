@@ -18,7 +18,6 @@ the Zig for Windows build (entirely optional) and the Linux builds.
 
 ##### Quick build (recommended)
 
-```bash
 Tested on Ubuntu 26.04 and 24.04
 
 ```bash
