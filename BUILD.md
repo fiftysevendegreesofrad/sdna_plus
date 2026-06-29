@@ -16,27 +16,64 @@ the Zig for Windows build (entirely optional) and the Linux builds.
 
 #### Building locally on Linux 
 
-##### Quick build (recommended)
+###### Building an sDNA Python Wheel
+* `export VCPKG_INSTALLATION_ROOT=/root/vcpkg`
+* `python -m venv venv`
+* `. venv/bin/activate`
+* `pip install build hatchling`
+* `cd sdna_plus`
+* `python -m build --no-isolation --wheel`
+TODO:  For better compatibility across Linux distros, the above Ubuntu 22.04 steps need to 
+be generalised to builds from source for
+CMake 29 etc. if necessary, and wheels built on the many linux image `quay.io/pypa/manylinux1_x86_64` that
+supports a GCC 4.8 version that was released 16 months after Geos 3.3.5.  See https://github.com/pypa/manylinux
+https://gcc.gnu.org/news.html and https://github.com/libgeos/geos/blob/main/NEWS.md
+
+##### Ubuntu 26.04
+
+
+
+### Building with the operating system's Boost and other libraries
+
+It is possible to build sDNA much more quickly, linking to operating system libraries
+but this is not officially supported until testing is complete
+
+#### Quick build (without vcpkg)
+
 
 Tested on Ubuntu 26.04, 24.04, and on Debian Trixie.  On Ubuntu 24.04 and other older distros, see note below about adding Kitware's repositories for CMake >= 3.29
 
-```bash
-# Install prerequisites (one-time, needs ~480 MB space)
-sudo apt update
-sudo apt install git cmake make g++ libboost-dev python3-pip -y
+##### Stubbing vcpkg
+```
 
-# Clone and build (build_linux.sh itself does NOT need root)
+```
+
+```bash
+sudo apt update
+sudo apt install git cmake ninja-build g++ libboost-dev python3-pip -y
+
 git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus
 cd sdna_plus
 bash build_linux.sh
 ```
 
-This produces `output/Release/x64/sdna_vs2008.so` with **OpenMP multi-threading** enabled,
-and bundles `libgeos_c.so` for spatial operations. All dependencies come from system packages —
-no vcpkg required.
+This builds sDNA in `./output`.  All dependencies come 
+from system packages —no vcpkg required.
 
-The script works on Ubuntu 24.04 through 26.04, and Debian 13+.
+The script works on Ubuntu 24.04, 26.04, and Debian Trixie.
 Tested with GCC 10–15 and Boost 1.71–1.90.
+
+
+To use with vcpkg for pinned Boost 1.83 (matching CI exactly):
+```bash
+git clone --depth=1 https://github.com/microsoft/vcpkg ~/vcpkg
+cd ~/vcpkg && ./bootstrap-vcpkg.sh
+cd path/to/sdna_plus
+VCPKG_ROOT=~/vcpkg bash build_linux.sh
+```
+
+##### Ubuntu 24.04
+
 ###### Installing CMake on Debian based distros, if >= 3.29 unavailable in default apt repos
 Follow [the instructions](https://apt.kitware.com/) to configure your package manager (apt)
 to download directly from Kitware's CMake apt repository.  E.g. on Ubuntu 24.04:
@@ -49,43 +86,51 @@ echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://ap
 sudo apt update
 ```
 
-To use with vcpkg for pinned Boost 1.83 (matching CI exactly):
-```bash
-git clone --depth=1 https://github.com/microsoft/vcpkg ~/vcpkg
-cd ~/vcpkg && ./bootstrap-vcpkg.sh
-cd path/to/sdna_plus
-VCPKG_ROOT=~/vcpkg bash build_linux.sh
-```
 
-##### Manual CMake build
+##### Ubuntu 22.04 (Jammy)
+Kitware haven't got a repo for Noble (24.04) yet, so 22.04 is needed for now.
+[Upgrade CMake to 3.29](https://askubuntu.com/a/1157132)
+Working directory assumed to be `/root`
+* `sudo apt purge --auto-remove cmake`
+* `wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null`
+* `sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'`
+* `sudo apt update`
+* `sudo apt-get install curl zip unzip tar g++ python-is-python3 python3-pip python3-venv cmake ninja-build `
+* `git clone --depth=1 http://www.github.com/Microsoft/vcpkg`
+* `cd vcpkg`
+* `./bootstrap-vcpkg.sh`
+On ARM:
+* `export VCPKG_FORCE_SYSTEM_BINARIES=1`
+* `cd ..`
+* `git clone --depth=1 --branch=Cross_platform  http://www.github.com/fiftysevendegreesofrad/sdna_plus`
+Download GEOS 3.3.5 and compile it locally (so that it can link to your available version of glibc, instead of whichever one was in the build environment I used).  `.github\workflows\build_geos.yml` can be used in a Github Action Ubuntu runner.
+* `curl -OL http://download.osgeo.org/geos/geos-3.3.5.tar.bz2`
+* `tar xfj geos-3.3.5.tar.bz2`
+* `cd geos-3.3.5`
+* `cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/root/build_geos/_installed -DBUILD_SHARED_LIBS=ON -DBUILD_DOCUMENTATION=OFF -DBUILD_TESTING=OFF -G Ninja -B /root/build_geos -S .`
+* `cmake --build /root/build_geos`
+* `cp /root/build_geos/lib/libgeos_c.so /root/sdna_plus/sDNA/geos/x64/src`
+Then pick one of the following package options
+###### Simple output dir 
+The `output/Config` dir is automatically zipped if it was built in one of the Github Actions workflows, 
+e.g. `.github\workflows\smoke_test_gcc.yml`
+* `cd sdna_plus`
+* `VCPKG_INSTALLATION_ROOT=/root/vcpkg cmake -G "Ninja Multi-Config" -D USE_ZIG=OFF -D CMAKE_MAKE_PROGRAM=/usr/bin/ninja -D BUNDLE_PYSHP=ON -B build_linux -S .`
+* `cmake --build build_linux --config=Release`
+Install user-land dependencies (R).
+* `sudo apt-get install r-cran-optparse r-cran-sjstats`
+Run a smoke test
+* `export sdnadll=/root/sdna_plus/output/Release/x64/sdna_vs2008.so`
+* `cd sDNA/sdna_vs2008/tests`
+* `python prepare_test_new.py`
 
-If you prefer to run the steps individually:
 
-```bash
-# Prerequisites (needs root); the build steps below do not
-sudo apt install cmake make g++ libboost-dev
-
-# Create a stub vcpkg (or use real vcpkg)
-mkdir -p /tmp/sdna_vcpkg_stub/scripts/buildsystems
-echo 'set(VCPKG_MANIFEST_MODE OFF)' > /tmp/sdna_vcpkg_stub/scripts/buildsystems/vcpkg.cmake
-
-# Configure and build
-VCPKG_ROOT=/tmp/sdna_vcpkg_stub cmake -G "Unix Makefiles" \
-    -DCMAKE_BUILD_TYPE=Release -DUSE_ZIG=OFF -DBUNDLE_PYSHP=OFF \
-    -B build_linux -S .
-cmake --build build_linux --parallel $(nproc)
-
-# Copy outputs manually (post-build copy uses multi-config paths)
-mkdir -p output/Release/x64 output/Release/bin
-cp build_linux/sDNA/sdna_vs2008/sdna_vs2008.so output/Release/x64/
-cp sDNA/geos/x64/src/libgeos_c.so output/Release/x64/
-cp -r arcscripts/* output/Release/
-cp -r arcscripts/bin/* output/Release/bin/
 ```
 
 Install user-land dependencies (R, required for sDNA Learn/Predict):
 ```bash
 sudo apt-get install r-cran-optparse r-cran-sjstats
+python3 -m pip install -r requirements/base.txt -r requirements/learn-predict.txt
 ```
 
 Run a smoke test:
@@ -96,21 +141,12 @@ python3 prepare_test_new.py
 ```
 Run all regression tests:
 If this isn't a throw away env, make a venv and activate it.
-* `python -m pip install pytest`
+* `python -m pip install pytest numpy PyShp==2.4.2 --break-system-packages`
 * `cd /root/sdna_plus/sDNA/sdna_vs2008/tests/pytest`
 * `pytest`
-###### Building an sDNA Python Wheel (also on Ubuntu 22.04)
-* `export VCPKG_INSTALLATION_ROOT=/root/vcpkg`
-* `python -m venv venv`
-* `. venv/bin/activate`
-* `pip install build hatchling`
-* `cd sdna_plus`
-* `python -m build --no-isolation --wheel`
-TODO:  For better compatibility across Linux distros, the above Ubuntu 22.04 steps need to 
-be generalised to builds from source for
-CMake 29 etc. if necessary, and wheels built on the many linux image `quay.io/pypa/manylinux1_x86_64` that
-supports a GCC 4.8 version that was released 16 months after Geos 3.3.5.  See https://github.com/pypa/manylinux
-https://gcc.gnu.org/news.html and https://github.com/libgeos/geos/blob/main/NEWS.md
+
+
+
 
 ## Compilation notes.
 #### Dynamic changes to the source code when compiling with Visual Studio

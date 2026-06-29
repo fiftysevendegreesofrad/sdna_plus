@@ -161,7 +161,7 @@ jobs:
         update-pyenv: 'false'
 
     - name: Install numpy
-      run: python -m pip install numpy PyShp==2.1.0
+      run: python -m pip install numpy
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6
