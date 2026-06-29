@@ -18,7 +18,7 @@ the Zig for Windows build (entirely optional) and the Linux builds.
 
 ##### Quick build (recommended)
 
-Tested on Ubuntu 26.04 and 24.04
+Tested on Ubuntu 26.04, 24.04, and on Debian Trixie.  On Ubuntu 24.04 and other older distros, see note below about adding Kitware's repositories for CMake >= 3.29
 
 ```bash
 # Install prerequisites (one-time, needs ~480 MB space)
