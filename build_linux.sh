@@ -198,7 +198,7 @@ if [ -f "${SO_FILE}" ]; then
     if [ "${REPLY,,}" = "y" ] || [ "${REPLY,,}" = "yes" ]; then
         # Avoid duplicates
         if [ -f "${BASHRC}" ]; then
-            if grep -qF "SDNADLL=" "${BASHRC}" 2>/dev/null; then
+            if grep -qF "sdnadll=" "${BASHRC}" 2>/dev/null; then
                 echo "sDNA entries already found in ${BASHRC} — skipping"
             else
                 {
