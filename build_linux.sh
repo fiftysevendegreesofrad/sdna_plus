@@ -5,15 +5,18 @@ set -euo pipefail
 # Otherwise, create a stub that uses system packages.
 if [ -n "${VCPKG_ROOT:-}" ] && [ -f "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" ]; then
     echo "Using vcpkg from VCPKG_ROOT=${VCPKG_ROOT}"
-    export VCPKG_ROOT
 else
-    stub_vcpkg.sh
+    VCPKG_ROOT=/tmp
+    STUB_VCPKG_DIR="${VCPKG_ROOT}/scripts/buildsystems"
+    mkdir -p "${STUB_VCPKG_DIR}"
+    cp vcpkg.stub.cmake "${STUB_VCPKG_DIR}/vcpkg.cmake"
+    export VCPKG_ROOT
 fi
 
 cmake -G "Ninja Multi-Config" \
     -DCMAKE_BUILD_TYPE=Release \
     -DUSE_ZIG=OFF \
-    -DBUNDLE_PYSHP=OFF \
+    -DBUNDLE_PYSHP=ON \
     -B build_linux \
     -S .
 

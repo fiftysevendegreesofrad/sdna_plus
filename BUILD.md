@@ -14,9 +14,8 @@ produce an x64 output installation.
 * Work needs to be done to dynamically link to the Geos DLLs and .so (and to provide the latter) on both
 the Zig for Windows build (entirely optional) and the Linux builds.
 
-#### Building locally on Linux 
 
-###### Building an sDNA Python Wheel
+#### Building an sDNA Python Wheel
 * `export VCPKG_INSTALLATION_ROOT=/root/vcpkg`
 * `python -m venv venv`
 * `. venv/bin/activate`
@@ -24,47 +23,49 @@ the Zig for Windows build (entirely optional) and the Linux builds.
 * `cd sdna_plus`
 * `python -m build --no-isolation --wheel`
 TODO:  For better compatibility across Linux distros, the above Ubuntu 22.04 steps need to 
-be generalised to builds from source for
-CMake 29 etc. if necessary, and wheels built on the many linux image `quay.io/pypa/manylinux1_x86_64` that
+be generalised to builds from source for CMake 29 etc. if necessary, and wheels built on 
+the many linux image `quay.io/pypa/manylinux1_x86_64` that
 supports a GCC 4.8 version that was released 16 months after Geos 3.3.5.  See https://github.com/pypa/manylinux
 https://gcc.gnu.org/news.html and https://github.com/libgeos/geos/blob/main/NEWS.md
 
+#### Building locally on Linux 
+
+#### Building with the operating system's Boost and other libraries
+
+##### GLIBC
+Note.  As with any dynamically linked libary, an error will occur if the resulting binaries are run 
+on a distro with an older GLIBC, than the GLIBC on the system the sDNA build was compiled on, and linked against.
+This route should not be used for the official binaries for release, that we will try to support.  It 
+is for quickly producing personal customised unofficial versions of sDNA only.
+
 ##### Ubuntu 26.04
+It is possible to build sDNA on Linux much quicker, by linking to the operating system's libraries 
+(GLIBC and Boost), instead of installing vcpkg, and compiling the same pinned version of Boost
+(1.83) as the main branch from source.  
+If vcpkg is not available, the script `build_linux.sh` does this automatically.
 
 
-
-### Building with the operating system's Boost and other libraries
-
-It is possible to build sDNA much more quickly, linking to operating system libraries
-but this is not officially supported until testing is complete
-
-#### Quick build (without vcpkg)
-
-
-Tested on Ubuntu 26.04, 24.04, and on Debian Trixie.  On Ubuntu 24.04 and other older distros, see note below about adding Kitware's repositories for CMake >= 3.29
-
-##### Stubbing vcpkg
-```
-
-```
+#### Quick build (e.g. without vcpkg)
+Tested on x64/x86 (not ARM yet), on Ubuntu 26.04, 24.04, and on Debian Trixie.  On 
+Ubuntu 24.04 and other older distros, see note below about adding Kitware's repositories for CMake >= 3.29
 
 ```bash
 sudo apt update
-sudo apt install git cmake ninja-build g++ libboost-dev python3-pip -y
+sudo apt install git cmake ninja-build g++ libboost-dev python3-venv -y
 
 git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus
 cd sdna_plus
 bash build_linux.sh
 ```
 
-This builds sDNA in `./output`.  All dependencies come 
+This produces sDNA in `./output/Release/x64`.  All dependencies come 
 from system packages —no vcpkg required.
 
 The script works on Ubuntu 24.04, 26.04, and Debian Trixie.
 Tested with GCC 10–15 and Boost 1.71–1.90.
 
 
-To use with vcpkg for pinned Boost 1.83 (matching CI exactly):
+To use with vcpkg for pinned Boost 1.83 (as in our CI pipeline):
 ```bash
 git clone --depth=1 https://github.com/microsoft/vcpkg ~/vcpkg
 cd ~/vcpkg && ./bootstrap-vcpkg.sh
@@ -86,6 +87,7 @@ echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://ap
 sudo apt update
 ```
 
+#### Standard build.
 
 ##### Ubuntu 22.04 (Jammy)
 Kitware haven't got a repo for Noble (24.04) yet, so 22.04 is needed for now.
@@ -95,7 +97,7 @@ Working directory assumed to be `/root`
 * `wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null`
 * `sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ jammy main'`
 * `sudo apt update`
-* `sudo apt-get install curl zip unzip tar g++ python-is-python3 python3-pip python3-venv cmake ninja-build `
+* `sudo apt-get install curl zip unzip tar g++ python-is-python3 python3-venv cmake ninja-build `
 * `git clone --depth=1 http://www.github.com/Microsoft/vcpkg`
 * `cd vcpkg`
 * `./bootstrap-vcpkg.sh`
@@ -125,12 +127,11 @@ Run a smoke test
 * `python prepare_test_new.py`
 
 
-```
-
-Install user-land dependencies (R, required for sDNA Learn/Predict):
+#### Install user-land dependencies.
+If using sDNA Learn/Predict, Numpy and R are needed:
 ```bash
-sudo apt-get install r-cran-optparse r-cran-sjstats
-python3 -m pip install -r requirements/base.txt -r requirements/learn-predict.txt
+python3 -m pip install -r requirements/learn-predict.txt
+sudo apt-get install r-cran-optparse r-cran-sjstats # Warning!  Can need 3.5GB
 ```
 
 Run a smoke test:
@@ -141,9 +142,9 @@ python3 prepare_test_new.py
 ```
 Run all regression tests:
 If this isn't a throw away env, make a venv and activate it.
-* `python -m pip install pytest numpy PyShp==2.4.2 --break-system-packages`
+* `python -m pip install pytest`
 * `cd /root/sdna_plus/sDNA/sdna_vs2008/tests/pytest`
-* `pytest`
+* `DONT_TEST_N_LINK_SUBSYSTEMS_ORDER=1 && ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT=1 && pytest`
 
 
 
