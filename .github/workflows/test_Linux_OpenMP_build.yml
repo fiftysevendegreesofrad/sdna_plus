@@ -1,8 +1,8 @@
-name: Build sdna_plus
+name: Quick build, linked to system libraries
 
 on:
   push:
-    branches: [ "Cross_platform", ]
+    branches: [ "Cross_platform",]
   pull_request:
     branches: [ "Cross_platform", ]
   workflow_dispatch:  

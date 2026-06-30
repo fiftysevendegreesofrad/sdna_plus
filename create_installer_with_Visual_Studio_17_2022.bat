@@ -18,6 +18,7 @@ cmake -G "Visual Studio 17 2022" ^
       -D USE_ZIG=OFF ^
       -D BUNDLE_PYSHP=ON && ^
 cmake --build %THIS_FILE_DIR%\build_output_cmake_x64 --config %CONFIG% --parallel %NUMBER_OF_PROCESSORS% && ^
+python insert_sDNA_versions.py --advinst-config-file=installerbits\advanced\sdna.aip && ^
 AdvancedInstaller.com /build installerbits\advanced\sdna.aip && ^
 python -u installerbits\rename_version.py installerbits/advanced/output/sdna_setup.msi .
 

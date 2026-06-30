@@ -16,10 +16,9 @@ import re
 
 PARENT_DIR = Path(__file__).parent
 
-def getVersion() -> str:
+def getVersion(version_file: Path) -> str:
     version = None
     version_line_num = None
-    version_file = PARENT_DIR / "sDNA" / "sdna_vs2008" / "version_template.h"
     for i, line in enumerate(version_file.read_text().splitlines()):
         m = re.match(r'^const char \*SDNA_VERSION = "(.*)";.*', line)
         if m:
@@ -49,14 +48,18 @@ def _insert_version_info(file: Path, version: str) -> None:
     file.write_text("\n".join(lines))
 
 
-def _replace_version_specifiers_in_scripts_files(version: str) -> None:
+def _replace_version_specifiers_in_scripts_files(
+    version: str,
+    target_dir: Path = PARENT_DIR / "output" / "release",
+    ) -> None:
+
     sub_dirs = ["", "bin"]
     exclude = {"shapefile.py", "placeholder.txt"}
     target_exts = {".py", ".pyt", ".r", ".txt"} # must all be lower case to run on Windows.
 
 
     for sub_dir in sub_dirs:
-        dir_ = PARENT_DIR / "output" / "release" / sub_dir
+        dir_ = target_dir / sub_dir
         if not dir_.is_dir():
             continue
         for file in dir_.iterdir():
@@ -68,13 +71,15 @@ def _replace_version_specifiers_in_scripts_files(version: str) -> None:
                 continue
             _insert_version_info(file, version)
 
-def _replace_version_specifier_in_advinst_config_file(version: str) -> None:
+def _replace_version_specifier_in_advinst_config_file(
+    version: str,
+    file: Path = PARENT_DIR / "installerbits" / "advanced" / "sdna.aip",
+    ) -> None:
     version_line_template = '    <ROW Property="ProductVersion" Value="{version}" Options="32"/>'
     old = version_line_template.format(version="1.0.0")
     new = version_line_template.format(version=version)
     pattern=version_line_template.format(version=r"\d+\.\d+\.\d+")
 
-    file = PARENT_DIR / "installerbits" / "advanced" / "sdna.aip"
     lines = file.read_text().splitlines()
 
     matches = [(j, m) for j, line in enumerate(lines) if (m := re.match(pattern, line))]
@@ -100,22 +105,37 @@ def main(args = sys.argv[1:]) -> int:
     )
 
     parser.add_argument(
-        "targets",
-        nargs='*',
-        type=str,
-        default="scripts",
+        "--version-file",
+        type=Path,
+        default=PARENT_DIR / "sDNA" / "sdna_vs2008" / "version_template.h"
+    )
+    parser.add_argument(
+        "--scripts",
+        type=Path,
+    )
+    parser.add_argument(
+        "--advinst-config-file",
+        type=Path,
     )
 
     args_namespace = parser.parse_args(args)    
-    version = getVersion()
+    version = getVersion(version_file = args_namespace.version_file)
 
-    if "scripts" in args_namespace.targets:
-        _replace_version_specifiers_in_scripts_files(version)
+    if (scripts_target := getattr(args_namespace, "scripts", None)) is not None:
+        print(f"Inserting {version=} into Python files in: {scripts_target} (and bin sub dir)...")
+        _replace_version_specifiers_in_scripts_files(
+            version=version,
+            target_dir=scripts_target,
+        )
 
-    if "advinst-config-file" in args_namespace.targets:
-        _replace_version_specifier_in_advinst_config_file(version)
+    if (advinst_file := getattr(args_namespace, "advinst_config_file", None)) is not None:
+        print(f"Inserting {version=} into Advanced Installer config file: {file}...")
+        _replace_version_specifier_in_advinst_config_file(
+            version=version,
+            target = advinst_file,
+        )
 
-
+    print(f"{__file__} done. ")
 
     return 0
 
