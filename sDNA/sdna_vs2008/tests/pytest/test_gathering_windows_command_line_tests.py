@@ -75,7 +75,7 @@ print('SDNA_DLL: %s' % SDNA_DLL)
 
 
 SDNA_BIN_DIR = os.getenv('sdna_bin_dir', '')
-DEFAULT_TEST_SDNA_BIN = r'..\..\..\arcscripts\bin'.replace('\\', os.sep)
+DEFAULT_TEST_SDNA_BIN = os.path.join('..','..','..','arcscripts','bin')
 
 def is_sdna_bin_dir(dir_):
     if not os.path.isdir(dir_):
@@ -334,7 +334,6 @@ class PythonCommand(Command):
 
         try:
             return _run_insecurely_in_shell_without_catching_exceptions(self.command_str)
-
         except subprocess.CalledProcessError as e:
             return e.output.decode('ascii')
 
@@ -865,7 +864,7 @@ XFAIL_ON_LINUX = ['correctout.txt',
                  ]
 
 
-def xfailed_diff_tests():
+def diff_tests_with_xfails_marked():
     for test in diff_tests.values():
         if sys.platform == "win32" and os.getenv('USED_ZIG', ''):
             yield pytest.param(
@@ -892,7 +891,7 @@ except ImportError:
 else:
     @pytest.mark.parametrize(
         'diff_test', 
-        xfailed_diff_tests(),
+        list(diff_tests_with_xfails_marked()),
         ids = diff_tests.keys(),
         )
     def test_diff_(diff_test):

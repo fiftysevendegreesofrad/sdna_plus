@@ -4,16 +4,71 @@ This is the experimental [Cross Platform](https://github.com/fiftysevendegreesof
 
 ## Quick start
 
-If not already available, install [`pipx`](https://github.com/pypa/pipx) to automatically 
-install Python applications into virtual environments (avoiding Python dependency conflicts):
+### Python
+
+If working on the command line (outside of ArcGIS, QGIS and Rhino3D for which there are plug-ins) sDNA is most 
+conveniently run via Python.  uv makes this easy, and results in the fewest problems (e.g. issues with the 
+operating system that may occur with other Python installers).
+
+#### uv
+In general one should never run untrusted code straight from the internet (please don't!).
+However (to the horror of the security conscious) installing 
+[uv](https://github.com/astral-sh/uv) is easiest by running either their Linux 
+installation script:
+```bash
+ curl
+ -LsSf https://astral.sh/uv/install.sh | sh
+``` 
+
+or their Windows one:
 ```
-pip install pipx
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-Use pipx to install an sDNA Wheel from PyPi:
+which both download further scripts from Astral's website ([see](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_1)) and runs them directly.
+Otherwise uv is also available in [various package managers](https://docs.astral.sh/uv/getting-started/installation/#winget), or by 
+[downloading their executables](https://github.com/astral-sh/uv/releases), unpacking them, and appending the dir they are in to your system's Path environment variable.
+
+#### Windows
+
+On Windows we recommend either uv (as above), or or [pyenv-win](https://github.com/pyenv-win/pyenv-win/), 
+Either option can install whichever Python versions you desire, relatively trouble free.
+
+#### Linux
+
+On Linux we recommend either also installing uv (as above) to provision Pythons (independent of any 
+operating system Python) or simply create a Python virtual environment, e.g.
+
+```
+sudo apt-get update
+sudo apt-get install -y python3-venv
+```
+
+### Isolation
+
+If using uv, installation of the core software is straightforward:
+
+```
+uv tool install sdna_plus
+```
+For sDNA Learn and Predict on Windows use `uv tool install sdna_plus[R]`, or  On Linux, a separate installation of R is also required for sDNA Learn and Predict - see below.
+
+#### Pipx
+
+If not using uv, install your chosen Python version (if using PyEnv, you might need to 'activate' it).
+Then install [`pipx`](https://github.com/pypa/pipx) into this Python.  
+Pipx automatically installs Python applications into virtual environments (avoiding Python 
+dependency conflicts).
+```
+python3 -m pip install pipx
+```
+
+Pipx can then be used to install an sDNA Wheel from PyPi (including PyShp and any other Python deps), 
+and set up the run time commands:
 ```
 pipx install sdna_plus
 ```
+or on Windows, for sDNA Learn and Predict, `pipx install sdna_plus[R]`.  Pipx will automatically create a special virtual environment for sDNA, and add its executables to the Path environment variable.
 
 Example command line use:
 ```
@@ -21,41 +76,28 @@ sdnaintegral -i input_network.shp -o output_network.shp`
 ```
 
 ### To use sDNA Learn or sDNA Predict
-The `[learn]` or `[predict]` optional dependencies (including Numpy) are also required (Numpy 2 needs ~35MB).  
-As is an installation of [`R`](https://www.r-project.org/) with optparse and Car.
+An an installation of [`R`](https://www.r-project.org/) with optparse and Car is required.  
+On Windows, a portable version of R is checked into the main branch, 
+or installable separately from [Rportable](https://pypi.org/project/rportable/)
 
-#### On Linux 
+#### Installing R on Linux 
 
-Install R and the two deps separately, e.g. on Ubuntu with:
+Install R and the two R deps separately, e.g. on Ubuntu with:
 ```
 sudo apt-get update
-sudo apt-get install -y r-cran-optparse r-cran-sjstats
-pipx install sdna_plus[learn]
+sudo apt-get install -y r-cran-optparse r-cran-sjstats # Warning!  Can need 3.5GB
+pipx install sdna_plus
 ```
 
-##### Building from source (with OpenMP multi-threading)
+or set up [r2u](https://eddelbuettel.github.io/r2u/).
 
-
-```bash
-sudo apt install cmake make g++ libboost-dev python3
-git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus
-cd sdna_plus
-bash build_linux.sh
-```
-
-This produces `output/Release/x64/sdna_vs2008.so` with OpenMP enabled.
-Then set `export sdnadll=$(pwd)/output/Release/x64/sdna_vs2008.so` before running sDNA commands.
-
-CMake 3.29 is required.  See [BUILD.md](BUILD.md) for detailed build instructions, including guidance for installing later versions of CMake on older distros.
 
 #### Using R Portable 3.2.3 (Windows only). 
 This is the same [R-Portable](https://github.com/JamesParrott/rportable) as bundled 
-with sDNA previously.  Requires ~100MB.
+with sDNA previously.  Requires ~100MB.  E.g.:
 ```
-pipx install sdna_plus[learn,R]
+pipx install sdna_plus[R]
 ```
-
-
 
 
 ## Notes
@@ -116,11 +158,11 @@ There are  a handful of open regressions (compared to the Windows build), which 
 be made, on which Github Actions can be run for free.  Using this, the "CMake, GCC & Ubuntu" one will rebuild it for
 you automatically in about 5 minutes.  The copy of `libgeos_c.so` may require a specific version of glibc.  If this is not available, it will have to be recompiled (see `./BUILD.md` or `.github/workflows/build_geos.yml`).
 * Create a venv and activate it (to avoid installing packages into the operating system's Python, and to isolate Numpy).
-* Install PyShp: `pip install -r requirements.txt`
+* Install PyShp and any other deps: `pip install -r requirements/base.txt`
 * The entry points in './bin' should be able to be used as normal.
 * The Python API may first require: `SDNADLL=/path/to/output/Release/x64/sdna_vs2008.so`  
 * If sDNA Learn or Predict is required:
-  - Numpy must be installed: `pip install -r requirements-learn-predict.txt`
+  - To install Numpy (and anything else) `pip install -r requirements/learn-predict.txt`
   - R (and the "optparser" and "can" packages) must be installed separately, e.g. on Ubuntu: 
 ```
 sudo apt-get update
@@ -222,10 +264,15 @@ Some key folders:
 
 ### Tests
 
-The test code needs updating (plan to do this with the port to Linux).
 
 #### Continuous Integration Tests.
+##### Test pollution
+The tests are based on regressions tests against test files, from test procedures defined in .bat files.  
+Some rely on artefacts from previous tests (they are intended to be run sequentially) so the individual
+PyTest test cases based on these should not be run without those previous to it, the files written
+by which it relies on.
 
+##### Description
 Currently, the CI tests are a subset of sDNA's regression tests, which diff the test output against that produced by a previous build (eight of the expected output files can be recreated using `sDNA\sdna_vs2008\tests\approve_debug_output.bat`, but `correctout_learn.txt` and `correctout_table.txt` require other means).
 
 The CI test runner parses every `.bat` file in `sDNA\sdna_vs2008\tests` except the following which are filtered out:
@@ -237,14 +284,21 @@ To run the CI tests locally, something like the following commands are required:
 cd your_venvs_directory
 python -m venv sdna_testing_venv
 .\sdna_testing_venv\Scripts\activate
-pip install numpy pytest
+pip install pytest
 cd path_to_sdna_plus_repo\sdna_plus\sDNA\sdna_vs2008\tests\pytest
+```
+then either on Windows in cmd.exe:
+```cmd
 set DONT_TEST_N_LINK_SUBSYSTEMS_ORDER=1 & set ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT=1 & pytest -rA
 ```
+or in Bash:
+```bash
+DONT_TEST_N_LINK_SUBSYSTEMS_ORDER=1 && ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT=1 && pytest -rA
+```
 
-The CI test runner is designed to use Pytest, but can also run its tests only requiring pytest as an import (if run as a script).  It is influenced by the following environment variables:
+The CI test runner (`sDNA\sdna_vs2008\tests\pytest\test_gathering_windows_command_line_tests.py`) is designed to be invoked via Pytest.  It can also run either all the tests or the test at a specific index if run as a script.  It is influenced by the following environment variables:
  - `sdna_debug` - By default it is assumed release builds are tested, so this is Falsey - i.e. an empty string (do not use 0 or "False" as in Python `bool("0") is True` and `bool("False") is True`).  If so, then the output lines resulting from the parts of sDNA's C++ source code, that are only compiled if the pre_processor directive `_SDNADEBUG` is set, are omitted from the "expected" output.  Set this to something Truthy (any non-empty string other than `False`) if testing a debug build.
- - `sdna_dll` - the path to the `sdna_vs2008.dll` to test.  By default the test runner tries to run a fair test, by using the Python files associated with an sDNA installation, or those in a repo containing a `sdna_vs2008.dll` resulting from running the compilation process.  It is also possible to set `sdna_bin_dir` to any directory containing the required sDNA `.py` files.
+ - `sdnadll` - the path to the `sdna_vs2008.dll` to test.  By default the test runner tries to run a fair test, by using the Python files associated with an sDNA installation, or those in a repo containing a `sdna_vs2008.dll` resulting from running the compilation process.  It is also possible to set `sdna_bin_dir` to any directory containing the required sDNA `.py` files.
  - `DONT_TEST_N_LINK_SUBSYSTEMS_ORDER` - must be set to something Truthy, to work around issue 20.
  - `ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT` - must be set to something Truthy, to work around issue 21.
 

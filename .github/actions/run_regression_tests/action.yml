@@ -8,7 +8,7 @@ inputs:
   python_version:
     required: false
     default: "3.12"
-    description: 'The tests pass on Python 2.7 and Python 3.5, ..., 3.12'
+    description: 'The tests pass on Python 2.7 and Python 3.5, ..., 3.14'
 
   shell:
     required: false
@@ -32,7 +32,7 @@ inputs:
     required: false
     default: ''
 
-  sdna_installed_in_python_env:
+  test_sdna_wheel:
     description: 'Test the sDNA .dll or .so installed in the Python environment, e.g. in a venv, from a Wheel installed by pip'
     required: false
     default: ''
@@ -58,35 +58,21 @@ inputs:
 runs:
   using: "composite"
   steps:
-
-    - name: Parse and compare version
-      id: version_check
-      uses: madhead/semver-utils@latest
-      with:
-        version: ${{ inputs.python_version }}
-        compare-to: "3.9"
-
-    - uses: actions/setup-python@v6
-      if: steps.version_check.outputs.comparison-result == '>='
-      with:
-        python-version:  ${{ inputs.python_version }}
-        
-    - uses: LizardByte/actions/actions/setup_python@master
-      if: steps.version_check.outputs.comparison-result == '<'
+    - uses: JamesParrott/LizardByte_actions/actions/setup_python@master
       with:
         python-version: ${{ inputs.python_version }}
         update-pyenv: 'false'
 
-
     # Windows only version specifier in R_full.txt
     - name: Install sDNA.
-      if: ${{ inputs.sdna_installed_in_python_env }}
+      if: ${{ inputs.test_sdna_wheel }}
       shell: bash
       run: >
         pip
         install
         ${{ inputs.python_version == '3.5' && '--trusted-host pypi.python.org' || '' }}
         dist/sdna_plus*.whl
+        -r requirements/base.txt
         -r requirements/R_full.txt
 
     # All builds require PyTest and Numpy
@@ -100,7 +86,7 @@ runs:
         -r requirements/learn-predict.txt
 
     # - name: Install sDNA.
-    #   if: inputs.sdna_installed_in_python_env
+    #   if: inputs.test_sdna_wheel
     #   shell: bash
     #   run: pip install --no-deps dist/sdna_plus*.whl
 
@@ -131,7 +117,7 @@ runs:
       env:
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: ${{ inputs.DONT_TEST_N_LINK_SUBSYSTEMS_ORDER }}
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: ${{ inputs.ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT }}
-        SDNA_INSTALLED_IN_PYTHON_ENV: ${{ inputs.sdna_installed_in_python_env }}
+        SDNA_INSTALLED_IN_PYTHON_ENV: ${{ inputs.test_sdna_wheel }}
         sdnadll: ${{ inputs.sdnadll }}
         sdna_bin_dir: ${{ inputs.sdna_bin_dir }}
         sdna_debug: ${{ inputs.sdna_debug }}

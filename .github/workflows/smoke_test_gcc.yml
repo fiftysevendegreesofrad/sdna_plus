@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform" ]
+    branches: [ "Cross_platform",  ]
 
   pull_request:
-    branches: [ "Cross_platform" ]
+    branches: [ "Cross_platform", ]
 
 env:
   CONFIGURATION: Release
@@ -59,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.11']
+        python_version: ['3.14']
         smoke_test: ["debug_test.py",
                       "hybrid_test.py",
                       "3d_test.py",
@@ -76,7 +76,7 @@ jobs:
                       '../../../arcscripts/bin/sdnaprepare.py -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3 --dll="$sdnadll"  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
                       "prepare_test_new.py",]
 
-    name: "Download and run sDNA output dir, and run diff tests on it (without diffing the output). "
+    name: "Smoke test: ${{ matrix.smoke_test }}"
     
     runs-on: "ubuntu-24.04"
 
@@ -89,16 +89,14 @@ jobs:
     - name: Install R, and Git etc.
       run: |
         sudo apt-get update
-        sudo apt-get install -y --no-install-recommends git r-cran-optparse r-cran-sjstats
+        sudo apt-get install -y --no-install-recommends git r-cran-optparse r-cran-sjstats r-cran-car r-cran-glmnet
 
-
-    - uses: LizardByte/actions/actions/setup_python@master
+    - uses: actions/setup-python@v6
       with:
-        python-version: ${{ matrix.python_version }}
-        update-pyenv: 'false'
+        python-version:  ${{ matrix.python_version }}
 
-    - name: Install numpy
-      run: python -m pip install numpy PyShp==2.1.0
+    - name: Install deps
+      run: python -m pip install -r requirements/base.txt -r requirements/learn-predict.txt
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6

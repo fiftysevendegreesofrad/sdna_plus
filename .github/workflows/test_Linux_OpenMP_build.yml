@@ -2,14 +2,14 @@ name: Build sdna_plus
 
 on:
   push:
-    branches: [ "Cross_platform", "Apply---parallel-${nproc}-to-all-build-steps",]
+    branches: [ "Cross_platform", ]
   pull_request:
-    branches: [ "Cross_platform"]
+    branches: [ "Cross_platform", ]
   workflow_dispatch:  
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -42,16 +42,16 @@ jobs:
     
     - name: Install dependencies
       run: |
-        apt install -y cmake make g++ libboost-dev python3 git
+        apt update
+        apt install git cmake ninja-build g++ libboost-dev python3-venv python3-pip -y
     
     - name: Checkout repository
       uses: actions/checkout@v5
 
-    - name: Avoid Git complaining about "dubious ownership"
+    - name: Avoid Git complaining about "dubious ownership" of the sdna_plus repo
       run: git config --global --add safe.directory /__w/sdna_plus/sdna_plus
 
     - name: Build sdna_plus
-      continue-on-error: true # Even when the build is successful, the interactive script hangs at a "read" command
       run: |
         bash build_linux.sh
 
@@ -62,7 +62,7 @@ jobs:
         python3 prepare_test_new.py
     
     - name: Upload build artifacts
-      if: ${{ matrix.container_image == 'ubuntu:26.04' }}
+      if: ${{ matrix.container_image == 'ubuntu:24.04' }}
       uses: actions/upload-artifact@v4
       with:
         name: sdna_plus-build
@@ -79,16 +79,14 @@ jobs:
       matrix:
         python_version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
 
-    name: "Download and run sDNA installer, and run diff tests on it. "
+    name: "Download built sDNA output dir, and run diff tests on it. "
     
-    runs-on: "ubuntu-24.04"
+    runs-on: "ubuntu-26.04"
 
 
     steps:
 
-
     - uses: actions/checkout@v6
-
 
     - name: Install Git and R, etc.
       run: |
@@ -100,9 +98,6 @@ jobs:
       with:
         name: sdna_plus-build
         path: output
-
-
-
 
     - name: Run regression tests
       uses: ./.github/actions/run_regression_tests
@@ -119,10 +114,12 @@ jobs:
 
     needs: build
 
+    runs-on: "ubuntu-24.04"
+
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.11']
+        python_version: ['3.14']
         smoke_test: ["debug_test.py",
                       "hybrid_test.py",
                       "3d_test.py",
@@ -139,9 +136,8 @@ jobs:
                       '../../../arcscripts/bin/sdnaprepare.py -i prep_crash_shapefile/shapefilepreparecrash -o prep_crash_shapefile/out_py3 --dll="$sdnadll"  "action=repair;splitlinks;isolated;nearmisses;duplicates;xytol=0.01"',
                       "prepare_test_new.py",]
 
-    name: "Download and run sDNA output dir, and run diff tests on it (without diffing the output). "
+    name: "Smoke test: ${{ matrix.smoke_test }}"
     
-    runs-on: "ubuntu-24.04"
 
 
     steps:
@@ -149,19 +145,19 @@ jobs:
 
     - uses: actions/checkout@v6
 
+
+
     - name: Install R, and Git etc.
       run: |
         sudo apt-get update
-        sudo apt-get install -y --no-install-recommends git r-cran-optparse r-cran-sjstats
-
-
-    - uses: LizardByte/actions/actions/setup_python@master
+        sudo apt-get install -y git r-cran-optparse r-cran-sjstats
+        
+    - uses: actions/setup-python@v6
       with:
-        python-version: ${{ matrix.python_version }}
-        update-pyenv: 'false'
+        python-version:  ${{ matrix.python_version }}
 
-    - name: Install numpy
-      run: python -m pip install numpy
+    - name: Install deps
+      run: python -m pip install -r requirements/base.txt -r requirements/learn-predict.txt
 
     - name: Download output tree built in previous job
       uses: actions/download-artifact@v6

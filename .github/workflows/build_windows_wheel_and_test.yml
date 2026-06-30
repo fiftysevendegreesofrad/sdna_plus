@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [ "Cross_platform"]
+    branches: [ "Cross_platform", ]
 
   pull_request:
-    branches: [ "Cross_platform", "Apply---parallel-${nproc}-to-all-build-steps"]
+    branches: [ "Cross_platform", ]
 
 jobs:
   build_windows_wheel:
@@ -66,7 +66,7 @@ jobs:
         python_version: ${{ matrix.python_version }}
         DONT_TEST_N_LINK_SUBSYSTEMS_ORDER: 1
         ALLOW_NEGATIVE_FORMULA_ERROR_ON_ANY_LINK_PRESENT: 1
-        sdna_installed_in_python_env: 1
+        test_sdna_wheel: 1
         sdnadll: ''
         sdna_debug: ""
         shell: bash
@@ -79,7 +79,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.12']
+        python_version: ['3.14']
         smoke_test: ["python -u debug_test.py",
                      "python -u hybrid_test.py",
                      "python -u 3d_test.py",
@@ -109,10 +109,9 @@ jobs:
 
 
 
-    - uses: LizardByte/actions/actions/setup_python@master
+    - uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python_version }}
-        update-pyenv: 'false'
 
     - name: Install dependencies (PyShp, Numpy & R Portable)
       shell: bash
