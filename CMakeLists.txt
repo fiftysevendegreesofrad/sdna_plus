@@ -82,6 +82,12 @@ else ()
     )
 endif()
 
+
+
+set(VersionHeader
+    "sDNA/sdna_vs2008/version_template.h"
+)
+
 set(Scripts
     "arcscripts/sDNA_ArcGIS_extra_tools.tbx"
     "arcscripts/runcalculation.py"
@@ -101,6 +107,7 @@ set(Scripts
     "arcscripts/sdnaexception.py"
     "arcscripts/__init__.py"
     "arcscripts/__main__.py"
+    "insert_sDNA_versions.py"
 )
 source_group("Scripts" FILES ${Scripts})
 
@@ -140,7 +147,6 @@ foreach(dll ${DLLs})
     add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_BINARY_DIR}/sDNA/sdna_vs2008/$<CONFIG>/${dll}" "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>${Bin_sub_dir}/"
-        DEPENDS "${PROJECT_BINARY_DIR}/sDNA/sdna_vs2008/$<CONFIG>/${dll}"
     )
 endforeach()
 
@@ -168,6 +174,7 @@ endforeach()
 
 set(BUNDLE_PYSHP ON CACHE BOOL "Bundle static copies of deps (not making wheel) or let pip install them from metadata.")
 
+
 if(BUNDLE_PYSHP)
 
     
@@ -185,4 +192,16 @@ if(BUNDLE_PYSHP)
     endif() 
 endif()
 
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/${VersionHeader}" "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/"
+)
+    
+# OUTPUT ${Scripts} ${ScriptsBin}
+
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND Python::Interpreter "${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/insert_sDNA_versions.py" --scripts="${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>" --version-file="${CMAKE_CURRENT_SOURCE_DIR}/output/$<CONFIG>/version_template.h"
+    COMMENT "Populating version placeholders in Python scripts"
+)
 

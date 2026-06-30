@@ -115,7 +115,7 @@ or running AdvancedInstaller on Windows).
 
 This is the open source fork of the formerly proprietary sDNA+ software - all the sDNA features plus hybrid metrics. 
 
-sDNA+ was created by Crispin Cooper on behalf of [Cardiff University](https://www.cardiff.ac.uk).  Alain Chiaradia was responsible for the initial idea, and Chris Webster for the initial funding and project mentoring. We are grateful to various parties for financial contributions towards development: in no particular order, Hong Kong University, Tongji University, the UK Economic and Social Research Council, BRE, Wedderburn Transport Planning. Also research contributions in kind from Arup Ltd, WSP Global Engineering, BuroHappold and Sustrans. Also to James Parrott both for developing the [sDNA for Grasshopper](https://github.com/fiftysevendegreesofrad/sDNA_GH) plugin, and for assistance in updating the sDNA build process during 2023. And Jeffrey Morgan for updating sDNA to Python 3.
+sDNA+ was created by Crispin Cooper on behalf of [Cardiff University](https://www.cardiff.ac.uk).  Alain Chiaradia was responsible for the initial idea, and Chris Webster for the initial funding and project mentoring. We are grateful to various parties for financial contributions towards development: in no particular order, Hong Kong University, Tongji University, the UK Economic and Social Research Council, BRE, Wedderburn Transport Planning. Also research contributions in kind from Arup Ltd, WSP Global Engineering, BuroHappold and Sustrans. Also to James Parrott both for developing the [sDNA for Grasshopper](https://github.com/fiftysevendegreesofrad/sDNA_GH) plugin, and for assistance in updating the sDNA build process during 2023. And Jeffrey Morgan for updating sDNA to Python 3.  Robin Lovelace (University of Leeds) figured out how to enable OpenMP support on Linux (for multi-threading).
 
 If you are interested in sponsoring changes to sDNA, please get in touch with Crispin cooperch@cardiff.ac.uk.
 
@@ -318,7 +318,7 @@ Interfaces are not automatically tested, though `arcscripts\sdna_environment.py`
 
 ### Future
 
-The long term roadmap includes moving to reproducible builds (which will be nice when developers have to onboard or change machines), and porting to Linux. We think the path towards this is (1) replace MSBuild with cmake (there is a converter); (2) replace msvc with gcc; (3) the community profits!
+The long term roadmap includes moving to reproducible builds (which will be nice when developers have to onboard or change machines).
 
 ## License
 

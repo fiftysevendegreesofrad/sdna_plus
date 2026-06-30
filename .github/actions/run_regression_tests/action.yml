@@ -58,10 +58,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: JamesParrott/LizardByte_actions/actions/setup_python@master
+    - uses: LizardByte/actions/actions/setup_python@c7968aee67e9c765b69ef2720bd852facaec05df
       with:
         python-version: ${{ inputs.python_version }}
         update-pyenv: 'false'
+        list-python-versions: 'false'
 
     # Windows only version specifier in R_full.txt
     - name: Install sDNA.
