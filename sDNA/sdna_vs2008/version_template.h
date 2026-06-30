@@ -10,6 +10,8 @@ const char *BUILD_CONFIG="debug";
 const char *BUILD_CONFIG="";
 #endif
 
+// Note:  try to ensure the version in pyproject.toml matches this one
+// TODO:  make the pyproject.toml one a dynamic=["version"]
 //do not change anything on this line except what's in the quotes
 //python parses this file to pull out the version number
-const char *SDNA_VERSION = "5.1.6";
+const char *SDNA_VERSION = "5.2.0";
