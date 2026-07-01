@@ -2,12 +2,17 @@ name: Build a Linux Wheel and test it.
 
 on:
   workflow_dispatch:
-
   push:
-    branches: [ "Cross_platform", ]
+    branches-ignore:
+      - main**
 
   pull_request:
-    branches: [ "Cross_platform", ]
+    branches-ignore:
+      - main**
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   build_linux_wheel:
@@ -15,26 +20,49 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # - name: Build Docker Image
-      #   run: docker build --file Dockerfile.build --tag sdna_manylinux_wheel_builder .
+      # GitHub's Container Registry
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker Image
+      - name: Extract Docker metadata
+        id: docker_metadata
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}/sdna_manylinux_wheel_builder
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,format=short
+
+      - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
+          context: .
           file: Dockerfile.build
-          tags: sdna_manylinux_wheel_builder
-          load: true
+          tags: ${{ steps.docker_metadata.outputs.tags }}
+          push: true 
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-
       - name: Run Docker Container from image
-        run: docker run --rm -v .:/home/sdna_plus sdna_manylinux_wheel_builder
+        # Force the repository path to lowercase using Bash parameter expansion
+        # (,, is lower casing operator).
+        run: |
+          THIS_REPO="${{ github.repository }}"
+          IMAGE_NAME="ghcr.io/${THIS_REPO,,}/sdna_manylinux_wheel_builder"
+          
+          docker run --rm \
+            -v .:/home/sdna_plus \
+            ${IMAGE_NAME}:${{ steps.docker_metadata.outputs.version }}
 
       - name: upload_output
         id: installer-upload-step

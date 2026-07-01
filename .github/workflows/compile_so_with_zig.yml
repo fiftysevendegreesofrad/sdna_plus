@@ -4,12 +4,6 @@ name: "CMake, Zig (c++), & Ubuntu.  Compile .so."
 on:
   workflow_dispatch:
 
-  push:
-    branches: [ "Cross_platform", ]
-
-  pull_request:
-    branches: [ "Cross_platform", ]
-
 
 env:
   CONFIGURATION: Release

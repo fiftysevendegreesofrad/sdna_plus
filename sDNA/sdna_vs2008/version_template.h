@@ -14,4 +14,4 @@ const char *BUILD_CONFIG="";
 // TODO:  make the pyproject.toml one a dynamic=["version"]
 //do not change anything on this line except what's in the quotes
 //python parses this file to pull out the version number
-const char *SDNA_VERSION = "5.2.0";
+const char *SDNA_VERSION = "5.2.1";
