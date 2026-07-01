@@ -369,7 +369,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 
 if(OpenMP_FOUND)
   target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES} OpenMP::OpenMP_CXX)
-  target_compile_definitions(${PROJECT_NAME} PRIVATE _OPENMP)
 else()
   target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 endif()
