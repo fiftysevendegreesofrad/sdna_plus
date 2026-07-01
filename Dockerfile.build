@@ -13,8 +13,7 @@ ENV PATH=/opt/python/cp312-cp312/bin/:$PATH \
 # Remove existing repository files
 RUN rm -f /etc/yum.repos.d/CentOS-*.repo
 
-RUN yum check-update && \
-    yum install -y ninja-build zip && \
+RUN yum install -y ninja-build zip && \
     yum clean all
 
 # TODO: Figure out where to install zip to satisfy vcpkg, to avoid:

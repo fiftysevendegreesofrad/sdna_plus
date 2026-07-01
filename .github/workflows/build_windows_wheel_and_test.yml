@@ -2,12 +2,13 @@ name: Build Windows Wheel and test it
 
 on:
   workflow_dispatch:
-
   push:
-    branches: [ "Cross_platform", ]
+    branches-ignore:
+      - main**
 
   pull_request:
-    branches: [ "Cross_platform", ]
+    branches-ignore:
+      - main**
 
 jobs:
   build_windows_wheel:

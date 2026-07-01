@@ -172,13 +172,12 @@ foreach(installer_bit ${InstallerBits})
     )
 endforeach()
 
+find_package(Python REQUIRED COMPONENTS Interpreter)
+
 set(BUNDLE_PYSHP ON CACHE BOOL "Bundle static copies of deps (not making wheel) or let pip install them from metadata.")
 
 
 if(BUNDLE_PYSHP)
-
-    
-    find_package(Python REQUIRED COMPONENTS Interpreter)
 
     add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD

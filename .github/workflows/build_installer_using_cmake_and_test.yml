@@ -2,12 +2,13 @@ name: "CMake, VS 2022, & Windows.  Build installer and test it"
 
 on:
   workflow_dispatch:
-
   push:
-    branches: [ "main", "Cross_platform", ]
+    branches-ignore:
+      - main**
 
   pull_request:
-    branches: [ "main", "Cross_platform", ]
+    branches-ignore:
+      - main**
 
 
 env:

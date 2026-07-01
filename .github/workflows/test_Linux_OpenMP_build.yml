@@ -2,9 +2,12 @@ name: Quick build, linked to system libraries
 
 on:
   push:
-    branches: [ "Cross_platform",]
+    branches-ignore:
+      - main**
+
   pull_request:
-    branches: [ "Cross_platform", ]
+    branches-ignore:
+      - main**
   workflow_dispatch:  
 
 jobs:
