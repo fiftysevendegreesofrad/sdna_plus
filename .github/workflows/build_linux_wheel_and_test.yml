@@ -25,8 +25,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # GitHub's Container Registry
+        # Only login if workflow trigger is NOT a PR from a fork.
       - name: Log in to GHCR
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -49,7 +50,10 @@ jobs:
           context: .
           file: Dockerfile.build
           tags: ${{ steps.docker_metadata.outputs.tags }}
-          push: true 
+          # Only push to the registry if it's a branch push or internal PR.
+          push: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+          # Otherwise, only load, so the image builds locally for testing.
+          load: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
