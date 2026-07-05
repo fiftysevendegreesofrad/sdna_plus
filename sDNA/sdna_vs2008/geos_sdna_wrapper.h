@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include <print>
+#include <string>
 #include "net.h"
 
 using namespace std;
