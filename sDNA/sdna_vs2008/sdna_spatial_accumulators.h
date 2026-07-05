@@ -30,7 +30,7 @@ template <typename T> class BidirectionalThreadSafeAccumulator
 	ThreadSafeAccumulator<T> fwd_data, bwd_data;
 	bool use_both_directions, is_initialized;
 public:
-	BidirectionalThreadSafeAccumulator<T>() : use_both_directions(false), is_initialized(false) {}
+	BidirectionalThreadSafeAccumulator() : use_both_directions(false), is_initialized(false) {}
 	void set_bidirectional() {assert(!is_initialized); use_both_directions=true;}
 	void enable()
 	{
@@ -183,9 +183,9 @@ public:
 	typename vector<T>::iterator end() {return v.end();}
 	
 	//copy constructor creates new mutex
-	ThreadSafeVector<T>(ThreadSafeVector<T> &other) : vector<T>(other) {}
+	ThreadSafeVector(ThreadSafeVector<T> &other) : vector<T>(other) {}
 	//default constructor needed because copy constructor suppresses it
-	ThreadSafeVector<T>() {} 
+	ThreadSafeVector() {} 
 	//assignment operator keeps same mutex
 	ThreadSafeVector<T>& operator=(ThreadSafeVector<T> &other) 
 	{

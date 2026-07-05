@@ -59,7 +59,7 @@ template<class T,class INDEX> class IdIndexedArray
 {
 private:
 	IdIndexedArray& operator=(const IdIndexedArray<T,INDEX> &original);
-	IdIndexedArray<T,INDEX>(const IdIndexedArray<T,INDEX> &original);
+	IdIndexedArray(const IdIndexedArray<T,INDEX> &original);
 protected:
 	T * data;
 	size_t size;
@@ -154,7 +154,7 @@ private:
 	T dummy; //to return when not enabled
 
 	IdRadiusIndexed2dArray<T,INDEX>& operator=(const IdRadiusIndexed2dArray<T,INDEX> &other);
-	IdRadiusIndexed2dArray<T,INDEX>(const IdRadiusIndexed2dArray<T,INDEX> &other);
+	IdRadiusIndexed2dArray(const IdRadiusIndexed2dArray<T,INDEX> &other);
 public:
 	IdRadiusIndexed2dArray() : radii(0), will_be_used(false) {}
 	IdRadiusIndexed2dArray(size_t n,size_t r,T initval) : will_be_used(true)
@@ -321,7 +321,7 @@ public:
 		}
 		cout << endl;
 	}
-	NetAttachedData<T>(SDNAPolylineContainer *links) : links(links) {}
+	NetAttachedData(SDNAPolylineContainer *links) : links(links) {}
 private:
 	//quick test shows vector of names is faster than map for sizes <5
 	//for the most part though we access by index anyway

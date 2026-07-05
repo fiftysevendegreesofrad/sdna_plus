@@ -35,7 +35,7 @@ public:
 		delete[] p;
 	}
 };
-typedef variant<long,float,HeapString> SDNAVariant;
+typedef boost::variant<long,float,HeapString> SDNAVariant;
 
 class Net;
 struct FieldMetaData;
