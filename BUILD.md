@@ -51,7 +51,7 @@ Ubuntu 24.04 and other older distros, see note below about adding Kitware's repo
 
 ```bash
 sudo apt update
-sudo apt install git cmake ninja-build g++ libboost-dev python3-venv -y
+sudo apt install git cmake ninja-build g++ libboost-dev python3-venv python3-pip -y
 
 git clone --depth=1 --branch=Cross_platform https://github.com/fiftysevendegreesofrad/sdna_plus
 cd sdna_plus

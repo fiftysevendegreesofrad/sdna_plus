@@ -13,12 +13,12 @@ public:
 	static TraversalEventAccumulator test_pci(SDNAPolyline *link,float partial_length)
 	{
 		Edge *edge = &link->forward_edge;
-		return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(edge->traversal_events_begin(),edge->traversal_events_end(),partial_length,PLUS);
+		return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(edge->fwd_range_all(),partial_length,PLUS);
 	}
 	static void test_pci_from_middle(SDNAPolyline *link,float partial_length)
 	{
 		Edge *edge = &link->forward_edge;
-		link->traversal_events.partial_cost_from_iterators_ignoring_oneway(edge->traversal_events_centre(),edge->traversal_events_end(),partial_length,PLUS);
+		link->traversal_events.partial_cost_from_iterators_ignoring_oneway(edge->fwd_half_range_from_centre(),partial_length,PLUS);
 	}
 	static float evaluate_me(SDNAPolyline *link,MetricEvaluator &e,polarity direction)
 	{
@@ -76,14 +76,14 @@ void test_evaluator(string expr,vector<Point> &p3)
 void pci_tests(Net &net)
 {
 	SDNAPolyline *link = net.link_container[0];
-	PartialEdge::debug_on();
+	PartialEdgeSpecializationsDebugControls::debug_on();
 	cout << "full traversal" << endl;
 	float length = TestHooks::test_pci(link,numeric_limits<float>::infinity()).euclidean;
 	cout << "half traversal ending exactly on centre" << endl;
 	TestHooks::test_pci(link,length/2);
 	cout << "quarter traversal starting from centre" << endl;
 	TestHooks::test_pci_from_middle(link,length/4);
-	PartialEdge::debug_off();
+	PartialEdgeSpecializationsDebugControls::debug_off();
 }
 
 SDNA_API void __stdcall run_unit_tests()

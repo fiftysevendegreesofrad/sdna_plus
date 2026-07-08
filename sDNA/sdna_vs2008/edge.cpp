@@ -361,69 +361,26 @@ void Edge::get_outgoing_connections(CandidateEdgeVector &output,double cost_to_d
 	}
 }
 
-TraversalEventIterator Edge::traversal_events_begin() const
-{
-	return link->traversal_events.begin(direction);
+Range<std::vector<TraversalEvent>::iterator> Edge::fwd_range_all() const {
+	return Range{link->traversal_events.begin(), link->traversal_events.end()};
 }
 
-TraversalEventIterator TraversalEventContainer::begin(polarity direction)
-{
-	switch (direction)
-	{
-	case PLUS:
-		return TraversalEventIterator(vector<TraversalEvent>::begin());
-	case MINUS:
-		return TraversalEventIterator(vector<TraversalEvent>::rbegin());
-	default:
-		assert(0);
-		return TraversalEventIterator();
-	}
+Range<std::vector<TraversalEvent>::reverse_iterator> Edge::rev_range_all() const {
+	return Range{link->traversal_events.rbegin(), link->traversal_events.rend()};
 }
 
-TraversalEventIterator Edge::traversal_events_end() const
-{
-	return link->traversal_events.end(direction);
+Range<std::vector<TraversalEvent>::iterator> Edge::fwd_half_range_from_centre() const {
+	return Range{link->traversal_events.centre_located_on_event, link->traversal_events.end()};
 }
 
-TraversalEventIterator TraversalEventContainer::end(polarity direction)
-{
-	switch (direction)
-	{
-	case PLUS:
-		return TraversalEventIterator(vector<TraversalEvent>::end());
-	case MINUS:
-		return TraversalEventIterator(vector<TraversalEvent>::rend());
-	default:
-		assert(0);
-		return TraversalEventIterator();
-	}
+
+Range<std::vector<TraversalEvent>::reverse_iterator> Edge::rev_half_range_from_centre() const {
+	return Range{std::reverse_iterator<TraversalEventContainer::iterator>(link->traversal_events.centre_located_on_event+1),
+	             link->traversal_events.rend()
+	};
 }
 
-//handy function, because reverse iterators point to the preceding element
-TraversalEventIterator reverse_iterator_to_same_element(TraversalEventContainer::iterator it)
-{
-	return TraversalEventIterator(std::reverse_iterator<TraversalEventContainer::iterator>(it + 1));
-}
 
-TraversalEventIterator Edge::traversal_events_centre() const
-{
-	return link->traversal_events.centre(direction);
-}
-
-TraversalEventIterator TraversalEventContainer::centre(polarity direction)
-{
-	assert(has_centre);
-	switch (direction)
-	{
-	case PLUS:
-		return TraversalEventIterator(centre_located_on_event);
-	case MINUS:
-		return reverse_iterator_to_same_element(centre_located_on_event);
-	default:
-		assert(0);
-		return TraversalEventIterator();
-	}
-}
 
 float Edge::evaluate_me(MetricEvaluator* e,const TraversalEventAccumulator& acc) const
 {
@@ -453,6 +410,30 @@ TraversalEventAccumulator Edge::get_end_traversal_cost_ignoring_oneway() const
 		return link->traversal_events.get_start_traversal_cost_ignoring_oneway(MINUS);
 }
 
+PartialEdge<std::vector<TraversalEvent>::iterator> Edge::forward_partial_edge(float length, bool start_at_centre) const {
+		assert(direction==PLUS);
+		if (start_at_centre)
+			return PartialEdge(fwd_half_range_from_centre(),length,&link->traversal_events,PLUS);
+		else
+			return PartialEdge(fwd_range_all(),length,&link->traversal_events,PLUS);
+	}
+PartialEdge<std::vector<TraversalEvent>::reverse_iterator> Edge::reverse_partial_edge(float length, bool start_at_centre) const {
+		assert(direction==MINUS);
+		if (start_at_centre)
+			return PartialEdge(rev_half_range_from_centre(),length,&link->traversal_events,MINUS);
+		else
+			return PartialEdge(rev_range_all(),length,&link->traversal_events,MINUS);
+}
+
+TraversalEventContainer Edge::temporary_container(float length, bool start_at_centre) const {
+	TraversalEventContainer retval;
+	if (direction==PLUS)
+		retval = forward_partial_edge(length, start_at_centre);
+	else
+	    retval = reverse_partial_edge(length, start_at_centre);
+	return retval;
+}
+
 //used for crow flight, etc
 Point Edge::get_centre(double partial_length) const
 {
@@ -461,8 +442,8 @@ Point Edge::get_centre(double partial_length) const
 	else
 	{
 		assert(traversal_allowed());
-		TraversalEventContainer temp = PartialEdge(traversal_events_begin(),traversal_events_end(),(float)partial_length,
-			&link->traversal_events,direction);
+		
+		auto temp = temporary_container((float)partial_length);
 		temp.add_centre(link->traversal_events.get_centre_type());
 		Point &p = temp.get_centre();
 		#ifdef _SDNADEBUG
@@ -482,8 +463,11 @@ TraversalEventAccumulator Edge::partial_cost_from_start(float partial_length) co
 	{
 		if (partial_length >= full_cost_ignoring_oneway().euclidean)
 			return full_cost_ignoring_oneway();
+		else if (direction==PLUS)
+			// Call method on cached container
+			return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(fwd_range_all(),partial_length,direction);
 		else
-			return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(traversal_events_begin(),traversal_events_end(),partial_length,direction);
+			return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(rev_range_all(),partial_length,direction);
 	}
 }
 
@@ -493,8 +477,10 @@ TraversalEventAccumulator Edge::partial_cost_from_middle_ignoring_oneway(float p
 		return TraversalEventAccumulator::zero();
 	else if (partial_length >= get_end_traversal_cost_ignoring_oneway().euclidean)
 		return get_end_traversal_cost_ignoring_oneway();
-	else
-		return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(traversal_events_centre(),traversal_events_end(),partial_length,direction);
+	else if (direction==PLUS) 
+		return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(fwd_half_range_from_centre(),partial_length,direction);
+	else 
+		return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(rev_half_range_from_centre(),partial_length,direction);
 }
 
 //csccl = cost from start to centre of cut link
@@ -514,8 +500,7 @@ TraversalEventAccumulator Edge::csccl(float partial_length) const
 //the costly csccl logic without optimization wrapper
 TraversalEventAccumulator Edge::csccl_internal(float partial_length) const
 {
-	TraversalEventContainer temp = PartialEdge(traversal_events_begin(),traversal_events_end(),partial_length,
-				&link->traversal_events,direction);
+	auto temp = temporary_container((float)partial_length);
 	temp.add_centre(link->traversal_events.get_centre_type());
 	return temp.get_start_traversal_cost_ignoring_oneway(PLUS); //reversal happened when temp was created
 }
@@ -536,8 +521,14 @@ TraversalEventAccumulator Edge::cscclfe(float partial_length) const
 		{
 			const float forward_length_to_centre_far_end = full_cost_ignoring_oneway().euclidean - get_twin()->csccl_internal(partial_length).euclidean;
 			//as for partial_cost_from_start without the optimizations:
-			return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(traversal_events_begin(),traversal_events_end(),
-				forward_length_to_centre_far_end,direction);
+			if (direction==PLUS) {
+				// Call method on cached container
+				return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(fwd_range_all(),
+							forward_length_to_centre_far_end,direction);
+			} else {
+				return link->traversal_events.partial_cost_from_iterators_ignoring_oneway(rev_range_all(),
+							forward_length_to_centre_far_end,direction);
+			}
 		}
 	}
 }
@@ -547,8 +538,10 @@ void Edge::add_partial_points_to_geometry(BoostLineString3d &geom,float partial_
 	#ifdef _SDNADEBUG
 		cout << "     unpacking partial points from end of edge " << id.id << endl;
 	#endif
-	PartialEdge(traversal_events_begin(),traversal_events_end(),partial_length,&link->traversal_events,direction)
-		.add_points_to_geometry(geom);
+	if (direction==PLUS)
+		forward_partial_edge(partial_length).add_points_to_geometry(geom);
+	else
+	    reverse_partial_edge(partial_length).add_points_to_geometry(geom);
 }
 
 void Edge::add_partial_points_from_middle_to_geometry_ignoring_oneway(BoostLineString3d &geom,float partial_length) const
@@ -556,8 +549,11 @@ void Edge::add_partial_points_from_middle_to_geometry_ignoring_oneway(BoostLineS
 	#ifdef _SDNADEBUG
 		cout << "     unpacking partial points from middle of edge " << id.id << endl;
 	#endif
-	PartialEdge(traversal_events_centre(),traversal_events_end(),partial_length,&link->traversal_events,direction)
-		.add_points_to_geometry(geom);
+	
+	if (direction==PLUS)
+		forward_partial_edge(partial_length, true).add_points_to_geometry(geom);
+	else
+	    reverse_partial_edge(partial_length, true).add_points_to_geometry(geom);
 }
 
 void Edge::add_copy_of_points_from_end_to_vector(junction_option_type end,vector<Point> &v) const
@@ -633,32 +629,25 @@ bool Edge::traversal_allowed() const
 
 TraversalEventAccumulator TraversalEventContainer::full_cost_ignoring_oneway(polarity direction) 
 {
-	return partial_cost_from_iterators_ignoring_oneway(TraversalEventIterator(vector<TraversalEvent>::begin()),
-										TraversalEventIterator(vector<TraversalEvent>::end()),
+	return partial_cost_from_iterators_ignoring_oneway(Range{begin(), end()},
 										numeric_limits<float>::infinity(),direction);
 }
 
 TraversalEventAccumulator TraversalEventContainer::get_start_traversal_cost_ignoring_oneway(polarity direction)
 {
 	assert(has_centre);
-	return partial_cost_from_iterators_ignoring_oneway(TraversalEventIterator(vector<TraversalEvent>::begin()),
-										TraversalEventIterator(centre_located_on_event),
+	return partial_cost_from_iterators_ignoring_oneway(Range{begin(), centre_located_on_event},
 										numeric_limits<float>::infinity(),direction);
 }
 
 TraversalEventAccumulator TraversalEventContainer::get_end_traversal_cost_ignoring_oneway(polarity direction)
 {
 	assert(has_centre);
-	return partial_cost_from_iterators_ignoring_oneway(TraversalEventIterator(centre_located_on_event),
-										TraversalEventIterator(vector<TraversalEvent>::end()),
+	return partial_cost_from_iterators_ignoring_oneway(Range{centre_located_on_event, end()},
 											numeric_limits<float>::infinity(),direction);
 }
 
-TraversalEventAccumulator TraversalEventContainer::partial_cost_from_iterators_ignoring_oneway(TraversalEventIterator start, TraversalEventIterator end, 
-	float partial_length, polarity direction) 
-{
-	return PartialEdge(start,end,partial_length,this,direction).full_cost();
-}
+
 
 void TraversalEventContainer::simplify()
 {
@@ -875,27 +864,9 @@ void CachedTraversalEventContainer::give_centre_to_zero_length_tev()
 // Can either give full cost or convert to a TraversalEventContainer for adding centre           
 /////////////////////////////////////////////////////////////
 
-#ifdef _SDNADEBUG
-	bool PartialEdge::debug = false;
-#endif
 
-PartialEdge::PartialEdge(TraversalEventIterator from, TraversalEventIterator to, float partial_length, 
-						 TraversalEventContainer* const parent_traversal_event_vector,polarity direction)
-	: next(from), end(to), remaining_length(partial_length), valid(true), has_endpoint_left_to_emit(false),
-	parent_traversal_event_vector(parent_traversal_event_vector), direction(direction)
-{
-	assert(next->physical_location()!=NULL);
-	assert(from != to); // so we get startpoints and endpoints
-
-	if (debug)
-		cout << "partial edge called length=" << partial_length << " ";
-
-	//ensure no points whatsoever come out (not even start/endpoints) if partial length is negative
-	if (partial_length < 0)
-		next = end;
-}
-
-TraversalEvent PartialEdge::next_event_inner()
+template<typename TraversalEventIterator>
+TraversalEvent PartialEdge<TraversalEventIterator>::next_event_inner()
 {
 	if (has_endpoint_left_to_emit)
 	{
@@ -903,7 +874,7 @@ TraversalEvent PartialEdge::next_event_inner()
 		return TraversalEvent(EndpointTE(&end_point_storage));
 	}
 
-	const TraversalEventIterator current = next++;
+	const TraversalEventIterator current = range.begin()++;
 	
 	if (current->type()==EUCLIDEAN_TE)
 	{
@@ -913,7 +884,7 @@ TraversalEvent PartialEdge::next_event_inner()
 		if (remaining_length < 0)
 		{
 			//prevent further events from being returned
-			next = end;
+			range.b = range.e;
 
 			//calculate how much cost is included in final euclidean event, 
 			//by subtracting (adding the negative) remaining length
@@ -925,8 +896,8 @@ TraversalEvent PartialEdge::next_event_inner()
 			assert((current+1)->physical_location()!=NULL);
 			assert((current-1)->physical_location()!=NULL);
 			end_point_storage = Point::proportional_midpoint((current-1)->physical_location(),
-															 (current+1)->physical_location(),
-															 ratio);
+															(current+1)->physical_location(),
+															ratio);
 			
 			//return final euclidean event
 			return TraversalEvent(current->split_te(ratio).first);
@@ -951,10 +922,11 @@ TraversalEvent PartialEdge::next_event_inner()
 	}
 }
 
-TraversalEvent PartialEdge::next_event()
+template<typename TraversalEventIterator>
+TraversalEvent PartialEdge<TraversalEventIterator>::next_event()
 {
 	TraversalEvent retval = next_event_inner();
-	if (debug)
+	if (PartialEdgeSpecializationsDebugControls::debug)
 	{
 		cout << retval.toString();
 		if (!has_more_events() && !has_endpoint_left_to_emit)
@@ -963,7 +935,8 @@ TraversalEvent PartialEdge::next_event()
 	return retval;
 }
 
-PartialEdge::operator TraversalEventContainer()
+template<typename TraversalEventIterator>
+PartialEdge<TraversalEventIterator>::operator TraversalEventContainer()
 {
 	assert(valid);
 	valid = false;
@@ -971,7 +944,7 @@ PartialEdge::operator TraversalEventContainer()
 	//this should only happen if partial length is negative,
 	//in which case we shouldn't try to convert to a traversaleventvector
 	//which has start and end points so is inconsistent with the empty vector abstraction
-	assert(next != end); 
+	assert(range.b != range.e); 
 
 	TraversalEventContainer v;
 	v.reserve(parent_traversal_event_vector->size()+2); //+2 as add_centre will be called
@@ -980,7 +953,8 @@ PartialEdge::operator TraversalEventContainer()
 	return v;
 }
 
-TraversalEventAccumulator PartialEdge::full_cost()
+template<typename TraversalEventIterator>
+TraversalEventAccumulator PartialEdge<TraversalEventIterator>::full_cost()
 {
 	assert(valid);
 	valid = false;
@@ -990,7 +964,8 @@ TraversalEventAccumulator PartialEdge::full_cost()
 	return acc;
 }
 
-void PartialEdge::add_points_to_geometry(BoostLineString3d &geom)
+template<typename TraversalEventIterator>
+void PartialEdge<TraversalEventIterator>::add_points_to_geometry(BoostLineString3d &geom)
 {
 	assert(valid);
 	valid = false;
@@ -1022,7 +997,8 @@ void PartialEdge::add_points_to_geometry(BoostLineString3d &geom)
 	#endif
 }
 
-void PartialEdge::printinternal()
+template<typename TraversalEventIterator>
+void PartialEdge<TraversalEventIterator>::printinternal()
 {
 	assert(valid);
 	valid = false;

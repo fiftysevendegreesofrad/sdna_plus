@@ -1,0 +1,47 @@
+name: Quick build GCC Linux, linked to system libraries
+
+on:
+  push:
+    branches-ignore:
+      - main**
+
+  pull_request:
+    branches-ignore:
+      - main**
+  workflow_dispatch:  
+jobs:
+  build:
+    runs-on: ubuntu-26.04
+
+    steps:
+    
+
+    # Direct on host
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y libboost-dev
+    
+    - uses: actions/setup-python@v6
+      with:
+        python-version:  "3.14"
+
+    - name: Checkout repository
+      uses: actions/checkout@v5
+
+
+    - name: Build sdna_plus
+      run: |
+        bash build_linux.sh
+
+    - name: Smoke test
+      run: |
+        export sdnadll=$(pwd)/output/Release/x64/sdna_vs2008.so
+        cd sDNA/sdna_vs2008/tests
+        python3 prepare_test_new.py
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: sdna_plus-build
+        path: output

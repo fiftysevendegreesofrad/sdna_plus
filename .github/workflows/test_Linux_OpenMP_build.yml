@@ -43,11 +43,12 @@ jobs:
         echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ noble main' | tee /etc/apt/sources.list.d/kitware.list
         apt update
     
+    # Docker container
     - name: Install dependencies
       run: |
         apt update
         apt install -y git cmake ninja-build g++ libboost-dev python3-venv python3-pip
-    
+
     - name: Update GCC to support C++23
       if: ${{ matrix.container_image != 'ubuntu:26.04' && matrix.container_image != 'debian:trixie' }}
       run: |

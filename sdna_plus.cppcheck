@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <builddir>sdna_plus-cppcheck-build-dir</builddir>
+    <importproject>sDNA/sdna_vs2008/sdna_vs2008.vcxproj</importproject>
+    <analyze-all-vs-configs>false</analyze-all-vs-configs>
+    <check-headers>true</check-headers>
+    <check-unused-templates>true</check-unused-templates>
+    <max-ctu-depth>2</max-ctu-depth>
+    <max-template-recursion>100</max-template-recursion>
+    <vs-configurations>
+        <config>Release</config>
+    </vs-configurations>
+    <project-name>sdna_plus</project-name>
+</project>
