@@ -144,7 +144,7 @@ float* HybridMetricEvaluator::juncvariablefactory(const char* name_cstr)
 	return &user_junc_variables[index];
 }
 
-float truncate(float value,float lower,float upper)
+float sdna_truncate(float value,float lower,float upper)
 {
 	if (value<lower)
 		return lower;
@@ -188,10 +188,7 @@ void HybridMetricEvaluator::set_buffer_pointers()
 	parser.DefineFun("randnorm",&randnorm,false);
 	parser.DefineFun("randuni",&randuni,false);
 	parser.DefineFun("proportion",&safedivide,true);
-	#ifdef _WINDOWS
-	// TODO:  Figure out why Posix doesn't like &truncate 
-	parser.DefineFun("trunc",&truncate,true);
-	#endif
+	parser.DefineFun("trunc",&sdna_truncate,true);
 	parser.SetVarFactory(&staticvariablefactory,this);
 	
 	junction_parser.DefineVar("ang",&junction_turn_angle_variable);
@@ -203,9 +200,7 @@ void HybridMetricEvaluator::set_buffer_pointers()
 	junction_parser.DefineFun("randnorm",&randnorm,false);
 	junction_parser.DefineFun("randuni",&randuni,false);
 	junction_parser.DefineFun("proportion",&safedivide,true);
-	#ifdef _WINDOWS
-	junction_parser.DefineFun("trunc",&truncate,true);
-	#endif
+	junction_parser.DefineFun("trunc",&sdna_truncate,true);
 	junction_parser.SetVarFactory(&staticjuncvariablefactory,this);
 	
 	buffers_set = true;
