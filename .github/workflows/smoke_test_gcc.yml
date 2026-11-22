@@ -61,7 +61,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.14']
+        python_version: ['3.15']
         smoke_test: ["debug_test.py",
                       "hybrid_test.py",
                       "3d_test.py",

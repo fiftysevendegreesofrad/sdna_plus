@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14' ]
+        python_version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14', '3.15' ]
 
     name: "Run regression tests. "
     
@@ -80,7 +80,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.14']
+        python_version: ['3.15']
         smoke_test: ["python -u debug_test.py",
                      "python -u hybrid_test.py",
                      "python -u 3d_test.py",
