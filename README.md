@@ -211,6 +211,26 @@ Running (in a normal cmd.exe, not the VS Developer Command Prompt):
  - `.\create_installer_with_CMake.bat`
 should create `sDNA_setup_win_vX.msi`.
 
+### Versioning (cross_platform)
+Bump the X.Y.Z semver strings in both `./sDNA/sdna_vs2008/version_template.h` and `pyproject.toml`, 
+and add a "vX.Y.Z" tag to that Git commit.  The version in the generated C++ header is
+embedded in the .dll and .so, and is now inspectable via the API.  It is also used by insert_sDNA_versions.py 
+to version the Python scripts and AdvancedInstalle config (for the start menu on Windows).  
+The version in pyproject.toml determines the version declared on PyPi 
+Note: `insert_sDNA_versions.py` is called by
+CMake, which is called by the hook `hatch_build.py`, which is easier to use with a static 
+version in pyproject.toml to kick things off (TODO: figure out how to set versions in custom hooks 
+with `dynamic = ["version"]`.  Just use e.g. bump2version and Git tags?).
+
+It is important for PyPi users (and would avoid much confusion for everyone) if both these tags 
+match (but should you wish, there's no technical reason why any compatible sdna_plus Python wheel can't call 
+out to any compatible sDNA .dll or .so).
+
+### Publishing cross_platform branch wheels to PyPi
+Currently this is not automated.  The outputs of `build_linux_wheel_and_test.yml` 
+and `build_windows_wheel_and_test.yml` (in `.github/workflows`) are downloaded to `./dist`.
+Within that dir, any standard tool like `uv publish` or `twine` is run with `__token__`.
+
 ### Dependencies
 
 #### Boost
