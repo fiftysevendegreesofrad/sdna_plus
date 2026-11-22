@@ -34,8 +34,6 @@ else:
 class my_void_p(c_void_p):
     pass
 
-#print "debug!"
-#sys.stdin.readline()
 
 _WARNFUNCTYPE = CFUNCTYPE(c_int, c_char_p)
 _PROGFUNCTYPE = CFUNCTYPE(c_int, c_float)
@@ -49,6 +47,10 @@ def set_dll_path(path):
         global __sdna_dll_path
         __sdna_dll_path = path
 
+def get_dll_info():
+        dll_version = get_dll_sDNA_version()
+        return dll_version, __sdna_dll_path
+        
 def set_sdnapy_message_callback(callback):
     global __send_message_callback
     __send_message_callback = callback

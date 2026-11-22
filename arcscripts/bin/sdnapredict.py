@@ -9,6 +9,8 @@ from optparse import OptionParser
 
 import numpy
 
+from sdnapy import get_dll_info
+
 
 def main(argv = sys.argv[1:]):
 
@@ -20,11 +22,18 @@ def main(argv = sys.argv[1:]):
     desc = 'Examples:\n'\
         + example\
         + "GDB usage requires ArcGIS to be installed, Shapefile usage doesn't."
+    dll_v, dll_path = get_dll_info()
+    version = "%prog v{python_code_v}, ({note}) sDNA+ v{dll_v} ({dll_path})".format(
+        python_code_v=__version__,
+        note="experimental Linux & Windows cross_platform branch",
+        dll_v=dll_v,
+        dll_path=dll_path,
+    )
     
     op = OptionParser(
         "usage: %prog [options] [config_string]",
         epilog=desc,
-        version="sDNA+ {v} (experimental Linux & Windows cross_platform branch)".format(v=__version__),
+        version=version,
         )
 
     op.add_option("--modelfile",dest="modelfile",
