@@ -42,6 +42,10 @@ def set_dll_path(path):
         if path != "":
                 global __sdna_dll_path
                 __sdna_dll_path = path
+                                                                                        
+def get_dll_info():
+        dll_version = get_dll_sDNA_version()
+        return dll_version, __sdna_dll_path
 
 def set_sdnapy_message_callback(callback):
         global __send_message_callback
@@ -60,11 +64,11 @@ def __initialize_dll():
     global __sdna_dll_path,__dll_instance
 
     if __sdna_dll_path=="":
-        dll_name = r"\\sdna_vs2008.dll"
+        dll_name = r"\sdna_vs2008.dll"
         
         # what kind of platform are we on?
         if c_size_t==c_ulonglong:
-                dll_name = r"\\x64"+dll_name # 64-bit
+                dll_name = r"\x64"+dll_name # 64-bit
         else:
                 assert(c_size_t==c_ulong) # 32-bit
                 
