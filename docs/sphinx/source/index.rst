@@ -12,11 +12,12 @@ This is the manual for sDNA_, the spatial network analysis toolbox for GIS and P
 
     Cooper, C. (|today|) Spatial Design Network Analysis (sDNA) version |version| Manual. Cardiff University.  Available, http://sdna.cardiff.ac.uk/sdna/software/documentation
 
-**Please also remember to cite the software itself in any published sDNA analysis:**
+**Please also remember to cite the current version of the software itself in any published sDNA analysis:**
 
-    Cooper, C.H.V., Chiaradia, A.J.F., 2020. sDNA: 3-d spatial network analysis for GIS, CAD, Command Line & Python. SoftwareX 12, 100525. https://doi.org/10.1016/j.softx.2020.100525 
+    Cooper, C.H.V, Parrott, J., Morgan, J., Fan, Z., Chiaradia, Alain J. F. (2026). Version 4.1 – sDNA+: 2-d and 3-d spatial network analysis for GIS, CAD, command line & Python, SoftwareX 35 (102926) https://doi.org/10.1016/j.softx.2026.102926.
+
+If you want an academic reference for the underlying concepts (radius, metric, etc) see also https://doi.org/10.1016/j.softx.2020.100525.
     
-
 **Further help, feature requests, bug reports, errata:**  If you have any general questions about using sDNA, requests for features, or problems with the software or manual, please get in touch via our website_.
 
 .. _website: http://sdna.cardiff.ac.uk/sdna
