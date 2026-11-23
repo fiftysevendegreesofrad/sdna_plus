@@ -15,8 +15,9 @@ example='python -u sdnalearn.py --calibfile cfile --target var0 --vars var1,var2
 desc = 'Examples:\n'\
        + example\
        + "GDB usage requires ArcGIS to be installed, Shapefile usage doesn't."
+version = "%prog v{python_code_v} (sDNA+) ".format(python_code_v=__version__)
 
-op = OptionParser("usage: %prog [options] [config_string]",epilog= desc)
+op = OptionParser("usage: %prog [options] [config_string]", epilog=desc, version=version)
 
 op.add_option("--calibfile",dest="calibfile",
               help="Calibration file",metavar="FILE")

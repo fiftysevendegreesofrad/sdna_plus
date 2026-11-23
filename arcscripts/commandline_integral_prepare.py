@@ -4,6 +4,7 @@ __version__ = "VERSION_PLACEHOLDER"
 
 from runcalculation import runcalculation
 import sdna_environment,sdnaexception
+from sdnapy import set_dll_path, get_dll_info
 
 import optparse,sys
 from optparse import OptionParser
@@ -16,8 +17,8 @@ def commandline_integral_prepare(command):
     desc = 'Examples:\n'\
            + example\
            + "GDB usage requires ArcGIS to be installed, Shapefile usage doesn't."
-    
-    op = OptionParser("usage: %prog [options] [config_string]",epilog= desc)
+
+    op = OptionParser("usage: %prog [options] [config_string]", epilog=desc)
 
     op.add_option("-i","--infile",dest="infilename",
                   help="Input shapefile or gdb (gdb requires ArcGIS)",metavar="FILE")
@@ -28,8 +29,25 @@ def commandline_integral_prepare(command):
     op.add_option("--om","--outfilemap",dest="outfilemap",
                   help="Mapping of config names to outputs",metavar="FILE")
     op.add_option("--dll",dest="dll",help=optparse.SUPPRESS_HELP,default="")
+    op.add_option("--version", dest='print_version', action='store_true')
 
     (options,args) = op.parse_args()
+
+    set_dll_path(options.dll)
+
+    # Support querying the --version of a specified --dll (with the 
+    # args in that order - the built-in version=__version__ callback 
+    # would exit before --dll is parsed)
+    if options.print_version:
+        dll_v, dll_path = get_dll_info()
+        full_version_info = "{command}.py v{python_code_v}, sDNA+ v{dll_v} ({dll_path})".format(
+            command=command,
+            python_code_v=__version__,
+            dll_v=dll_v,
+            dll_path=dll_path,
+        )
+        print(full_version_info)
+        sys.exit(0)
 
     if len(args)==0:
         config_string=""
