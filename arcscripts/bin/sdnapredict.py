@@ -10,21 +10,23 @@ from optparse import OptionParser
 import numpy
 
 
+
 def main(argv = sys.argv[1:]):
 
     import sdna_environment
-    # from sdnaregutilities import *
     import sdnaregutilities
 
     example='python -u sdnapredict.py --input infile --output outfile --modelfile model.csv --predvarname prediction\n'
     desc = 'Examples:\n'\
         + example\
         + "GDB usage requires ArcGIS to be installed, Shapefile usage doesn't."
+    version = "%prog v{python_code_v} (sDNA+) ".format(python_code_v=__version__)
+
     
     op = OptionParser(
         "usage: %prog [options] [config_string]",
         epilog=desc,
-        version="sDNA+ {v} (experimental Linux & Windows cross_platform branch)".format(v=__version__),
+        version=version,
         )
 
     op.add_option("--modelfile",dest="modelfile",
