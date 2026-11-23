@@ -16,20 +16,12 @@ def main(argv = sys.argv[1:]):
 
     import sdna_environment
     import sdnaregutilities
-    # from sdnaregutilities import *
-    from sdnapy import get_dll_info
 
     example='python -u sdnalearn.py --calibfile cfile --target var0 --vars var1,var2 --varregex "var.*"\n'
     desc = 'Examples:\n'\
         + example\
         + "GDB usage requires ArcGIS to be installed, Shapefile usage doesn't."
-    dll_v, dll_path = get_dll_info()
-    version = "%prog v{python_code_v}, ({note}) sDNA+ v{dll_v} ({dll_path})".format(
-        python_code_v=__version__,
-        note="experimental Linux & Windows cross_platform branch",
-        dll_v=dll_v,
-        dll_path=dll_path,
-    )
+    version = "%prog v{python_code_v} (sDNA+) ".format(python_code_v=__version__)
     
     op = OptionParser(
         "usage: %prog [options] [config_string]",
