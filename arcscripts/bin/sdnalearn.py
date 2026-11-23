@@ -9,7 +9,6 @@ from optparse import OptionParser
 
 import numpy
 
-from sdnapy import get_dll_info
 
 
 
@@ -18,6 +17,7 @@ def main(argv = sys.argv[1:]):
     import sdna_environment
     import sdnaregutilities
     # from sdnaregutilities import *
+    from sdnapy import get_dll_info
 
     example='python -u sdnalearn.py --calibfile cfile --target var0 --vars var1,var2 --varregex "var.*"\n'
     desc = 'Examples:\n'\

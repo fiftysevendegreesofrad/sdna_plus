@@ -9,7 +9,6 @@ from optparse import OptionParser
 
 import numpy
 
-from sdnapy import get_dll_info
 
 
 def main(argv = sys.argv[1:]):
@@ -17,6 +16,7 @@ def main(argv = sys.argv[1:]):
     import sdna_environment
     # from sdnaregutilities import *
     import sdnaregutilities
+    from sdnapy import get_dll_info
 
     example='python -u sdnapredict.py --input infile --output outfile --modelfile model.csv --predvarname prediction\n'
     desc = 'Examples:\n'\
