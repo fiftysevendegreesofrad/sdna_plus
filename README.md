@@ -158,6 +158,35 @@ Some key folders:
 * `installerbits` - extras needed to create install package
 * `docs` - documentation
 
+### Versioning (main)
+Bump the X.Y.Z semver string in both `./sDNA/sdna_vs2008/version_template.h`.  The version in the generated C++ header is
+embedded in the .dll and .so, and is now inspectable via the API.  It is also used by insert_sDNA_versions.py 
+to version the Python scripts and AdvancedInstaller config (for the start menu on Windows).  
+The version in pyproject.toml determines the version declared on PyPi 
+Note: `insert_sDNA_versions.py` is called by MSBuild (or Ninja if a build script is built by CMake, 
+depending on the build tools being used).
+
+
+### Publishing (Continuous Deployment)
+#### Trigger a new release
+On the `main` branch, add a "vX.Y.Z" tag to the Git commit, from which 
+sDNA+ version X.Y.Z will be built, and push it to the Github repo.
+#### Workflow notes (why we shouldn't go back to the old way)
+The Continuous Integration workflow (`./github/workflows/publish_release.yml`) on the Github repo
+will be triggered by a push to main of a tag matching the above pattern.
+This workflow will itself first call the Continuous Deployment workflow `build_installer_and_test.yml` 
+(which to reduce unnecessary compute, cancels any in-progress CI workflows on 
+the same commit hash, using the concurrency group mechanism).
+If the built release artefacts (currently the .msi file) fail the CI tests, the entire workflow will be
+failed, and the actual release job will never be started.
+If the build was successful, and if it passes the normal CI tests, the exact same outputs 
+from `./dist` (that the build job supplied to the test job)
+are passed to [`@softprops/action-gh-release`](https://github.com/softprops/action-gh-release) which 
+essentially copies and pastes the files into a new Github Release, with the same name as the tag, marked as the latest,
+(hopefully exactly the same as when this used to be done manually, but without the released .msi
+shipped to users, which they've historically been required to run as admin, needing to be first 
+downloaded to a local computer).
+
 ### Tests
 
 The test code needs updating (plan to do this with the port to Linux).
