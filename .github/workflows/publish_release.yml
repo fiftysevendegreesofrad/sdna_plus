@@ -1,0 +1,56 @@
+name: Publish release
+
+on:
+  push:
+    tags:
+     - "v*.*.*"
+
+jobs:
+  ensure-on-main:
+    runs-on: ubuntu-latest
+    outputs:
+      is_on_main: ${{ steps.check.outputs.on_main }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history is required for branch ancestry checks
+
+      - name: Check if tag is on main
+        id: check
+        run: |
+          if git merge-base --is-ancestor ${{ github.sha }} origin/main; then
+            echo "on_main=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "on_main=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  build_installer_and_test:    
+    needs: ensure-on-main
+    if: needs.ensure-on-main.outputs.is_on_main == 'true'
+    uses: ./.github/workflows/build_installer_and_test.yml
+    with:
+      called: true
+
+  publish_release:
+    needs: build_installer_and_test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Crucial for the validation step
+
+    - name: Download installer (built in previous job)
+      uses: actions/download-artifact@v8
+      with:
+        name: installer_file
+        path: dist
+
+
+    - name: Release
+      uses: softprops/action-gh-release@v3
+      if: github.ref_type == 'tag'
+      with:
+        working_directory: dist
+        files: |
+          *.*
