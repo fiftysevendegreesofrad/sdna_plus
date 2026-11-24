@@ -33,7 +33,9 @@ jobs:
 
   publish_release:
     needs: build_installer_and_test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest    
+    permissions:
+      contents: write
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
