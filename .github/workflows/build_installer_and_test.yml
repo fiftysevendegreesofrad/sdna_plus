@@ -1,9 +1,18 @@
 name: "MSBuild, VS 2022, & Windows.  Build installer and test it."
 
 on:
-  workflow_dispatch:
-  push:
   pull_request:
+  push:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      called:
+        type: boolean
+        default: false
+
+concurrency:
+  group: ci-${{ github.sha }}
+  cancel-in-progress: ${{ inputs.called == true }}
 
 env:
   CONFIGURATION: Release
