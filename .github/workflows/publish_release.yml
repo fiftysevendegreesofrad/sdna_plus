@@ -30,7 +30,7 @@ jobs:
     uses: ./.github/workflows/build_linux_wheel_and_test.yml
     with:
       called: true
-      run_smoke_test: false
+      run_smoke_tests: false
 
   build_windows_wheel_and_test:    
     needs: ensure-on-cross-platform
@@ -38,7 +38,7 @@ jobs:
     uses: ./.github/workflows/build_windows_wheel_and_test.yml
     with:
       called: true
-      run_smoke_test: false
+      run_smoke_tests: false
 
   build_installer_and_test:    
     needs: ensure-on-cross-platform
@@ -120,6 +120,7 @@ jobs:
       uses: softprops/action-gh-release@v3
       if: github.ref_type == 'tag'
       with:
+        make_latest: false
         working_directory: dist
         files: |
           *.*
