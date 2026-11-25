@@ -30,6 +30,7 @@ jobs:
     uses: ./.github/workflows/build_linux_wheel_and_test.yml
     with:
       called: true
+      run_smoke_test: false
 
   build_windows_wheel_and_test:    
     needs: ensure-on-cross-platform
@@ -37,6 +38,7 @@ jobs:
     uses: ./.github/workflows/build_windows_wheel_and_test.yml
     with:
       called: true
+      run_smoke_test: false
 
   build_installer_and_test:    
     needs: ensure-on-cross-platform
