@@ -55,10 +55,10 @@ jobs:
     runs-on: ubuntu-latest    
     steps:
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v10
-      with:
-          enable-cache: false
+    # - name: Install uv
+    #   uses: astral-sh/setup-uv@v10
+    #   with:
+    #       enable-cache: false
 
     - name: Download Linux Wheel
       uses: actions/download-artifact@v8
@@ -72,8 +72,19 @@ jobs:
         name: python_wheel_VS_2022_Windows_x64
         path: dist
 
-    - name: Publish to PyPI
-      run: uv publish ./dist/*
+    # # I'm not sure setting up a Trusted Publisher workflow will work from a non-main branch
+    # - name: Publish to PyPI
+    #   run: uv publish ./dist/*
+
+    
+    - name: Publish package
+      if: github.repository == 'fiftysevendegreesofrad/sdna_plus'
+      uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 #v1.14.3
+      with:
+        user: __token__
+        password: ${{ secrets.PUBLISH_SDNA_PLUS_RELEASE_PYPI }}
+        packages-dir: dist/
+
 
   publish_release:
     needs: [
