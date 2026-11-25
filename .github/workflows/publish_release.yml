@@ -5,6 +5,10 @@ on:
     tags:
      - "v*.*.*"
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   ensure-on-cross-platform:
     runs-on: ubuntu-latest
@@ -25,6 +29,9 @@ jobs:
           fi
 
   build_linux_wheel_and_test:    
+    permissions:
+      contents: read
+      packages: write
     needs: ensure-on-cross-platform
     if: needs.ensure-on-cross-platform.outputs.is_on_cross_platform == 'true'
     uses: ./.github/workflows/build_linux_wheel_and_test.yml

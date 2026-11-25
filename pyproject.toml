@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sDNA_plus"
-version = "5.2.4" # Should match that in version_template.h
+version = "5.2.5" # Should match that in version_template.h
 authors = [ {name = 'Crispin Cooper', email = 'sdna@cardiff.ac.uk'}, {name = "James Parrott", email = "james.parrott@proton.me"}]
 description = "sDNA is a world leading tool for Spatial Design Network Analysis.  "
 readme = {file = "README.md", content-type = "text/markdown"}
