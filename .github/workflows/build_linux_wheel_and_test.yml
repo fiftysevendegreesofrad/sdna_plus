@@ -10,6 +10,19 @@ on:
     branches-ignore:
       - main**
 
+  workflow_call:
+    inputs:
+      called:
+        type: boolean
+        default: false
+      run_smoke_tests:
+        type: boolean
+        default: true
+
+concurrency:
+  group: ci-linux-wheel-${{ github.sha }}
+  cancel-in-progress: ${{ inputs.called == true }}
+
 permissions:
   contents: read
   packages: write
@@ -127,7 +140,7 @@ jobs:
   smoke_tests:
 
     needs: build_linux_wheel
-
+    if: ${{ inputs.run_smoke_tests == true }}
     strategy:
       fail-fast: false
       matrix:

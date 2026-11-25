@@ -10,6 +10,19 @@ on:
     branches-ignore:
       - main**
 
+  workflow_call:
+    inputs:
+      called:
+        type: boolean
+        default: false
+      run_smoke_tests:
+        type: boolean
+        default: true
+
+concurrency:
+  group: ci-windows-wheel-${{ github.sha }}
+  cancel-in-progress: ${{ inputs.called == true }}
+
 jobs:
   build_windows_wheel:
     runs-on: windows-2022
@@ -76,6 +89,7 @@ jobs:
   smoke_tests:
 
     needs: build_windows_wheel
+    if: ${{ inputs.run_smoke_tests == true }}
 
     strategy:
       fail-fast: false
