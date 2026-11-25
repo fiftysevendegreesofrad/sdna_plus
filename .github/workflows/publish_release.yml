@@ -18,7 +18,7 @@ jobs:
       - name: Check if tag is on Cross_platform
         id: check
         run: |
-          if git merge-base --is-ancestor ${{ github.sha }} origin/Test_publish_release; then
+          if git merge-base --is-ancestor ${{ github.sha }} origin/Cross_platform; then
             echo "on_cross_platform=true" >> "$GITHUB_OUTPUT"
           else
             echo "on_cross_platform=false" >> "$GITHUB_OUTPUT"
@@ -30,6 +30,7 @@ jobs:
     uses: ./.github/workflows/build_linux_wheel_and_test.yml
     with:
       called: true
+      run_smoke_test: false
 
   build_windows_wheel_and_test:    
     needs: ensure-on-cross-platform
@@ -37,6 +38,7 @@ jobs:
     uses: ./.github/workflows/build_windows_wheel_and_test.yml
     with:
       called: true
+      run_smoke_test: false
 
   build_installer_and_test:    
     needs: ensure-on-cross-platform
@@ -45,33 +47,33 @@ jobs:
     with:
       called: true
 
-  # publish_wheels_to_PyPi:
-  #   needs: [
-  #     build_linux_wheel_and_test,
-  #     build_windows_wheel_and_test,
-  #   ]
-  #   runs-on: ubuntu-latest    
-  #   steps:
+  publish_wheels_to_PyPi:
+    needs: [
+      build_linux_wheel_and_test,
+      build_windows_wheel_and_test,
+    ]
+    runs-on: ubuntu-latest    
+    steps:
 
-  #   - name: Install uv
-  #     uses: astral-sh/setup-uv@v10
-  #     with:
-  #         enable-cache: false
+    - name: Install uv
+      uses: astral-sh/setup-uv@v10
+      with:
+          enable-cache: false
 
-  #   - name: Download Linux Wheel
-  #     uses: actions/download-artifact@v8
-  #     with:
-  #       name: python_wheel_gcc_linux
-  #       path: dist
+    - name: Download Linux Wheel
+      uses: actions/download-artifact@v8
+      with:
+        name: python_wheel_gcc_linux
+        path: dist
 
-  #   - name: Download Windows Wheel
-  #     uses: actions/download-artifact@v8
-  #     with:
-  #       name: python_wheel_VS_2022_Windows_x64
-  #       path: dist
+    - name: Download Windows Wheel
+      uses: actions/download-artifact@v8
+      with:
+        name: python_wheel_VS_2022_Windows_x64
+        path: dist
 
-  #   - name: Publish to PyPI
-  #     run: uv publish ./dist/*
+    - name: Publish to PyPI
+      run: uv publish ./dist/*
 
   publish_release:
     needs: [
