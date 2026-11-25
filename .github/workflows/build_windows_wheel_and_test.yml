@@ -10,6 +10,16 @@ on:
     branches-ignore:
       - main**
 
+  workflow_call:
+    inputs:
+      called:
+        type: boolean
+        default: false
+
+concurrency:
+  group: ci-windows-wheel-${{ github.sha }}
+  cancel-in-progress: ${{ inputs.called == true }}
+
 jobs:
   build_windows_wheel:
     runs-on: windows-2022

@@ -10,6 +10,16 @@ on:
     branches-ignore:
       - main**
 
+  workflow_call:
+    inputs:
+      called:
+        type: boolean
+        default: false
+
+concurrency:
+  group: ci-cmake-windows-${{ github.sha }}
+  cancel-in-progress: ${{ inputs.called == true }}
+
 
 env:
   CONFIGURATION: Release
